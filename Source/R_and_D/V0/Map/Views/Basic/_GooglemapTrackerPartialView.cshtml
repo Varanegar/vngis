@@ -1,0 +1,35 @@
+﻿
+@using System.Drawing
+@using Jmelosegui.Mvc.GoogleMap
+@model IList<TrackingMap.Models.PolyModel>
+
+
+@{
+    Html.GoogleMap()
+      .Name("map")
+      .Zoom(11)
+      .FitToMarkersBounds(true)
+      .Center(c => c.Latitude(35.6961111).Longitude(51.4230556))
+      .Polylines(pf =>
+       {
+           foreach (var line in Model)
+           {
+               pf.Add()
+                   .Points(ptn =>
+                   {
+                       foreach (var pt in line.Points)
+                       {
+                           ptn.Add(pt.Latitude, pt.Longitude);
+                       }
+                   })
+
+                   .StrokeColor(line.Color)
+                   .StrokeWeight(3);
+           }
+
+       }).Render();
+     
+    }
+
+
+    @(Html.GoogleMap().ScriptRegistrar())

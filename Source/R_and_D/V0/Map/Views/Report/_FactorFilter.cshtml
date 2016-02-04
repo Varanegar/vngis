@@ -1,0 +1,57 @@
+﻿
+<!-- Modal -->
+<div id="pnl_factor" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@CaptionResource.Order</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="col-md-4">
+                            @Html.Label(CaptionResource.FromDate, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" id="factor_from_date" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-4">
+                            @Html.Label(CaptionResource.ToDate, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" id="factor_to_date" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="col-md-4">
+                            @Html.Label(CaptionResource.FromPrice, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            <input type="number" id="factor_from_price" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-4">
+                            @Html.Label(CaptionResource.ToPrice, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            <input type="number" id="factor_to_price" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btn_factor_chk">@CaptionResource.Check</button>
+                <button type="button" class="btn btn-default" id="btn_factor_not_chk">@CaptionResource.NotCheck</button>
+            </div>
+        </div>
+
+    </div>
+</div>
