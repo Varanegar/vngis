@@ -13,56 +13,23 @@ namespace TrackingMap.Service.BL
 {
     public class AreaService
     {
-        private IRepository<AreaPointEntity> _areaRepository;
+        private IRepository<AreaEntity> _areaRepository;
 
         public AreaService(
-            IRepository<AreaPointEntity>  areaRepository)
+            IRepository<AreaEntity>  areaRepository)
         {
             _areaRepository = areaRepository;
         }
-        public IList<PointView> LoadAreaPointById(int id)
+        public IList<AreaView> LoadAreaByParentId(int id)
         {
-            var list = _areaRepository.Table.Where(x => id == 0 || x.MasterId == id).Select(x => new PointView()
+            var list = _areaRepository.Table.Where(x => x.ParentId == id)
+                .Select(x => new AreaView()
                 {
                     Id = x.Id,
-                    Desc = "",
-                    MasterId = x.MasterId,
-                    Longitude = x.Longitude,
-                    Latitude = x.Latitude,
-                    PointType = PointType.Limited
+                    Title = x.Title,
+                    IsLeaf = x.IsLeaf
                 }).ToList() ;
-                //IList<PointView> list;
-                //var id_param = new SqlParameter("@Id", id);
-
-                //list = ctx.Database.SqlQuery<PointView>("LoadLimits_Point @Id ", id_param).ToList();
-                return list;
-        }
-
-        public void SaveAreaPointList(int id, List<AreaPointView> entities)
-        {
-                foreach (var entityview in entities)
-                {
-
-                    AreaPointEntity entity;
-                    if (entityview.Id <= 0)
-                    {
-                        entity = new AreaPointEntity(entityview);
-                        entity.MasterId = id;
-                        entity.Id = 0;
-                        _areaRepository.Insert(entity);
-                    }
-                    else
-                    {
-
-                        entity = _areaRepository.GetById(entityview.Id);
-                        if (entity != null)
-                        {
-                            entity.Longitude = entityview.Lng;
-                            entity.Latitude = entityview.Lat;
-                        }
-                        _areaRepository.Update(entity);
-                    }
-                }
+            return list;
         }
 
     }

@@ -201,10 +201,6 @@
     </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
-    <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\RoadController.cs" />
-    <Compile Include="Controllers\SettingController.cs" />
-    <Compile Include="Controllers\TrackerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,7 +209,6 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\AreaModel.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\RoadModel.cs" />
@@ -541,9 +536,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\view\area.js" />
-    <Content Include="Scripts\view\report.js" />
-    <Content Include="Scripts\view\road.js" />
-    <Content Include="Scripts\view\tracker.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -626,16 +618,8 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js.map" />
     <Content Include="Views\Basic\_GooglemapPartialView.cshtml" />
     <Content Include="Views\Basic\_GooglemapTrackerPartialView.cshtml" />
-    <Content Include="Views\Tracker\Index.cshtml" />
     <Content Include="Views\Area\Index.cshtml" />
     <Content Include="Views\Basic\_GooglemapAreaPartialView.cshtml" />
-    <Content Include="Views\Setting\Index.cshtml" />
-    <Content Include="Views\Report\Index.cshtml" />
-    <Content Include="Views\Report\_OrderFilter.cshtml" />
-    <Content Include="Views\Report\_FactorFilter.cshtml" />
-    <Content Include="Views\Report\_VisitorFilter.cshtml" />
-    <None Include="Views\Report\_CustomerFilter.cshtml" />
-    <Content Include="Views\Road\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Map.Service\TrackingMap.Service.csproj">
@@ -677,7 +661,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2416</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8392/</IISUrl>
+          <IISUrl>http://localhost:8398/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

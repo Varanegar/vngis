@@ -52,78 +52,12 @@
                 <div class="sidebar-toggler">
                 </div>
                 <ul id="side-menu" class="sidebar-menu">
-                   <li class="has-sub">
-                        <a href="javascript:;">
-                            <span class="icon-box">
-                                <i class="glyphicon glyphicon-th"></i>
-                            </span>
-                            @CaptionResource.Definition
-                            <span class="arrow"></span>
-                        </a>
-                        <ul class="sub">
-                            <li>
-                                <a class="" href="/Setting/Index">
-                                    @CaptionResource.Setting
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="@(ViewBag.CurrMenu == "Road"? "Active" : "" )" href="/Area/Index">@CaptionResource.Areas</a>
-                            </li>
-                            <li>
-                                <a class="" href="/Road/Index">@CaptionResource.Roads</a>
-                            </li>
-                        </ul>
-
-                    </li>
-
-
-
                     <li>
-                        <a class="@(ViewBag.CurrMenu == "Report"? "Active" : "" )" href="/Report/Index">
-                            <span class="icon-box">
-                                <i class="glyphicon glyphicon-th"></i>
-                            </span>
-                            @CaptionResource.Map
-                        </a>
-                    </li>
-                    @*<li class="has-sub">
-                    <a href="javascript:;">
-                        <span class="icon-box">
-                            <i class="glyphicon glyphicon-map-marker"></i>
-                        </span>
-                        @CaptionResource.PointAnalaizing
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub">
-                        <li>
-                            <a class="@(ViewBag.CurrMenu == "Order"? "Active" : "" )" href="/Order/Index">@CaptionResource.Order</a>
-                        </li>
-                        <li>
-                            <a class="" href="#">@CaptionResource.Customer</a>
-                        </li>
-                        <li>
-                            <a class="" href="#">@CaptionResource.Good</a>
-                        </li>
-                    </ul>
-
-                </li>*@
-
-
-                    @*<li>
-                <a class="" href="/Order/Index">
-                    <span class="icon-box">
-                        <i class=" 	glyphicon glyphicon-map-marker"></i>
-                    </span>
-                    @CaptionResource.PointAnalaizing
-                </a>
-            </li>*@
-                    <li>
-                        <a href="/Supperviser/Index">
+                        <a class="@(ViewBag.CurrMenu == "Road"? "Active" : "" )" href="/Area/Index">
                             <span class="icon-box">
                                 <i class="glyphicon glyphicon-random"></i>
                             </span>
-                            @CaptionResource.Supperviser
+                            @CaptionResource.Route
                         </a>
                     </li>
                     <li>
@@ -134,6 +68,7 @@
                             @CaptionResource.Visitor
                         </a>
                     </li>
+
                 </ul>
 
             </div>

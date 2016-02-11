@@ -22,16 +22,12 @@ namespace TrackingMap.Infrastructure
 
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
-            builder.RegisterType<AreaService>().InstancePerLifetimeScope();
             builder.RegisterType<ConfigService>().InstancePerLifetimeScope();
-            builder.RegisterType<CustomerService>().InstancePerLifetimeScope();
-            builder.RegisterType<DistributService>().InstancePerLifetimeScope();
-            builder.RegisterType<GoodService>().InstancePerLifetimeScope();
             builder.RegisterType<LogService>().InstancePerLifetimeScope();
-            builder.RegisterType<ReportService>().InstancePerLifetimeScope();
-            builder.RegisterType<RoadService>().InstancePerLifetimeScope();
+            builder.RegisterType<AreaService>().InstancePerLifetimeScope();
+            builder.RegisterType<AreaPointService>().InstancePerLifetimeScope();
+            builder.RegisterType<CustomerService>().InstancePerLifetimeScope();
             builder.RegisterType<SettingService>().InstancePerLifetimeScope();
-            builder.RegisterType<TrackerService>().InstancePerLifetimeScope();
             builder.RegisterType<VisitorService>().InstancePerLifetimeScope();
 
             var container = builder.Build();

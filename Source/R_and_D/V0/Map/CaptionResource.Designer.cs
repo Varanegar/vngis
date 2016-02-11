@@ -241,33 +241,6 @@ namespace TrackingMap {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to فاکتور.
-        /// </summary>
-        public static string Factor {
-            get {
-                return ResourceManager.GetString("Factor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to شماره فاکتور.
-        /// </summary>
-        public static string FactorNumber {
-            get {
-                return ResourceManager.GetString("FactorNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to مبلغ فاکتور.
-        /// </summary>
-        public static string FactorPrice {
-            get {
-                return ResourceManager.GetString("FactorPrice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to از تاریخ .
         /// </summary>
         public static string FromDate {
@@ -295,56 +268,11 @@ namespace TrackingMap {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to کالا.
-        /// </summary>
-        public static string Good {
-            get {
-                return ResourceManager.GetString("Good", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to گروه کالا.
-        /// </summary>
-        public static string GoodGroup {
-            get {
-                return ResourceManager.GetString("GoodGroup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to لیست.
-        /// </summary>
-        public static string List {
-            get {
-                return ResourceManager.GetString("List", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ماشین.
-        /// </summary>
-        public static string Machin {
-            get {
-                return ResourceManager.GetString("Machin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to نقشه.
         /// </summary>
         public static string Map {
             get {
                 return ResourceManager.GetString("Map", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to نقشه.
-        /// </summary>
-        public static string Mapp {
-            get {
-                return ResourceManager.GetString("Mapp", resourceCulture);
             }
         }
         
@@ -367,7 +295,7 @@ namespace TrackingMap {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عدم بازدید.
+        ///   Looks up a localized string similar to عدم ویزیت.
         /// </summary>
         public static string NotVisit {
             get {
@@ -385,56 +313,11 @@ namespace TrackingMap {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to سفارش.
-        /// </summary>
-        public static string Order {
-            get {
-                return ResourceManager.GetString("Order", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to سماره سفارش.
-        /// </summary>
-        public static string OrderNumber {
-            get {
-                return ResourceManager.GetString("OrderNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to مبلغ سفارش.
-        /// </summary>
-        public static string OrderPrice {
-            get {
-                return ResourceManager.GetString("OrderPrice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to آنالیز سفارشات.
-        /// </summary>
-        public static string Orders {
-            get {
-                return ResourceManager.GetString("Orders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to مسیر حرکت.
         /// </summary>
         public static string Path {
             get {
                 return ResourceManager.GetString("Path", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to آنالیز نقاط.
-        /// </summary>
-        public static string PointAnalaizing {
-            get {
-                return ResourceManager.GetString("PointAnalaizing", resourceCulture);
             }
         }
         
@@ -462,6 +345,15 @@ namespace TrackingMap {
         public static string Roads {
             get {
                 return ResourceManager.GetString("Roads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مسیربندی.
+        /// </summary>
+        public static string Route {
+            get {
+                return ResourceManager.GetString("Route", resourceCulture);
             }
         }
         
@@ -534,24 +426,6 @@ namespace TrackingMap {
         public static string ToDate {
             get {
                 return ResourceManager.GetString("ToDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to تا مبلغ.
-        /// </summary>
-        public static string ToPrice {
-            get {
-                return ResourceManager.GetString("ToPrice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to تا مسیر.
-        /// </summary>
-        public static string ToRoad {
-            get {
-                return ResourceManager.GetString("ToRoad", resourceCulture);
             }
         }
         

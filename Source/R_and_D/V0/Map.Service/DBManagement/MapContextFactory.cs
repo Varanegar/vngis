@@ -8,7 +8,7 @@ namespace TrackingMap.Service.DBManagement
         private static string _ConnectionString;
         private static string GetTransferConnectionString()
         {
-            return "Data Source= .;Initial Catalog=VnGisDB;Persist Security Info=True;User ID=sa;Password=sa@123";
+            return "Data Source= .;Initial Catalog=VnGIS_DB;Persist Security Info=True;User ID=sa;Password=Rubik";
         }
 
         public static MapContext Create()

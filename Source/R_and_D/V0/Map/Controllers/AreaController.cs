@@ -17,53 +17,44 @@ namespace TrackingMap.Controllers
     {
 
         private readonly AreaService _areaService;
-        private readonly DistributService _distributService;
-        public AreaController(AreaService areaService,
-            DistributService distributService)
+        private readonly AreaPointService _areaPointService;
+        public AreaController(AreaPointService areaPointService,
+            AreaService areaService)
         {
+            _areaPointService = areaPointService;
             _areaService = areaService;
-            _distributService = distributService;
         }
-        
+
         public ActionResult Index()
         {
             ViewBag.CurrMenu = "Area";
-            var model = new AreaModel();
-            model = PrepareModel();
-            return View(model);
+            return View();
         }
 
-        public ActionResult GetAreaList(int id)
+        public ActionResult GetAreaList(int parentId)
         {
-            var model = new AreaModel();
-            var area = new List<SelectListItem>();
-            var AreaList = _distributService.LoadDistributArea();
-            area.AddRange((from d in AreaList select new SelectListItem() { Value = d.Id + "", Text = d.Title }).ToList());
-            model.AvailableAreasGroup = area;
-            return Json(area, JsonRequestBehavior.AllowGet);
+            var AreaList = _areaService.LoadAreaByParentId(parentId);
+            return Json(AreaList);
         }
 
-
-        public AreaModel PrepareModel()
+        public ActionResult HaseAreaPoint(int id)
         {
-            var model = new AreaModel();
-            var group = new List<SelectListItem>();
-            var groupList = _distributService.LoadAreaGroup();
-            group.AddRange((from d in groupList select new SelectListItem() { Value = d.Id + "", Text = d.Title }).ToList());
-            model.AvailableAreasGroup = group;
-
-            return model;
+            var r = _areaPointService.HaseAreaPoint(id);
+            return Json(r);
         }
 
+        //-----------------------------------------------------------------------------------------------------------
+        //  MAP
+        //-----------------------------------------------------------------------------------------------------------
         public ActionResult SaveAreaPoint(int id, AreaPointView[] markers)
         {
-            _areaService.SaveAreaPointList(id, markers.ToList());
+            _areaPointService.SaveAreaPointList(id, markers.ToList());
             return Json(new { success = true });
             //Redirect("GooglemapLimiteView", new { id });
         }
         public ActionResult GooglemapAreaView(int id)
         {
-            var points = _areaService.LoadAreaPointById(id);
+            var points = _areaPointService.LoadAreaPointById(id);
             var group = 0;
             var line = new List<TrackingMap.Service.ViewModel.PointView>();
             var model = new List<PolyModel>();

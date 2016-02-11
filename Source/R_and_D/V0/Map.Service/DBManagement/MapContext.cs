@@ -30,6 +30,7 @@ namespace TrackingMap.Service.DBManagement
             return this.Database;
         }
 
+        public DbSet<AreaEntity> Areas { get; set; }
         public DbSet<AreaPointEntity> AreaPoints { get; set; }
 
     

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TrackingMap.Service.ViewModel
 {
-    public class AreaPointView
+    public class AreaView
     {
         public int Id { set; get; }
-        public int AreaId { set; get; }
-        public double Lng { set; get; }
-        public double Lat { set; get; }
+        public string Title { set; get; }
+        public bool IsLeaf { set; get; }
+
     }
 }

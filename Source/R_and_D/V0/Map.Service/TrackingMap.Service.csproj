@@ -48,23 +48,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\AreaService.cs" />
     <Compile Include="BL\ConfigService.cs" />
-    <Compile Include="BL\RoadService.cs" />
     <Compile Include="DataSourceResult.cs" />
-    <Compile Include="BL\DistributService.cs" />
     <Compile Include="DBManagement\EfRepository.cs" />
     <Compile Include="DBManagement\IDbContext.cs" />
     <Compile Include="DBManagement\IRepository.cs" />
+    <Compile Include="Entity\AreaEntity.cs" />
     <Compile Include="Entity\BaseEntity.cs" />
     <Compile Include="Entity\AreaPointEntity.cs" />
     <Compile Include="Filter\TrackerFilter.cs" />
     <Compile Include="Filter\ReportFilter.cs" />
-    <Compile Include="BL\GoodService.cs" />
-    <Compile Include="BL\AreaService.cs" />
+    <Compile Include="BL\AreaPointService.cs" />
     <Compile Include="BL\SettingService.cs" />
-    <Compile Include="BL\TrackerService.cs" />
     <Compile Include="PagingList.cs" />
     <Compile Include="ViewModel\AreaPointView.cs" />
+    <Compile Include="ViewModel\AreaView.cs" />
     <Compile Include="ViewModel\PointView.cs" />
     <Compile Include="BL\VisitorService.cs" />
     <Compile Include="BL\CustomerService.cs" />
@@ -74,7 +73,6 @@
     <Compile Include="DBManagement\MapDBInitializer.cs" />
     <Compile Include="DefaultValue.cs" />
     <Compile Include="BL\LogService.cs" />
-    <Compile Include="BL\ReportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ConfigView.cs" />
     <Compile Include="ViewModel\TextValueView.cs" />

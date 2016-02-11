@@ -177,15 +177,6 @@
   <data name="Empty" xml:space="preserve">
     <value>خالی کردن</value>
   </data>
-  <data name="Factor" xml:space="preserve">
-    <value>فاکتور</value>
-  </data>
-  <data name="FactorNumber" xml:space="preserve">
-    <value>شماره فاکتور</value>
-  </data>
-  <data name="FactorPrice" xml:space="preserve">
-    <value>مبلغ فاکتور</value>
-  </data>
   <data name="FromDate" xml:space="preserve">
     <value>از تاریخ </value>
   </data>
@@ -195,22 +186,7 @@
   <data name="FromRoad" xml:space="preserve">
     <value>از مسیر</value>
   </data>
-  <data name="Good" xml:space="preserve">
-    <value>کالا</value>
-  </data>
-  <data name="GoodGroup" xml:space="preserve">
-    <value>گروه کالا</value>
-  </data>
-  <data name="List" xml:space="preserve">
-    <value>لیست</value>
-  </data>
-  <data name="Machin" xml:space="preserve">
-    <value>ماشین</value>
-  </data>
   <data name="Map" xml:space="preserve">
-    <value>نقشه</value>
-  </data>
-  <data name="Mapp" xml:space="preserve">
     <value>نقشه</value>
   </data>
   <data name="NotCheck" xml:space="preserve">
@@ -220,28 +196,13 @@
     <value>عدم سفارش</value>
   </data>
   <data name="NotVisit" xml:space="preserve">
-    <value>عدم بازدید</value>
+    <value>عدم ویزیت</value>
   </data>
   <data name="OnlineOrder" xml:space="preserve">
     <value>سفارشات انلاین</value>
   </data>
-  <data name="Order" xml:space="preserve">
-    <value>سفارش</value>
-  </data>
-  <data name="OrderNumber" xml:space="preserve">
-    <value>سماره سفارش</value>
-  </data>
-  <data name="OrderPrice" xml:space="preserve">
-    <value>مبلغ سفارش</value>
-  </data>
-  <data name="Orders" xml:space="preserve">
-    <value>آنالیز سفارشات</value>
-  </data>
   <data name="Path" xml:space="preserve">
     <value>مسیر حرکت</value>
-  </data>
-  <data name="PointAnalaizing" xml:space="preserve">
-    <value>آنالیز نقاط</value>
   </data>
   <data name="Road" xml:space="preserve">
     <value>مسیر</value>
@@ -251,6 +212,9 @@
   </data>
   <data name="Roads" xml:space="preserve">
     <value>مسیر ها</value>
+  </data>
+  <data name="Route" xml:space="preserve">
+    <value>مسیربندی</value>
   </data>
   <data name="Run" xml:space="preserve">
     <value>اجرا</value>
@@ -275,12 +239,6 @@
   </data>
   <data name="ToDate" xml:space="preserve">
     <value>تا تاریخ</value>
-  </data>
-  <data name="ToPrice" xml:space="preserve">
-    <value>تا مبلغ</value>
-  </data>
-  <data name="ToRoad" xml:space="preserve">
-    <value>تا مسیر</value>
   </data>
   <data name="TrackerAnalaizing" xml:space="preserve">
     <value>آنالیز مسیر</value>

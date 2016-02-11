@@ -2,8 +2,8 @@
 var new_id = 0;
 $(document).ready(function () {
 
-
- 
+    $("#pnl_path").hide();
+    refreshgrid(0);
 
 
     $("#btn_save").on("click", function (e) {
@@ -12,73 +12,87 @@ $(document).ready(function () {
         //var map = new GMap(document.getElementById("map_canvas")); 
         //var markers = $('#map').markers;
 
-        var _id = $("#ddl_distribut_area :selected").val();
+        var _id = $("#selected_id").val();
         $.ajax({
             type: "POST",
             url: "/Area/SaveAreaPoint",
             dataType: "json",
             data: { id: _id, markers: my_markers },
             success: function (data) {
-                $("#ddl_distribut_area").click();
+                refreshmap(_id);
             }
         })
        .done(function (Result) {
        });
-
-
     });
 
-
-    $("#ddl_distribut_area").change(function () {
-        var Value = $(this).val();
-        $("#Area_List").removeClass("hidden");
-
-        var grid = $("#Area_List").kendoGrid({
-            dataSource: {
-                type: "json",
-                transport: {
-                    read: {
-                        url: "/Area/GetAreaList",
-                        type: "POST",
-                        data: { id: Value }
-                    },
-                },
-
-                pageSize: 20,
-                serverPaging: true,
-                //serverFiltering: true,
-                //serverSorting: true
-            },
-
-            sortable: false,
-            editable: false,
-            selectable: "row",
-            pageable: false,
-            scrollable: false,
-            change: grid_change,
-            columns: [{
-                field: "Text",
-                title: 'ناحیه',
-            }, {
-
-                field: "",
-                title: '',
-                template: "<i class='glyphicon glyphicon-pencil'></i>"
-            }, {
-
-                field: "",
-                title: '',
-                template: "<i class='glyphicon glyphicon-remove color-Red'></i>"
-
-            },
-            ]
+    $("#btn_detail").on("click", function (e) {
+        var _id = $("#selected_id").val();
+        $.ajax({
+            type: "POST",
+            url: "/Area/HaseAreaPoint",
+            dataType: "json",
+            data: { id: _id},
+            success: function (data) {
+                if (data == true){
+                    refreshgrid(_id);
+                    $("#selected_id").val(0);
+                    refreshmap(0);
+                }
+                else{
+                    alert("لطفا محدوده را مشخص کنید!");
+                }
+            }
         });
     });
-
 });
 
+function refreshgrid(parentid) {
+    var grid = $("#grid_area").kendoGrid({
+        dataSource: {
+            type: "json",
+            transport: {
+                read: {
+                    url: "/Area/GetAreaList",
+                    data: { parentId: parentid },
+                    type: "POST"
+                },
+            },
+            pageSize: 30,
+            serverPaging: true,
+            //serverFiltering: true,
+            //serverSorting: true
+        },
+
+        sortable: false,
+        editable: false,
+        selectable: "row",
+        pageable: false,
+        scrollable: false,
+        change: grid_change,
+        columns: [{
+            field: "Title",
+            title: 'عنوان',
+
+        }
+        //,
+        //{
+        //    field: '',
+        //    title: '',
+        //    width: 15,
+        //    template: "<button id='btn_show_aray2' class='btn btn-default'><i class='glyphicon glyphicon-zoom-in'></i></button>"
+        //}
 
 
+        ]
+    });
+
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+// MAP
+//---------------------------------------------------------------------------------------------------------
 function onMapLoadHandler(args) {
     my_markers = [];
     for (var mark in args.markers) {
@@ -92,16 +106,20 @@ function onMapLoadHandler(args) {
 
 function grid_change(arg) {
     var selectedData = this.dataItem(this.select());
-    $("#Report_Map").show();
+    $("#selected_id").val(selectedData.Id);
+    refreshmap(selectedData.Id);
+};
+
+function refreshmap(id) {
     new $.jmelosegui.GoogleMap('#mapContainer').ajax({
         url: 'GooglemapAreaView',
         type: "Get",
-        data: { id: selectedData.Value },
+        data: { id: id },
         success: function (data) {
             //alert('succeded');
         }
     });
-};
+}
 
 function onDragEnd(args) {
     var _find = false;
@@ -140,5 +158,4 @@ function addPoint(args) {
 
     //Jmelosegui.Mvc.GoogleMap.markerEvents();
     //marker.addListener("OnMarkerDragEnd", onDragEnd);
-
 }
