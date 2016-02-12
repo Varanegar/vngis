@@ -454,6 +454,10 @@ footer {
     height: 650px;
     border: solid 1px #ccc;
 }
+#mapContainer {
+    width: 100%;
+    height: 100%;
+}
 
 .frame-side-list {
     height: 700px !important;

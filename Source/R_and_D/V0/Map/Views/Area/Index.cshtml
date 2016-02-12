@@ -6,9 +6,6 @@
 @(Html.GoogleMap().ScriptRegistrar(scripts => scripts.Add("jmelosegui.googlemap.js")))
 
 
-<input type="hidden" id="selected_id" />
-
-
 <div class="panel panel-default panel-main">
     <div class="options-bar">
         <div class="form-group row ">
@@ -43,8 +40,8 @@
         </div>
 
         <div class="col-md-9">
-            <div id="Report_Map">
-                <div class="frame-map" id="mapContainer">
+            <div id="Report_Map" class="frame-map">
+                <div id="mapContainer" >
                 </div>
             </div>
 

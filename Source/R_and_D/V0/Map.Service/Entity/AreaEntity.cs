@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.Entity
 {
@@ -30,5 +31,9 @@ namespace TrackingMap.Service.Entity
 
         [Column("isleaf", TypeName = "bit")]
         public bool IsLeaf { set; get; }
+
+        public AreaView GetView(){
+            return new AreaView() { Id = this.Id, Title = this.Title, IsLeaf = this.IsLeaf};
+        }
     }
 }

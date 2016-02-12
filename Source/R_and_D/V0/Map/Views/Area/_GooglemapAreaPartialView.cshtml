@@ -1,0 +1,69 @@
+﻿
+@using System.Drawing
+@using Jmelosegui.Mvc.GoogleMap
+
+@model TrackingMap.Models.AreaModel
+
+
+    @{
+        Html.GoogleMap()
+          .Name("map")
+          .Zoom(11)
+          .FitToMarkersBounds(true)
+          .Center(c => c.Latitude(35.6961111).Longitude(51.4230556))
+          .ClientEvents(events => events.OnMapClick("addPoint")
+               .OnMapLoaded("onMapLoadHandler")
+
+           )
+          .Polygons(pf =>
+           {
+                   pf.Add()
+                       .Points(ptn =>
+                       {
+                           foreach (var pt in Model.Points)
+                           {
+                               ptn.Add(pt.Latitude, pt.Longitude);
+                           }
+                       })
+                       .FillColor(Model.Color)
+                       .StrokeColor(Color.Gray)
+
+                       .StrokeWeight(1);
+           })
+
+          .Polylines(pf =>
+          {
+              pf.Add()
+                  .Points(ptn =>
+                  {
+                      foreach (var pt in Model.ParentPoints)
+                      {
+                          ptn.Add(pt.Latitude, pt.Longitude);
+                      }
+                  })
+                  .StrokeColor(Color.Black)
+
+                  .StrokeWeight(3);
+           })
+            .Markers(marker =>
+            {
+                foreach (var pt in Model.Points)
+                {
+                    marker.Add()
+                        .Draggable(true)
+                        .Id("point_" + pt.Id)
+                        .Longitude(pt.Longitude)
+                        .Latitude(pt.Latitude)
+                        .Title(pt.Desc)
+                        .Icon("~/Content/img/pin/point.png", new Size(10, 10), new Point(0, 0)
+                                , new Point(5, 5));
+                }
+                
+            })
+            .MarkerEvents(events => events.OnMarkerDragEnd("onDragEnd"))
+            .Render();
+
+    }
+
+
+    @(Html.GoogleMap().ScriptRegistrar())

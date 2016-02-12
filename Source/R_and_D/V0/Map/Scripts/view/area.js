@@ -1,60 +1,17 @@
 ﻿var my_markers = [];
 var new_id = 0;
+var selected_id = 0;
 $(document).ready(function () {
-
     $("#pnl_path").hide();
-    refreshgrid(0);
+    selected_id = 0;
 
-
-    $("#btn_save").on("click", function (e) {
-        e.preventDefault();
-
-        //var map = new GMap(document.getElementById("map_canvas")); 
-        //var markers = $('#map').markers;
-
-        var _id = $("#selected_id").val();
-        $.ajax({
-            type: "POST",
-            url: "/Area/SaveAreaPoint",
-            dataType: "json",
-            data: { id: _id, markers: my_markers },
-            success: function (data) {
-                refreshmap(_id);
-            }
-        })
-       .done(function (Result) {
-       });
-    });
-
-    $("#btn_detail").on("click", function (e) {
-        var _id = $("#selected_id").val();
-        $.ajax({
-            type: "POST",
-            url: "/Area/HaseAreaPoint",
-            dataType: "json",
-            data: { id: _id},
-            success: function (data) {
-                if (data == true){
-                    refreshgrid(_id);
-                    $("#selected_id").val(0);
-                    refreshmap(0);
-                }
-                else{
-                    alert("لطفا محدوده را مشخص کنید!");
-                }
-            }
-        });
-    });
-});
-
-function refreshgrid(parentid) {
-    var grid = $("#grid_area").kendoGrid({
+    $("#grid_area").kendoGrid({
         dataSource: {
             type: "json",
             transport: {
                 read: {
                     url: "/Area/GetAreaList",
-                    data: { parentId: parentid },
+                    data: aditionaldata,
                     type: "POST"
                 },
             },
@@ -73,20 +30,92 @@ function refreshgrid(parentid) {
         columns: [{
             field: "Title",
             title: 'عنوان',
-
         }
-        //,
-        //{
-        //    field: '',
-        //    title: '',
-        //    width: 15,
-        //    template: "<button id='btn_show_aray2' class='btn btn-default'><i class='glyphicon glyphicon-zoom-in'></i></button>"
+        //,{
+        //field: "Id",
+        //title: "&nbsp; &nbsp;",
+        //attributes:{style:"width:15px;"},
+        //template: "<button  type='button' class='btn btn-default' onclick='show_detail(0);'><span class='glyphicon glyphicon-zoom-in'></span ></button>"
         //}
-
-
         ]
     });
 
+    $("#btn_save").on("click", function (e) {
+        e.preventDefault();
+
+        //var map = new GMap(document.getElementById("map_canvas")); 
+        //var markers = $('#map').markers;
+
+        var _id = selected_id;
+        $.ajax({
+            type: "POST",
+            url: "/Area/SaveAreaPoint",
+            dataType: "json",
+            data: { id: _id, markers: my_markers },
+            success: function (data) {
+                refreshmap(_id);
+            }
+        })
+       .done(function (Result) {
+       });
+    });
+
+    $("#btn_detail").on("click", function (e) {
+        show_detail(selected_id);
+    });
+
+
+});
+
+function show_detail(id) {
+    $.ajax({
+        type: "POST",
+        url: "/Area/HasAreaPoint",
+        dataType: "json",
+        data: { id: id },
+        success: function (data) {
+            if (data == true) {
+                refreshgrid();
+                selected_id = 0;
+                refreshmap(0);
+
+            }
+            else {
+                alert("لطفا محدوده را مشخص کنید!");
+            }
+        }
+    });
+};
+
+
+function aditionaldata() {
+    return { parentId: selected_id };
+}
+
+function refreshgrid() {
+    if (selected_id != 0) {
+        $.ajax({
+            type: "POST",
+            url: "/Area/GetAreaPath",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ id: selected_id }),
+            success: function (data) {
+                var list;
+                for (var i = 0; i < data.length; i++) {
+                    list += "<button type='button' class='btn btn-link'>"+data[0].Title+"</button>";
+                }
+                $("#pnl_path").html(list);
+                $("#pnl_path").show();
+            }
+        });
+
+    }
+    else {
+        $("#pnl_path").hide();
+    }
+    $('#grid_area').data('kendoGrid').dataSource.read();
+    $('#grid_area').data('kendoGrid').refresh();
 }
 
 
@@ -100,25 +129,29 @@ function onMapLoadHandler(args) {
         //    my_markers.push(args.markers[c].positions.latLng);
 
     }
-
 }
-
 
 function grid_change(arg) {
     var selectedData = this.dataItem(this.select());
-    $("#selected_id").val(selectedData.Id);
+    selected_id = selectedData.Id;
     refreshmap(selectedData.Id);
 };
 
 function refreshmap(id) {
-    new $.jmelosegui.GoogleMap('#mapContainer').ajax({
-        url: 'GooglemapAreaView',
-        type: "Get",
-        data: { id: id },
-        success: function (data) {
-            //alert('succeded');
-        }
-    });
+    if (id == 0) {
+        $("#mapContainer").hide();
+    }
+    else{
+        $("#mapContainer").show();
+        new $.jmelosegui.GoogleMap('#mapContainer').ajax({
+            url: 'GooglemapAreaView',
+            type: "Get",
+            data: { id: id },
+            success: function (data) {
+                //alert('succeded');
+            }
+        });
+    }    
 }
 
 function onDragEnd(args) {

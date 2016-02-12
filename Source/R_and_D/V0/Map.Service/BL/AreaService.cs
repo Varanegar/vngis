@@ -20,6 +20,14 @@ namespace TrackingMap.Service.BL
         {
             _areaRepository = areaRepository;
         }
+
+        public int GetParentIdById(int id)
+        {
+            var area = _areaRepository.GetById(id);
+            if (area == null)
+                return 0;
+            return area.ParentId;
+        }
         public IList<AreaView> LoadAreaByParentId(int id)
         {
             var list = _areaRepository.Table.Where(x => x.ParentId == id)
@@ -32,5 +40,25 @@ namespace TrackingMap.Service.BL
             return list;
         }
 
+
+        public AreaView GetViewById(int id)
+        {
+            return _areaRepository.GetById(id).GetView();
+        }
+
+        public List<AreaView> GetAreaPathById(int id)
+        {
+            var list = new List<AreaView>();
+            var entity = _areaRepository.GetById(id);
+            while (entity.ParentId != 0)
+            {
+                list.Add(entity.GetView());
+                entity = _areaRepository.GetById(entity.ParentId);
+
+            }
+            list.Add(entity.GetView());
+
+            return list;
+        }
     }
 }

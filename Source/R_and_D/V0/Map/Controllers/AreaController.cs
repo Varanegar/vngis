@@ -37,12 +37,17 @@ namespace TrackingMap.Controllers
             return Json(AreaList);
         }
 
-        public ActionResult HaseAreaPoint(int id)
+        public ActionResult HasAreaPoint(int id)
         {
-            var r = _areaPointService.HaseAreaPoint(id);
-            return Json(r);
+            var haspoint = _areaPointService.HaseAreaPoint(id);
+            return Json(haspoint);
         }
-
+        public ActionResult GetAreaPath(int id)
+        {
+            var haspoint = _areaService.GetAreaPathById(id);
+            return Json(haspoint);
+        }
+        
         //-----------------------------------------------------------------------------------------------------------
         //  MAP
         //-----------------------------------------------------------------------------------------------------------
@@ -54,37 +59,23 @@ namespace TrackingMap.Controllers
         }
         public ActionResult GooglemapAreaView(int id)
         {
-            var points = _areaPointService.LoadAreaPointById(id);
-            var group = 0;
-            var line = new List<TrackingMap.Service.ViewModel.PointView>();
-            var model = new List<PolyModel>();
-            Random randonGen = new Random();
-            foreach (var pointView in points)
+            var parentid = _areaService.GetParentIdById(id);
+            var parentpoints = new List<PointView>();
+            if (parentid != 0)
             {
-                if (group == 0)
-                    group = pointView.MasterId;
-
-                if (group != pointView.MasterId)
-                {
-                    model.Add(new PolyModel()
-                    {
-                        Points = line,
-                        Color = Color.FromArgb(randonGen.Next(200), randonGen.Next(200), randonGen.Next(200))
-                    });
-                    line = new List<TrackingMap.Service.ViewModel.PointView>();
-                    group = pointView.MasterId;
+                parentpoints = _areaPointService.LoadAreaPointById(parentid).ToList();
+                if (parentpoints.Count() > 0){
+                    parentpoints.Add(parentpoints.ElementAt(0));
                 }
-                line.Add(pointView);
+                
             }
-            if (line.Count > 0)
-                model.Add(new PolyModel()
-                {
-                    Points = line,
-                    Color = Color.FromArgb(randonGen.Next(200), randonGen.Next(200), randonGen.Next(200))
-                });
 
-
-            return this.PartialView("../Basic/_GooglemapAreaPartialView", model);
+            var points = _areaPointService.LoadAreaPointById(id);
+            var model = new AreaModel();
+            model.Points = points;
+            model.ParentPoints = parentpoints;
+            model.Color = Color.Orange;
+            return this.PartialView("_GooglemapAreaPartialView", model);
         }
     }
 }
