@@ -29,7 +29,7 @@ namespace TrackingMap.Service.BL
                     MasterId = x.AreaEntityId,
                     Longitude = x.Longitude,
                     Latitude = x.Latitude,
-                    PointType = PointType.Limited
+                    PointType = PointType.point
                 }).ToList() ;
                 //IList<PointView> list;
                 //var id_param = new SqlParameter("@Id", id);

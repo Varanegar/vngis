@@ -20,7 +20,7 @@
                    pf.Add()
                        .Points(ptn =>
                        {
-                           foreach (var pt in Model.Points)
+                           foreach (var pt in Model.AreaPoints)
                            {
                                ptn.Add(pt.Latitude, pt.Longitude);
                            }
@@ -42,20 +42,43 @@
                       }
                   })
                   .StrokeColor(Color.Black)
-
                   .StrokeWeight(3);
+
+              pf.Add()
+                   .Points(ptn =>
+                    {
+                        foreach (var pt in Model.LinePoints)
+                        {
+                            ptn.Add(pt.Latitude, pt.Longitude);
+                        }
+                    })
+                    .StrokeColor(Model.Color)
+                    .StrokeWeight(2);
+
+              
            })
             .Markers(marker =>
             {
-                foreach (var pt in Model.Points)
+                foreach (var pt in Model.AreaPoints)
                 {
                     marker.Add()
                         .Draggable(true)
                         .Id("point_" + pt.Id)
                         .Longitude(pt.Longitude)
                         .Latitude(pt.Latitude)
-                        .Title(pt.Desc)
+                        .Title("")
                         .Icon("~/Content/img/pin/point.png", new Size(10, 10), new Point(0, 0)
+                                , new Point(5, 5));
+                }
+                foreach (var pt in Model.CustomerPoints)
+                {
+                    marker.Add()
+                        .Draggable(false)
+                        .Id("cpoint_" + pt.Id)
+                        .Longitude(pt.Longitude)
+                        .Latitude(pt.Latitude)
+                        .Title(pt.Desc)
+                        .Icon(String.Format("~/Content/img/pin/customer{0}.png",(int)pt.PointType ), new Size(60, 60), new Point(0, 0)
                                 , new Point(5, 5));
                 }
                 

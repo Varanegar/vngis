@@ -53,7 +53,7 @@ $(document).ready(function () {
             dataType: "json",
             data: { id: _id, markers: my_markers },
             success: function (data) {
-                refreshmap(_id);
+                refreshmap();
             }
         })
        .done(function (Result) {
@@ -61,7 +61,8 @@ $(document).ready(function () {
     });
 
     $("#btn_detail").on("click", function (e) {
-        show_detail(selected_id);
+        if (selected_id > 0)
+            show_detail(selected_id);
     });
 
 
@@ -77,7 +78,7 @@ function show_detail(id) {
             if (data == true) {
                 refreshgrid();
                 selected_id = 0;
-                refreshmap(0);
+                refreshmap();
 
             }
             else {
@@ -101,9 +102,9 @@ function refreshgrid() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ id: selected_id }),
             success: function (data) {
-                var list;
-                for (var i = 0; i < data.length; i++) {
-                    list += "<button type='button' class='btn btn-link'>"+data[0].Title+"</button>";
+                var list = "<button id = 'btn_back_0' class='btn btn-link' onclick='back(0)' > خانه</button>" ;
+                for (var i = data.length -1 ; i >= 0 ; i--) {
+                    list += "> <button id = 'btn_back_'" + data[i].Id + " class='btn btn-link' onclick='back(" + data[i].Id + ")' >" + data[i].Title + "</button> " ;
                 }
                 $("#pnl_path").html(list);
                 $("#pnl_path").show();
@@ -118,7 +119,13 @@ function refreshgrid() {
     $('#grid_area').data('kendoGrid').refresh();
 }
 
+function back(id) {
+    selected_id = id;
+    refreshgrid();
+    selected_id = 0;
+    $("#btn_detail").hide();
 
+}
 //---------------------------------------------------------------------------------------------------------
 // MAP
 //---------------------------------------------------------------------------------------------------------
@@ -134,11 +141,20 @@ function onMapLoadHandler(args) {
 function grid_change(arg) {
     var selectedData = this.dataItem(this.select());
     selected_id = selectedData.Id;
-    refreshmap(selectedData.Id);
+    refreshmap();
+    if (selected_id == 0) {
+        $("#btn_detail").hide();
+    }
+    else {
+        if (selectedData.IsLeaf)
+            $("#btn_detail").hide();
+        else
+            $("#btn_detail").show();
+    }
 };
 
-function refreshmap(id) {
-    if (id == 0) {
+function refreshmap() {
+    if (selected_id == 0) {
         $("#mapContainer").hide();
     }
     else{
@@ -146,7 +162,7 @@ function refreshmap(id) {
         new $.jmelosegui.GoogleMap('#mapContainer').ajax({
             url: 'GooglemapAreaView',
             type: "Get",
-            data: { id: id },
+            data: { id: selected_id, showcust: $("#chk_customer").is(':checked') },
             success: function (data) {
                 //alert('succeded');
             }

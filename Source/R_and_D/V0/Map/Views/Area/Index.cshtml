@@ -29,8 +29,11 @@
 
         <div class="col-md-3">
             <div class="side-bar">
+                <div id="pnl_condition" class="frame-condition">
+                    @Html.CheckBox("chk_customer", false, new { @id = "chk_customer", @class = "control-label" })
+                    @Html.Label(CaptionResource.ShowCustomer, new { @class = "control-label" })
+                </div>
                 <div id="pnl_path">
-                    <div id="txt_area2_title1"><h2></h2></div>
                 </div>
 
                 <div id="pnl_Area">

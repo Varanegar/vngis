@@ -88,6 +88,6 @@ namespace TrackingMap.Service
         
     }
 
-    public enum PointType{Order, Factor, NotOrder, Customer, Machin, NotVisit, Visitor, Limited, Road}
+    public enum PointType{point = 0, SelectedCustomer = 0, NotSelectedCustomer=1}
 
 }

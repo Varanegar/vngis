@@ -394,6 +394,15 @@ namespace TrackingMap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نمایش مشتریان.
+        /// </summary>
+        public static string ShowCustomer {
+            get {
+                return ResourceManager.GetString("ShowCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to زمان شروع.
         /// </summary>
         public static string StartTime {

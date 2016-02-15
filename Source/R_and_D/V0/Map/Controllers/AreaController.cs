@@ -18,11 +18,13 @@ namespace TrackingMap.Controllers
 
         private readonly AreaService _areaService;
         private readonly AreaPointService _areaPointService;
+        private readonly CustomerService _customerService;
         public AreaController(AreaPointService areaPointService,
-            AreaService areaService)
+            AreaService areaService, CustomerService customerService)
         {
             _areaPointService = areaPointService;
             _areaService = areaService;
+            _customerService = customerService;
         }
 
         public ActionResult Index()
@@ -57,24 +59,53 @@ namespace TrackingMap.Controllers
             return Json(new { success = true });
             //Redirect("GooglemapLimiteView", new { id });
         }
-        public ActionResult GooglemapAreaView(int id)
+        public ActionResult GooglemapAreaView(int id,bool showcust)
         {
-            var parentid = _areaService.GetParentIdById(id);
+            var model = new AreaModel();
             var parentpoints = new List<PointView>();
+            var customerpoints = new List<PointView>();
+
+            var view = _areaService.GetViewById(id);
+            var parentid = _areaService.GetParentIdById(id);
+
+            //---------------------------------------
+            //  show parent limit
+            //---------------------------------------
             if (parentid != 0)
             {
                 parentpoints = _areaPointService.LoadAreaPointById(parentid).ToList();
                 if (parentpoints.Count() > 0){
                     parentpoints.Add(parentpoints.ElementAt(0));
                 }
-                
+                model.ParentPoints = parentpoints;
             }
 
+            //---------------------------------------
+            //  show customer markers
+            //---------------------------------------
+            if (showcust)
+            {
+                if (view.IsLeaf)
+                    customerpoints = _customerService.LoadCustomerByAreaId(parentid);
+                else
+                    customerpoints = _customerService.LoadCustomerByAreaId(id);
+                model.CustomerPoints = customerpoints; 
+            }
+
+            //---------------------------------------
+            //  show curent area or route point
+            //---------------------------------------
             var points = _areaPointService.LoadAreaPointById(id);
-            var model = new AreaModel();
-            model.Points = points;
-            model.ParentPoints = parentpoints;
-            model.Color = Color.Orange;
+            if (view.IsLeaf)
+            {
+                model.LinePoints = points;
+                model.Color = Color.Red;
+            }
+            else{
+                model.AreaPoints = points;
+                model.Color = Color.Orange;
+            }
+
             return this.PartialView("_GooglemapAreaPartialView", model);
         }
     }

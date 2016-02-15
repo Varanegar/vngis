@@ -57,6 +57,8 @@
     <Compile Include="Entity\AreaEntity.cs" />
     <Compile Include="Entity\BaseEntity.cs" />
     <Compile Include="Entity\AreaPointEntity.cs" />
+    <Compile Include="Entity\CustomerAreaEntity.cs" />
+    <Compile Include="Entity\CustomerEntity.cs" />
     <Compile Include="Filter\TrackerFilter.cs" />
     <Compile Include="Filter\ReportFilter.cs" />
     <Compile Include="BL\AreaPointService.cs" />

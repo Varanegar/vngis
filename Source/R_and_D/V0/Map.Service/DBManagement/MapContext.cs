@@ -32,6 +32,8 @@ namespace TrackingMap.Service.DBManagement
 
         public DbSet<AreaEntity> Areas { get; set; }
         public DbSet<AreaPointEntity> AreaPoints { get; set; }
+        public DbSet<CustomerEntity> Customers { get; set; }
+        public DbSet<CustomerAreaEntity> CustomerAreas { get; set; }
 
     
     }

@@ -463,6 +463,10 @@ footer {
     height: 700px !important;
 }
 
+.frame-condition {
+    margin: 5px !important;
+}
+
 .frame-list {
     height: 700px !important;
 }
@@ -502,3 +506,4 @@ footer {
 .color-Red {
     color: darkred;
 }
+
