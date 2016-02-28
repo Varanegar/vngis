@@ -8,17 +8,17 @@ using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.Entity
 {
-    [Table("area_point")]
+    [Table("AreaPoint")]
     public class AreaPointEntity : BaseEntity
     {
-        [Column("area_id", TypeName = "int")]
+        [Column("AreaId", TypeName = "int")]
         public int AreaEntityId { get; set; }
         public virtual AreaEntity AreaEntity { set; get; }
 
-        [Column("latitude")]
+        [Column("Latitude")]
         public double Latitude { set; get; }
 
-        [Column("longitude")]
+        [Column("Longitude")]
         public double Longitude { set; get; }
 
         public AreaPointEntity()

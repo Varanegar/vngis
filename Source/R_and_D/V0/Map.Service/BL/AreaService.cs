@@ -13,12 +13,20 @@ namespace TrackingMap.Service.BL
 {
     public class AreaService
     {
-        private IRepository<AreaEntity> _areaRepository;
+        private readonly IDbContext _ctx;
+        private readonly IRepository<AreaEntity> _areaRepository;
+        private readonly IRepository<CustomerAreaEntity> _customerAreaRepository;
+        private readonly IRepository<CustomerEntity> _customerRepository;
 
-        public AreaService(
-            IRepository<AreaEntity>  areaRepository)
+        public AreaService( IDbContext ctx,
+            IRepository<AreaEntity>  areaRepository,
+            IRepository<CustomerEntity> customerRepository,
+            IRepository<CustomerAreaEntity> customerAreaRepository)
         {
+            _ctx = ctx;
             _areaRepository = areaRepository;
+            _customerRepository = customerRepository;
+            _customerAreaRepository = customerAreaRepository;
         }
 
         public int GetParentIdById(int id)
@@ -59,6 +67,71 @@ namespace TrackingMap.Service.BL
             list.Add(entity.GetView());
 
             return list;
+        }
+
+
+        public List<CustomerView> LoadCustomerSelectedByAreaId(int areaid, bool selected)
+        {
+
+            List<CustomerView> list;
+
+            SqlParameter areaid_param = new SqlParameter("@areaid", areaid);
+            SqlParameter selected_param = new SqlParameter("@selected", selected);
+
+            list = _ctx.GetDatabase().SqlQuery<CustomerView>("LoadSelectedCustomerByPathId @AreaId, @Selected ", areaid_param, selected_param).ToList();
+
+            return list;
+
+            //List<CustomerView> list;
+            //if (selected)
+            //{
+            //    var q = from cust in _customerRepository.Table
+            //        join
+            //            are in _customerAreaRepository.Table on cust.Id equals are.CustomerEntityId
+            //        where (are.AreaEntityId == areaid)
+            //        select new CustomerView() {Id = cust.Id, Title = cust.Title};
+
+            //    list = q.ToList();
+            //}
+            //else
+            //{
+
+            //    var customer_in_area_list = _customerAreaRepository.Table.Where(x => x.AreaEntityId == areaid).ToList();
+
+            //    var q = from cust in _customerRepository.Table
+            //            where ( !(customer_in_area_list.Any(x => x.CustomerEntityId == cust.Id)) )
+            //            select new CustomerView() { Id = cust.Id, Title = cust.Title };
+
+            //    list = q.ToList();
+                
+            //}
+            //return list;
+        }
+
+        public bool AddCustomerToSelected(int customerId, int areaId)
+        {
+            var custar = new CustomerAreaEntity();
+            custar.AreaEntityId = areaId;
+            custar.CustomerEntityId = customerId;
+
+            //var ae = _areaRepository.GetById(areaId);
+            //if (ae == null) return false;
+
+            //var ce = _customerRepository.GetById(customerId);
+            //if (ce == null) return false;
+
+            //custar.AreaEntity = ae;
+            //custar.CustomerEntity = ce;
+
+            _customerAreaRepository.Insert(custar);
+            return true;
+        }
+
+        public bool RemoveCustomerFromSelected(int customerId, int areaId)
+        {
+            var custar = _customerAreaRepository.Table.FirstOrDefault(x => x.CustomerEntityId == customerId && x.AreaEntityId == areaId);
+            _customerAreaRepository.Delete(custar);
+            return true;
         }
     }
 }

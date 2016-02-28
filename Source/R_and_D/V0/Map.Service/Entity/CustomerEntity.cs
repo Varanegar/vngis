@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 
 namespace TrackingMap.Service.Entity
 {
-    [Table("customer")]
+    [Table("Customer")]
     public class CustomerEntity : BaseEntity
     {
-        [Column("title", TypeName = "varchar")]
+        [Column("Title", TypeName = "varchar")]
         [MaxLength(200)]
         public string Title { set; get; }
         
-        [Column("address", TypeName = "varchar")]
+        [Column("Address", TypeName = "varchar")]
         [MaxLength(500)]
         public string Address { set; get; }
 
-        [Column("latitude")]
+        [Column("Latitude")]
         public double Latitude { set; get; }
 
-        [Column("longitude")]
+        [Column("Longitude")]
         public double Longitude { set; get; }
 
     }

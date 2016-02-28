@@ -35,6 +35,11 @@ namespace TrackingMap.Service.DBManagement
         public DbSet<CustomerEntity> Customers { get; set; }
         public DbSet<CustomerAreaEntity> CustomerAreas { get; set; }
 
+        public DbSet<VisitorGroupEntity> VisitorGroups { get; set; }
+        public DbSet<VisitorEntity> Visitors { get; set; }
+        public DbSet<VisitorDailyPathEntity> VisitorDailyPaths { get; set; }
+        public DbSet<VisitorPathEntity> VisitorPaths { get; set; }
+        public DbSet<TransactionEntity> Transactions { get; set; }
     
     }
 }

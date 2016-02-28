@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace TrackingMap.Service.Entity
 {
-    [Table("customer_area")]
+    [Table("CustomerArea")]
     public class CustomerAreaEntity : BaseEntity
     {
-        [Column("customer_id", TypeName = "int")]
+        [Column("CustomerId", TypeName = "int")]
         public int CustomerEntityId { get; set; }
         public virtual CustomerEntity CustomerEntity { set; get; }
 
 
-        [Column("area_id", TypeName = "int")]
+        [Column("AreaId", TypeName = "int")]
         public int AreaEntityId { get; set; }
         public virtual AreaEntity AreaEntity { set; get; }
 

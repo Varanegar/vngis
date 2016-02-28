@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data;
+
 using System.Data.SqlClient;
 using System.Linq;
 using TrackingMap.Service.DBManagement;
+using TrackingMap.Service.Entity;
 using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.BL
@@ -10,8 +11,12 @@ namespace TrackingMap.Service.BL
     public class CustomerService
     {
         private readonly IDbContext _ctx;
-        public CustomerService(IDbContext ctx) {
+
+        public CustomerService(IDbContext ctx)
+           
+        {
             _ctx = ctx;
+          
         }
 
         public List<PointView> LoadCustomerByAreaId(int areaid)
@@ -24,6 +29,8 @@ namespace TrackingMap.Service.BL
 
             return list;
         }
+
+
 
     }
 }

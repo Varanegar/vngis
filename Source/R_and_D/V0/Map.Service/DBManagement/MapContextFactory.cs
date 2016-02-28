@@ -8,7 +8,27 @@ namespace TrackingMap.Service.DBManagement
         private static string _ConnectionString;
         private static string GetTransferConnectionString()
         {
-            return "Data Source= .;Initial Catalog=VnGIS_DB;Persist Security Info=True;User ID=sa;Password=Rubik";
+            if (string.IsNullOrEmpty(_ConnectionString))
+            {
+                string constr = "";
+
+                //use webHelper.MapPath instead of HostingEnvironment.MapPath which is not available in unit tests
+                string filePath = DefaultValue.GetAppDataPath() + "Config.ini";
+
+
+                if (File.Exists(filePath))
+                {
+                    var lines = File.ReadLines(filePath);
+                    constr = lines.ElementAt(0);
+                }
+
+                _ConnectionString = constr;
+
+            }
+            return _ConnectionString;
+
+
+            //return "Data Source= .;Initial Catalog=VnGIS_DB;Persist Security Info=True;User ID=sa;Password=Rubik";
         }
 
         public static MapContext Create()

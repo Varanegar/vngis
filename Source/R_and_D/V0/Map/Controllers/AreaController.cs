@@ -25,6 +25,7 @@ namespace TrackingMap.Controllers
             _areaPointService = areaPointService;
             _areaService = areaService;
             _customerService = customerService;
+
         }
 
         public ActionResult Index()
@@ -48,6 +49,29 @@ namespace TrackingMap.Controllers
         {
             var haspoint = _areaService.GetAreaPathById(id);
             return Json(haspoint);
+        }
+
+        public ActionResult GetSelectedCustomer(int parentId)
+        {
+            var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId, true);
+            return Json(CustomerList);
+        }
+        public ActionResult GetNotSelectedCustomer(int parentId)
+        {
+            var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId, false);
+            return Json(CustomerList);
+        }
+
+        public ActionResult AddCustomerToSelected(int customerId, int areaId)
+        {
+            var r = _areaService.AddCustomerToSelected(customerId,  areaId);
+            return Json(r);
+        }
+
+        public ActionResult RemoveCustomerFromSelected(int customerId, int areaId)
+        {
+            var r = _areaService.RemoveCustomerFromSelected(customerId, areaId);
+            return Json(r);
         }
         
         //-----------------------------------------------------------------------------------------------------------

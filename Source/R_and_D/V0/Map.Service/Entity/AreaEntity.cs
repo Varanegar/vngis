@@ -9,27 +9,27 @@ using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.Entity
 {
-    [Table("area")]
+    [Table("Area")]
     public class AreaEntity : BaseEntity
     {
-        [Column("parent_id", TypeName = "int")]
+        [Column("ParentId", TypeName = "int")]
         public int ParentId { set; get; }
 
-        [Column("code", TypeName = "int")]
+        [Column("Code", TypeName = "int")]
         public int Code { set; get; }
 
-        [Column("left_code", TypeName = "int")]
+        [Column("LeftCode", TypeName = "int")]
         public int LeftCode { set; get; }
         
-        [Column("right_code", TypeName = "int")]
+        [Column("RightCode", TypeName = "int")]
         public int RightCode { set; get; }
 
 
-        [Column("title", TypeName = "varchar")]
+        [Column("Title", TypeName = "varchar")]
         [MaxLength(200)]
         public string Title { set; get; }
 
-        [Column("isleaf", TypeName = "bit")]
+        [Column("IsLeaf", TypeName = "bit")]
         public bool IsLeaf { set; get; }
 
         public AreaView GetView(){

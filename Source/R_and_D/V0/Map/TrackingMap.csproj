@@ -201,6 +201,7 @@
     </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -211,11 +212,11 @@
     <Compile Include="Models\AreaModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ResourceDisplayName.cs" />
+    <Compile Include="Models\VisitorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Tools\DateTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\config.xml" />
@@ -405,9 +406,12 @@
     <Content Include="Content\img\forbidden.png" />
     <Content Include="Content\img\icon.png" />
     <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\pin\area.png" />
     <Content Include="Content\img\pin\customer0.png" />
     <Content Include="Content\img\pin\customer1.png" />
+    <Content Include="Content\img\pin\Marker0.png" />
     <Content Include="Content\img\pin\point.png" />
+    <Content Include="Content\img\pin\road.png" />
     <Content Include="Content\img\side-bar-list-bg.png" />
     <Content Include="Content\img\submenu_border.png" />
     <Content Include="Content\img\submenu_hover.png" />
@@ -519,6 +523,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\view\area.js" />
+    <Content Include="Scripts\view\visitor.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -601,6 +606,8 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js.map" />
     <Content Include="Views\Area\Index.cshtml" />
     <Content Include="Views\Area\_GooglemapAreaPartialView.cshtml" />
+    <Content Include="Views\Visitor\Index.cshtml" />
+    <Content Include="Views\Visitor\_GooglemapVisitorPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Map.Service\TrackingMap.Service.csproj">

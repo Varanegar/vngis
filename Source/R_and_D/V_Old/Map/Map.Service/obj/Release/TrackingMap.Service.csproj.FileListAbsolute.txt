@@ -1,0 +1,11 @@
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\bin\Release\TrackingMap.Service.dll.config
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\bin\Release\TrackingMap.Service.dll
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\bin\Release\TrackingMap.Service.pdb
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\bin\Release\CipherTools.dll
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\bin\Release\EntityFramework.dll
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\bin\Release\EntityFramework.SqlServer.dll
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\bin\Release\EntityFramework.xml
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\bin\Release\EntityFramework.SqlServer.xml
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\obj\Release\TrackingMap.Service.csprojResolveAssemblyReference.cache
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\obj\Release\TrackingMap.Service.dll
+E:\ProjectSource\Dragonfly\Map\V2\Map\Map.Service\obj\Release\TrackingMap.Service.pdb

@@ -153,6 +153,9 @@
   <data name="Customers" xml:space="preserve">
     <value>آنالیز مشتریان</value>
   </data>
+  <data name="DailyPath" xml:space="preserve">
+    <value>مسیر روز</value>
+  </data>
   <data name="Dashbord" xml:space="preserve">
     <value>داشبوردها</value>
   </data>
@@ -186,20 +189,23 @@
   <data name="FromRoad" xml:space="preserve">
     <value>از مسیر</value>
   </data>
+  <data name="LackOfOrder" xml:space="preserve">
+    <value>عدم سفارش</value>
+  </data>
+  <data name="LackOfVisit" xml:space="preserve">
+    <value>عدم بازدید</value>
+  </data>
   <data name="Map" xml:space="preserve">
     <value>نقشه</value>
+  </data>
+  <data name="Markers" xml:space="preserve">
+    <value>مارکرها</value>
   </data>
   <data name="NotCheck" xml:space="preserve">
     <value>انصراف</value>
   </data>
-  <data name="NotOrder" xml:space="preserve">
-    <value>عدم سفارش</value>
-  </data>
-  <data name="NotVisit" xml:space="preserve">
-    <value>عدم ویزیت</value>
-  </data>
-  <data name="OnlineOrder" xml:space="preserve">
-    <value>سفارشات انلاین</value>
+  <data name="Order" xml:space="preserve">
+    <value>سفارش</value>
   </data>
   <data name="Path" xml:space="preserve">
     <value>مسیر حرکت</value>
@@ -254,5 +260,11 @@
   </data>
   <data name="VisitorPath" xml:space="preserve">
     <value>مسیر حرکت بازاریاب</value>
+  </data>
+  <data name="WaitWithoutCustomer" xml:space="preserve">
+    <value>توقف بدون مشتری</value>
+  </data>
+  <data name="WithoutActivity" xml:space="preserve">
+    <value>بدون فعالیت</value>
   </data>
 </root>

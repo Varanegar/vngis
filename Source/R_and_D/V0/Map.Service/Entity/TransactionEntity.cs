@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TrackingMap.Service.Enum;
+
+namespace TrackingMap.Service.Entity
+{
+    [Table("Transaction")]
+    public class TransactionEntity : BaseEntity
+    {
+        [Column("VisitorId", TypeName = "int")]
+        public int VisitorEntityId { get; set; }
+        public virtual VisitorEntity VisitorEntity { set; get; }
+
+
+        [Column("CustomerId", TypeName = "int")]
+        public int CustomerEntityId { get; set; }
+        public virtual CustomerEntity CustomerEntity { set; get; }
+
+        [Column("TransactionType", TypeName = "int")]
+        public ETransactionType TransactionType { get; set; }
+
+        [Column("CustomerType", TypeName = "int")]
+        public ECustomerType CustomerType { get; set; }
+
+        [Column("Latitude")]
+        public double Latitude { set; get; }
+
+        [Column("Longitude")]
+        public double Longitude { set; get; }
+
+        [Column("Desc", TypeName = "varchar")]
+        [MaxLength(5000)]
+        public string Desc { set; get; }
+
+    }
+}
