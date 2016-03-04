@@ -70,6 +70,15 @@ namespace TrackingMap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to اضافه به مسیر.
+        /// </summary>
+        public static string AddCustomerRoute {
+            get {
+                return ResourceManager.GetString("AddCustomerRoute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آدرس.
         /// </summary>
         public static string Address {
@@ -160,11 +169,38 @@ namespace TrackingMap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مشتریان مسیر های دیگر.
+        /// </summary>
+        public static string CustomerOtherRoute {
+            get {
+                return ResourceManager.GetString("CustomerOtherRoute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مشتریان مسیر.
+        /// </summary>
+        public static string CustomerRoute {
+            get {
+                return ResourceManager.GetString("CustomerRoute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آنالیز مشتریان.
         /// </summary>
         public static string Customers {
             get {
                 return ResourceManager.GetString("Customers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مشتریان بدون مسیر.
+        /// </summary>
+        public static string CustomerWithOutRoute {
+            get {
+                return ResourceManager.GetString("CustomerWithOutRoute", resourceCulture);
             }
         }
         
@@ -336,6 +372,15 @@ namespace TrackingMap {
         public static string Path {
             get {
                 return ResourceManager.GetString("Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حذف از مسیر.
+        /// </summary>
+        public static string RemoveCustomerRoute {
+            get {
+                return ResourceManager.GetString("RemoveCustomerRoute", resourceCulture);
             }
         }
         

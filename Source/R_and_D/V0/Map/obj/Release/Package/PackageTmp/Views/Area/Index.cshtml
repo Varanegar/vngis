@@ -12,13 +12,14 @@
 
             <div class="col-md-12">
                 <div class="left">
-
                     <input value=@CaptionResource.Save type="button" id="btn_save" class="btn btn-default">
-                    <input value=@CaptionResource.Cancel type="button" id="btn_refresh" class="btn btn-default" />
+                    <button id='btn_add_customer_list' class='btn btn-default'>اختصاص مشتریان به مسیر</button>
+                    <button id='btn_remove_customer_list' class='btn btn-default'>حذف مشتریان از مسیر</button>
                 </div>
                 <div class="right">
                     <button id='btn_detail' class='btn btn-default'><i class='glyphicon glyphicon-zoom-in'></i></button>
-                    <button id='btn_set_customer' class='btn btn-default'>اختصاص مشتری به مسیر</button>
+                    <button id='btn_edit' class='btn btn-default'><i class='glyphicon glyphicon-pencil'></i></button>
+                    <button id='btn_set_customer' class='btn btn-default'>مشتریان مسیر</button>
                     <button id='btn_map' class='btn btn-default'>@CaptionResource.Map</button>
                 </div>
             </div>
@@ -33,8 +34,27 @@
         <div class="col-md-3">
             <div class="side-bar">
                 <div id="pnl_condition" class="frame-condition">
-                    @Html.CheckBox("chk_customer", false, new { @id = "chk_customer", @class = "control-label" })
-                    @Html.Label(CaptionResource.ShowCustomer, new { @class = "control-label" })
+                    <div id="div_customer">
+                        @Html.CheckBox("chk_customer", false, new { @id = "chk_customer", @class = "control-label" })
+                        @Html.Label(CaptionResource.ShowCustomer, new { @class = "control-label" })
+                    </div>
+
+                    <div id="div_leaf_customer">
+                        <div class="color-back-orange">
+                        @Html.CheckBox("chk_customer_route", false, new { @id = "chk_customer_route", @class = "control-label" })
+                        @Html.Label(CaptionResource.CustomerRoute, new { @class = "control-label" })
+                        </div>
+                        <div class="color-back-gray">
+                            @Html.CheckBox("chk_customer_other_route", false, new { @id = "chk_customer_other_route", @class = "control-label" })
+                            @Html.Label(CaptionResource.CustomerOtherRoute, new { @class = "control-label" })
+                        </div>
+                        <div class="color-back-Yellow">
+
+                            @Html.CheckBox("chk_customer_without_route", false, new { @id = "chk_customer_without_route", @class = "control-label" })
+                            @Html.Label(CaptionResource.CustomerWithOutRoute, new { @class = "control-label" })
+                        </div>
+
+                        </div>
                 </div>
 
                 <div id="pnl_Area">
@@ -47,7 +67,7 @@
             <div id="Report_Frame" class="frame-map">
                 <div id="mapContainer"> </div>
                 <div id="customerContainer">
-                    <div id="grid_customer_not_selected" class="col-md-6"></div>
+                    <div id="grid_customer_not_selected" class="col-md-5"></div>
                     <div id="grid_customer_selected" class="col-md-5"></div>
                 </div>
             </div>

@@ -409,7 +409,8 @@
     <Content Include="Content\img\pin\area.png" />
     <Content Include="Content\img\pin\customer0.png" />
     <Content Include="Content\img\pin\customer1.png" />
-    <Content Include="Content\img\pin\Marker0.png" />
+    <Content Include="Content\img\pin\customer2.png" />
+    <Content Include="Content\img\pin\marker0.png" />
     <Content Include="Content\img\pin\point.png" />
     <Content Include="Content\img\pin\road.png" />
     <Content Include="Content\img\side-bar-list-bg.png" />
@@ -523,6 +524,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\view\area.js" />
+    <Content Include="Scripts\view\general.js" />
     <Content Include="Scripts\view\visitor.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

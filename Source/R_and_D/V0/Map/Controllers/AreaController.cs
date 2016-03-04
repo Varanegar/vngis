@@ -8,8 +8,10 @@ using System.Web.Mvc;
 using Jmelosegui.Mvc.GoogleMap;
 using Microsoft.Owin.Security.Google;
 using TrackingMap.Service.BL;
+using TrackingMap.Service.Tools;
 using TrackingMap.Service.ViewModel;
 using TrackingMap.Models;
+using WebGrease.Css.Ast.Selectors;
 
 namespace TrackingMap.Controllers
 {
@@ -34,41 +36,41 @@ namespace TrackingMap.Controllers
             return View();
         }
 
-        public ActionResult GetAreaList(int parentId)
+        public ActionResult GetAreaList(Guid? parentId)
         {
             var AreaList = _areaService.LoadAreaByParentId(parentId);
             return Json(AreaList);
         }
 
-        public ActionResult HasAreaPoint(int id)
+        public ActionResult HasAreaPoint(Guid id)
         {
             var haspoint = _areaPointService.HaseAreaPoint(id);
             return Json(haspoint);
         }
-        public ActionResult GetAreaPath(int id)
+        public ActionResult GetAreaPath(Guid? id)
         {
             var haspoint = _areaService.GetAreaPathById(id);
             return Json(haspoint);
         }
 
-        public ActionResult GetSelectedCustomer(int parentId)
+        public ActionResult GetSelectedCustomer(Guid parentId)
         {
             var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId, true);
             return Json(CustomerList);
         }
-        public ActionResult GetNotSelectedCustomer(int parentId)
+        public ActionResult GetNotSelectedCustomer(Guid parentId)
         {
             var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId, false);
             return Json(CustomerList);
         }
 
-        public ActionResult AddCustomerToSelected(int customerId, int areaId)
+        public ActionResult AddCustomerToSelected(Guid customerId, Guid areaId)
         {
             var r = _areaService.AddCustomerToSelected(customerId,  areaId);
             return Json(r);
         }
 
-        public ActionResult RemoveCustomerFromSelected(int customerId, int areaId)
+        public ActionResult RemoveCustomerFromSelected(Guid customerId, Guid areaId)
         {
             var r = _areaService.RemoveCustomerFromSelected(customerId, areaId);
             return Json(r);
@@ -77,43 +79,86 @@ namespace TrackingMap.Controllers
         //-----------------------------------------------------------------------------------------------------------
         //  MAP
         //-----------------------------------------------------------------------------------------------------------
-        public ActionResult SaveAreaPoint(int id, AreaPointView[] markers)
+        public ActionResult SaveAreaPoint(Guid id, AreaPointView[] markers)
         {
             _areaPointService.SaveAreaPointList(id, markers.ToList());
             return Json(new { success = true });
             //Redirect("GooglemapLimiteView", new { id });
         }
-        public ActionResult GooglemapAreaView(int id,bool showcust)
+        
+        public ActionResult GooglemapAreaView(Guid id, bool editable,
+                bool showcust,
+                bool showcustrout,
+                bool showcustotherrout,
+                bool showcustwithoutrout)
         {
             var model = new AreaModel();
-            var parentpoints = new List<PointView>();
-            var customerpoints = new List<PointView>();
 
             var view = _areaService.GetViewById(id);
             var parentid = _areaService.GetParentIdById(id);
-
             //---------------------------------------
             //  show parent limit
             //---------------------------------------
-            if (parentid != 0)
+            if (parentid != null)
             {
-                parentpoints = _areaPointService.LoadAreaPointById(parentid).ToList();
-                if (parentpoints.Count() > 0){
+                var parentpoints = _areaPointService.LoadAreaPointById(parentid).ToList();
+                if (parentpoints.Any())
+                {
                     parentpoints.Add(parentpoints.ElementAt(0));
                 }
                 model.ParentPoints = parentpoints;
             }
 
-            //---------------------------------------
-            //  show customer markers
-            //---------------------------------------
-            if (showcust)
+
+
+
+            if (editable)
             {
-                if (view.IsLeaf)
-                    customerpoints = _customerService.LoadCustomerByAreaId(parentid);
-                else
-                    customerpoints = _customerService.LoadCustomerByAreaId(id);
-                model.CustomerPoints = customerpoints; 
+                //---------------------------------------
+                //  show sibling limit
+                //---------------------------------------
+                if (parentid != null)
+                {
+                    var siblingpoints = _areaPointService.LoadAreaPointByParentId(parentid).ToList();
+                    model.SiblingPoints = GeneralTools.PointListToPolyList(siblingpoints);
+                }
+            }
+            else
+            {
+                //---------------------------------------
+                //  show child limit
+                //---------------------------------------
+                if (!view.IsLeaf)
+                {
+                    var childgpoints = _areaPointService.LoadAreaPointByParentId(view.Id).ToList();
+                    model.SiblingPoints = GeneralTools.PointListToPolyList(childgpoints);                    
+                }
+            }
+
+            if (view.IsLeaf)
+            {
+
+                //---------------------------------------
+                //  show customer markers
+                //---------------------------------------
+                if (showcustrout || showcustotherrout || showcustwithoutrout)
+                {
+                    var customerpoints = _customerService.LoadCustomerByAreaId(parentid, id,
+                        showcustrout, showcustotherrout, showcustwithoutrout);
+                    model.CustomerPoints = customerpoints;
+                }
+
+            }
+            else
+            {
+                //---------------------------------------
+                //  show customer markers
+                //---------------------------------------
+                if (showcust)
+                {
+                    var customerpoints = _customerService.LoadCustomerByAreaId(id);
+                    model.CustomerPoints = customerpoints;
+                }
             }
 
             //---------------------------------------
@@ -129,7 +174,18 @@ namespace TrackingMap.Controllers
                 model.AreaPoints = points;
                 model.Color = Color.Orange;
             }
-
+            
+            if (points.Count > 0)
+                model.Center = points.ElementAt(0);
+            else
+            {
+                if (model.ParentPoints.Count > 0)
+                    model.Center = model.ParentPoints.ElementAt(0);
+                else
+                    model.Center = new PointView() { Longitude = 51.4230556, Latitude = 35.6961111 };
+            }
+            model.EditMode = editable;
+            model.IsLeaf = view.IsLeaf;
             return this.PartialView("_GooglemapAreaPartialView", model);
         }
     }

@@ -8,7 +8,7 @@ namespace TrackingMap.Service.ViewModel
 {
     public class AreaView
     {
-        public int Id { set; get; }
+        public Guid Id { set; get; }
         public string Title { set; get; }
         public bool IsLeaf { set; get; }
 

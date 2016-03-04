@@ -11,12 +11,12 @@ namespace TrackingMap.Service.Entity
     [Table("VisitorDailyPath")]
     public class VisitorDailyPathEntity : BaseEntity
     {
-        [Column("VisitorId", TypeName = "int")]
-        public int VisitorEntityId { get; set; }
+        [Column("VisitorId")]
+        public Guid VisitorEntityId { get; set; }
         public virtual VisitorEntity VisitorEntity { set; get; }
 
-        [Column("VisitorPathId", TypeName = "int")]
-        public int AreaEntityId { get; set; }
+        [Column("VisitorPathId")]
+        public Guid AreaEntityId { get; set; }
         public virtual AreaEntity AreaEntity { set; get; }
 
         [Column("Date", TypeName = "varchar")]

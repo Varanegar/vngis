@@ -29,14 +29,15 @@ namespace TrackingMap.Service.BL
             _customerAreaRepository = customerAreaRepository;
         }
 
-        public int GetParentIdById(int id)
+        public Guid? GetParentIdById(Guid id)
         {
             var area = _areaRepository.GetById(id);
             if (area == null)
-                return 0;
+                return null;
             return area.ParentId;
         }
-        public IList<AreaView> LoadAreaByParentId(int id)
+
+        public IList<AreaView> LoadAreaByParentId(Guid? id)
         {
             var list = _areaRepository.Table.Where(x => x.ParentId == id)
                 .Select(x => new AreaView()
@@ -49,28 +50,31 @@ namespace TrackingMap.Service.BL
         }
 
 
-        public AreaView GetViewById(int id)
+        public AreaView GetViewById(Guid id)
         {
             return _areaRepository.GetById(id).GetView();
         }
 
-        public List<AreaView> GetAreaPathById(int id)
+        public List<AreaView> GetAreaPathById(Guid? id)
         {
             var list = new List<AreaView>();
-            var entity = _areaRepository.GetById(id);
-            while (entity.ParentId != 0)
+            if (id != null)
             {
-                list.Add(entity.GetView());
-                entity = _areaRepository.GetById(entity.ParentId);
+                var entity = _areaRepository.GetById(id);
+                while (entity.ParentId != null)
+                {
+                    list.Add(entity.GetView());
+                    entity = _areaRepository.GetById(entity.ParentId);
 
+                }
+                list.Add(entity.GetView());
             }
-            list.Add(entity.GetView());
 
             return list;
         }
 
 
-        public List<CustomerView> LoadCustomerSelectedByAreaId(int areaid, bool selected)
+        public List<CustomerView> LoadCustomerSelectedByAreaId(Guid areaid, bool selected)
         {
 
             List<CustomerView> list;
@@ -108,26 +112,20 @@ namespace TrackingMap.Service.BL
             //return list;
         }
 
-        public bool AddCustomerToSelected(int customerId, int areaId)
+        public bool AddCustomerToSelected(Guid customerId, Guid areaId)
         {
             var custar = new CustomerAreaEntity();
             custar.AreaEntityId = areaId;
             custar.CustomerEntityId = customerId;
-
-            //var ae = _areaRepository.GetById(areaId);
-            //if (ae == null) return false;
-
-            //var ce = _customerRepository.GetById(customerId);
-            //if (ce == null) return false;
-
-            //custar.AreaEntity = ae;
-            //custar.CustomerEntity = ce;
-
-            _customerAreaRepository.Insert(custar);
+            
+            var find = _customerAreaRepository.Table
+                .FirstOrDefault(x => x.AreaEntityId == areaId && x.CustomerEntityId == customerId);
+            if (find == null)
+                _customerAreaRepository.Insert(custar);
             return true;
         }
 
-        public bool RemoveCustomerFromSelected(int customerId, int areaId)
+        public bool RemoveCustomerFromSelected(Guid customerId, Guid areaId)
         {
             var custar = _customerAreaRepository.Table.FirstOrDefault(x => x.CustomerEntityId == customerId && x.AreaEntityId == areaId);
             _customerAreaRepository.Delete(custar);

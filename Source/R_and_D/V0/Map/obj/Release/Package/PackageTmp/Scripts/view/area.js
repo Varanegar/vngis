@@ -1,4 +1,7 @@
-﻿var my_markers = [];
+﻿var point_markers = [];
+var selected_markers = [];
+var ctr = false;
+
 var new_id = 0;
 var selected_id = 0;
 $(document).ready(function () {
@@ -6,6 +9,11 @@ $(document).ready(function () {
     $("#btn_set_customer").hide();
     $("#btn_map").hide();
     $("#btn_detail").hide();
+    $("#btn_edit").hide();
+    $("#btn_add_customer_list").hide();
+    $("#btn_remove_customer_list").hide();
+
+    $("#div_leaf_customer").hide();
 
     selected_id = 0;
 
@@ -55,9 +63,9 @@ $(document).ready(function () {
             type: "POST",
             url: "/Area/SaveAreaPoint",
             dataType: "json",
-            data: { id: _id, markers: my_markers },
+            data: { id: _id, markers: point_markers },
             success: function (data) {
-                refreshmap();
+                refreshmap(false);
             }
         })
        .done(function (Result) {
@@ -68,7 +76,12 @@ $(document).ready(function () {
         if (selected_id > 0)
             show_detail(selected_id);
     });
-    
+
+    $("#btn_edit").on("click", function (e) {
+        if (selected_id > 0)
+            refreshmap(true);
+    });
+
     $("#btn_map").on("click", function (e) {
         $("#mapContainer").show(1000);
         $("#customerContainer").hide(1000);
@@ -151,41 +164,26 @@ $(document).ready(function () {
         });
 
     });
-   
-   
+    
+    $("#btn_add_customer_list").on("click", function (e) {
+       for (var i = 0; i < selected_markers.length; i++) {
+           add_to_selected(selected_markers[i].marker.id.substring(selected_markers[i].marker.id.lastIndexOf('_') + 1), false);
+           selected_markers[i].marker.marker.setIcon("../Content/img/pin/customer1.png");
+       }
+       empty_selected_markers(false);
+    });
+
+    $("#btn_remove_customer_list").on("click", function (e) {
+        for (var i = 0; i < selected_markers.length; i++) {
+            remove_from_selected(selected_markers[i].marker.id.substring(selected_markers[i].marker.id.lastIndexOf('_') + 1), false);
+            selected_markers[i].marker.marker.setIcon("../Content/img/pin/customer0.png");
+        }
+        empty_selected_markers(false);
+    });
+
 });
 
 
-function add_to_selected(id) {
-    $.ajax({
-        type: "POST",
-        url: "/Area/AddCustomerToSelected",
-        dataType: "json",
-        data: { customerId: id, areaId: selected_id },
-        success: function (data) {
-            $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
-            $('#grid_customer_not_selected').data('kendoGrid').refresh();
-            $('#grid_customer_selected').data('kendoGrid').dataSource.read();
-            $('#grid_customer_selected').data('kendoGrid').refresh();
-        }
-    });
-}
-
-
-function remove_from_selected(id) {
-    $.ajax({
-        type: "POST",
-        url: "/Area/RemoveCustomerFromSelected",
-        dataType: "json",
-        data: { customerId: id, areaId: selected_id },
-        success: function (data) {
-            $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
-            $('#grid_customer_not_selected').data('kendoGrid').refresh();
-            $('#grid_customer_selected').data('kendoGrid').dataSource.read();
-            $('#grid_customer_selected').data('kendoGrid').refresh();
-        }
-    });
-}
 function show_detail(id) {
     $.ajax({
         type: "POST",
@@ -196,7 +194,7 @@ function show_detail(id) {
             if (data == true) {
                 refreshgrid();
                 selected_id = 0;
-                refreshmap();
+                refreshmap(false);
 
             }
             else {
@@ -244,80 +242,175 @@ function back(id) {
     $("#btn_detail").hide();
 
 }
-//---------------------------------------------------------------------------------------------------------
-// MAP
-//---------------------------------------------------------------------------------------------------------
-function onMapLoadHandler(args) {
-    my_markers = [];
-    for (var mark in args.markers) {
-        if (mark.indexOf("customer_point_") < 0)
-            my_markers.push({ Id: mark.substring(6), Lat: args.markers[mark].getPosition().lat(), Lng: args.markers[mark].getPosition().lng() });
-        //    my_markers.push(args.markers[c].positions.latLng);
 
-    }
-}
+
 
 function grid_change(arg) {
     var selectedData = this.dataItem(this.select());
     selected_id = selectedData.Id;
-    refreshmap();
+    refreshmap(false);
     if (selected_id == 0) {
         $("#btn_detail").hide();
+        $("#btn_edit").hide();
     }
     else {
+        $("#btn_edit").show();
         if (selectedData.IsLeaf) {
             $("#btn_detail").hide();
             $("#btn_set_customer").show();
             $("#btn_map").hide();
+            $("#div_customer").hide();
+            $("#div_leaf_customer").show();
         } else {
             $("#btn_set_customer").hide();
             $("#btn_detail").show();
             $("#btn_map").hide();
+            $("#div_customer").show();
+            $("#div_leaf_customer").hide();
         }
     }
 };
 
-function refreshmap() {
+function refreshmap(edit) {
     if (selected_id == 0) {
         $("#mapContainer").hide();
+        $("#btn_save").hide();
     }
-    else{
+    else {
         $("#mapContainer").show();
+        if (edit == true)
+            $("#btn_save").show();
+        else
+            $("#btn_save").hide();
+
         new $.jmelosegui.GoogleMap('#mapContainer').ajax({
             url: 'GooglemapAreaView',
             type: "Get",
-            data: { id: selected_id, showcust: $("#chk_customer").is(':checked') },
+            data: {
+                id: selected_id, editable: edit,
+                showcust: $("#chk_customer").is(':checked'), 
+                showcustrout: $("#chk_customer_route").is(':checked'),
+                showcustotherrout: $("#chk_customer_other_route").is(':checked'),
+                showcustwithoutrout: $("#chk_customer_without_route").is(':checked'),
+            },
             success: function (data) {
                 //alert('succeded');
             }
         });
-    }    
+    }
+}
+
+//---------------------------------------------------------------------------------------------------------
+// Cutomer
+//---------------------------------------------------------------------------------------------------------
+
+function add_to_selected(id, changeicon) {
+    $.ajax({
+        type: "POST",
+        url: "/Area/AddCustomerToSelected",
+        dataType: "json",
+        data: { customerId: id, areaId: selected_id },
+        success: function (data) {
+            if (changeicon) {
+                var mrk = find_customer_marker(id);
+                if (mrk != null)
+                    mrk.marker.setIcon("../Content/img/pin/customer1.png");
+            }
+            $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
+            $('#grid_customer_not_selected').data('kendoGrid').refresh();
+            $('#grid_customer_selected').data('kendoGrid').dataSource.read();
+            $('#grid_customer_selected').data('kendoGrid').refresh();
+        }
+    });
+}
+
+
+function remove_from_selected(id, changeicon) {
+    $.ajax({
+        type: "POST",
+        url: "/Area/RemoveCustomerFromSelected",
+        dataType: "json",
+        data: { customerId: id, areaId: selected_id },
+        success: function (data) {
+            if (changeicon) {
+                var mrk = find_customer_marker(id);
+                if (mrk != null)
+                    mrk.marker.setIcon("../Content/img/pin/customer0.png");
+            }
+            $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
+            $('#grid_customer_not_selected').data('kendoGrid').refresh();
+            $('#grid_customer_selected').data('kendoGrid').dataSource.read();
+            $('#grid_customer_selected').data('kendoGrid').refresh();
+        }
+    });
+}
+
+function find_customer_marker(id) {
+    for (var i = 0; i < selected_markers.length; i++) {
+        if (selected_markers[i].marker.id == "customer_point_"+id) {
+            return selected_markers[i].marker;
+        }
+    }
+    return null;
+}
+
+//---------------------------------------------------------------------------------------------------------
+// MAP
+//---------------------------------------------------------------------------------------------------------
+function onMapLoadHandler(args) {
+    point_markers = [];
+
+    for (var mark in args.markers) {
+        if (mark.indexOf("customer_point_") < 0)
+            point_markers.push({ Id: mark.substring(mark.lastIndexOf('_')+1 ), Lat: args.markers[mark].getPosition().lat(), Lng: args.markers[mark].getPosition().lng() });
+    }
+    
+}
+
+function empty_selected_markers(reverticon) {
+    if (reverticon)
+    for (var i = 0; i < selected_markers.length; i++) {
+        selected_markers[i].marker.marker.setIcon(selected_markers[i].oldicon);
+    }
+    selected_markers = [];
+    $("#btn_add_customer_list").hide();
+    $("#btn_remove_customer_list").hide();
+}
+
+function onClick(args) {
+    if ((args.marker.icon.url.indexOf("marker0") < 0) && (args.marker.icon.url.indexOf("customer2") < 0)) {
+        if (!ctr) {
+            empty_selected_markers(true);
+        }
+        selected_markers.push({ marker: args, oldicon:args.marker.icon.url});
+        args.marker.setIcon("../Content/img/pin/marker0.png");
+        if (selected_markers.length > 1) {
+            $("#btn_add_customer_list").show();
+            $("#btn_remove_customer_list").show();            
+        }
+    }
+
 }
 
 function onDragEnd(args) {
     var _find = false;
     var _id;
 
-    for (var i = 0; i < my_markers.length; i++) {
-        _id = args.id.substring(6);
-        if (my_markers[i].Id == _id) {
-            my_markers[i].Lat = args.latLng.lat();
-            my_markers[i].Lng = args.latLng.lng();
-            _find = true;
+    _id = args.id.substring(args.id.lastIndexOf('_')+1);
 
+    for (var i = 0; i < point_markers.length; i++) {
+        if (point_markers[i].Id == _id) {
+            point_markers[i].Lat = args.latLng.lat();
+            point_markers[i].Lng = args.latLng.lng();
+            _find = true;
         }
         if (_find == true) break;
-    }
-    //if (_find == false) {
-    //    _id = args.id.substring(6);
-    //    my_markers.push({ Id: args.id, Lat: args.latLng.lat(), Lng: args.latLng.lng() });
-    //    alert("not find " + _id);
-    //}
+    }    
 }
 
 function addPoint(args) {
     new_id--;
-    my_markers.push({ Id: new_id, Lat: args.latLng.lat(), Lng: args.latLng.lng() });
+    point_markers.push({ Id: new_id, Lat: args.latLng.lat(), Lng: args.latLng.lng() });
 
     var marker = new google.maps.Marker({
         Id: "point_" + new_id,
@@ -328,7 +421,13 @@ function addPoint(args) {
     }).addListener("dragend", function (e) {
         onDragEnd({ id: "point_" + new_id, latLng: e.latLng });
     });
-
-    //Jmelosegui.Mvc.GoogleMap.markerEvents();
-    //marker.addListener("OnMarkerDragEnd", onDragEnd);
 }
+
+
+
+window.onkeydown = function(e) {
+    ctr = ((e.keyIdentifier == 'Control') || (e.ctrlKey == true));
+};
+window.onkeyup = function(e) {
+    ctr = false;
+};

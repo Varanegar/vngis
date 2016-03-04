@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using TrackingMap.Service.ViewModel;
 
@@ -21,7 +22,7 @@ namespace TrackingMap.Models
     {
         public VisitorConditionModel()
         {
-            VisitorIds = new List<int>();
+            VisitorIds = new List<Guid>();
 
         }
 
@@ -30,7 +31,7 @@ namespace TrackingMap.Models
 
 
         //-------------------
-        public List<int> VisitorIds { get; set; }
+        public List<Guid> VisitorIds { get; set; }
         public string Date { get; set; }
         public bool DailyPath { get; set; }
         public bool VisitorPath { get; set; }

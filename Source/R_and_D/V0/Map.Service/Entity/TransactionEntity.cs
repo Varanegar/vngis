@@ -12,13 +12,13 @@ namespace TrackingMap.Service.Entity
     [Table("Transaction")]
     public class TransactionEntity : BaseEntity
     {
-        [Column("VisitorId", TypeName = "int")]
-        public int VisitorEntityId { get; set; }
+        [Column("VisitorId")]
+        public Guid VisitorEntityId { get; set; }
         public virtual VisitorEntity VisitorEntity { set; get; }
 
 
-        [Column("CustomerId", TypeName = "int")]
-        public int CustomerEntityId { get; set; }
+        [Column("CustomerId")]
+        public Guid CustomerEntityId { get; set; }
         public virtual CustomerEntity CustomerEntity { set; get; }
 
         [Column("TransactionType", TypeName = "int")]

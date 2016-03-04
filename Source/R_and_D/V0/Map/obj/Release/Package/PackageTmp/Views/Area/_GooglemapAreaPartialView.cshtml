@@ -10,27 +10,31 @@
           .Name("map")
           .Zoom(11)
           .FitToMarkersBounds(true)
-          .Center(c => c.Latitude(35.6961111).Longitude(51.4230556))
+          .Center(c => c.Latitude(Model.Center.Latitude).Longitude(Model.Center.Longitude))
 
-          .ClientEvents(events => events.OnMapClick("addPoint")
-               .OnMapLoaded("onMapLoadHandler")
-
+          .ClientEvents(events =>
+          {
+              events.OnMapLoaded("onMapLoadHandler");
+              if (Model.EditMode)
+                  events.OnMapClick("addPoint");
+          }
+                    
            )
-          .Polygons(pf =>
-           {
-                   pf.Add()
-                       .Points(ptn =>
-                       {
-                           foreach (var pt in Model.AreaPoints)
-                           {
-                               ptn.Add(pt.Latitude, pt.Longitude);
-                           }
-                       })
-                       .FillColor(Model.Color)
-                       .StrokeColor(Color.Gray)
 
-                       .StrokeWeight(1);
-           })
+
+          .Polygons(pf => pf.Add()
+              .Points(ptn =>
+              {
+                  foreach (var pt in Model.AreaPoints)
+                  {
+                      ptn.Add(pt.Latitude, pt.Longitude);
+                  }
+              })
+              .FillColor(Model.Color)
+              .StrokeColor(Color.Gray)
+              .StrokeWeight(4))
+
+
 
           .Polylines(pf =>
           {
@@ -44,7 +48,32 @@
                   })
                   .StrokeColor(Color.Black)
                   .StrokeWeight(3);
-
+              foreach (var child in Model.ChiledPoints)
+              {
+                  pf.Add()
+                      .Points(ptn =>
+                      {
+                          foreach (var pt in child.Points)
+                          {
+                              ptn.Add(pt.Latitude, pt.Longitude);
+                          }
+                      })
+                      .StrokeColor(child.Color)
+                      .StrokeWeight(2);
+              }
+              foreach (var sibling in Model.SiblingPoints)
+              {
+                  pf.Add()
+                      .Points(ptn =>
+                      {
+                          foreach (var pt in sibling.Points)
+                          {
+                              ptn.Add(pt.Latitude, pt.Longitude);
+                          }
+                      })
+                      .StrokeColor(sibling.Color)
+                      .StrokeWeight(2);
+              }
               pf.Add()
                    .Points(ptn =>
                     {
@@ -55,50 +84,108 @@
                     })
                     .StrokeColor(Model.Color)
                     .StrokeWeight(2);
-
-              
            })
             .Markers(marker =>
             {
-                foreach (var pt in Model.AreaPoints)
+                if (Model.EditMode)
                 {
-                    marker.Add()
-                        .Draggable(true)
-                        .Id("point_" + pt.Id)
-                        .Longitude(pt.Longitude)
-                        .Latitude(pt.Latitude)
-                        .Title("")
-                        .Icon("~/Content/img/pin/point.png", new Size(10, 10), new Point(0, 0)
-                                , new Point(5, 5));
-                }
-                foreach (var pt in Model.LinePoints)
-                {
-                    marker.Add()
-                        .Draggable(true)
-                        .Id("point_" + pt.Id)
-                        .Longitude(pt.Longitude)
-                        .Latitude(pt.Latitude)
-                        .Title("")
-                        .Icon("~/Content/img/pin/point.png", new Size(10, 10), new Point(0, 0)
-                                , new Point(5, 5));
+                    foreach (var pt in Model.AreaPoints)
+                    {
+                        marker.Add()
+                            .Draggable(true).Clickable(false)
+                            .Id("point_" + pt.Id)
+                            .Longitude(pt.Longitude)
+                            .Latitude(pt.Latitude)
+                            .Title("")
+                            .Icon("~/Content/img/pin/point.png", new Size(10, 10), new Point(0, 0)
+                                    , new Point(5, 5));
+                    }
+                    foreach (var pt in Model.LinePoints)
+                    {
+                        marker.Add()
+                            .Draggable(true).Clickable(false)
+                            .Id("point_" + pt.Id)
+                            .Longitude(pt.Longitude)
+                            .Latitude(pt.Latitude)
+                            .Title("")
+                            .Icon("~/Content/img/pin/point.png", new Size(10, 10), new Point(0, 0)
+                                    , new Point(5, 5));
+                    }
+
                 }
                 foreach (var pt in Model.CustomerPoints)
                 {
                     marker.Add()
-                        .Draggable(false)
+                        .Draggable(false).Clickable(true)
                         .Id("customer_point_" + pt.Id)
                         .Longitude(pt.Longitude)
                         .Latitude(pt.Latitude)
                         .Title(pt.Desc)
-                        .Icon(String.Format("~/Content/img/pin/customer{0}.png",(int)pt.PointType ), new Size(60, 60), new Point(0, 0)
-                                , new Point(5, 5));
+                        .Icon(String.Format("../Content/img/pin/customer{0}.png", (int) pt.PointType), new Size(50, 60), new Point(0, 0)
+                            , new Point(0, 0))
+                        .Window(window =>
+                        {
+                            var win = window.Add()
+                                .MaxWidth(500)
+                                .DisableAutoPan(false);
+
+
+                            if ((Model.IsLeaf && Model.EditMode) && (pt.PointType == TrackingMap.Service.PointType.CustomerRout))
+                            {
+                                win.Content(
+                                    @<text>
+                                         <h1>@pt.Desc</h1>
+                                         <div> توضیحات اضافه قراره اینجا بیاد</div>
+                                         <br />
+                                            
+                                         <button id='btn_remove_customer_' onclick='remove_from_selected(@pt.Id, true)' class='btn btn-default'>@CaptionResource.RemoveCustomerRoute</button>
+                                     </text>
+
+                                    );
+
+                            }
+                            else
+                                if ((Model.IsLeaf && Model.EditMode) && (pt.PointType == TrackingMap.Service.PointType.CustomerWithoutRout))
+                                {
+                                    win.Content(
+                                        @<text>
+                                            <h1>@pt.Desc</h1>
+                                            <div> توضیحات اضافه قراره اینجا بیاد</div>
+                                            <br />
+                                            <button id='btn_add_customer_' onclick='add_to_selected(@pt.Id, true)' class='btn btn-default'>@CaptionResource.AddCustomerRoute</button>
+                                        </text>
+
+                                    );
+
+                                }
+                                else
+                                {
+                                    win.Content(
+                                    @<text>
+                                        <h1>@pt.Desc</h1>
+                                        <div> توضیحات اضافه قراره اینجا بیاد</div>
+                                    </text>
+
+                                        );
+
+                            }
+                        }
+                        );
+
                 }
-                
+
             })
-            .MarkerEvents(events => events.OnMarkerDragEnd("onDragEnd"))
-            .Render();
+        .MarkerEvents(events =>
+        {
+            events.OnMarkerDragEnd("onDragEnd");
+            if (Model.IsLeaf && Model.EditMode)
+                events.OnMarkerClick("onClick");
 
-    }
+
+        } )
+        .Render();
+
+}
 
 
-    @(Html.GoogleMap().ScriptRegistrar())
+        @(Html.GoogleMap().ScriptRegistrar())

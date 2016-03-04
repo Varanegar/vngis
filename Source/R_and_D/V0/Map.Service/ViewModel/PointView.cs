@@ -5,7 +5,7 @@ namespace TrackingMap.Service.ViewModel
 {
     public class PointView
     {
-        public int Id { set; get; }
+        public Guid Id { set; get; }
         public string Desc { set; get; }
 
         public double Longitude { set; get; }
@@ -16,7 +16,8 @@ namespace TrackingMap.Service.ViewModel
 
         public PointType PointType { set; get; }
 
-        public int MasterId { set; get; }
+        public Guid MasterId { set; get; }
 
+        public bool IsLeaf { set; get; }
     }
 }

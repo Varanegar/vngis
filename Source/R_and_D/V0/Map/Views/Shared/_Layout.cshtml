@@ -20,7 +20,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Content/js/scripts.js")
-
   
 
     @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.web.min.js", kendoVersion))
@@ -30,7 +29,8 @@
     @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.calendar.js", kendoVersion))
     @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.popup.js", kendoVersion))
     @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.datepicker.js", kendoVersion))
-    
+
+    @Scripts.Render("~/Scripts/view/general.js")
 
     @RenderSection("scripts", required: false)
     </head>

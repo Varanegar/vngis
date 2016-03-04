@@ -15,8 +15,8 @@ namespace TrackingMap.Service.Entity
         [MaxLength(200)]
         public string Title { set; get; }
 
-        [Column("GroupId", TypeName = "int")]
-        public int VisitorGroupEntityId { get; set; }
+        [Column("GroupId")]
+        public Guid VisitorGroupEntityId { get; set; }
         public virtual VisitorGroupEntity VisitorGroupEntity { set; get; }
 
     }

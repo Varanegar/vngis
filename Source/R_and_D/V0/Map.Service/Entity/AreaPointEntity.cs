@@ -11,8 +11,8 @@ namespace TrackingMap.Service.Entity
     [Table("AreaPoint")]
     public class AreaPointEntity : BaseEntity
     {
-        [Column("AreaId", TypeName = "int")]
-        public int AreaEntityId { get; set; }
+        [Column("AreaId")]
+        public Guid AreaEntityId { get; set; }
         public virtual AreaEntity AreaEntity { set; get; }
 
         [Column("Latitude")]
@@ -27,7 +27,6 @@ namespace TrackingMap.Service.Entity
 
         public AreaPointEntity(AreaPointView view)
         {
-            this.Id = view.Id;
             this.Latitude = view.Lat;
             this.Longitude = view.Lng;
             this.AreaEntityId = view.AreaId;

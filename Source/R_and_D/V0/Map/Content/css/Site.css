@@ -497,19 +497,30 @@ footer {
     float: right;
 }
 
-.color-gray {
-    color: #333333;
+.color-back-gray {
+    background: #333333;
+    color: #ffffff;
+    padding: 5px;
 }
 
-.color-Yellow {
-    color: goldenrod;
+.color-back-orange {
+    background: #d2691e;
+    color: #ffffff;
+    padding: 5px;
+}
+.color-back-Yellow {
+    background: goldenrod;
+    color: #000;
+    padding: 5px;
 }
 
-.color-blue {
-    color: lightseagreen;
+.color-back-blue {
+    background: lightseagreen;
+    color: #000;
 }
 
-.color-Red {
-    color: darkred;
+.color-back-Red {
+    background: darkred;
+    color: #ffffff;
 }
 

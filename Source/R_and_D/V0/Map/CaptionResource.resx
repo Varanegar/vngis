@@ -150,8 +150,17 @@
   <data name="CustomerGroup" xml:space="preserve">
     <value>گروه مشتریان</value>
   </data>
+  <data name="CustomerOtherRoute" xml:space="preserve">
+    <value>مشتریان مسیر های دیگر</value>
+  </data>
+  <data name="CustomerRoute" xml:space="preserve">
+    <value>مشتریان مسیر</value>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>آنالیز مشتریان</value>
+  </data>
+  <data name="CustomerWithOutRoute" xml:space="preserve">
+    <value>مشتریان بدون مسیر</value>
   </data>
   <data name="DailyPath" xml:space="preserve">
     <value>مسیر روز</value>
@@ -266,5 +275,11 @@
   </data>
   <data name="WithoutActivity" xml:space="preserve">
     <value>بدون فعالیت</value>
+  </data>
+  <data name="AddCustomerRoute" xml:space="preserve">
+    <value>اضافه به مسیر</value>
+  </data>
+  <data name="RemoveCustomerRoute" xml:space="preserve">
+    <value>حذف از مسیر</value>
   </data>
 </root>

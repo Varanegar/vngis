@@ -1,8 +1,9 @@
-﻿namespace TrackingMap.Service.ViewModel
+﻿using System;
+namespace TrackingMap.Service.ViewModel
 {
     public class TextValueView
     {
-        public int Id { set; get; }
+        public Guid Id { set; get; }
         public string Title { set; get; }
         
     }

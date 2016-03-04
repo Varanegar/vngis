@@ -8,8 +8,8 @@ namespace TrackingMap.Service.ViewModel
 {
     public class AreaPointView
     {
-        public int Id { set; get; }
-        public int AreaId { set; get; }
+        public Guid Id { set; get; }
+        public Guid AreaId { set; get; }
         public double Lng { set; get; }
         public double Lat { set; get; }
     }

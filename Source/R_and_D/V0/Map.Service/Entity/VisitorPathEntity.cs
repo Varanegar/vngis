@@ -11,8 +11,8 @@ namespace TrackingMap.Service.Entity
     [Table("VisitorPath")]
     public class VisitorPathEntity : BaseEntity
     {
-        [Column("VisitorId", TypeName = "int")]
-        public int VisitorEntityId { get; set; }
+        [Column("VisitorId")]
+        public Guid VisitorEntityId { get; set; }
         public virtual VisitorEntity VisitorEntity { set; get; }
 
         [Column("Latitude")]
@@ -22,10 +22,6 @@ namespace TrackingMap.Service.Entity
         public double Longitude { set; get; }
 
         public DateTime Date { get; set; }
-
-
-
-
 
     }
 }

@@ -22,7 +22,7 @@ namespace TrackingMap.Service.BL
             _transactionRepository = transactionRepository;
         }
 
-        public List<PointView> LoadTransactionList(List<int> visitorIds)
+        public List<PointView> LoadTransactionList(List<Guid> visitorIds)
         {
             var list = _transactionRepository.Table.Where(x => visitorIds.Contains(x.VisitorEntityId))
                .Select(

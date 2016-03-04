@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web.Mvc;
 using TrackingMap.Models;
 using TrackingMap.Service.BL;
+using TrackingMap.Service.Tools;
 using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Controllers
@@ -37,9 +38,9 @@ namespace TrackingMap.Controllers
             return model;
         }
 
-        public ActionResult LoadVisitorByGroupId(int groupId)
+        public ActionResult LoadVisitorByGroupId(Guid groupId)
         {
-            var list = groupId == 0 ? new List<TextValueView>() : _visitorService.LoadVisitorByGroupId(groupId);
+            var list = groupId == null ? new List<TextValueView>() : _visitorService.LoadVisitorByGroupId(groupId);
             return Json(list);
         }
 
@@ -47,75 +48,20 @@ namespace TrackingMap.Controllers
         {
             var model = new VisitorModel();
             
-            var line = new List<PointView>();
-            var lines = new List<PolyView>();
+
 
             var marker = new List<PointView>();
-            var markers = new List<PointView>();
 
             if (filter.VisitorPath)
             {
                 var points = _visitorService.LoadVisitorPath(filter.Date, filter.VisitorIds);
-                var group = 0;
-
-                Random randonGen = new Random();
-                foreach (var pointView in points)
-                {
-                    if (group == 0)
-                        group = pointView.MasterId;
-
-                    if (group != pointView.MasterId)
-                    {
-                        lines.Add(new PolyView()
-                        {
-                            Points = line,
-                            Color = Color.FromArgb(randonGen.Next(200), randonGen.Next(200), randonGen.Next(200))
-                        });
-                        line = new List<PointView>();
-                        group = pointView.MasterId;
-                    }
-                    line.Add(pointView);
-                }
-                if (line.Count > 0)
-                    lines.Add(new PolyView()
-                    {
-                        Points = line,
-                        Color = Color.FromArgb(randonGen.Next(200), randonGen.Next(200), randonGen.Next(200))
-                    });
-                model.Lines = lines;
+                model.Lines = GeneralTools.PointListToPolyList(points);
             }
 
             if (filter.DailyPath)
             {
-                line = new List<PointView>();
                 var points = _visitorService.LoadDailyPath(filter.Date, filter.VisitorIds);
-                var group = 0;
-
-                foreach (var pointView in points)
-                {
-                    if (group == 0)
-                        group = pointView.MasterId;
-
-                    if (group != pointView.MasterId)
-                    {
-                        lines.Add(new PolyView()
-                        {
-                            Points = line,
-                            Color = Color.Black
-                        });
-                        line = new List<PointView>();
-                        group = pointView.MasterId;
-                    }
-                    line.Add(pointView);
-                }
-                if (line.Count > 0)
-                    lines.Add(new PolyView()
-                    {
-                        Points = line,
-                        Color = Color.Black
-                    });
-                model.Lines = lines;
-
+                model.Lines.AddRange(GeneralTools.PointListToPolyList(points, true));
             }
 
             if (filter.Order)

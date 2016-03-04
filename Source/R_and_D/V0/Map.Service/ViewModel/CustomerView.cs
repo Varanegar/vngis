@@ -8,7 +8,7 @@ namespace TrackingMap.Service.ViewModel
 {
     public class CustomerView
     {
-        public int Id { set; get; }
+        public Guid Id { set; get; }
         public string Title { set; get; }
         public string Adress { set; get; }
     }

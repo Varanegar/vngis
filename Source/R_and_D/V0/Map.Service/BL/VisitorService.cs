@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -40,7 +41,7 @@ namespace TrackingMap.Service.BL
             list = _visitorGroupRepository.Table.Select(x => new TextValueView(){Id = x.Id, Title = x.Title}).ToList();
             return list;
         }
-        public List<TextValueView> LoadVisitorByGroupId(int groupId)
+        public List<TextValueView> LoadVisitorByGroupId(Guid groupId)
         {
             List<TextValueView> list;
             list =
@@ -50,7 +51,7 @@ namespace TrackingMap.Service.BL
                 return list;
         }
 
-        public List<PointView> LoadVisitorPath(string date, List<int> visitorIds )
+        public List<PointView> LoadVisitorPath(string date, List<Guid> visitorIds )
         {
             //List<PointView> list;
             //var vis = GeneralTools.IntListTostring(visitorIds);
@@ -72,7 +73,7 @@ namespace TrackingMap.Service.BL
             return list;
         }
 
-        public List<PointView> LoadDailyPath(string date, List<int> visitorIds)
+        public List<PointView> LoadDailyPath(string date, List<Guid> visitorIds)
         {
             //List<PointView> list;
             //var vis = GeneralTools.IntListTostring(visitorIds);

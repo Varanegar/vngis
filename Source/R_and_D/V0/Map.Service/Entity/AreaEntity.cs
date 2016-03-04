@@ -12,8 +12,8 @@ namespace TrackingMap.Service.Entity
     [Table("Area")]
     public class AreaEntity : BaseEntity
     {
-        [Column("ParentId", TypeName = "int")]
-        public int ParentId { set; get; }
+        [Column("ParentId")]
+        public Guid? ParentId { set; get; }
 
         [Column("Code", TypeName = "int")]
         public int Code { set; get; }
