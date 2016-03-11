@@ -5,14 +5,12 @@ var ctr = false;
 var new_id = 0;
 var selected_id = null;
 $(document).ready(function () {
-    $("#pnl_path").hide();
     $("#btn_set_customer").hide();
     $("#btn_map").hide();
-    $("#btn_detail").hide();
-    $("#btn_edit").hide();
     $("#btn_add_customer_list").hide();
     $("#btn_remove_customer_list").hide();
-
+    $("#btn_save").hide();
+    
     $("#div_leaf_customer").hide();
 
     selected_id = null;
@@ -43,12 +41,18 @@ $(document).ready(function () {
             field: "Title",
             title: 'عنوان',
         }
-        //,{
-        //field: "Id",
-        //title: "&nbsp; &nbsp;",
-        //attributes:{style:"width:15px;"},
-        //template: "<button  type='button' class='btn btn-default' onclick='show_detail(0);'><span class='glyphicon glyphicon-zoom-in'></span ></button>"
-        //}
+        ,{
+            field: "Id",
+            title: "&nbsp; &nbsp;",
+            attributes:{style:"width:15px;"},
+            template: "<button  type='button' class='btn btn-link' onclick=show_detail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray'></span ></button>"
+        }
+        , {
+            field: "Id",
+            title: "&nbsp; &nbsp;",
+            attributes: { style: "width:15px;" },
+            template: "<button  type='button' class='btn btn-link' onclick='edit_area()';><span class='glyphicon glyphicon-pencil color-gray'></span ></button>"
+        }
         ]
     });
 
@@ -77,10 +81,6 @@ $(document).ready(function () {
             show_detail(selected_id);
     });
 
-    $("#btn_edit").on("click", function (e) {
-        if (selected_id != null)
-            refreshmap(true);
-    });
 
     $("#btn_map").on("click", function (e) {
         $("#mapContainer").show(1000);
@@ -125,7 +125,7 @@ $(document).ready(function () {
                 field: "Id",
                 title: "&nbsp; &nbsp;",
                 attributes:{style:"width:15px;"},
-                template: "<button  type='button' class='btn btn-default'  onclick='add_to_selected(#=Id#);'><span class='glyphicon glyphicon-chevron-left'></span ></button>"
+                template: "<button  type='button' class='btn btn-default'  onclick=add_to_selected('#=Id#');><span class='glyphicon glyphicon-chevron-left'></span ></button>"
             }
             ]
         });
@@ -158,13 +158,14 @@ $(document).ready(function () {
                 field: "Id",
                 title: "&nbsp; &nbsp;",
                 attributes: { style: "width:15px;" },
-                template: "<button  type='button' class='btn btn-default' onclick='remove_from_selected(#=Id#);' ><span class='glyphicon glyphicon-chevron-right'></span ></button>"
+                template: "<button  type='button' class='btn btn-default' onclick=remove_from_selected('#=Id#'); ><span class='glyphicon glyphicon-chevron-right'></span ></button>"
             }
             ]
         });
 
     });
     
+
     $("#btn_add_customer_list").on("click", function (e) {
        for (var i = 0; i < selected_markers.length; i++) {
            add_to_selected(selected_markers[i].marker.id.substring(selected_markers[i].marker.id.lastIndexOf('_') + 1), false);
@@ -183,6 +184,12 @@ $(document).ready(function () {
 
 });
 
+
+//$("#btn_edit").on("click", function (e) {
+function edit_area() {
+    if (selected_id != null)
+        refreshmap(true);
+};
 
 function show_detail(id) {
     $.ajax({
@@ -218,18 +225,17 @@ function refreshgrid() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ id: selected_id }),
             success: function (data) {
-                var list = "<button id = 'btn_back_0' class='btn btn-link' onclick='back(0)' > خانه</button>" ;
+                var list = "<button id = 'btn_back_0' class='btn btn-link color-gray' onclick='back(0)' > خانه</button>";
                 for (var i = data.length -1 ; i >= 0 ; i--) {
-                    list += ">> <button id = 'btn_back_'" + data[i].Id + " class='btn btn-link' onclick=back('"+data[i].Id+"') >" + data[i].Title + "</button> " ;
+                    list += ">> <button id = 'btn_back_'" + data[i].Id + " class='btn btn-link color-gray' onclick=back('" + data[i].Id + "') >" + data[i].Title + "</button> ";
                 }
                 $("#pnl_path").html(list);
-                $("#pnl_path").show();
             }
         });
 
     }
     else {
-        $("#pnl_path").hide();
+        $("#pnl_path").html("");
     }
     $('#grid_area').data('kendoGrid').dataSource.read();
     $('#grid_area').data('kendoGrid').refresh();
@@ -247,26 +253,28 @@ function back(id) {
 
 function grid_change(arg) {
     var selectedData = this.dataItem(this.select());
-    selected_id = selectedData.Id;
-    refreshmap(false);
-    if (selected_id == null) {
-        $("#btn_detail").hide();
-        $("#btn_edit").hide();
-    }
-    else {
-        $("#btn_edit").show();
-        if (selectedData.IsLeaf) {
+    if (selected_id != selectedData.Id) {
+        selected_id = selectedData.Id;
+        refreshmap(false);
+        if (selected_id == null) {
             $("#btn_detail").hide();
-            $("#btn_set_customer").show();
-            $("#btn_map").hide();
-            $("#div_customer").hide();
-            $("#div_leaf_customer").show();
-        } else {
-            $("#btn_set_customer").hide();
-            $("#btn_detail").show();
-            $("#btn_map").hide();
-            $("#div_customer").show();
-            $("#div_leaf_customer").hide();
+            $("#btn_edit").hide();
+        }
+        else {
+            $("#btn_edit").show();
+            if (selectedData.IsLeaf) {
+                $("#btn_detail").hide();
+                $("#btn_set_customer").show();
+                $("#btn_map").hide();
+                $("#div_customer").hide();
+                $("#div_leaf_customer").show();
+            } else {
+                $("#btn_set_customer").hide();
+                $("#btn_detail").show();
+                $("#btn_map").hide();
+                $("#div_customer").show();
+                $("#div_leaf_customer").hide();
+            }
         }
     }
 };
@@ -294,6 +302,7 @@ function refreshmap(edit) {
                 showcustwithoutrout: $("#chk_customer_without_route").is(':checked'),
             },
             success: function (data) {
+                
                 //alert('succeded');
             }
         });
@@ -336,6 +345,7 @@ function remove_from_selected(id, changeicon) {
                 var mrk = find_customer_marker(id);
                 if (mrk != null)
                     mrk.marker.setIcon("../Content/img/pin/customer0.png");
+                
             }
             $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
             $('#grid_customer_not_selected').data('kendoGrid').refresh();
@@ -353,16 +363,31 @@ function find_customer_marker(id) {
     }
     return null;
 }
+//---------------------------------------------------------------------------------------------------------
+//point
+//---------------------------------------------------------------------------------------------------------
+function change_priority_point(id) {
+}
 
+function remove_point(id) {
+}
 //---------------------------------------------------------------------------------------------------------
 // MAP
 //---------------------------------------------------------------------------------------------------------
 function onMapLoadHandler(args) {
     point_markers = [];
-
+    new_id = 0;
     for (var mark in args.markers) {
-        if (mark.indexOf("customer_point_") < 0)
-            point_markers.push({ Id: mark.substring(mark.lastIndexOf('_')+1 ), Lat: args.markers[mark].getPosition().lat(), Lng: args.markers[mark].getPosition().lng() });
+        if (mark.indexOf("customer_point_") < 0) {
+            point_markers.push({
+                Id: mark.substring(mark.lastIndexOf('_') + 1),
+                Lat: args.markers[mark].getPosition().lat(),
+                Lng: args.markers[mark].getPosition().lng(),
+                Pr: parseInt(args.markers[mark].title)
+            });
+            args.markers[mark].setLabel(args.markers[mark].title);
+        }
+        new_id = parseInt(args.markers[mark].title); //priority
     }
     
 }
@@ -378,12 +403,13 @@ function empty_selected_markers(reverticon) {
 }
 
 function onClick(args) {
-    if ((args.marker.icon.url.indexOf("marker0") < 0) && (args.marker.icon.url.indexOf("customer2") < 0)) {
+    if ((args.marker.icon.url.indexOf("customerselected") < 0) && (args.marker.icon.url.indexOf("customer2") < 0)) {
         if (!ctr) {
             empty_selected_markers(true);
         }
-        selected_markers.push({ marker: args, oldicon:args.marker.icon.url});
-        args.marker.setIcon("../Content/img/pin/marker0.png");
+        selected_markers.push({ marker: args, oldicon:args.marker.icon});
+        args.marker.setIcon({ url: "../Content/img/pin/customerselected.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+        
         if (selected_markers.length > 1) {
             $("#btn_add_customer_list").show();
             $("#btn_remove_customer_list").show();            
@@ -411,15 +437,18 @@ function onDragEnd(args) {
 function addPoint(args) {
     new_id++;
     var guid = get_temp_guid(new_id);
-    point_markers.push({ Id: guid, Lat: args.latLng.lat(), Lng: args.latLng.lng() });
+    point_markers.push({ Id: guid, Lat: args.latLng.lat(), Lng: args.latLng.lng(), Pr: new_id });
 
     var marker = new google.maps.Marker({
         Id: "point_" + guid,
         position: args.latLng,
         map: args.map,
         draggable: true,
-        icon: "/Content/img/pin/point.png"
-    }).addListener("dragend", function (e) {
+        label: new_id.toString(),
+        labelClass: 'labels',
+        labelAnchor: new google.maps.Point(22, 0),
+        icon: "/Content/img/pin/point.png",
+        }).addListener("dragend", function (e) {
         onDragEnd({ id: "point_" + guid, latLng: e.latLng });
     });
 }

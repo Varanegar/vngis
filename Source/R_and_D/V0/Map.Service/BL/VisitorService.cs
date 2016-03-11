@@ -35,17 +35,17 @@ namespace TrackingMap.Service.BL
             _areaPointRepository = areaPointRepository;
         }
 
-        public IList<TextValueView> LoadVisitorGroup()
+        public IList<TextValueView> LoadVisitorGroup(Guid? areaid)
         {
             IList<TextValueView> list;
-            list = _visitorGroupRepository.Table.Select(x => new TextValueView(){Id = x.Id, Title = x.Title}).ToList();
+            list = _visitorGroupRepository.Table.Where(x => areaid == null || x.AreaEntityId == areaid).Select(x => new TextValueView() { Id = x.Id, Title = x.Title }).ToList();
             return list;
         }
-        public List<TextValueView> LoadVisitorByGroupId(Guid groupId)
+        public List<TextValueView> LoadVisitorByGroupId(Guid? groupId)
         {
             List<TextValueView> list;
             list =
-                _visitorRepository.Table.Where(x => x.VisitorGroupEntityId == groupId)
+                _visitorRepository.Table.Where(x => groupId == null || x.VisitorGroupEntityId == groupId)
                     .Select(x => new TextValueView() {Id = x.Id, Title = x.Title})
                     .ToList();
                 return list;

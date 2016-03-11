@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
+using TrackingMap.Service.Enum;
 using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.BL
@@ -28,10 +29,13 @@ namespace TrackingMap.Service.BL
 
         public IList<PointView> LoadAreaPointById(Guid? id)
         {
-            var list = _areaPointRepository.Table.Where(x => id == null || x.AreaEntityId == id).Select(x => new PointView()
+            var list = _areaPointRepository.Table.Where(x => id == null || x.AreaEntityId == id)
+                .OrderBy(x => x.Priority)
+                .Select(x => new PointView()
                 {
                     Id = x.Id,
                     Desc = "",
+                    Lable= x.Priority.ToString(),
                     MasterId = x.AreaEntityId,
                     Longitude = x.Longitude,
                     Latitude = x.Latitude,
@@ -85,6 +89,7 @@ namespace TrackingMap.Service.BL
                         entity = _areaPointRepository.GetById(entityview.Id);
                         if (entity != null)
                         {
+                            entity.Priority = entityview.Pr;
                             entity.Longitude = entityview.Lng;
                             entity.Latitude = entityview.Lat;
                         }

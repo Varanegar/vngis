@@ -106,6 +106,15 @@ namespace TrackingMap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to حوزه.
+        /// </summary>
+        public static string Area1 {
+            get {
+                return ResourceManager.GetString("Area1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to منطقه شهرداری.
         /// </summary>
         public static string AreaCity {
@@ -313,6 +322,24 @@ namespace TrackingMap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to از ساعت.
+        /// </summary>
+        public static string FromTime {
+            get {
+                return ResourceManager.GetString("FromTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to گروه.
+        /// </summary>
+        public static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to عدم سفارش.
         /// </summary>
         public static string LackOfOrder {
@@ -322,7 +349,7 @@ namespace TrackingMap {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عدم بازدید.
+        ///   Looks up a localized string similar to عدم ویزیت.
         /// </summary>
         public static string LackOfVisit {
             get {
@@ -372,6 +399,15 @@ namespace TrackingMap {
         public static string Path {
             get {
                 return ResourceManager.GetString("Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حذف.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         
@@ -484,6 +520,15 @@ namespace TrackingMap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ساعت.
+        /// </summary>
+        public static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to زمان سفارش گیری.
         /// </summary>
         public static string TimeDuring {
@@ -493,11 +538,29 @@ namespace TrackingMap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تا.
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تا تاریخ.
         /// </summary>
         public static string ToDate {
             get {
                 return ResourceManager.GetString("ToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تا ساعت.
+        /// </summary>
+        public static string ToTime {
+            get {
+                return ResourceManager.GetString("ToTime", resourceCulture);
             }
         }
         

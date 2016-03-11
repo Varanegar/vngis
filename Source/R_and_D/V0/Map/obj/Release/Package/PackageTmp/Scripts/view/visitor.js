@@ -7,6 +7,13 @@ $(document).ready(function () {
         format: "yyyy/MM/dd",
     });
 
+    $("#tim_from").kendoTimePicker({
+       
+    });
+    $("#tim_to").kendoTimePicker({
+
+    });
+
     $("#grid_visitor").kendoGrid({
         dataSource: {
             type: "json",
@@ -54,6 +61,26 @@ $(document).ready(function () {
         }
     });
 
+    $("#ddl_area").on("change", function (event) {
+        var value = $("#ddl_area").val();
+        $("#ddl_visitor_group").empty();
+        $.ajax({
+            type: "POST",
+            url: "LoadVisitorGroupByAreaId",
+            dataType: "json",
+            data: { areaId: value },
+            success: function (data) {
+                $.each(data, function (i, ItemDropdown) {
+                    $("#ddl_visitor_group").append
+                        ('<option value="' + ItemDropdown.Id + '">' + ItemDropdown.Title + '</option>');
+
+                });
+            }
+        })
+        .done(function (Result) {
+        });       
+    });
+    
     $("#ddl_visitor_group").on("change", function (event) {        
         $('#grid_visitor').data('kendoGrid').dataSource.read();
         $('#grid_visitor').data('kendoGrid').refresh();

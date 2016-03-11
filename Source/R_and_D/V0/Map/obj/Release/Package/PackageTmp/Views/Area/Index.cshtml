@@ -16,9 +16,10 @@
                     <button id='btn_add_customer_list' class='btn btn-default'>اختصاص مشتریان به مسیر</button>
                     <button id='btn_remove_customer_list' class='btn btn-default'>حذف مشتریان از مسیر</button>
                 </div>
+
                 <div class="right">
-                    <button id='btn_detail' class='btn btn-default'><i class='glyphicon glyphicon-zoom-in'></i></button>
-                    <button id='btn_edit' class='btn btn-default'><i class='glyphicon glyphicon-pencil'></i></button>
+                    @*<button id='btn_detail' class='btn btn-default'><i class='glyphicon glyphicon-zoom-in'></i></button>
+                    <button id='btn_edit' class='btn btn-default'><i class='glyphicon glyphicon-pencil'></i></button>*@
                     <button id='btn_set_customer' class='btn btn-default'>مشتریان مسیر</button>
                     <button id='btn_map' class='btn btn-default'>@CaptionResource.Map</button>
                 </div>
@@ -26,32 +27,34 @@
 
         </div>
     </div>
+    <div id="pnl_path" class="path-bar"></div>
 
     <div class="panel-body">
-        
-        <div id="pnl_path" class="col-md-12"></div>
+
 
         <div class="col-md-3">
             <div class="side-bar">
                 <div id="pnl_condition" class="frame-condition">
                     <div id="div_customer">
                         @Html.CheckBox("chk_customer", false, new { @id = "chk_customer", @class = "control-label" })
-                        @Html.Label(CaptionResource.ShowCustomer, new { @class = "control-label" })
+                        <label for="chk_customer">@CaptionResource.ShowCustomer</label>
                     </div>
 
                     <div id="div_leaf_customer">
-                        <div class="color-back-orange">
-                        @Html.CheckBox("chk_customer_route", false, new { @id = "chk_customer_route", @class = "control-label" })
-                        @Html.Label(CaptionResource.CustomerRoute, new { @class = "control-label" })
+                        <div>
+                            <img src="~/Content/img/pin/customer1.png" />
+                            @Html.CheckBox("chk_customer_route", true, new { @id = "chk_customer_route", @class = "control-label" })
+                            <label for="chk_customer_route">@CaptionResource.CustomerRoute</label>
                         </div>
-                        <div class="color-back-gray">
-                            @Html.CheckBox("chk_customer_other_route", false, new { @id = "chk_customer_other_route", @class = "control-label" })
-                            @Html.Label(CaptionResource.CustomerOtherRoute, new { @class = "control-label" })
+                        <div>
+                            <img src="~/Content/img/pin/customer2.png" />
+                            @Html.CheckBox("chk_customer_other_route", true, new { @id = "chk_customer_other_route", @class = "control-label" })
+                            <label for="chk_customer_other_route">@CaptionResource.CustomerOtherRoute</label>
                         </div>
-                        <div class="color-back-Yellow">
-
-                            @Html.CheckBox("chk_customer_without_route", false, new { @id = "chk_customer_without_route", @class = "control-label" })
-                            @Html.Label(CaptionResource.CustomerWithOutRoute, new { @class = "control-label" })
+                        <div>
+                            <img src="~/Content/img/pin/customer0.png" />
+                            @Html.CheckBox("chk_customer_without_route", true, new { @id = "chk_customer_without_route", @class = "control-label" })
+                            <label for="chk_customer_without_route">@CaptionResource.CustomerWithOutRoute</label>
                         </div>
 
                         </div>

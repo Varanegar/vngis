@@ -1,6 +1,8 @@
 ﻿
+@using System.Data.Entity.Migrations.Model
 @using System.Drawing
 @using Jmelosegui.Mvc.GoogleMap
+@using TrackingMap.Service.Enum
 
 @model TrackingMap.Models.VisitorModel
 
@@ -9,8 +11,7 @@
           .Name("map")
           .Zoom(11)
           .FitToMarkersBounds(true)
-          .Center(c => c.Latitude(35.6961111).Longitude(51.4230556))         
-
+          .Center(c => c.Latitude(35.6961111).Longitude(51.4230556))
           .Polylines(pf =>
           {
               foreach (var line in Model.Lines)
@@ -25,24 +26,74 @@
                       })
                       .StrokeColor(line.Color)
                       .StrokeWeight(3);
-              }             
+              }
           })
             .Markers(marker =>
-            {               
+            {
+                
                 foreach (var pt in Model.MarkerPoints)
                 {
+                    var icon = "marker0";
+
+                    if (pt.PointType == PointType.Order)
+                    {
+                        icon = "orderpin";
+                    }
+                    if (pt.PointType == PointType.LackOfVisit)
+                    {                        
+                        icon = "lackvisitpin";
+                    }
+                    if (pt.PointType == PointType.LackOfOrder)
+                    {                        
+                        icon = "lackorderpin";
+                    }
+                    if (pt.PointType == PointType.Customer)
+                    {                        
+                        icon = "customerpin";
+                    }
+                    if (pt.PointType == PointType.StopWithoutCustomer)
+                    {                        
+                        icon = "withoutcustomerpin";
+                    }
+                    if (pt.PointType == PointType.StopWithoutActivity)
+                    {                        
+                        icon = "withoutactivitypin";
+                    }
+
+                    var color = "";
+                    if (pt.SubType == (int) ECustomerType.OUTE_LINE)
+                    {                        
+                        color = "1";
+                    }
+                    if (pt.SubType == (int) ECustomerType.NEW)
+                    {                        
+                        color = "2";
+                    }
+                    
                     marker.Add()
                         .Draggable(false)
-                        .Id("customer_point_" + pt.Id)
+                        .Id("marker_point_" + pt.PointType+"_"+pt.SubType + "_" + pt.Id)
                         .Longitude(pt.Longitude)
                         .Latitude(pt.Latitude)
-                        .Title(pt.Desc)
-                        .Icon(String.Format("~/Content/img/pin/marker{0}.png",(int)pt.PointType ), new Size(60, 60), new Point(0, 0)
-                                , new Point(5, 5));
+                        .Title(pt.Lable)
+                        .Window(window => window.Add()
+                                .MaxWidth(800)
+                                .DisableAutoPan(false)
+                                .OpenOnRightClick(false)
+                                .Content(
+                                @<text>
+                                   @Html.Raw(@pt.Desc)
+                                </text>
+
+                                    )
+                            )
+                        .Icon(String.Format("~/Content/img/pin/{0}{1}.png", icon, color), new Size(32, 32), new Point(0, 0)
+                                , new Point(16, 16));
                 }
-                
+
             })
-            .Render();
+          .ClientEvents(events => events.OnMapLoaded("onMapLoadHandler"))
+          .Render();
 
     }
 

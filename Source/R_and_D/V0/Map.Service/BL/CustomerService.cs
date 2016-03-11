@@ -16,8 +16,7 @@ namespace TrackingMap.Service.BL
         public CustomerService(IDbContext ctx)
            
         {
-            _ctx = ctx;
-          
+            _ctx = ctx;          
         }
 
         public List<PointView> LoadCustomerByAreaId(Guid? areaid, Guid? routid = null,

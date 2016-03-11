@@ -18,7 +18,7 @@
               if (Model.EditMode)
                   events.OnMapClick("addPoint");
           }
-                    
+
            )
 
 
@@ -31,7 +31,7 @@
                   }
               })
               .FillColor(Model.Color)
-              .StrokeColor(Color.Gray)
+              .StrokeColor(Color.Black)
               .StrokeWeight(4))
 
 
@@ -46,8 +46,8 @@
                           ptn.Add(pt.Latitude, pt.Longitude);
                       }
                   })
-                  .StrokeColor(Color.Black)
-                  .StrokeWeight(3);
+                  .StrokeColor(Color.DimGray)
+                  .StrokeWeight(2);
               foreach (var child in Model.ChiledPoints)
               {
                   pf.Add()
@@ -84,7 +84,7 @@
                     })
                     .StrokeColor(Model.Color)
                     .StrokeWeight(2);
-           })
+          })
             .Markers(marker =>
             {
                 if (Model.EditMode)
@@ -92,13 +92,29 @@
                     foreach (var pt in Model.AreaPoints)
                     {
                         marker.Add()
-                            .Draggable(true).Clickable(false)
+                            .Draggable(true).Clickable(true)
                             .Id("point_" + pt.Id)
                             .Longitude(pt.Longitude)
                             .Latitude(pt.Latitude)
-                            .Title("")
+                            .Title(pt.Lable)
+                            .Window(window => window.Add()
+                                .MaxWidth(300)
+                                .DisableAutoPan(false)
+                                .OpenOnRightClick(true)
+                                .Content(
+                                    @<text>
+                                         <br/>
+                                         <input type="number" id=@("txt_priority_" + pt.Id) value="@pt.Lable" class="form-control" />
+                                         <br />
+                                         <button id="btn_add_customer_" onclick="change_priority_point('@pt.Id')" class="btn btn-default">@CaptionResource.Save</button>
+                                         <button id="btn_add_customer_" onclick="remove_point('@pt.Id')" class="btn btn-default">@CaptionResource.Remove</button>
+                                     </text>
+
+                                )
+                            )
                             .Icon("~/Content/img/pin/point.png", new Size(10, 10), new Point(0, 0)
                                     , new Point(5, 5));
+
                     }
                     foreach (var pt in Model.LinePoints)
                     {
@@ -107,7 +123,22 @@
                             .Id("point_" + pt.Id)
                             .Longitude(pt.Longitude)
                             .Latitude(pt.Latitude)
-                            .Title("")
+                            .Title(pt.Lable)
+                                                        .Window(window => window.Add()
+                                .MaxWidth(300)
+                                .DisableAutoPan(false)
+                                .OpenOnRightClick(true)
+                                .Content(
+                                @<text>
+                                    <br />
+                                    <input type="number" id=@("txt_priority_" + pt.Id) value="@pt.Lable" class="form-control" />
+                                    <br />
+                                    <button id="btn_add_customer_" onclick="change_priority_point('@pt.Id')" class="btn btn-default">@CaptionResource.Save</button>
+                                    <button id="btn_add_customer_" onclick="remove_point('@pt.Id', true)" class="btn btn-default">@CaptionResource.Remove</button>
+                                </text>
+
+                                )
+                            )
                             .Icon("~/Content/img/pin/point.png", new Size(10, 10), new Point(0, 0)
                                     , new Point(5, 5));
                     }
@@ -121,8 +152,8 @@
                         .Longitude(pt.Longitude)
                         .Latitude(pt.Latitude)
                         .Title(pt.Desc)
-                        .Icon(String.Format("../Content/img/pin/customer{0}.png", (int) pt.PointType), new Size(50, 60), new Point(0, 0)
-                            , new Point(0, 0))
+                        .Icon(String.Format("../Content/img/pin/customer{0}.png", (int)pt.PointType), new Size(16, 16), new Point(0, 0)
+                            , new Point(8, 8))
                         .Window(window =>
                         {
                             var win = window.Add()
@@ -136,9 +167,8 @@
                                     @<text>
                                          <h1>@pt.Desc</h1>
                                          <div> توضیحات اضافه قراره اینجا بیاد</div>
-                                         <br />
-                                            
-                                         <button id='btn_remove_customer_' onclick='remove_from_selected(@pt.Id, true)' class='btn btn-default'>@CaptionResource.RemoveCustomerRoute</button>
+                                         <br />                                            
+                                         <button id="btn_remove_customer_" onclick="remove_from_selected('@pt.Id', true)" class="btn btn-default">@CaptionResource.RemoveCustomerRoute</button>
                                      </text>
 
                                     );
@@ -152,7 +182,7 @@
                                             <h1>@pt.Desc</h1>
                                             <div> توضیحات اضافه قراره اینجا بیاد</div>
                                             <br />
-                                            <button id='btn_add_customer_' onclick='add_to_selected(@pt.Id, true)' class='btn btn-default'>@CaptionResource.AddCustomerRoute</button>
+                                            <button id="btn_add_customer_" onclick="add_to_selected('@pt.Id', true)" class="btn btn-default">@CaptionResource.AddCustomerRoute</button>
                                         </text>
 
                                     );
@@ -175,6 +205,7 @@
                 }
 
             })
+            
         .MarkerEvents(events =>
         {
             events.OnMarkerDragEnd("onDragEnd");

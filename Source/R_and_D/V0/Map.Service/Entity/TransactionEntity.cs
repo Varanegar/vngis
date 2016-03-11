@@ -22,7 +22,7 @@ namespace TrackingMap.Service.Entity
         public virtual CustomerEntity CustomerEntity { set; get; }
 
         [Column("TransactionType", TypeName = "int")]
-        public ETransactionType TransactionType { get; set; }
+        public PointType TransactionType { get; set; }
 
         [Column("CustomerType", TypeName = "int")]
         public ECustomerType CustomerType { get; set; }
@@ -33,9 +33,9 @@ namespace TrackingMap.Service.Entity
         [Column("Longitude")]
         public double Longitude { set; get; }
 
-        [Column("Desc", TypeName = "varchar")]
-        [MaxLength(5000)]
+        [Column("Desc", TypeName = "varchar(MAX)")]
         public string Desc { set; get; }
+
 
     }
 }

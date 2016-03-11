@@ -27,7 +27,7 @@ namespace TrackingMap.Models
         }
 
         //-------------------
-        public IList<SelectListItem> AvailableVisitorGroup { get; set; }
+        public IList<SelectListItem> AvailableArea { get; set; }
 
 
         //-------------------
@@ -38,9 +38,8 @@ namespace TrackingMap.Models
         public bool Order { get; set; }
         public bool LackOrder { get; set; }
         public bool LackVisit { get; set; }
-        public bool Wait { get; set; }
-        public bool WithoutActivity { get; set; }
-
+        public bool StopWithoutCustomer { get; set; }
+        public bool StopWithoutActivity { get; set; }
     }
 
 }

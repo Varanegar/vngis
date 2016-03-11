@@ -120,7 +120,7 @@ namespace TrackingMap.Controllers
                 if (parentid != null)
                 {
                     var siblingpoints = _areaPointService.LoadAreaPointByParentId(parentid).ToList();
-                    model.SiblingPoints = GeneralTools.PointListToPolyList(siblingpoints);
+                    model.SiblingPoints = GeneralTools.PointListToPolyList(siblingpoints, true , false);
                 }
             }
             else
@@ -131,7 +131,7 @@ namespace TrackingMap.Controllers
                 if (!view.IsLeaf)
                 {
                     var childgpoints = _areaPointService.LoadAreaPointByParentId(view.Id).ToList();
-                    model.SiblingPoints = GeneralTools.PointListToPolyList(childgpoints);                    
+                    model.SiblingPoints = GeneralTools.PointListToPolyList(childgpoints, true, false);                    
                 }
             }
 
@@ -172,7 +172,7 @@ namespace TrackingMap.Controllers
             }
             else{
                 model.AreaPoints = points;
-                model.Color = Color.Orange;
+                model.Color = Color.LightSalmon;
             }
             
             if (points.Count > 0)

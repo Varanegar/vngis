@@ -37,6 +37,18 @@ namespace TrackingMap.Service.BL
             return area.ParentId;
         }
 
+        public IList<TextValueView> LoadArea1() // level 1
+        {
+            var list = _areaRepository.Table.Where(x => x.ParentId == null)
+                .Select(x => new TextValueView()
+                {
+                    Id = x.Id,
+                    Title = x.Title,                   
+                }).ToList();
+            return list;
+        }
+
+
         public IList<AreaView> LoadAreaByParentId(Guid? id)
         {
             var list = _areaRepository.Table.Where(x => x.ParentId == id)

@@ -15,5 +15,9 @@ namespace TrackingMap.Service.Entity
         [MaxLength(200)]
         public string Title { set; get; }
 
+        [Column("AreaId")]
+        public Guid AreaEntityId { get; set; }
+       // public virtual AreaEntity AreaEntity { set; get; }
+
     }
 }

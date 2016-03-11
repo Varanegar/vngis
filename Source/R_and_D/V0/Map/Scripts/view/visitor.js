@@ -7,6 +7,13 @@ $(document).ready(function () {
         format: "yyyy/MM/dd",
     });
 
+    $("#tim_from").kendoTimePicker({
+       
+    });
+    $("#tim_to").kendoTimePicker({
+
+    });
+
     $("#grid_visitor").kendoGrid({
         dataSource: {
             type: "json",
@@ -31,8 +38,8 @@ $(document).ready(function () {
         columns: [
         {
             field: "Id",
-            headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
-            template: "<input type='checkbox' value='#=Id#' onchange='change_id_list(" + 'this' + ",#=Id#)' id=" + "chk" + "#=Id#" + " class='checkboxGroups'/>",
+            title: " ",
+            template: "<input type='checkbox' value='#=Id#' onchange=change_id_list(" + 'this' + ",'#=Id#') id=" + "chk" + "#=Id#" + " class='checkboxGroups'/>",
             attributes: { style: "width:5%;" }
         }, {
                     field: "Title",
@@ -54,6 +61,26 @@ $(document).ready(function () {
         }
     });
 
+    $("#ddl_area").on("change", function (event) {
+        var value = $("#ddl_area").val();
+        $("#ddl_visitor_group").empty();
+        $.ajax({
+            type: "POST",
+            url: "LoadVisitorGroupByAreaId",
+            dataType: "json",
+            data: { areaId: value },
+            success: function (data) {
+                $.each(data, function (i, ItemDropdown) {
+                    $("#ddl_visitor_group").append
+                        ('<option value="' + ItemDropdown.Id + '">' + ItemDropdown.Title + '</option>');
+
+                });
+            }
+        })
+        .done(function (Result) {
+        });       
+    });
+    
     $("#ddl_visitor_group").on("change", function (event) {        
         $('#grid_visitor').data('kendoGrid').dataSource.read();
         $('#grid_visitor').data('kendoGrid').refresh();
@@ -88,10 +115,6 @@ function change_id_list(e, id) {
         }
 
     } else {
-        var masterBox = $('#mastercheckbox');
-        if (masterBox.is(":checked")) {
-            masterBox.prop('checked', false);
-        }
 
         var idtoDelete = 0;
         for (var i = 0; i < selectedIds.length; i++) {
@@ -111,7 +134,13 @@ function map_aditionaldata() {
         Order: $("#chk_order").is(":checked"),
         LackOrder: $("#chk_lack_order").is(":checked"),
         LackVisit: $("#chk_lack_visit").is(":checked"),
-        Wait: $("#chk_wait").is(":checked"),
-        WithoutActivity: $("#chk_without_activity").is(":checked")
+        StopWithoutCustomer: $("#chk_wait").is(":checked"),
+        StopWithoutActivity: $("#chk_without_activity").is(":checked")
     };    
+}
+
+function onMapLoadHandler(args) {
+    for (var mark in args.markers) {
+       args.markers[mark].setLabel(args.markers[mark].title);
+    }
 }

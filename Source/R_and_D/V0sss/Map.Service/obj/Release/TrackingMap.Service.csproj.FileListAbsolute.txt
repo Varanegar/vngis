@@ -1,0 +1,10 @@
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\bin\Release\TrackingMap.Service.dll.config
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\bin\Release\TrackingMap.Service.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\bin\Release\TrackingMap.Service.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\bin\Release\EntityFramework.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\bin\Release\EntityFramework.SqlServer.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\bin\Release\EntityFramework.xml
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\bin\Release\EntityFramework.SqlServer.xml
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\obj\Release\TrackingMap.Service.csprojResolveAssemblyReference.cache
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\obj\Release\TrackingMap.Service.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Service\obj\Release\TrackingMap.Service.pdb

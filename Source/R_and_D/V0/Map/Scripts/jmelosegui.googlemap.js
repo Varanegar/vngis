@@ -188,6 +188,7 @@
         this.longitude = config.lng;
         this.address = config.address;
         this.title = config.title;
+       // this.labelClass= "labels",
         this.icon = config.icon;
         this.clickable = (config.clickable !== undefined) ? config.clickable : true;
         this.draggable = config.draggable;

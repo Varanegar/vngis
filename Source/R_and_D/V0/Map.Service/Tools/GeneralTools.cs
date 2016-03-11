@@ -14,6 +14,13 @@ namespace TrackingMap.Service.Tools
         {
             return list.Aggregate("", (current, i) => current + (i + ','));
         }
+        public static string GuidListTostring(List<Guid> list)
+        {
+            var str = list.Aggregate("", (current, i) => current + (i.ToString() + ','));
+            if (str.Length > 0)
+              str = str.Remove(str.Length - 1);
+            return str;
+        }
 
         public static Color GetRandomColor()
         {   var randonGen = new Random();
@@ -22,7 +29,7 @@ namespace TrackingMap.Service.Tools
             return c;
         }
 
-        public static List<PolyView> PointListToPolyList(List<PointView> list, bool randomColor = false)
+        public static List<PolyView> PointListToPolyList(List<PointView> list, bool closeline, bool randomColor)
         {
             Guid? group = null;
             var lines = new List<PolyView>();
@@ -38,7 +45,7 @@ namespace TrackingMap.Service.Tools
                 if (group != pointView.MasterId)
                 {
                     if (randomColor) color = GetRandomColor();
-                    if (!pointView.IsLeaf) line.Add(line.ElementAt(0));
+                    if ((!pointView.IsLeaf) && (closeline)) line.Add(line.ElementAt(0));
                         
 
                     lines.Add(new PolyView()
@@ -53,15 +60,16 @@ namespace TrackingMap.Service.Tools
             }
             if (line.Count > 0)
             {
-                if (randomColor) color = GetRandomColor();
-                if (!line.ElementAt(0).IsLeaf) line.Add(line.ElementAt(0));
-
-                lines.Add(new PolyView()
+                if ((closeline) && (!line.ElementAt(0).IsLeaf)) line.Add(line.ElementAt(0));
+            }
+            
+            if (randomColor) color = GetRandomColor();
+            lines.Add(new PolyView()
                 {
                     Points = line,
                     Color = color
                 });
-            }
+            
             return lines;
         }
     }

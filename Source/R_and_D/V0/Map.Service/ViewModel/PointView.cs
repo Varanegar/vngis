@@ -1,12 +1,15 @@
 ﻿
 using System;
+using TrackingMap.Service.Enum;
 
 namespace TrackingMap.Service.ViewModel
 {
     public class PointView
     {
         public Guid Id { set; get; }
+
         public string Desc { set; get; }
+        public string Lable { set; get; }
 
         public double Longitude { set; get; }
         
@@ -15,6 +18,7 @@ namespace TrackingMap.Service.ViewModel
         //public DateTime Timestpm { set; get;}
 
         public PointType PointType { set; get; }
+        public int SubType { set; get; }
 
         public Guid MasterId { set; get; }
 

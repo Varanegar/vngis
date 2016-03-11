@@ -202,7 +202,7 @@
     <value>عدم سفارش</value>
   </data>
   <data name="LackOfVisit" xml:space="preserve">
-    <value>عدم بازدید</value>
+    <value>عدم ویزیت</value>
   </data>
   <data name="Map" xml:space="preserve">
     <value>نقشه</value>
@@ -281,5 +281,26 @@
   </data>
   <data name="RemoveCustomerRoute" xml:space="preserve">
     <value>حذف از مسیر</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>ساعت</value>
+  </data>
+  <data name="Area1" xml:space="preserve">
+    <value>حوزه</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>گروه</value>
+  </data>
+  <data name="FromTime" xml:space="preserve">
+    <value>از ساعت</value>
+  </data>
+  <data name="ToTime" xml:space="preserve">
+    <value>تا ساعت</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>تا</value>
   </data>
 </root>

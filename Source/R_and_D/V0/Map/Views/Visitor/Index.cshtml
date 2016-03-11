@@ -3,6 +3,7 @@
 
 
 @Scripts.Render("~/Scripts/view/visitor.js")
+
 @(Html.GoogleMap().ScriptRegistrar(scripts => scripts.Add("jmelosegui.googlemap.js")))
 
 @model TrackingMap.Models.VisitorConditionModel
@@ -26,43 +27,89 @@
             <div class="side-bar">
                 <div id="pnl_condition" class="frame-condition">
                     <div>
-                        @Html.Label(CaptionResource.Date, new { @class = "control-label" })
-                        <input type="text" id="dte_date" />
-                    </div>
-                    <div>
-                        @Html.CheckBox("chk_daily_path", false, new { @id = "chk_daily_path", @class = "control-label" })
-                        @Html.Label(CaptionResource.DailyPath, new { @class = "control-label" })
-
-                        @Html.CheckBox("chk_visitor_path", true, new { @id = "chk_visitor_path", @class = "control-label" })
-                        @Html.Label(CaptionResource.VisitorPath, new { @class = "control-label" })
-                    </div>
-                    <div>
-                        <button id='btn_marker' class='btn btn-default'><span id="spn_marker" class='glyphicon glyphicon-chevron-down'></span>@CaptionResource.Markers</button>
+                        <button id='btn_marker' class='btn btn-default color-gray full-width'>@CaptionResource.Markers<span id="spn_marker" class='glyphicon glyphicon-chevron-down'></span></button>
                     </div>
                     <div id="pnl_marker" class="frame-border">
-                        @Html.CheckBox("chk_order", false, new { @id = "chk_order", @class = "control-label" })
-                        @Html.Label(CaptionResource.Order, new { @class = "control-label" })
+
+
+                        <img src="~/Content/img/pin/order.png" />
+                        @Html.CheckBox("chk_order", true, new { @id = "chk_order", @class = "control-label" })
+                        <label for="chk_order">@CaptionResource.Order</label>
                         <br />
-                        @Html.CheckBox("chk_lack_order", false, new { @id = "chk_lack_order", @class = "control-label" })
-                        @Html.Label(CaptionResource.LackOfOrder, new { @class = "control-label" })
+                        <img src="~/Content/img/pin/lackorder.png" />
+                        @Html.CheckBox("chk_lack_order", true, new { @id = "chk_lack_order", @class = "control-label" })
+                        <label for="chk_lack_order">@CaptionResource.LackOfOrder</label>
                         <br />
-                        @Html.CheckBox("chk_lack_visit", false, new { @id = "chk_lack_visit", @class = "control-label" })
-                        @Html.Label(CaptionResource.LackOfVisit, new { @class = "control-label" })
+                        <img src="~/Content/img/pin/lackvisit.png" />
+                        @Html.CheckBox("chk_lack_visit", true, new { @id = "chk_lack_visit", @class = "control-label" })
+                        <label for="chk_lack_visit">@CaptionResource.LackOfVisit</label>
                         <br />
-                        @Html.CheckBox("chk_without_activity", false, new { @id = "chk_without_activity", @class = "control-label" })
-                        @Html.Label(CaptionResource.WithoutActivity, new { @class = "control-label" })
+                        <img src="~/Content/img/pin/withoutactivity.png" />
+                        @Html.CheckBox("chk_without_activity", true, new { @id = "chk_without_activity", @class = "control-label" })
+                        <label for="chk_without_activity">@CaptionResource.WithoutActivity</label>
                         <br />
-                        @Html.CheckBox("chk_wait", false, new { @id = "chk_wait", @class = "control-label" })
-                        @Html.Label(CaptionResource.WaitWithoutCustomer, new { @class = "control-label" })
+                        <img src="~/Content/img/pin/wating.png" />
+                        @Html.CheckBox("chk_wait", true, new { @id = "chk_wait", @class = "control-label" })
+                        <label for="chk_wait">@CaptionResource.WaitWithoutCustomer</label>
+                    </div>
+                    <br />
+                    <div>
+                        @Html.CheckBox("chk_daily_path", false, new { @id = "chk_daily_path", @class = "control-label" })
+                        <label for="chk_daily_path">@CaptionResource.DailyPath</label>
+                        <br />
+                        @Html.CheckBox("chk_visitor_path", true, new { @id = "chk_visitor_path", @class = "control-label" })
+                        <label for="chk_visitor_path">@CaptionResource.VisitorPath</label>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="dte_date">@CaptionResource.Date</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" id="dte_date" />
+                        </div>
                     </div>
                     <br/>
-                    <div>
-                        @Html.DropDownList("ddl_visitor_group",
-                            new SelectList(
-                                Model.AvailableVisitorGroup,
-                                         "Value", "Text"), new { @id = "ddl_visitor_group", @class = "form-control" })
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="dte_date">@CaptionResource.Time</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" id="tim_from" />
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="dte_date">@CaptionResource.To</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" id="tim_to" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddl_area">@CaptionResource.Area1</label>
+                        </div>
+                        <div class="col-md-9">
+                            @Html.DropDownList("ddl_area",
+                                new SelectList(
+                                    Model.AvailableArea,
+                                    "Value", "Text"), new { @id = "ddl_area", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddl_visitor_group">@CaptionResource.Group</label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ddl_visitor_group"></select>
+                        </div>
+                    </div>
+
                 </div>
+
                 <div id="pnl_Visitor">
                     <div id="grid_visitor" class="full-width"></div>
                 </div>
