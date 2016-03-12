@@ -55,7 +55,5 @@ namespace TrackingMap.Service.BL
             return list;
         }
 
-
-
     }
 }

@@ -14,10 +14,25 @@ namespace TrackingMap.Service.Entity
         [Column("Title", TypeName = "varchar")]
         [MaxLength(200)]
         public string Title { set; get; }
-        
+
+        [Column("Code", TypeName = "varchar")]
+        [MaxLength(20)]
+        public string Code { set; get; }
+
+        [Column("ShopTitle", TypeName = "varchar")]
+        [MaxLength(200)]
+        public string ShopTitle { set; get; }
+
+        [Column("Phone", TypeName = "varchar")]
+        [MaxLength(200)]
+        public string Phone { set; get; }
+
         [Column("Address", TypeName = "varchar")]
         [MaxLength(500)]
         public string Address { set; get; }
+
+        [Column("Desc", TypeName = "varchar(MAX)")]
+        public string Desc { set; get; }
 
         [Column("Latitude")]
         public double Latitude { set; get; }

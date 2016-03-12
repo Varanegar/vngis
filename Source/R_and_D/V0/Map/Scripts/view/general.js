@@ -14,3 +14,5 @@ function get_temp_guid(id) {
     return g;
     
 }
+
+

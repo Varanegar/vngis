@@ -85,6 +85,11 @@ namespace TrackingMap.Controllers
             return Json(new { success = true });
             //Redirect("GooglemapLimiteView", new { id });
         }
+        public ActionResult RemoveAreaPointsByAreaId(Guid id)
+        {
+            return Json(new { success = _areaPointService.RemoveAreaPointsByAreaId(id) });
+            //Redirect("GooglemapLimiteView", new { id });
+        }
         
         public ActionResult GooglemapAreaView(Guid id, bool editable,
                 bool showcust,

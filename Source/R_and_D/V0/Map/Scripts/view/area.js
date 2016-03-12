@@ -37,21 +37,19 @@ $(document).ready(function () {
         pageable: false,
         scrollable: false,
         change: grid_change,
+        dataBound: first_row_select,
         columns: [{
             field: "Title",
             title: 'عنوان',
         }
+
         ,{
             field: "Id",
             title: "&nbsp; &nbsp;",
-            attributes:{style:"width:15px;"},
-            template: "<button  type='button' class='btn btn-link' onclick=show_detail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray'></span ></button>"
-        }
-        , {
-            field: "Id",
-            title: "&nbsp; &nbsp;",
-            attributes: { style: "width:15px;" },
-            template: "<button  type='button' class='btn btn-link' onclick='edit_area()';><span class='glyphicon glyphicon-pencil color-gray'></span ></button>"
+            attributes:{style:"width:90px;"},
+            template: "<button  type='button' class='btn-link btn-grid' onclick=show_detail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray'></span ></button>" +
+                "<button  type='button' class='btn-link btn-grid' onclick='edit_area()';><span class='glyphicon glyphicon-pencil color-gray'></span ></button>" +
+                "<button  type='button' class='btn-link btn-grid' onclick='remove_area()';><span class='glyphicon glyphicon-trash color-gray'></span ></button>"
         }
         ]
     });
@@ -107,7 +105,7 @@ $(document).ready(function () {
                     },
                 },
                 pageSize: 30,
-                serverPaging: true,
+                serverPaging: false,
                 //serverFiltering: true,
                 //serverSorting: true
             },
@@ -116,17 +114,20 @@ $(document).ready(function () {
             editable: false,
             selectable: "row",
             pageable: false,
-            scrollable: false,
-            columns: [{
-                field: "Title",
-                title: 'عنوان',
-            }
-            ,{
-                field: "Id",
-                title: "&nbsp; &nbsp;",
-                attributes:{style:"width:15px;"},
-                template: "<button  type='button' class='btn btn-default'  onclick=add_to_selected('#=Id#');><span class='glyphicon glyphicon-chevron-left'></span ></button>"
-            }
+            scrollable: true,
+            columns: [
+                {
+                    field: "Id",
+                    title: "&nbsp; &nbsp;",
+                    width: 40,
+                    //attributes: { style: "width:15px;" },
+                    template: "<button  type='button' class='btn-link btn-grid' onclick=add_to_selected('#=Id#'); ><span class='glyphicon glyphicon-chevron-down color-gray'></span ></button>"
+                },
+                {   field: "Code", title: "کد",   width: 100,     },
+                {   field: "Title", title: "عنوان"     },
+                {   field: "Phone",  title: "تلفن", width: 100 },
+                {   field: "ShopTitle", title: "فروشگاه", width: 100, },
+                {   field: "Address", title: "آدرس" },
             ]
         });
         $("#grid_customer_selected").kendoGrid({
@@ -140,7 +141,7 @@ $(document).ready(function () {
                     },
                 },
                 pageSize: 30,
-                serverPaging: true,
+                serverPaging: false,
                 //serverFiltering: true,
                 //serverSorting: true
             },
@@ -149,27 +150,28 @@ $(document).ready(function () {
             editable: false,
             selectable: "row",
             pageable: false,
-            scrollable: false,
-            columns: [{
-                field: "Title",
-                title: 'عنوان',
-            }
-            , {
-                field: "Id",
-                title: "&nbsp; &nbsp;",
-                attributes: { style: "width:15px;" },
-                template: "<button  type='button' class='btn btn-default' onclick=remove_from_selected('#=Id#'); ><span class='glyphicon glyphicon-chevron-right'></span ></button>"
-            }
+            scrollable: true,
+            columns: [
+                {
+                    field: "Id",
+                    title: "&nbsp; &nbsp;",
+                    width: 40,
+                    template: "<button  type='button' class='btn-link btn-grid' onclick=remove_from_selected('#=Id#'); ><span class='glyphicon glyphicon-chevron-up color-gray'></span ></button>"
+                },
+                { field: "Code", title: "کد", width: 100, },
+                { field: "Title", title: "عنوان" },
+                { field: "Phone", title: "تلفن", width: 100 },
+                { field: "ShopTitle", title: "فروشگاه", width: 100, },
+                { field: "Address", title: "آدرس" },
             ]
         });
 
     });
     
-
     $("#btn_add_customer_list").on("click", function (e) {
        for (var i = 0; i < selected_markers.length; i++) {
            add_to_selected(selected_markers[i].marker.id.substring(selected_markers[i].marker.id.lastIndexOf('_') + 1), false);
-           selected_markers[i].marker.marker.setIcon("../Content/img/pin/customer1.png");
+           selected_markers[i].marker.marker.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
        }
        empty_selected_markers(false);
     });
@@ -177,7 +179,7 @@ $(document).ready(function () {
     $("#btn_remove_customer_list").on("click", function (e) {
         for (var i = 0; i < selected_markers.length; i++) {
             remove_from_selected(selected_markers[i].marker.id.substring(selected_markers[i].marker.id.lastIndexOf('_') + 1), false);
-            selected_markers[i].marker.marker.setIcon("../Content/img/pin/customer0.png");
+            selected_markers[i].marker.marker.setIcon({ url: "../Content/img/pin/customer0.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
         }
         empty_selected_markers(false);
     });
@@ -185,10 +187,33 @@ $(document).ready(function () {
 });
 
 
+function first_row_select(e) {
+    e.sender.select("tr:eq(1)");
+};
+
 //$("#btn_edit").on("click", function (e) {
 function edit_area() {
     if (selected_id != null)
         refreshmap(true);
+};
+
+function remove_area() {
+    if (selected_id != null)
+        $.ajax({
+            type: "POST",
+            url: "/Area/RemoveAreaPointsByAreaId",
+            dataType: "json",
+            data: { id: selected_id },
+            success: function (data) {
+                if (data.success == true) {
+                    refreshmap(false);
+
+                }
+                else {
+                    alert('محدوده مورد نظر دارای زیر شاخه می باشد. امکان حذف وجود ندارد.');
+                }
+            }
+        });
 };
 
 function show_detail(id) {
@@ -323,7 +348,7 @@ function add_to_selected(id, changeicon) {
             if (changeicon) {
                 var mrk = find_customer_marker(id);
                 if (mrk != null)
-                    mrk.marker.setIcon("../Content/img/pin/customer1.png");
+                    mrk.marker.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
             }
             $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
             $('#grid_customer_not_selected').data('kendoGrid').refresh();
@@ -344,8 +369,7 @@ function remove_from_selected(id, changeicon) {
             if (changeicon) {
                 var mrk = find_customer_marker(id);
                 if (mrk != null)
-                    mrk.marker.setIcon("../Content/img/pin/customer0.png");
-                
+                    mrk.marker.setIcon({ url: "../Content/img/pin/customer0.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
             }
             $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
             $('#grid_customer_not_selected').data('kendoGrid').refresh();
@@ -385,9 +409,7 @@ function onMapLoadHandler(args) {
                 Lng: args.markers[mark].getPosition().lng(),
                 Pr: parseInt(args.markers[mark].title)
             });
-            args.markers[mark].setLabel(args.markers[mark].title);
         }
-        new_id = parseInt(args.markers[mark].title); //priority
     }
     
 }

@@ -98,6 +98,23 @@ namespace TrackingMap.Service.BL
                 }
         }
 
+        public bool RemoveAreaPointsByAreaId(Guid id)
+        {
+
+            var ids = _areaRepository.Table.Where(x => x.ParentId == id).Select(x => x.Id).ToList();
+
+            if (_areaPointRepository.Table.Any(x => ids.Contains(x.Id)))
+                return false; //has child
+
+
+            var list = _areaPointRepository.Table.Where(x => x.AreaEntityId == id).ToList();
+            foreach(var en in list){
+                _areaPointRepository.Delete(en);
+            }
+            return true;
+        }
+
+
         public bool HaseAreaPoint(Guid id)
         {
             return _areaPointRepository.Table.Where(x => x.AreaEntityId == id).Count() > 3;

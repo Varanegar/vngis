@@ -1,7 +1,7 @@
 ﻿var selectedIds = [];
 
 $(document).ready(function () {
-    $("#pnl_marker").hide();
+    //$("#pnl_marker").hide();
     
     $("#dte_date").kendoDatePicker({
         format: "yyyy/MM/dd",
