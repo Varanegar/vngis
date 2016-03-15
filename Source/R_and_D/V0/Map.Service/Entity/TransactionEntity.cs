@@ -25,7 +25,7 @@ namespace TrackingMap.Service.Entity
         public PointType TransactionType { get; set; }
 
         [Column("CustomerType", TypeName = "int")]
-        public ECustomerType CustomerType { get; set; }
+        public ESubType CustomerType { get; set; }
 
         [Column("Latitude")]
         public double Latitude { set; get; }

@@ -33,44 +33,7 @@
                 
                 foreach (var pt in Model.MarkerPoints)
                 {
-                    var icon = "marker0";
-
-                    if (pt.PointType == PointType.Order)
-                    {
-                        icon = "orderpin";
-                    }
-                    if (pt.PointType == PointType.LackOfVisit)
-                    {                        
-                        icon = "lackvisitpin";
-                    }
-                    if (pt.PointType == PointType.LackOfOrder)
-                    {                        
-                        icon = "lackorderpin";
-                    }
-                    if (pt.PointType == PointType.Customer)
-                    {                        
-                        icon = "customerpin";
-                    }
-                    if (pt.PointType == PointType.StopWithoutCustomer)
-                    {                        
-                        icon = "withoutcustomerpin";
-                    }
-                    if (pt.PointType == PointType.StopWithoutActivity)
-                    {                        
-                        icon = "withoutactivitypin";
-                    }
-
-                    var color = "";
-                    if (pt.SubType == (int) ECustomerType.OUTE_LINE)
-                    {                        
-                        color = "1";
-                    }
-                    if (pt.SubType == (int) ECustomerType.NEW)
-                    {                        
-                        color = "2";
-                    }
-                    
-                    marker.Add()
+                    var m = marker.Add()
                         .Draggable(false)
                         .Id("marker_point_" + pt.PointType+"_"+pt.SubType + "_" + pt.Id)
                         .Longitude(pt.Longitude)
@@ -86,9 +49,39 @@
                                 </text>
 
                                     )
-                            )
-                        .Icon(String.Format("~/Content/img/pin/{0}{1}.png", icon, color), new Size(32, 32), new Point(0, 0)
-                                , new Point(16, 16));
+                            );
+
+
+
+                    var icon = "marker0";
+                    if ( (pt.PointType == PointType.Customer) || (pt.PointType == PointType.GpsOff) )
+                    {
+                        if (pt.PointType == PointType.Customer){ icon = "customer"; }
+                        else if (pt.PointType == PointType.GpsOff) { icon = "gpsoff"; }
+                        
+                        m.Icon(String.Format("~/Content/img/pin/{0}.png", icon), new Size(16, 16), new Point(0, 0)
+                            , new Point(8, 8));
+                    }
+                    else
+                    {
+
+                        if (pt.SubType == (int)ESubType.OUTE_LINE) { icon = "outeline"; }
+                        else if (pt.SubType == (int)ESubType.DISTANCE) { icon = "distance"; }
+                        else if (pt.PointType == PointType.Order) { icon = "order"; }
+                        else if (pt.PointType == PointType.LackOfVisit) { icon = "lackvisit"; }
+                        else if (pt.PointType == PointType.LackOfOrder) { icon = "lackorder"; }
+                        else if (pt.PointType == PointType.StopWithoutCustomer) { icon = "withoutcustomer"; }
+                        else if (pt.PointType == PointType.StopWithoutActivity) { icon = "withoutactivity"; }
+                        else if (pt.PointType == PointType.OuteLine) { icon = "outeline"; }
+
+                        var color = "";
+                        if (pt.SubType == (int)ESubType.NEW) { color = "1"; }
+                        
+                        m.Icon(String.Format("~/Content/img/pin/{0}{1}.png", icon, color), new Size(10, 10), new Point(0, 0)
+                            , new Point(5, 5));
+                    }
+
+                            
                 }
 
             })

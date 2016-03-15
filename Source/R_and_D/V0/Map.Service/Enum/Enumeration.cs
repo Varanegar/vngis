@@ -11,7 +11,7 @@ namespace TrackingMap.Service.Enum
     }
 
     public enum ETransactionType {ORDER,  LACK_OF_ORDER, LACK_OF_VISIT, STOP_WITHOUT_CUSTOME, MULTI}
-    public enum ECustomerType { IN_LINE, OUTE_LINE, NEW }
+    public enum ESubType { IN_LINE, OUTE_LINE, NEW, DISTANCE }
 
     public enum PointType
     {
@@ -25,7 +25,9 @@ namespace TrackingMap.Service.Enum
         LackOfVisit = 2, 
         StopWithoutCustomer = 3,
         StopWithoutActivity = 4,
-        Customer = 5, 
+        Customer = 5,
+        OuteLine= 6,
+        GpsOff = 7,
         
         Multi = 10
 

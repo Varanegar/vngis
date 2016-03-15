@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    
+    @{
+        var kendoVersion = "2014.1.318";
+    }
+
+    @Styles.Render(string.Format("~/Content/css/kendo/{0}/kendo.default.min.css", kendoVersion))
+    @Styles.Render(string.Format("~/Content/css/kendo/{0}/kendo.common.min.css", kendoVersion))
+    @Styles.Render("~/Content/css/bootstrap-rtl.css")
+    @Styles.Render("~/Content/css/Site.css")
+    @Styles.Render("~/Content/css/style_responsive.css")
+    @Styles.Render("~/Content/css/sb-admin-2.css")
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/js/scripts.js")
+  
+
+    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.web.min.js", kendoVersion))
+    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/fa-IR.js", kendoVersion))
+    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/JalaliDate.js", kendoVersion))
+    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.core.js", kendoVersion))
+    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.calendar.js", kendoVersion))
+    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.popup.js", kendoVersion))
+    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.datepicker.js", kendoVersion))
+
+    @Scripts.Render("~/Scripts/view/general.js")
+
+    @RenderSection("scripts", required: false)
+    </head>
+    <body>
+      
+
+        <div id="container" >
+            <div id="sidebar" class="nav-collapse">
+                <div class="sidebar-toggler">
+                </div>
+                <ul id="side-menu" class="sidebar-menu">
+                    <li>
+                        <a class="@(ViewBag.CurrMenu == "Road"? "Active" : "" )" href="/Area/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.Route
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Visitor/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                            @CaptionResource.Visitor
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div id="main-content">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                            @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <p>&copy; @DateTime.Now.Year - @CaptionResource.AppName</p>
+            </footer>
+        </div>
+        <script>jQuery(document).ready(function () { App.init(); });</script>
+
+</body>
+</html>

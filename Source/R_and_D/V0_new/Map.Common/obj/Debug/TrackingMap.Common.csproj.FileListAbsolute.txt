@@ -1,0 +1,4 @@
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\bin\Debug\TrackingMap.Common.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\bin\Debug\TrackingMap.Common.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\obj\Debug\TrackingMap.Common.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\obj\Debug\TrackingMap.Common.pdb

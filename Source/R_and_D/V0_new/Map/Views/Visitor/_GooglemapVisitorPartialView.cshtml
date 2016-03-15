@@ -1,0 +1,94 @@
+﻿
+@using System.Data.Entity.Migrations.Model
+@using System.Drawing
+@using Jmelosegui.Mvc.GoogleMap
+@using TrackingMap.Common.Enum
+
+@model TrackingMap.Models.VisitorModel
+
+    @{
+        Html.GoogleMap()
+          .Name("map")
+          .Zoom(11)
+          .FitToMarkersBounds(true)
+          .Center(c => c.Latitude(35.6961111).Longitude(51.4230556))
+          .Polylines(pf =>
+          {
+              foreach (var line in Model.Lines)
+              {
+                  pf.Add()
+                      .Points(ptn =>
+                      {
+                          foreach (var pt in line.Points)
+                          {
+                              ptn.Add(pt.Latitude, pt.Longitude);
+                          }
+                      })
+                      .StrokeColor(line.Color)
+                      .StrokeWeight(3);
+              }
+          })
+            .Markers(marker =>
+            {
+                
+                foreach (var pt in Model.MarkerPoints)
+                {
+                    var m = marker.Add()
+                        .Draggable(false)
+                        .Id("marker_point_" + pt.PointType+"_"+pt.SubType + "_" + pt.Id)
+                        .Longitude(pt.Longitude)
+                        .Latitude(pt.Latitude)
+                        .Title(pt.Lable)
+                        .Window(window => window.Add()
+                                .MaxWidth(800)
+                                .DisableAutoPan(false)
+                                .OpenOnRightClick(false)
+                                .Content(
+                                @<text>
+                                   @Html.Raw(@pt.Desc)
+                                </text>
+
+                                    )
+                            );
+
+
+
+                    var icon = "marker0";
+                    if ( (pt.PointType == PointType.Customer) || (pt.PointType == PointType.GpsOff) )
+                    {
+                        if (pt.PointType == PointType.Customer){ icon = "customer"; }
+                        else if (pt.PointType == PointType.GpsOff) { icon = "gpsoff"; }
+                        
+                        m.Icon(String.Format("~/Content/img/pin/{0}.png", icon), new Size(16, 16), new Point(0, 0)
+                            , new Point(8, 8));
+                    }
+                    else
+                    {
+
+                        if (pt.SubType == (int)ESubType.OUTE_LINE) { icon = "outeline"; }
+                        else if (pt.SubType == (int)ESubType.DISTANCE) { icon = "distance"; }
+                        else if (pt.PointType == PointType.Order) { icon = "order"; }
+                        else if (pt.PointType == PointType.LackOfVisit) { icon = "lackvisit"; }
+                        else if (pt.PointType == PointType.LackOfOrder) { icon = "lackorder"; }
+                        else if (pt.PointType == PointType.StopWithoutCustomer) { icon = "withoutcustomer"; }
+                        else if (pt.PointType == PointType.StopWithoutActivity) { icon = "withoutactivity"; }
+                        else if (pt.PointType == PointType.OuteLine) { icon = "outeline"; }
+
+                        var color = "";
+                        if (pt.SubType == (int)ESubType.NEW) { color = "1"; }
+                        
+                        m.Icon(String.Format("~/Content/img/pin/{0}{1}.png", icon, color), new Size(10, 10), new Point(0, 0)
+                            , new Point(5, 5));
+                    }
+
+                            
+                }
+
+            })
+          .ClientEvents(events => events.OnMapLoaded("onMapLoadHandler"))
+          .Render();
+
+    }
+
+
+    @(Html.GoogleMap().ScriptRegistrar())
