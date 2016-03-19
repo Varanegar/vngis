@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.Enum;
+using TrackingMap.Common.ViewModel;
 
 namespace TrackingMap.Service.BL
 {

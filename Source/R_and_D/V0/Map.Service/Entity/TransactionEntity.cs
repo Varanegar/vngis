@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TrackingMap.Service.Enum;
+using TrackingMap.Common.Enum;
 
 namespace TrackingMap.Service.Entity
 {

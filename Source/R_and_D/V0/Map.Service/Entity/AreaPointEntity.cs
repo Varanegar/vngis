@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.ViewModel;
 
 namespace TrackingMap.Service.Entity
 {

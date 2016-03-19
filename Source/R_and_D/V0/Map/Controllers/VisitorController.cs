@@ -3,15 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Web.Mvc;
-using TrackingMap.Models;
 using TrackingMap.Service.BL;
 using TrackingMap.Service.Tools;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.ViewModel;
+using System.Web.Http;
 
 namespace TrackingMap.Controllers
 {
-    public class VisitorController : Controller
+    public class VisitorController : ApiController
     {
         private readonly VisitorService _visitorService;
         private readonly AreaService _areaService;
@@ -26,36 +25,28 @@ namespace TrackingMap.Controllers
             _areaService = areaService;
         }
 
-        public ActionResult Index()
+
+        public List<TextValueView> LoadLevel1Area()
         {
-            ViewBag.CurrMenu = "Visitor";
-            var model = PrepareConditionModel();
-            return View(model);
+            var list = _areaService.LoadArea1().ToList();
+            list.Insert(0, new TextValueView() { Id = null, Title = "همه" });
+            return list;
         }
 
-        public VisitorConditionModel PrepareConditionModel()
+        public List<TextValueView> LoadVisitorGroupByAreaId(IdView areaId)
         {
-            var model = new VisitorConditionModel();
-            var list = _areaService.LoadArea1().Select(x => new SelectListItem(){Value = x.Id.ToString(), Text = x.Title}).ToList();
-            list.Insert(0,new SelectListItem(){Value = null, Text = "همه"});
-            model.AvailableArea = list;
-            return model;
-        }
-
-        public ActionResult LoadVisitorGroupByAreaId(Guid areaId)
-        {
-            var list = _visitorService.LoadVisitorGroup(areaId);
+            var list = _visitorService.LoadVisitorGroup(areaId.Id).ToList();
             list.Insert(0, new TextValueView() { Id = null, Title = "انتخاب کنید..." });
-            return Json(list);
+            return list;
         }
 
-        public ActionResult LoadVisitorByGroupId(Guid groupId)
+        public List<TextValueView> LoadVisitorByGroupId(IdView groupId)
         {
-            var list = groupId == null ? new List<TextValueView>() : _visitorService.LoadVisitorByGroupId(groupId);
-            return Json(list);
+            var list = groupId == null ? new List<TextValueView>() : _visitorService.LoadVisitorByGroupId(groupId.Id);
+            return list;
         }
 
-        public ActionResult GooglemapVisitorView(VisitorConditionModel filter)
+        public VisitorModel MapVisitorModel(VisitorConditionModel filter)
         {
             var model = new VisitorModel();
             
@@ -83,7 +74,7 @@ namespace TrackingMap.Controllers
                             filter.StopWithoutActivity);
             model.MarkerPoints = marker;
             
-            return this.PartialView("_GooglemapVisitorPartialView", model);
+            return model;
         }
     }
 }

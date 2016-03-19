@@ -1,15 +1,10 @@
 ﻿using System;
 using System.IO;
+using TrackingMap.Common.Enum;
 
 namespace TrackingMap.Service.BL
 {
-    public enum ELogLevel
-    {
-        DEBUG,
-        INFO,
-        ERROR
-    }
-
+   
     public class LogService
     {
         public static void InsertLog(string str, string key = "", ELogLevel type = ELogLevel.INFO)

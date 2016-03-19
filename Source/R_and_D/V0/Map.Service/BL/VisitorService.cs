@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
 using TrackingMap.Service.Tools;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.ViewModel;
 
 namespace TrackingMap.Service.BL
 {

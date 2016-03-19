@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
-using TrackingMap.Service.Enum;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.Enum;
+using TrackingMap.Common.ViewModel;
 
 namespace TrackingMap.Service.BL
 {
@@ -115,7 +115,7 @@ namespace TrackingMap.Service.BL
         }
 
 
-        public bool HaseAreaPoint(Guid id)
+        public bool HaseAreaPoint(Guid? id)
         {
             return _areaPointRepository.Table.Where(x => x.AreaEntityId == id).Count() > 3;
         }

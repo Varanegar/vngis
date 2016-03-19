@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.ViewModel;
 
 namespace TrackingMap.Service.BL
 {

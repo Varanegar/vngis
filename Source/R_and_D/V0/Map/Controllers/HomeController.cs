@@ -7,8 +7,6 @@ namespace TrackingMap.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = CaptionResource.AppName;
-
             return View();
         }
         public ActionResult About()

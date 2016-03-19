@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.ViewModel;
 
 namespace TrackingMap.Service.BL
 {
@@ -86,7 +86,7 @@ namespace TrackingMap.Service.BL
         }
 
 
-        public List<CustomerView> LoadCustomerSelectedByAreaId(Guid areaid, bool selected)
+        public List<CustomerView> LoadCustomerSelectedByAreaId(Guid? areaid, bool selected)
         {
 
             List<CustomerView> list;

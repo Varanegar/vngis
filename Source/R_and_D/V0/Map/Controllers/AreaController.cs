@@ -4,18 +4,18 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
-using System.Web.Mvc;
-using Jmelosegui.Mvc.GoogleMap;
 using Microsoft.Owin.Security.Google;
 using TrackingMap.Service.BL;
 using TrackingMap.Service.Tools;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.ViewModel;
 using TrackingMap.Models;
 using WebGrease.Css.Ast.Selectors;
+using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace TrackingMap.Controllers
 {
-    public class AreaController : Controller
+    public class AreaController : ApiController
     {
 
         private readonly AreaService _areaService;
@@ -30,77 +30,78 @@ namespace TrackingMap.Controllers
 
         }
 
-        public ActionResult Index()
+        [HttpPost]
+        public IList<AreaView> LoadAreaList(IdView parent)
         {
-            ViewBag.CurrMenu = "Area";
-            return View();
+
+            var AreaList = _areaService.LoadAreaByParentId((parent == null ? null : parent.Id));
+            return AreaList;
         }
 
-        public ActionResult GetAreaList(Guid? parentId)
+        [HttpPost]
+        public bool HasAreaPoint(IdView areaView)
         {
-            var AreaList = _areaService.LoadAreaByParentId(parentId);
-            return Json(AreaList);
+            var haspoint = _areaPointService.HaseAreaPoint(areaView.Id);
+            return haspoint;
         }
 
-        public ActionResult HasAreaPoint(Guid id)
+        [HttpPost]
+        public IList<AreaView> GetAreaPath(IdView areaView)
         {
-            var haspoint = _areaPointService.HaseAreaPoint(id);
-            return Json(haspoint);
-        }
-        public ActionResult GetAreaPath(Guid? id)
-        {
-            var haspoint = _areaService.GetAreaPathById(id);
-            return Json(haspoint);
+            var haspoint = _areaService.GetAreaPathById(areaView.Id);
+            return haspoint;
         }
 
-        public ActionResult GetSelectedCustomer(Guid parentId)
+
+        [HttpPost]
+        public List<CustomerView> LoadSelectedCustomer(IdView parentId)
         {
-            var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId, true);
-            return Json(CustomerList);
-        }
-        public ActionResult GetNotSelectedCustomer(Guid parentId)
-        {
-            var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId, false);
-            return Json(CustomerList);
+            var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId.Id, true);
+            return CustomerList;
         }
 
-        public ActionResult AddCustomerToSelected(Guid customerId, Guid areaId)
+        [HttpPost]
+        public List<CustomerView> LoadNotSelectedCustomer(IdView parentId)
         {
-            var r = _areaService.AddCustomerToSelected(customerId,  areaId);
-            return Json(r);
+            var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId.Id, false);
+            return CustomerList;
         }
 
-        public ActionResult RemoveCustomerFromSelected(Guid customerId, Guid areaId)
+        [HttpPost]
+        public bool AddCustomerToSelected(CustomerAreaView customer)
         {
-            var r = _areaService.RemoveCustomerFromSelected(customerId, areaId);
-            return Json(r);
+            
+            var r = _areaService.AddCustomerToSelected(customer.CustomerId, customer.AreaId);
+            return r;
+        }
+
+        [HttpPost]
+        public bool RemoveCustomerFromSelected(CustomerAreaView customer)
+        {
+            return _areaService.RemoveCustomerFromSelected(customer.CustomerId, customer.AreaId);
         }
         
         //-----------------------------------------------------------------------------------------------------------
         //  MAP
         //-----------------------------------------------------------------------------------------------------------
-        public ActionResult SaveAreaPoint(Guid id, AreaPointView[] markers)
+        public ReturnValue SaveAreaPoint(AreaPointListView areaPoints)
         {
-            _areaPointService.SaveAreaPointList(id, markers.ToList());
-            return Json(new { success = true });
+            _areaPointService.SaveAreaPointList(areaPoints.Id, areaPoints.Points);
+            return new ReturnValue{ Success = true };
             //Redirect("GooglemapLimiteView", new { id });
         }
-        public ActionResult RemoveAreaPointsByAreaId(Guid id)
+        public ReturnValue RemoveAreaPointsByAreaId(Guid id)
         {
-            return Json(new { success = _areaPointService.RemoveAreaPointsByAreaId(id) });
+            return new ReturnValue{ Success = _areaPointService.RemoveAreaPointsByAreaId(id) };
             //Redirect("GooglemapLimiteView", new { id });
         }
-        
-        public ActionResult GooglemapAreaView(Guid id, bool editable,
-                bool showcust,
-                bool showcustrout,
-                bool showcustotherrout,
-                bool showcustwithoutrout)
+
+        public AreaModel MapAreaModel(AreaConditionModel condition)
         {
             var model = new AreaModel();
 
-            var view = _areaService.GetViewById(id);
-            var parentid = _areaService.GetParentIdById(id);
+            var view = _areaService.GetViewById(condition.Id);
+            var parentid = _areaService.GetParentIdById(condition.Id);
             //---------------------------------------
             //  show parent limit
             //---------------------------------------
@@ -117,7 +118,7 @@ namespace TrackingMap.Controllers
 
 
 
-            if (editable)
+            if (condition.Editable)
             {
                 //---------------------------------------
                 //  show sibling limit
@@ -146,10 +147,10 @@ namespace TrackingMap.Controllers
                 //---------------------------------------
                 //  show customer markers
                 //---------------------------------------
-                if (showcustrout || showcustotherrout || showcustwithoutrout)
+                if (condition.Showcustrout || condition.Showcustotherrout || condition.Showcustwithoutrout)
                 {
-                    var customerpoints = _customerService.LoadCustomerByAreaId(parentid, id,
-                        showcustrout, showcustotherrout, showcustwithoutrout);
+                    var customerpoints = _customerService.LoadCustomerByAreaId(parentid, condition.Id,
+                        condition.Showcustrout, condition.Showcustotherrout, condition.Showcustwithoutrout);
                     model.CustomerPoints = customerpoints;
                 }
 
@@ -159,9 +160,9 @@ namespace TrackingMap.Controllers
                 //---------------------------------------
                 //  show customer markers
                 //---------------------------------------
-                if (showcust)
+                if (condition.Showcust)
                 {
-                    var customerpoints = _customerService.LoadCustomerByAreaId(id);
+                    var customerpoints = _customerService.LoadCustomerByAreaId(condition.Id);
                     model.CustomerPoints = customerpoints;
                 }
             }
@@ -169,7 +170,7 @@ namespace TrackingMap.Controllers
             //---------------------------------------
             //  show curent area or route point
             //---------------------------------------
-            var points = _areaPointService.LoadAreaPointById(id);
+            var points = _areaPointService.LoadAreaPointById(condition.Id);
             if (view.IsLeaf)
             {
                 model.LinePoints = points;
@@ -189,9 +190,9 @@ namespace TrackingMap.Controllers
                 else
                     model.Center = new PointView() { Longitude = 51.4230556, Latitude = 35.6961111 };
             }
-            model.EditMode = editable;
+            model.EditMode = condition.Editable;
             model.IsLeaf = view.IsLeaf;
-            return this.PartialView("_GooglemapAreaPartialView", model);
+            return model; // this.PartialView("_GooglemapAreaPartialView", model);
         }
     }
 }

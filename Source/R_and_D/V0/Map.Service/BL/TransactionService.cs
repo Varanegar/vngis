@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
-using TrackingMap.Service.Enum;
+using TrackingMap.Common.Enum;
 using TrackingMap.Service.Tools;
-using TrackingMap.Service.ViewModel;
+using TrackingMap.Common.ViewModel;
 
 namespace TrackingMap.Service.BL
 {
