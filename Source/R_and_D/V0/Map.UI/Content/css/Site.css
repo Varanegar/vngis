@@ -544,10 +544,12 @@ btn-grid{
 }
 
 .labels {
-  color: red;
-  font-family: Tahoma, "Arial", sans-serif;
-  font-size: 10px;
-  text-align: center;
-  width: 50px;
-  white-space: nowrap;
+   color: red;
+   background-color: white;
+   border: 2px solid black;
+   font-family: Tahoma, "Arial", sans-serif;
+   font-size: 10px;
+   text-align: center;
+   width: 50px;
+   white-space: nowrap;
 }

@@ -321,4 +321,7 @@
   <data name="WithoutActivity" xml:space="preserve">
     <value>بدون فعالیت</value>
   </data>
+  <data name="AddPoint" xml:space="preserve">
+    <value>افزودن نقطه</value>
+  </data>
 </root>

@@ -2,7 +2,6 @@ D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\TrackingMap.UI.dll.config
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\TrackingMap.UI.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\TrackingMap.UI.pdb
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\Antlr3.Runtime.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\Jmelosegui.Mvc.GoogleMap.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\Microsoft.Web.Infrastructure.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\Newtonsoft.Json.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Net.Http.Formatting.dll

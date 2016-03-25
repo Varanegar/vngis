@@ -29,7 +29,7 @@ namespace TrackingMap.Service.BL
             _customerAreaRepository = customerAreaRepository;
         }
 
-        public Guid? GetParentIdById(Guid id)
+        public Guid? GetParentIdById(Guid? id)
         {
             var area = _areaRepository.GetById(id);
             if (area == null)
@@ -62,7 +62,7 @@ namespace TrackingMap.Service.BL
         }
 
 
-        public AreaView GetViewById(Guid id)
+        public AreaView GetViewById(Guid? id)
         {
             return _areaRepository.GetById(id).GetView();
         }

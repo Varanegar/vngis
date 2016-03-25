@@ -17,17 +17,5 @@ namespace TrackingMap.UI.Controllers
             return View();
         }
 
-
-        public ActionResult GooglemapAreaView(AreaConditionModel condition)
-        {
-            using (var proxy = new WebProxy())
-            {
-                string json = proxy.UploadString(proxy.RegisterRoutes("Area/MapAreaModel"),
-                    JsonTools.ObjectToJson(condition));
-                var model = JsonTools.JsonToObject<AreaModel>(json);
-                return this.PartialView("_GooglemapAreaPartialView", model);
-            }
-        }
-
     }
 }

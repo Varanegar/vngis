@@ -5,6 +5,14 @@
 //--------------------------------------------------------
 url_loadarealist = url_server + "Area/LoadAreaList";
 
+url_loadareapoints = url_server + "Area/LoadAreaPoints";
+url_loadareaparentpoints = url_server + "Area/LoadAreaParentPoints";
+url_loadareasibilingpoints = url_server + "Area/LoadAreaSibilingPoints";
+url_loadareachildgpoints = url_server + "Area/LoadAreaChildPoints";
+url_loadareacustomerpoints = url_server + "Area/LoadAreaCustomerPoints";
+url_loadarealeafcustomerpoints = url_server + "Area/LoadAreaLeafCustomerPoints";
+
+
 url_savepoints = url_server + "Area/SaveAreaPoint";
 url_removepoint = url_server + "Area/RemoveAreaPoint";
 url_removepointsbyareaid = url_server + "Area/RemoveAreaPointsByAreaId"
@@ -25,3 +33,6 @@ url_removecustomerfromselected = url_server + "Area/RemoveCustomerFromSelected";
 url_loadvisitorbygroupid = url_server + "Visitor/LoadVisitorByGroupId";
 url_loadvisitorgroupbyareaid = url_server + "Visitor/LoadVisitorGroupByAreaId";
 url_loadlevel1area = url_server + "Visitor/LoadLevel1Area";
+
+url_loadvisitorspath = url_server + "Visitor/LoadVisitorsPath";
+url_loadmarkers = url_server + "Visitor/LoadMarkers";

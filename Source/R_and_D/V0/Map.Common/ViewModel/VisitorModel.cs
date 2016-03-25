@@ -6,31 +6,28 @@ using TrackingMap.Common.ViewModel;
 namespace TrackingMap.Common.ViewModel
 {
 
-    public class VisitorModel
-    {
-        public VisitorModel()
-        {
-            Lines = new List<PolyView>();
-            MarkerPoints = new List<PointView>();
-        }
-        public List<PolyView> Lines { set; get; }
-        public List<PointView> MarkerPoints { set; get; }
 
-    }
-
-    public class VisitorConditionModel
+    public class VisitorPathCondition
     {
-        public VisitorConditionModel()
+        public VisitorPathCondition()
         {
             VisitorIds = new List<Guid>();
 
         }
-
-        //-------------------
         public List<Guid> VisitorIds { get; set; }
         public string Date { get; set; }
         public bool DailyPath { get; set; }
         public bool VisitorPath { get; set; }
+    }
+
+    public class VisitorMarkerCondition
+    {
+        public VisitorMarkerCondition()
+        {
+            VisitorIds = new List<Guid>();
+        }
+        public List<Guid> VisitorIds { get; set; }
+        public string Date { get; set; }
         public bool Order { get; set; }
         public bool LackOrder { get; set; }
         public bool LackVisit { get; set; }

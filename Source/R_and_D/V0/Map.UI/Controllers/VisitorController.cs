@@ -17,17 +17,17 @@ namespace TrackingMap.UI.Controllers
             return View();
         }
 
-        public ActionResult GooglemapVisitorView(VisitorConditionModel filter)
-        {
-            using (var proxy = new WebProxy())
-            {
-                string json = proxy.UploadString(proxy.RegisterRoutes("Visitor/MapVisitorModel"),
-                    JsonTools.ObjectToJson(filter));
-                var model = JsonTools.JsonToObject<VisitorModel>(json);
-                return this.PartialView("_GooglemapVisitorPartialView", model);
-            }
+        //public ActionResult GooglemapVisitorView(VisitorConditionModel filter)
+        //{
+        //    using (var proxy = new WebProxy())
+        //    {
+        //        string json = proxy.UploadString(proxy.RegisterRoutes("Visitor/MapVisitorModel"),
+        //            JsonTools.ObjectToJson(filter));
+        //        var model = JsonTools.JsonToObject<VisitorModel>(json);
+        //        return this.PartialView("_GooglemapVisitorPartialView", model);
+        //    }
 
-        }
+        //}
 
 
     }

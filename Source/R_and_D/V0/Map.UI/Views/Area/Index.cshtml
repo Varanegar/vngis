@@ -1,19 +1,17 @@
 ﻿
-@using Jmelosegui.Mvc.GoogleMap
-
-
-@Scripts.Render("~/Scripts/view/area.js")
-@(Html.GoogleMap().ScriptRegistrar(scripts => scripts.Add("jmelosegui.googlemap.js")))
+@Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyD7cqEKEjKQxbcOgFs92w9V1Do281bfv0E")
 @Scripts.Render("~/Scripts/markerclusterer.js")
-
+@Scripts.Render("~/Scripts/vn.googlemap.js")
+@Scripts.Render("~/Scripts/view/area.js")
 
 <div class="panel panel-default panel-main">
     <div class="options-bar">
         <div class="form-group row ">
-
+            
             <div class="col-md-12">
                 <div class="left">
                     <input value=@CaptionResource.Save type="button" id="btn_save" class="btn btn-default">
+                    <input value=clean type="button" id="btn_clean" class="btn btn-default">
                     <button id='btn_add_customer_list' class='btn btn-default'>اختصاص مشتریان به مسیر</button>
                     <button id='btn_remove_customer_list' class='btn btn-default'>حذف مشتریان از مسیر</button>
                 </div>

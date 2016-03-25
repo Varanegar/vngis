@@ -79,6 +79,15 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to افزودن نقطه.
+        /// </summary>
+        public static string AddPoint {
+            get {
+                return ResourceManager.GetString("AddPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آدرس.
         /// </summary>
         public static string Address {

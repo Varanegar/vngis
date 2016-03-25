@@ -46,6 +46,40 @@ namespace TrackingMap.Controllers
             return list;
         }
 
+        public List<PointView> LoadMarkers(VisitorMarkerCondition filter)
+        {
+            var marker = new List<PointView>();
+
+            marker = _transactionService.LoadTransactionList(filter.VisitorIds,
+                            filter.Order,
+                            filter.LackOrder,
+                            filter.LackVisit,
+                            filter.StopWithoutCustomer,
+                            filter.StopWithoutActivity);
+            return marker;
+        }
+
+        public List<PolyView> LoadVisitorsPath(VisitorPathCondition filter)
+        {
+            var lines = new List<PolyView>();
+            if (filter.VisitorPath)
+            {
+                var points = _visitorService.LoadVisitorPath(filter.Date, filter.VisitorIds);
+                lines.AddRange(GeneralTools.PointListToPolyList(points, false, false));
+            }
+
+            if (filter.DailyPath)
+            {
+                var points = _visitorService.LoadDailyPath(filter.Date, filter.VisitorIds);
+                lines.AddRange(GeneralTools.PointListToPolyList(points, false, false));
+            }
+            return lines;
+        }
+
+
+        
+        /*
+
         public VisitorModel MapVisitorModel(VisitorConditionModel filter)
         {
             var model = new VisitorModel();
@@ -76,5 +110,7 @@ namespace TrackingMap.Controllers
             
             return model;
         }
+
+ */
     }
 }

@@ -18,7 +18,7 @@ namespace TrackingMap.Common.Enum
     }
 
     public enum ETransactionType {ORDER,  LACK_OF_ORDER, LACK_OF_VISIT, STOP_WITHOUT_CUSTOME, MULTI}
-    public enum ESubType { IN_LINE, OUTE_LINE, NEW, DISTANCE }
+    public enum ESubType { IN_LINE = 0, OUTE_LINE = 1, NEW = 2, DISTANCE = 3 }
 
     public enum PointType
     {

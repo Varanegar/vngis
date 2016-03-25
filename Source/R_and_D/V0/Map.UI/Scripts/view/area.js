@@ -1,9 +1,14 @@
-﻿var point_markers = [];
+﻿//var point_views_marker = [];
+
+var point_views = [];
 var selected_markers = [];
 var ctr = false;
+var gridchange_flag = true;
 
 var new_id = 0;
 var selected_id = null;
+
+
 $(document).ready(function () {
     $("#btn_set_customer").hide();
     $("#btn_map").hide();
@@ -18,16 +23,7 @@ $(document).ready(function () {
     $("#grid_area").kendoGrid({
         dataSource: {
             transport: {
-                read: load_area_list
-
-
-                //    {
-                //    url: url_loadarealist,
-                //    data: aditionaldata,
-                //    dataType: "json",
-                //    contentType: "application/json",
-                //    type: "POST"
-                //},
+                read: loadAreaList
             },
             pageSize: 30,
             serverPaging: false,
@@ -40,8 +36,8 @@ $(document).ready(function () {
         selectable: "row",
         pageable: false,
         scrollable: false,
-        change: grid_change,
-        dataBound: first_row_select,
+        change: gridChange,
+        dataBound: firstRowSelect,
         columns: [{
             field: "Title",
             title: 'عنوان',
@@ -50,13 +46,23 @@ $(document).ready(function () {
         ,{
             field: "Id",
             title: "&nbsp; &nbsp;",
-            attributes:{style:"width:90px;"},
-            template: "<button  type='button' class='btn-link btn-grid' onclick=show_detail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray'></span ></button>" +
-                "<button  type='button' class='btn-link btn-grid' onclick='edit_area()';><span class='glyphicon glyphicon-pencil color-gray'></span ></button>" +
-                "<button  type='button' class='btn-link btn-grid' onclick='remove_area()';><span class='glyphicon glyphicon-trash color-gray'></span ></button>"
-        }
+            attributes:{style:"width:60px;"},
+            template: 
+                "<button  type='button' class='btn-link btn-grid' onclick='editArea()';><span class='glyphicon glyphicon-pencil color-gray'></span ></button>" +
+                "<button  type='button' class='btn-link btn-grid' onclick='removeArea()';><span class='glyphicon glyphicon-trash color-gray'></span ></button>"
+          }
+            ,{
+                field: "IsLeaf",
+                title: "&nbsp; &nbsp;",
+                attributes:{style:"width:15px;"},
+                //hidden: "#=IsLeaf == true#",
+                template: "<button  type='button' class='btn-link btn-grid' onclick=showDetail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray'></span ></button>"
+              }               
+        
         ]
     });
+
+    initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
 
     $("#btn_save").on("click", function (e) {
         e.preventDefault();
@@ -70,9 +76,9 @@ $(document).ready(function () {
             url: url_savepoints,
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify({ Id: _id, Points: point_markers }),
+            data: JSON.stringify({ Id: _id, Points: point_views }),
             success: function (data) {
-                refreshmap(false);
+                refreshMap(false);
             }
         })
        .done(function (Result) {
@@ -81,9 +87,14 @@ $(document).ready(function () {
 
     $("#btn_detail").on("click", function (e) {
         if (selected_id !=  null)
-            show_detail(selected_id);
+            showDetail(selected_id);
     });
 
+    $("#btn_clean").on("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        gmap_markerCluster.clearMarkers();
+    });
 
     $("#btn_map").on("click", function (e) {
         $("#mapContainer").show(1000);
@@ -103,7 +114,7 @@ $(document).ready(function () {
             dataSource: {
                 type: "json",
                 transport: {
-                    read: load_not_selected_customer
+                    read: loadNotSelectedCustomer
                 },
                 pageSize: 30,
                 serverPaging: false,
@@ -122,7 +133,7 @@ $(document).ready(function () {
                     title: "&nbsp; &nbsp;",
                     width: 40,
                     //attributes: { style: "width:15px;" },
-                    template: "<button  type='button' class='btn-link btn-grid' onclick=add_to_selected('#=Id#'); ><span class='glyphicon glyphicon-chevron-down color-gray'></span ></button>"
+                    template: "<button  type='button' class='btn-link btn-grid' onclick=addToSelected('#=Id#'); ><span class='glyphicon glyphicon-chevron-down color-gray'></span ></button>"
                 },
                 {   field: "Code", title: "کد",   width: 100,     },
                 {   field: "Title", title: "عنوان"     },
@@ -135,7 +146,7 @@ $(document).ready(function () {
             dataSource: {
                 type: "json",
                 transport: {
-                    read: load_selected_customer
+                    read: loadSelectedCustomer
                 },
                 pageSize: 30,
                 serverPaging: false,
@@ -153,7 +164,7 @@ $(document).ready(function () {
                     field: "Id",
                     title: "&nbsp; &nbsp;",
                     width: 40,
-                    template: "<button  type='button' class='btn-link btn-grid' onclick=remove_from_selected('#=Id#'); ><span class='glyphicon glyphicon-chevron-up color-gray'></span ></button>"
+                    template: "<button  type='button' class='btn-link btn-grid' onclick=removeFromSelected('#=Id#'); ><span class='glyphicon glyphicon-chevron-up color-gray'></span ></button>"
                 },
                 { field: "Code", title: "کد", width: 100, },
                 { field: "Title", title: "عنوان" },
@@ -167,34 +178,29 @@ $(document).ready(function () {
     
     $("#btn_add_customer_list").on("click", function (e) {
        for (var i = 0; i < selected_markers.length; i++) {
-           add_to_selected(selected_markers[i].marker.id.substring(selected_markers[i].marker.id.lastIndexOf('_') + 1), false);
-           selected_markers[i].marker.marker.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+           addToSelected(selected_markers[i].marker.Id.substring(selected_markers[i].marker.Id.lastIndexOf('_') + 1), true);
        }
-       empty_selected_markers(false);
     });
 
     $("#btn_remove_customer_list").on("click", function (e) {
         for (var i = 0; i < selected_markers.length; i++) {
-            remove_from_selected(selected_markers[i].marker.id.substring(selected_markers[i].marker.id.lastIndexOf('_') + 1), false);
-            selected_markers[i].marker.marker.setIcon({ url: "../Content/img/pin/customer0.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+            removeFromSelected(selected_markers[i].marker.Id.substring(selected_markers[i].marker.Id.lastIndexOf('_') + 1), true);
         }
-        empty_selected_markers(false);
     });
 
 });
 
-
-function first_row_select(e) {
+function firstRowSelect(e) {
     e.sender.select("tr:eq(1)");
 };
 
 //$("#btn_edit").on("click", function (e) {
-function edit_area() {
+function editArea() {
     if (selected_id != null)
-        refreshmap(true);
+        refreshMap(true);
 };
 
-function remove_area() {
+function removeArea() {
     if (selected_id != null)
         $.ajax({
             type: "POST",
@@ -204,8 +210,7 @@ function remove_area() {
             data: JSON.stringify({ Id: selected_id }),
             success: function (data) {
                 if (data.success == true) {
-                    refreshmap(false);
-
+                    refreshMap(false);
                 }
                 else {
                     alert('محدوده مورد نظر دارای زیر شاخه می باشد. امکان حذف وجود ندارد.');
@@ -214,7 +219,7 @@ function remove_area() {
         });
 };
 
-function show_detail(id) {
+function showDetail(id) {
     $.ajax({
         type: "POST",
         url: url_haspoint,
@@ -223,10 +228,7 @@ function show_detail(id) {
         data: JSON.stringify({ Id: id }),
         success: function (data) {
             if (data == true) {
-                refreshgrid();
-                selected_id = null;
-                refreshmap(false);
-
+                refreshGrid();
             }
             else {
                 alert("لطفا محدوده را مشخص کنید!");
@@ -238,7 +240,7 @@ function show_detail(id) {
 
 
 
-function load_area_list(options) {
+function loadAreaList(options) {
     $.ajax({
         type: "POST",
         url: url_loadarealist,
@@ -252,7 +254,7 @@ function load_area_list(options) {
 }
 
 
-function load_not_selected_customer(options) {
+function loadNotSelectedCustomer(options) {
     $.ajax({
         type: "POST",
         url: url_loadnotselectedcustomer,
@@ -266,7 +268,7 @@ function load_not_selected_customer(options) {
 }
 
 
-function load_selected_customer(options) {
+function loadSelectedCustomer(options) {
     $.ajax({
         type: "POST",
         url: url_loadselectedcustomer,
@@ -279,7 +281,7 @@ function load_selected_customer(options) {
     });
 }
 
-function refreshgrid() {
+function refreshGrid() {
     if (selected_id != null) {
         $.ajax({
             type: "POST",
@@ -300,49 +302,206 @@ function refreshgrid() {
     else {
         $("#pnl_path").html("");
     }
+    gridchange_flag = false;
     $('#grid_area').data('kendoGrid').dataSource.read();
     $('#grid_area').data('kendoGrid').refresh();
+    gridchange_flag = true;
 }
 
 function back(id) {
     selected_id = id;
-    refreshgrid();
-    selected_id = null;
-    $("#btn_detail").hide();
-
+    refreshGrid();
 }
 
 
 
-function grid_change(arg) {
-    var selectedData = this.dataItem(this.select());
-    if (selected_id != selectedData.Id) {
-        selected_id = selectedData.Id;
-        refreshmap(false);
-        if (selected_id == null) {
-            $("#btn_detail").hide();
-            $("#btn_edit").hide();
-        }
-        else {
-            $("#btn_edit").show();
-            if (selectedData.IsLeaf) {
+function gridChange(arg) {
+    if (gridchange_flag == true) {
+        var selectedData = this.dataItem(this.select());
+        if (selected_id != selectedData.Id) {
+            selected_id = selectedData.Id;
+            refreshMap(false);
+            if (selected_id == null) {
                 $("#btn_detail").hide();
-                $("#btn_set_customer").show();
-                $("#btn_map").hide();
-                $("#div_customer").hide();
-                $("#div_leaf_customer").show();
-            } else {
-                $("#btn_set_customer").hide();
-                $("#btn_detail").show();
-                $("#btn_map").hide();
-                $("#div_customer").show();
-                $("#div_leaf_customer").hide();
+                $("#btn_edit").hide();
+            }
+            else {
+                $("#btn_edit").show();
+                if (selectedData.IsLeaf) {
+                    $("#btn_detail").hide();
+                    $("#btn_set_customer").show();
+                    $("#btn_map").hide();
+                    $("#div_customer").hide();
+                    $("#div_leaf_customer").show();
+                } else {
+                    $("#btn_set_customer").hide();
+                    $("#btn_detail").show();
+                    $("#btn_map").hide();
+                    $("#div_customer").show();
+                    $("#div_leaf_customer").hide();
+                }
             }
         }
     }
 };
 
-function refreshmap(edit) {
+
+
+
+//---------------------------------------------------------------------------------------------------------
+// Cutomer
+//---------------------------------------------------------------------------------------------------------
+
+function emptySelectedMarkers(reverticon) {
+    if (reverticon)
+        for (var i = 0; i < selected_markers.length; i++) {
+            selected_markers[i].marker.setIcon(selected_markers[i].oldicon);
+        }
+    selected_markers = [];
+    $("#btn_add_customer_list").hide();
+    $("#btn_remove_customer_list").hide();
+}
+
+function onCustomerMarkerClick(marker) {
+    if (!ctr) {
+        emptySelectedMarkers(true);
+    }
+
+    if ((marker.icon.url.indexOf("customerselected") < 0) && (marker.icon.url.indexOf("customer2") < 0)) {
+        selected_markers.push({ marker: marker, oldicon: marker.icon });
+        marker.setIcon({ url: "../Content/img/pin/customerselected.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+
+        if (selected_markers.length > 1) {
+            $("#btn_add_customer_list").show();
+            $("#btn_remove_customer_list").show();
+        }
+    }
+
+}
+
+function addToSelected(id, changeicon) {
+    $.ajax({
+        type: "POST",
+        url: url_addcustomertoselected,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ CustomerId: id, AreaId: selected_id }),
+        success: function (data) {
+            if (changeicon) {
+                var _index = findCustomerMarkerIndex(id)
+                if (_index > -1) {
+                    var mrk = selected_markers[_index].marker;
+                    mrk.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+                    selected_markers.splice(_index, 1);
+                }
+            }
+            if (($('#grid_customer_not_selected').data('kendoGrid') != undefined) && ($('#grid_customer_not_selected').data('kendoGrid') != null)) {
+                $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
+                $('#grid_customer_not_selected').data('kendoGrid').refresh();
+                $('#grid_customer_selected').data('kendoGrid').dataSource.read();
+                $('#grid_customer_selected').data('kendoGrid').refresh();
+            }
+        }
+    });
+}
+
+
+function removeFromSelected(id, changeicon) {
+    $.ajax({
+        type: "POST",
+        url: url_removecustomerfromselected,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ customerId: id, areaId: selected_id }),
+        success: function (data) {
+            if (changeicon) {
+                var _index = findCustomerMarkerIndex(id)
+                if (_index > -1) {
+                    var mrk = selected_markers[_index].marker;
+                    mrk.setIcon({ url: "../Content/img/pin/customer0.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+                    selected_markers.splice(_index, 1);
+                }
+            }
+            if (($('#grid_customer_not_selected').data('kendoGrid') != undefined) && ($('#grid_customer_not_selected').data('kendoGrid') != null)) {
+                $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
+                $('#grid_customer_not_selected').data('kendoGrid').refresh();
+                $('#grid_customer_selected').data('kendoGrid').dataSource.read();
+                $('#grid_customer_selected').data('kendoGrid').refresh();
+            }
+        }
+    });
+}
+
+function findCustomerMarkerIndex(id) {
+    for (var i = 0; i < selected_markers.length; i++) {
+        if (selected_markers[i].marker.Id == "customer_point_"+id) {
+            return i;
+        }
+    }
+    return -1;
+}
+//---------------------------------------------------------------------------------------------------------
+//point
+//---------------------------------------------------------------------------------------------------------
+function removePoint(id) {
+    var index = findPointMarkerIndex(id);
+    if (index > -1) {
+        point_views.splice(index, 1);
+        removeMarkerById("point_"+id);
+    }
+
+}
+
+function addPointByBtn(id) {
+    var index = findPointMarkerIndex(id);
+
+    if (index > -1) {
+        var point = point_views[index];                
+        addNewPoint(parseInt(point.Pr) + 1, point.Lat - 0.02, point.Lng - 0.02);
+        closeInfoWindow();
+        for (var i = index+1; i < point_views.length-1; i++) {
+            point_views[i].Pr++;
+        }
+    }
+}
+
+
+function addPointByClick(args) {
+    addNewPoint(-1, args.latLng.lat(), args.latLng.lng());
+}
+
+
+function addPoint(id, pr, lat, lng) {
+    var _m = addMarker("point_" + id, lat, lng, pr, true,
+                     "<br/>" +
+                     //   "<h1>اولویت : " + pr + "</h1>" +
+                     //"<br />" +
+                     "<button id='btn_add_point_' onclick=addPointByBtn('" + id + "') class='btn btn-default'>افزودن</button>" +
+                     "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>",
+                     false
+    );
+    _m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) })
+    _m.addListener("dragend", function (e) {
+        onDragEnd({ id: id, latLng: e.latLng });
+    });
+    var _id;
+    _id = id.substring(id.lastIndexOf('_') + 1);
+
+    point_views.push({ Id: _id, Lat: lat, Lng: lng, Pr: pr });
+    return _m;
+}
+
+function addNewPoint(pr, lat, lng) {
+    new_id++;
+    var guid = get_temp_guid(new_id);
+    if (pr == -1) { pr = new_id; }
+
+    addPoint(guid, pr, lat, lng)
+}
+//---------------------------------------------------------------------------------------------------------
+// MAP
+//---------------------------------------------------------------------------------------------------------
+function refreshMap(edit) {
     if (selected_id == null) {
         $("#mapContainer").hide();
         $("#btn_save").hide();
@@ -353,169 +512,228 @@ function refreshmap(edit) {
             $("#btn_save").show();
         else
             $("#btn_save").hide();
-        
 
+        var grid = $("#grid_area").data("kendoGrid");
+        var selectedItem = grid.dataItem(grid.select());
+        var isleaf = selectedItem.IsLeaf;
 
-        new $.jmelosegui.GoogleMap('#mapContainer').ajax({
-            url: 'GooglemapAreaView',
-            type: "Get",
-            data: {
-                Id: selected_id, Editable: edit,
-                Showcust: $("#chk_customer").is(':checked'), 
-                Showcustrout: $("#chk_customer_route").is(':checked'),
-                Showcustotherrout: $("#chk_customer_other_route").is(':checked'),
-                Showcustwithoutrout: $("#chk_customer_without_route").is(':checked'),
-            },
+        clearOverlays();
+        point_views = [];
+        new_id = 0;
+        if (edit) addListener('click', addPointByClick);
+        else removeListener('click');
+
+        drawAreaParentLine();
+
+        if (edit) {
+            drawAreaSibilingLine();
+        }
+        else {
+            if (!isleaf)
+            drawAreaChildLine();
+        }
+        drawAreaCustomerPoints(edit, isleaf);
+
+        drawAreaLinePoints(edit, isleaf);
+    }
+}
+function drawAreaParentLine() {
+    $.ajax({
+        type: "POST",
+        url: url_loadareaparentpoints,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ Id: selected_id }),
+        success: function (data) {
+            var arealine = [];
+            if ((data != null) && (data.Points != null)) {
+
+                $.each(data.Points, function (i, item) {
+                    arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                });
+                if (arealine.length > 0) {
+                    addPolyline(arealine, '#001100', 2);
+                    fitPointBounds();
+                }
+            }
+        }
+    });
+}
+
+function drawAreaSibilingLine(){
+    $.ajax({
+        type: "POST",
+        url: url_loadareasibilingpoints,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ Id: selected_id }),
+        success: function (data) {
+            if (data != null) {
+                $.each(data, function (i, line) {
+                    var arealine = [];
+                    if (line.Points != null)
+                        $.each(line.Points, function (j, item) {
+                            arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                        });
+                    if (arealine.length > 0) {
+                        addPolyline(arealine, '#777777', 2);
+                    }
+                })
+            }
+        }
+    });
+}
+
+function drawAreaChildLine(){
+    $.ajax({
+        type: "POST",
+        url: url_loadareachildgpoints,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ Id: selected_id }),
+        success: function (data) {
+            if (data != null)  {
+                $.each(data, function (i, line) {
+                    var arealine = [];
+                    if (line.Points != null)
+                    $.each(line.Points, function (j, item) {
+                        arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                    });
+                    if (arealine.length > 0) {
+                        addPolyline(arealine, '#777777', 2);
+                    }
+                })
+            }
+        }
+    });
+}
+
+function getCustomerWindowBtn(id, typ) {
+    var _btn = '';
+
+    if (typ == 1) {//PointType.CustomerRout
+        _btn =  "<!-- CUSTOMER BTN --> " +
+                "<br />" +
+                "<button id='btn_remove_customer_' onclick='removeFromSelected(\"" + id + "\", true)' class='btn btn-default'>حذف از مسیر</button>"
+    }
+    else if (typ == 0) { //PointType.CustomerWithoutRout
+        _btn = "<!-- CUSTOMER BTN --> " +
+               "<br />" +
+               "<button id='btn_add_customer_' onclick='addToSelected(\"" + id + "\", true)' class='btn btn-default'>اضافه به مسیر</button>"
+    }
+
+    return _btn;
+
+}
+
+function drawAreaCustomerPoints(edit, isleaf) {
+
+    if (isleaf) {
+        var showcustrout = $("#chk_customer_route").is(':checked');
+        var showcustotherrout = $("#chk_customer_other_route").is(':checked');
+        var showcustwithoutrout = $("#chk_customer_without_route").is(':checked');
+
+        if (showcustrout || showcustotherrout || showcustwithoutrout)
+        $.ajax({
+            type: "POST",
+            url: url_loadarealeafcustomerpoints,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({  Id: selected_id,
+                                    Showcustrout: showcustrout,
+                                    Showcustotherrout: showcustotherrout,
+                                    Showcustwithoutrout: showcustwithoutrout
+                                }),
             success: function (data) {
-                
-                //alert('succeded');
+                $.each(data, function (i, item) {
+                    var desc = '';
+                    if (edit) {
+                        desc = item.Desc + getCustomerWindowBtn(item.Id, item.PointType);
+                    }
+                    else {
+                        desc = item.Desc;
+                    }
+                    var _m = addMarker("customer_point_" + item.Id, item.Latitude, item.Longitude, null, false, desc, false);
+                    _m.setIcon({ url: "../Content/img/pin/customer" + item.PointType + ".png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+                    if (edit && isleaf)
+                        _m.addListener('click', function (e) { onCustomerMarkerClick(_m)});
+
+                });
             }
         });
+
+        }
+    else {
+        if ($("#chk_customer").is(':checked'))
+        $.ajax({
+            type: "POST",
+            url: url_loadareacustomerpoints,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ Id: selected_id }),
+            success: function (data) {
+                $.each(data, function (i, item) {
+                    var m = addMarker("customer_point_"+ item.Id, item.Latitude, item.Longitude, null, false, item.Desc, true);
+                    m.setIcon({ url: "../Content/img/pin/customer" + item.PointType + ".png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) })
+                });
+            }
+        });
+        renderClusterMarkers();
+
     }
 }
 
-//---------------------------------------------------------------------------------------------------------
-// Cutomer
-//---------------------------------------------------------------------------------------------------------
-
-function add_to_selected(id, changeicon) {
+function drawAreaLinePoints(edit, isleaf) {
     $.ajax({
         type: "POST",
-        url: url_addcustomertoselected,
+        url: url_loadareapoints,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ CustomerId: id, AreaId: selected_id }),
+        data: JSON.stringify({ Id: selected_id }),
         success: function (data) {
-            if (changeicon) {
-                var mrk = find_customer_marker(id);
-                if (mrk != null)
-                    mrk.marker.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+            var arealine = [];
+            if ((data != null) && (data.Points != null)) {
+                $.each(data.Points, function (i, item) {
+                    if (edit) {
+                        m = addPoint(item.Id, item.Lable, item.Latitude, item.Longitude);
+                        new_id = item.Lable;
+                    }
+                    arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                });
+                if (arealine.length > 0) {
+                    if (isleaf)
+                        addPolyline(arealine, data.Color, 3, data.Desc);
+                    else
+                        addPolygon(arealine, data.Color, '#ff1100', 3, data.Desc);
+                    fitPointBounds();
+                }
+
             }
-            $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
-            $('#grid_customer_not_selected').data('kendoGrid').refresh();
-            $('#grid_customer_selected').data('kendoGrid').dataSource.read();
-            $('#grid_customer_selected').data('kendoGrid').refresh();
         }
     });
 }
 
-
-function remove_from_selected(id, changeicon) {
-    $.ajax({
-        type: "POST",
-        url: url_removecustomerfromselected,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ customerId: id, areaId: selected_id }),
-        success: function (data) {
-            if (changeicon) {
-                var mrk = find_customer_marker(id);
-                if (mrk != null)
-                    mrk.marker.setIcon({ url: "../Content/img/pin/customer0.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
-            }
-            $('#grid_customer_not_selected').data('kendoGrid').dataSource.read();
-            $('#grid_customer_not_selected').data('kendoGrid').refresh();
-            $('#grid_customer_selected').data('kendoGrid').dataSource.read();
-            $('#grid_customer_selected').data('kendoGrid').refresh();
-        }
-    });
-}
-
-function find_customer_marker(id) {
-    for (var i = 0; i < selected_markers.length; i++) {
-        if (selected_markers[i].marker.id == "customer_point_"+id) {
-            return selected_markers[i].marker;
-        }
-    }
-    return null;
-}
-//---------------------------------------------------------------------------------------------------------
-//point
-//---------------------------------------------------------------------------------------------------------
-function change_priority_point(id) {
-}
-
-function remove_point(id) {
-}
-//---------------------------------------------------------------------------------------------------------
-// MAP
-//---------------------------------------------------------------------------------------------------------
-function onMapLoadHandler(args) {
-    point_markers = [];
-    new_id = 0;
-    for (var mark in args.markers) {
-        if (mark.indexOf("customer_point_") < 0) {
-            point_markers.push({
-                Id: mark.substring(mark.lastIndexOf('_') + 1),
-                Lat: args.markers[mark].getPosition().lat(),
-                Lng: args.markers[mark].getPosition().lng(),
-                Pr: parseInt(args.markers[mark].title)
-            });
-        }
-    }
-    
-}
-
-function empty_selected_markers(reverticon) {
-    if (reverticon)
-    for (var i = 0; i < selected_markers.length; i++) {
-        selected_markers[i].marker.marker.setIcon(selected_markers[i].oldicon);
-    }
-    selected_markers = [];
-    $("#btn_add_customer_list").hide();
-    $("#btn_remove_customer_list").hide();
-}
-
-function onClick(args) {
-    if ((args.marker.icon.url.indexOf("customerselected") < 0) && (args.marker.icon.url.indexOf("customer2") < 0)) {
-        if (!ctr) {
-            empty_selected_markers(true);
-        }
-        selected_markers.push({ marker: args, oldicon:args.marker.icon});
-        args.marker.setIcon({ url: "../Content/img/pin/customerselected.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
-        
-        if (selected_markers.length > 1) {
-            $("#btn_add_customer_list").show();
-            $("#btn_remove_customer_list").show();            
-        }
-    }
-
-}
 
 function onDragEnd(args) {
-    var _find = false;
+    var index = findPointMarkerIndex(args.id);
+    if (index > -1) {
+        point_views[index].Lat = args.latLng.lat();
+        point_views[index].Lng = args.latLng.lng();
+    }
+}
+
+function findPointMarkerIndex(id) {
     var _id;
+    _id = id.substring(id.lastIndexOf('_') + 1);
 
-    _id = args.id.substring(args.id.lastIndexOf('_')+1);
-
-    for (var i = 0; i < point_markers.length; i++) {
-        if (point_markers[i].Id == _id) {
-            point_markers[i].Lat = args.latLng.lat();
-            point_markers[i].Lng = args.latLng.lng();
-            _find = true;
+    for (var i = 0; i < point_views.length; i++) {
+        if (point_views[i].Id == _id) {
+            return i
         }
-        if (_find == true) break;
-    }    
+    }
+    return -1
 }
 
-function addPoint(args) {
-    new_id++;
-    var guid = get_temp_guid(new_id);    
-    point_markers.push({ Id: guid, Lat: args.latLng.lat(), Lng: args.latLng.lng(), Pr: new_id });
-
-    var marker = new google.maps.Marker({
-        Id: "point_" + guid,
-        position: args.latLng,
-        map: args.map,
-        draggable: true,
-        label: new_id.toString(),
-        labelClass: 'labels',
-        labelAnchor: new google.maps.Point(22, 0),
-        icon: "/Content/img/pin/point.png",
-        }).addListener("dragend", function (e) {
-        onDragEnd({ id: "point_" + guid, latLng: e.latLng });
-    });
-}
 
 
 

@@ -1,12 +1,10 @@
 ﻿
-@using Jmelosegui.Mvc.GoogleMap
 
-
+@Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyD7cqEKEjKQxbcOgFs92w9V1Do281bfv0E")
+@Scripts.Render("~/Scripts/markerclusterer.js")
+@Scripts.Render("~/Scripts/markerwithlabel.js")
+@Scripts.Render("~/Scripts/vn.googlemap.js")
 @Scripts.Render("~/Scripts/view/visitor.js")
-
-@(Html.GoogleMap().ScriptRegistrar(scripts => scripts.Add("jmelosegui.googlemap.js")))
-
-@model TrackingMap.Common.ViewModel.VisitorConditionModel
 
 <div class="panel panel-default panel-main">
     <div class="options-bar">
@@ -52,7 +50,7 @@
                         @Html.CheckBox("chk_without_activity", true, new { @id = "chk_without_activity", @class = "control-label" })
                         <label for="chk_without_activity">@CaptionResource.WithoutActivity</label>
                         <br />
-                        <img src="~/Content/img/pin/wating.png" />
+                        <img src="~/Content/img/pin/withoutcustomer.png" />
                         @Html.CheckBox("chk_wait", true, new { @id = "chk_wait", @class = "control-label" })
                         <label for="chk_wait">@CaptionResource.WaitWithoutCustomer</label>
                         <br />

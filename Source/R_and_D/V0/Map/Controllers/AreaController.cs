@@ -90,12 +90,88 @@ namespace TrackingMap.Controllers
             return new ReturnValue{ Success = true };
             //Redirect("GooglemapLimiteView", new { id });
         }
-        public ReturnValue RemoveAreaPointsByAreaId(Guid id)
+        public ReturnValue RemoveAreaPointsByAreaId(IdView areaId)
         {
-            return new ReturnValue{ Success = _areaPointService.RemoveAreaPointsByAreaId(id) };
+            return new ReturnValue{ Success = _areaPointService.RemoveAreaPointsByAreaId(areaId.Id) };
             //Redirect("GooglemapLimiteView", new { id });
         }
 
+
+        //---------------------------------------
+        //  load curent area or route point
+        //---------------------------------------
+        public PolyView LoadAreaPoints(IdView areaId)
+        {
+            var poly = new PolyView();
+            var points = _areaPointService.LoadAreaPointById(areaId.Id);
+            poly.Color = "#000000";
+            poly.Desc = "";
+            poly.Points = points;
+            return poly; 
+        }
+
+        //---------------------------------------
+        //  load parent limit
+        //---------------------------------------
+        public PolyView LoadAreaParentPoints(IdView areaId)
+        {
+            var poly = new PolyView();
+
+            var parentid = _areaService.GetParentIdById(areaId.Id);
+
+            if (parentid != null)
+            {
+                var parentpoints = _areaPointService.LoadAreaPointById(parentid).ToList();
+                if (parentpoints.Any())
+                {
+                    parentpoints.Add(parentpoints.ElementAt(0));
+                }
+                poly.Points = parentpoints;
+                poly.Color = "#888888";
+                poly.Desc = "";
+            }
+            return poly;
+        }        
+        
+        public List<PolyView> LoadAreaSibilingPoints(IdView areaId)
+        {
+            var polies = new List<PolyView>();
+
+            var parentid = _areaService.GetParentIdById(areaId.Id);
+
+            if (parentid != null)
+            {
+                var siblingpoints = _areaPointService.LoadAreaPointByParentId(parentid, areaId.Id).ToList();
+                polies = GeneralTools.PointListToPolyList(siblingpoints, true, false);
+            }            
+            return polies;
+        }
+
+        public List<PolyView> LoadAreaChildPoints(IdView areaId)
+        {
+            var polies = new List<PolyView>();
+
+            var childgpoints = _areaPointService.LoadAreaPointByParentId(areaId.Id).ToList();
+            polies = GeneralTools.PointListToPolyList(childgpoints, true, false);                    
+
+            return polies;
+        }
+
+        public List<PointView> LoadAreaCustomerPoints(IdView areaId)
+        {
+            var customerpoints = _customerService.LoadCustomerByAreaId(areaId.Id);
+            return customerpoints;
+        }
+
+        public List<PointView> LoadAreaLeafCustomerPoints(AreaCondition filter)
+        {
+
+            var parentid = _areaService.GetParentIdById(filter.Id);
+            var customerpoints = _customerService.LoadCustomerByAreaId(parentid, filter.Id,
+                filter.Showcustrout, filter.Showcustotherrout, filter.Showcustwithoutrout);
+            return customerpoints;
+        }
+/*
         public AreaModel MapAreaModel(AreaConditionModel condition)
         {
             var model = new AreaModel();
@@ -194,5 +270,6 @@ namespace TrackingMap.Controllers
             model.IsLeaf = view.IsLeaf;
             return model; // this.PartialView("_GooglemapAreaPartialView", model);
         }
+ */ 
     }
 }

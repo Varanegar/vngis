@@ -15,19 +15,21 @@ namespace TrackingMap.Service.BL
 {
     public class AreaPointService
     {
+        private readonly IDbContext _ctx;
         private IRepository<AreaPointEntity> _areaPointRepository;
         private IRepository<AreaEntity> _areaRepository;
 
-        public AreaPointService(
+        public AreaPointService(IDbContext ctx,
             IRepository<AreaPointEntity>  areaPointRepository,
             IRepository<AreaEntity>  areaRepository
             )
         {
+            _ctx = ctx;
             _areaRepository = areaRepository;
             _areaPointRepository = areaPointRepository;
         }
 
-        public IList<PointView> LoadAreaPointById(Guid? id)
+        public List<PointView> LoadAreaPointById(Guid? id)
         {
             var list = _areaPointRepository.Table.Where(x => id == null || x.AreaEntityId == id)
                 .OrderBy(x => x.Priority)
@@ -48,12 +50,14 @@ namespace TrackingMap.Service.BL
                 return list;
         }
 
-        public IList<PointView> LoadAreaPointByParentId(Guid? id)
+        public IList<PointView> LoadAreaPointByParentId(Guid? pId, Guid? id = null )
         {
 
             var q = from area in _areaRepository.Table
                     join point in _areaPointRepository.Table on area.Id equals point.AreaEntityId
-                    where (area.ParentId == id)
+                    where (area.ParentId == pId)
+                    && ((id == null) || (area.Id != id))
+                    orderby area.Id ,point.Priority
                     select new PointView()
                             {
                                 Id = point.Id,
@@ -73,32 +77,46 @@ namespace TrackingMap.Service.BL
 
         public void SaveAreaPointList(Guid id, List<AreaPointView> entities)
         {
-                foreach (var entityview in entities)
-                {
 
-                    AreaPointEntity entity;
-                    if ((entityview.Id == null) || (entityview.Id.ToString().StartsWith("00000000-0000")))
-                    {
-                        entity = new AreaPointEntity(entityview);
-                        entity.AreaEntityId = id;
-                        entity.IntId = 0;
-                        _areaPointRepository.Insert(entity);
-                    }
-                    else
-                    {
-                        entity = _areaPointRepository.GetById(entityview.Id);
-                        if (entity != null)
-                        {
-                            entity.Priority = entityview.Pr;
-                            entity.Longitude = entityview.Lng;
-                            entity.Latitude = entityview.Lat;
-                        }
-                        _areaPointRepository.Update(entity);
-                    }
-                }
+
+            _ctx.GetDatabase().ExecuteSqlCommand(string.Format("delete from AreaPoint where AreaId = '{0}'", id) );
+            foreach (var entityview in entities)
+            {
+                AreaPointEntity entity;
+                    entity = new AreaPointEntity(entityview);
+                    entity.AreaEntityId = id;
+                    entity.IntId = 0;
+                    _areaPointRepository.Insert(entity);
+            }
+            
+
+            //Oldversion
+                //foreach (var entityview in entities)
+                //{
+
+                //    AreaPointEntity entity;
+                //    if ((entityview.Id == null) || (entityview.Id.ToString().StartsWith("00000000-0000")))
+                //    {
+                //        entity = new AreaPointEntity(entityview);
+                //        entity.AreaEntityId = id;
+                //        entity.IntId = 0;
+                //        _areaPointRepository.Insert(entity);
+                //    }
+                //    else
+                //    {
+                //        entity = _areaPointRepository.GetById(entityview.Id);
+                //        if (entity != null)
+                //        {
+                //            entity.Priority = entityview.Pr;
+                //            entity.Longitude = entityview.Lng;
+                //            entity.Latitude = entityview.Lat;
+                //        }
+                //        _areaPointRepository.Update(entity);
+                //    }
+                //}
         }
 
-        public bool RemoveAreaPointsByAreaId(Guid id)
+        public bool RemoveAreaPointsByAreaId(Guid? id)
         {
 
             var ids = _areaRepository.Table.Where(x => x.ParentId == id).Select(x => x.Id).ToList();

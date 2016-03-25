@@ -20,13 +20,13 @@ $(document).ready(function () {
         format: "HH:mm"
     });
 
-    load_level1_area();
+    loadLevel1Area();
 
     $("#grid_visitor").kendoGrid({
         autoBind: false,
         dataSource: {
             transport: {
-                read: load_visitor_by_groupid
+                read: loadVisitorByGroupid
             },
             pageSize: 30,
             serverPaging: true,
@@ -43,7 +43,7 @@ $(document).ready(function () {
         {
             field: "Id",
             title: " ",
-            template: "<input type='checkbox' value='#=Id#' onchange=change_id_list(" + 'this' + ",'#=Id#') id=" + "chk" + "#=Id#" + " class='checkboxGroups'/>",
+            template: "<input type='checkbox' value='#=Id#' onchange=changeIdList(" + 'this' + ",'#=Id#') id=" + "chk" + "#=Id#" + " class='checkboxGroups'/>",
             attributes: { style: "width:5%;" }
         }, {
                     field: "Title",
@@ -52,6 +52,7 @@ $(document).ready(function () {
         ]
     });
 
+    initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
 
     $("#btn_marker").on("click", function (e) {
         if ($("#pnl_marker").is(':hidden')) {
@@ -92,20 +93,98 @@ $(document).ready(function () {
     });
 
     $("#btn_run").on("click", function (e) {
-        new $.jmelosegui.GoogleMap('#mapContainer').ajax({
-            url: 'GooglemapVisitorView',
-            type: "Post",
-            data: map_aditionaldata(),
-            success: function (data) {
-                //alert('succeded');
-            }
-        });
+        clearOverlays();
+
+        drawMarkers();
+        if ($("#chk_daily_path").is(":checked") || $("#chk_visitor_path").is(":checked"))
+            drawVisitorsPath();
     });
 
 });
+//-------------------------------------
+function drawMarkers() {
+    $.ajax({
+        type: "POST",
+        url: url_loadmarkers,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            VisitorIds: selectedIds,
+            Date: $("#dte_date").val(),
+            Order: $("#chk_order").is(":checked"),
+            LackOrder: $("#chk_lack_order").is(":checked"),
+            LackVisit: $("#chk_lack_visit").is(":checked"),
+            StopWithoutCustomer: $("#chk_wait").is(":checked"),
+            StopWithoutActivity: $("#chk_without_activity").is(":checked")
+        }),
+        success: function (data) {
+            $.each(data, function (i, item) {
+                var _m = addMarker("marker_" + item.Id, item.Latitude, item.Longitude, null, false, item.Desc, true, item.Lable);
 
 
-function load_level1_area() {
+                var icon = "marker0";
+                var color = "";
+                if ((item.PointType == 5 /*PointType.Customer*/) || (item.PointType == 7 /*PointType.GpsOff*/))
+                {
+                    if (item.PointType == 5 /*PointType.Customer*/){ icon = "customer"; }
+                    else if (item.PointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
+                        
+                    _m.setIcon("../../Content/img/pin/" + icon + ".png", new google.maps.Size(16, 16), new google.maps.Point(0, 0)
+                        , new google.maps.Point(8, 8));
+                }
+                else
+                {
+                        if (item.SubType == 1 /*(int)ESubType.OUTE_LINE*/) { icon = "outeline"; }
+                    else if (item.SubType == 3 /*(int)ESubType.DISTANCE*/) { icon = "distance"; }
+                    else if (item.PointType == 0 /*PointType.Order*/) { icon = "order"; }
+                    else if (item.PointType == 2 /*PointType.LackOfVisit*/) { icon = "lackvisit"; }
+                    else if (item.PointType == 1 /*PointType.LackOfOrder*/) { icon = "lackorder"; }
+                    else if (item.PointType == 3 /*PointType.StopWithoutCustomer*/) { icon = "withoutcustomer"; }
+                    else if (item.PointType == 4 /*PointType.StopWithoutActivity*/) { icon = "withoutactivity"; }
+                    else if (item.PointType == 6 /*PointType.OuteLine*/) { icon = "outeline"; }
+
+                    if (item.SubType == 2 /*(int)ESubType.NEW*/ ) { color = "1"; }
+                        
+                    _m.setIcon({ url: "../../Content/img/pin/"+icon+color+".png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+                }
+            });
+            renderClusterMarkers();
+            fitPointBounds();
+        }
+    });
+
+}
+
+function drawVisitorsPath() {
+    $.ajax({
+        type: "POST",
+        url: url_loadvisitorspath,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            VisitorIds: selectedIds,
+            Date: $("#dte_date").val(),
+            DailyPath: $("#chk_daily_path").is(":checked"),
+            VisitorPath: $("#chk_visitor_path").is(":checked"),
+        }),
+        success: function (data) {
+            if (data != null) {
+                $.each(data, function (i, line) {
+                    var arealine = [];
+                    if (line.Points != null)
+                        $.each(line.Points, function (j, item) {
+                            arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                        });
+                    if (arealine.length > 0) {
+                        addPolyline(arealine, line.Color, 2);
+                    }
+                })
+            }
+        }
+    });
+}
+//--------------------------------------
+function loadLevel1Area() {
     $("#ddl_area").empty();
     $.ajax({
         type: "POST",
@@ -122,7 +201,7 @@ function load_level1_area() {
 }
 
 
-function load_visitor_by_groupid(options)
+function loadVisitorByGroupid(options)
 {
     if ($("#ddl_visitor_group").val() != null) {
         $.ajax({
@@ -139,7 +218,7 @@ function load_visitor_by_groupid(options)
 }
     
 
-function change_id_list(e, id) {
+function changeIdList(e, id) {
     var flag = e.checked;
 
     if (flag) {
@@ -160,7 +239,7 @@ function change_id_list(e, id) {
 }
 
 
-function map_aditionaldata() {
+function mapAditionaldata() {
     return {
         VisitorIds: selectedIds,
         Date: $("#dte_date").val(),
@@ -173,6 +252,10 @@ function map_aditionaldata() {
         StopWithoutActivity: $("#chk_without_activity").is(":checked")
     };    
 }
+
+
+
+
 
 function onMapLoadHandler(args) {
     for (var mark in args.markers) {
