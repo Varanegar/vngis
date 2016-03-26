@@ -409,6 +409,7 @@
     <Content Include="Content\css\kendo\2014.1.318\images\kendoui.woff" />
     <Content Include="App_Data\Config.ini" />
     <None Include="Properties\PublishProfiles\map.pubxml" />
+    <None Include="Properties\PublishProfiles\MapServer.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

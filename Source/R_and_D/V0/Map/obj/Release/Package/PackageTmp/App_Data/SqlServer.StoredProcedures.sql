@@ -1,3 +1,4 @@
+
 CREATE PROCEDURE [dbo].[LoadCustomerByAreaId]
 	@AreaId uniqueidentifier,
 	@RoutId uniqueidentifier = null,
@@ -43,15 +44,14 @@ BEGIN
 		declare @polygon geometry
 		SET @polygon = geometry::STPolyFromText('POLYGON(('+@area_points_str+'))', 4326)
 		SET @polygon = @polygon.MakeValid();
-		SELECT	customer.Id, [Title] AS [Desc],
-			Longitude, Latitude,
-			CASE 
-			WHEN CustomerArea.AreaId IS null THEN 0
-			WHEN (@RoutId IS null) AND (NOT CustomerArea.AreaId IS NULL) THEN 1
-			WHEN (NOT @RoutId IS null) AND CustomerArea.AreaId = @RoutId THEN 1
-			WHEN (NOT @RoutId IS null) AND CustomerArea.AreaId <> @RoutId THEN 2
-
-			END AS PointType
+		SELECT	customer.Id, [Desc],
+				Longitude, Latitude,
+				CASE 
+				WHEN CustomerArea.AreaId IS null THEN 0
+				WHEN (@RoutId IS null) AND (NOT CustomerArea.AreaId IS NULL) THEN 1
+				WHEN (NOT @RoutId IS null) AND CustomerArea.AreaId = @RoutId THEN 1
+				WHEN (NOT @RoutId IS null) AND CustomerArea.AreaId <> @RoutId THEN 2
+				END AS PointType
 		FROM (	SELECT *, 
 						(geometry::STPointFromText('POINT('+ CAST(longitude AS VARCHAR(20)) + ' ' + CAST(latitude AS VARCHAR(20)) +')', 4326)) As cPoint
 				FROM Customer) as customer LEFT JOIN 
@@ -73,14 +73,16 @@ BEGIN
 
 	END
 	ELSE 
-		SELECT	customer.Id, [Title] AS [Desc],
+		SELECT	customer.Id, [Desc] AS [Desc],				
 				Longitude, Latitude,
 				0 AS PointType
 		FROM customer 
 
 
 END
+
 GO
+
 
 CREATE PROCEDURE [dbo].[LoadSelectedCustomerByPathId]
 	@PathId uniqueidentifier,
@@ -130,10 +132,11 @@ BEGIN
 		SET @polygon = geometry::STPolyFromText('POLYGON(('+@area_points_str+'))', 4326)
 
 		SELECT	customer.Id, [Title],
+				Code, ShopTitle, Phone, [Address],
 			Longitude, Latitude,
 			ISNULL(	(SELECT 1 WHERE customerArea.Id <> null) ,0) AS PointType
 		FROM (	
-				SELECT Id, [Title], [Address], Longitude, Latitude,
+				SELECT *,
 						(geometry::STPointFromText('POINT('+ CAST(longitude AS VARCHAR(20)) + ' ' + CAST(latitude AS VARCHAR(20)) +')', 4326)) As cPoint
 				FROM customer
 			) as customer LEFT JOIN customerArea ON (customer.Id = CustomerArea.CustomerId) AND (AreaId = @PathId)
@@ -148,6 +151,7 @@ BEGIN
 	END
 	ELSE 
 		SELECT	customer.Id, [Title] ,
+				Code, ShopTitle, Phone, [Address],
 				Longitude, Latitude,
 				0 AS PointType
 		FROM customer 
@@ -156,4 +160,93 @@ BEGIN
 				)
 
 END
+
 GO
+
+
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+create PROCEDURE [dbo].[LoadVisitorsMarker]
+	@VisitorIds VARCHAR(8000),
+	@Order bit,
+    @LackOrder bit,
+    @LackVisit bit,
+    @StopWithoutCustomer bit,
+    @StopWithoutActivity BIT
+AS
+BEGIN
+
+-- =============================================
+-- create visitor ids table
+-- =============================================
+	DECLARE @VisitorIdsTbl TABLE(Value VARCHAR(50) );
+	IF (@VisitorIds <> '')
+	BEGIN
+  
+		WITH StrCTE(start, stop) AS
+		(
+
+		  SELECT  1, CHARINDEX(',' , @VisitorIds )
+
+		  UNION ALL
+
+		  SELECT  stop + 1, CHARINDEX(',' ,@VisitorIds  , stop + 1)
+
+		  FROM StrCTE
+
+		  WHERE stop > 0
+
+		)
+
+		insert into @VisitorIdsTbl
+		SELECT   SUBSTRING(@VisitorIds , start, CASE WHEN stop > 0 THEN stop-start ELSE 4000 END) AS stringValue
+		FROM StrCTE 
+	END
+-- =============================================
+-- create table for adding customer when has diferent location from transaction
+-- =============================================
+	DECLARE @TempTbl TABLE(typ int );
+	insert into @TempTbl VALUES(1)
+	insert into @TempTbl VALUES(2)
+
+-- =============================================
+-- select markers
+-- =============================================
+	SELECT 
+			trn.Id,
+            trn.[Desc],
+            VisitorId AS MasterId,
+            ISNULL((SELECT trn.Latitude WHERE typ = 1), cst.Latitude) AS Latitude,
+            ISNULL((SELECT trn.Longitude WHERE typ = 1), cst.Longitude) AS Longitude,           
+			ISNULL((SELECT TransactionType WHERE typ = 1), 5) AS PointType,
+            ISNULL((SELECT CustomerType WHERE typ = 1), 0) AS SubType,
+			ISNULL((SELECT CAST(trn.intId AS VARCHAR(5)) WHERE (cPoint.STDistance(tPoint) > 0.1)), '' ) AS Lable
+	
+	 FROM 
+		(	SELECT *, 
+					(geography::STPointFromText('POINT('+ CAST(longitude AS VARCHAR(20)) + ' ' + CAST(latitude AS VARCHAR(20)) +')', 4326)) As tPoint 
+			FROM [dbo].[Transaction] JOIN @VisitorIdsTbl ON value = [VisitorId]
+		) trn 
+	 JOIN 
+		 (	SELECT *, 
+					(geography::STPointFromText('POINT('+ CAST(longitude AS VARCHAR(20)) + ' ' + CAST(latitude AS VARCHAR(20)) +')', 4326)) As cPoint 
+			FROM dbo.Customer 
+		 ) cst ON CustomerId = cst.Id 
+	 JOIN @TempTbl as tmp ON (	(tmp.typ = 1) or ((tmp.typ = 2) AND (cPoint.STDistance(tPoint) > 0.1) )  )
+	 WHERE 
+	 (	
+		(	(@Order = 1) AND (TransactionType = 0) )
+	OR	(	(@LackOrder = 1) AND (TransactionType = 1) )
+	OR	(	(@LackVisit = 1) AND (TransactionType = 2) )
+	OR	(	(@StopWithoutCustomer = 1) AND (TransactionType = 3) )
+	OR	(	(@StopWithoutActivity = 1) AND (TransactionType = 4) )
+    )
+
+END
+
+GO
+
+
