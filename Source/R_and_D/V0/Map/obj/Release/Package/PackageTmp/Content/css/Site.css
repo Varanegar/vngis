@@ -3,7 +3,14 @@
     src: url('../fonts/far_Yekan.ttf') format('truetype');
 }
 
+/**-------------------**/
+/*kendo*/
 
+div.k-grid-header{
+    padding-right: 0px !important ;
+    padding-left: 17px !important ;
+}
+/**-------------------**/
 * {
     font-family: far_Yekan,tahoma,arial;
     font-size: 12px;
@@ -502,7 +509,7 @@ footer {
     float: right;
 }
 .color-gray {
-    color: #333;
+    color: #555;
 }
 .color-back-gray {
     background: #333333;
@@ -531,11 +538,16 @@ footer {
     color: #ffffff;
 }
 
+btn-grid{
+    padding: 1px;
+    color: #555;
+}
+
 .labels {
-  color: black;
+  color: red;
   font-family: Tahoma, "Arial", sans-serif;
   font-size: 10px;
   text-align: center;
-  width: 30px;
+  width: 50px;
   white-space: nowrap;
 }

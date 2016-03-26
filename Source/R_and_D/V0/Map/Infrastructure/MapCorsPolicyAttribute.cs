@@ -24,6 +24,7 @@ namespace TrackingMap.Infrastructure
 
             // Add allowed origins.
             _policy.Origins.Add("http://localhost:2333");
+            //_policy.Origins.Add("*");
             //_policy.Origins.Add("");
         }
 

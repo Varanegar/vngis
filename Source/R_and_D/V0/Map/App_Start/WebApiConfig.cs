@@ -20,8 +20,9 @@ namespace TrackingMap
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            //var cors = new EnableCorsAttribute("http://localhost:2333", "*", "*");
-            config.EnableCors(new MapCorsPolicyAttribute());
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
+            //config.EnableCors(new MapCorsPolicyAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

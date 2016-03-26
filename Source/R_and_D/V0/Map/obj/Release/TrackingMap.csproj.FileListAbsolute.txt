@@ -9,7 +9,6 @@ D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\Elmah.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\Elmah.Mvc.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\EntityFramework.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\EntityFramework.SqlServer.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\Jmelosegui.Mvc.GoogleMap.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\Microsoft.AspNet.Identity.Core.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -70,8 +69,6 @@ D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\Microsoft.Owin.Security.Twitter.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\System.Web.Http.Owin.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\obj\Release\TrackingMap.csprojResolveAssemblyReference.cache
-D:\GIT\VnGIS\Source\R_and_D\V0\Map\obj\Release\TrackingMap.CaptionResource.resources
-D:\GIT\VnGIS\Source\R_and_D\V0\Map\obj\Release\TrackingMap.csproj.GenerateResource.Cache
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\obj\Release\TrackingMap.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\obj\Release\TrackingMap.pdb
 E:\ProjectSource\VnGIS\V0\Map\bin\TrackingMap.dll.config
@@ -150,3 +147,8 @@ E:\ProjectSource\VnGIS\V0\Map\obj\Release\TrackingMap.CaptionResource.resources
 E:\ProjectSource\VnGIS\V0\Map\obj\Release\TrackingMap.csproj.GenerateResource.Cache
 E:\ProjectSource\VnGIS\V0\Map\obj\Release\TrackingMap.dll
 E:\ProjectSource\VnGIS\V0\Map\obj\Release\TrackingMap.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\System.Web.Cors.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\System.Web.Http.Cors.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\TrackingMap.Common.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\TrackingMap.Common.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\System.Web.Http.Cors.xml
