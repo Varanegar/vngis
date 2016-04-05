@@ -1,24 +1,24 @@
 ﻿var selectedIds = [];
 
 $(document).ready(function () {
-    //$("#pnl_marker").hide();
+    $("#pnl_marker").hide();
 
     
     kendo.culture("fa-IR");
     var date = new JalaliDate();
     $("#dte_date").kendoDatePicker({
-
-        format: "yyyy/MM/dd",
-        value: date.jalalidate
-    });
+        format: "yyyy/MM/dd"
+    }).val(date.toFullDateString());
 
     $("#tim_from").kendoTimePicker({
-        format: "HH:mm"
+        format: "HH:mm",
+        value:"00:00"
        
     });
     $("#tim_to").kendoTimePicker({
-        format: "HH:mm"
-    });
+        format: "HH:mm",
+        value:"24:00"
+});
 
     loadLevel1Area();
 
@@ -42,7 +42,7 @@ $(document).ready(function () {
         columns: [
         {
             field: "Id",
-            title: " ",
+            headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
             template: "<input type='checkbox' value='#=Id#' onchange=changeIdList(" + 'this' + ",'#=Id#') id=" + "chk" + "#=Id#" + " class='checkboxGroups'/>",
             attributes: { style: "width:5%;" }
         }, {
@@ -100,7 +100,12 @@ $(document).ready(function () {
             drawVisitorsPath();
     });
 
+    $('#mastercheckbox').click(function () {
+        $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+    });
+
 });
+
 //-------------------------------------
 function drawMarkers() {
     $.ajax({
@@ -148,8 +153,16 @@ function drawMarkers() {
                     else if (item.PointType == 6 /*PointType.OuteLine*/) { icon = "outeline"; }
 
                     if (item.SubType == 2 /*(int)ESubType.NEW*/ ) { color = "1"; }
-                        
-                    _m.setIcon({ url: "../../Content/img/pin/"+icon+color+".png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+
+                    
+
+                    _m.setIcon({ url: "../../Content/img/pin/" + icon + color + ".png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+
+                    //test
+                    //if (item.PointType == 2) {                        
+                    //    _m.setIcon({ url: "../../Content/img/pin/test.gif" });
+                    //}
+
                 }
             });
             renderClusterMarkers();
@@ -169,7 +182,7 @@ function drawVisitorsPath() {
             VisitorIds: selectedIds,
             Date: $("#dte_date").val(),
             DailyPath: $("#chk_daily_path").is(":checked"),
-            VisitorPath: $("#chk_visitor_path").is(":checked"),
+            VisitorPath: true // $("#chk_visitor_path").is(":checked"),
         }),
         success: function (data) {
             if (data != null) {
@@ -180,7 +193,7 @@ function drawVisitorsPath() {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
-                        addPolyline({ line: arealine, color: line.Color, weight: 2 });
+                        addPolyline({ line: arealine, color: line.Color, weight: 2, direction:true });
                     }
                 })
             }
@@ -240,8 +253,14 @@ function changeIdList(e, id) {
         }
         selectedIds.splice(idtoDelete, 1);
     }
+    updateMasterCheckbox();
 }
 
+function updateMasterCheckbox() {
+    var numChkBoxes = $('#grid_visitor input[type=checkbox][id!=mastercheckbox]').length;
+    var numChkBoxesChecked = $('#grid_visitor input[type=checkbox][checked][id!=mastercheckbox]').length;
+    $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+}
 
 function mapAditionaldata() {
     return {
@@ -253,7 +272,7 @@ function mapAditionaldata() {
         LackOrder: $("#chk_lack_order").is(":checked"),
         LackVisit: $("#chk_lack_visit").is(":checked"),
         StopWithoutCustomer: $("#chk_wait").is(":checked"),
-        StopWithoutActivity: $("#chk_without_activity").is(":checked")
+        StopWithoutActivity: $("#chk_daily_path").is(":checked") //$("#chk_without_activity").is(":checked")
     };    
 }
 

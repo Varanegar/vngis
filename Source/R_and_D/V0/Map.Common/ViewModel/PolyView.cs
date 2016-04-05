@@ -8,5 +8,6 @@ namespace TrackingMap.Common.ViewModel
         public List<PointView> Points { set; get; }
         public string Color { set; get; }
         public string Desc { set; get; }
+        public string Lable { set; get; }
     }
 }

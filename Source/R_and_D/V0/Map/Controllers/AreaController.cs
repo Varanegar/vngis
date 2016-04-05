@@ -165,7 +165,6 @@ namespace TrackingMap.Controllers
 
         public List<PointView> LoadAreaLeafCustomerPoints(AreaCondition filter)
         {
-
             var parentid = _areaService.GetParentIdById(filter.Id);
             var customerpoints = _customerService.LoadCustomerByAreaId(parentid, filter.Id,
                 filter.Showcustrout, filter.Showcustotherrout, filter.Showcustwithoutrout);

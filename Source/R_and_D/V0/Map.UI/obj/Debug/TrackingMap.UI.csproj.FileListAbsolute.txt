@@ -29,8 +29,8 @@ D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Net.Http.Formatting.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.Http.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.Http.WebHost.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\Antlr3.Runtime.pdb
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.csprojResolveAssemblyReference.cache
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.CaptionResource.resources
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.csproj.GenerateResource.Cache
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.csprojResolveAssemblyReference.cache

@@ -83,7 +83,8 @@ function addMarker(opt_options) {
             Id: id,
             position: new google.maps.LatLng(lat, lng),
             draggable: drg,
-            map: gmap
+            map: gmap,
+            optimized: false
         });
     }
     else{
@@ -93,7 +94,7 @@ function addMarker(opt_options) {
             draggable: drg,
             map: gmap,
             labelContent: label,
-            labelAnchor: new google.maps.Point(22, 0),
+            labelAnchor: new google.maps.Point(22, 30),
             labelClass: "labels", // the CSS class for the label
             labelStyle: { opacity: 0.75 }
         });
@@ -175,31 +176,95 @@ function addInfoWindow(contentString) {
 // ----------------------------------------------------------
 
 function addPolyline(opt_options) {
-
     var options = opt_options || {};
+    var direction = options['direction'] || false;
     var linecoordinates = options['line'] || [];
     var color = options['color'] || '#000000';
     var weight = options['weight'] || 2;
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
+    var dashed = options['dashed'] || false;
+    var lable = options['lable'] || '';
+
+    var opacity = 1;
+
+    var symbolStart = {
+        path: 'M -2,0 0,-2 2,0 0,2 z',
+        strokeColor: '#000',
+        fillColor: '#222',
+        fillOpacity: 1
+    };
+
+    var symbolEnd = {
+        path: 'M -2,-2 2,2 M 2,-2 -2,2',
+        strokeColor: '#000',
+        strokeWeight: 4
+    };
+
+    var symbolDash = {
+        path: 'M 0,-1 0,1',
+        strokeOpacity: 1,
+        scale: 4
+    };
+
+    var ico = null;
+
+    if (dashed == true) {
+        opacity = 0;
+        ico = [
+            {
+                icon: symbolDash,
+            offset: '0', repeat: '20px'
+            }
+            ]
+    }
+
+    if (direction == true) {
+        ico = [
+            {   icon: symbolStart,
+                offset: '0%'
+            },
+            {
+                icon: { path: google.maps.SymbolPath.FORWARD_OPEN_ARROW },
+                offset: '10%', repeat: '50px'
+            },
+            {
+                icon: symbolEnd,
+                offset: '100%'
+            }
+        ]
+
+    }
 
     var path = new google.maps.Polyline({
         path: linecoordinates,
         geodesic: true,
         strokeColor: color,
-        strokeOpacity: 1.0,
-        strokeWeight: weight
+        strokeOpacity: opacity,
+        strokeWeight: weight,
+        icons : ico
     });
     path.setMap(gmap);
-    // --------
+
+
+    // -------- window
     if ((windowdesc != null) && (windowdesc != undefined) && (windowdesc != '')) {
         path.addListener('click', function (event) {
             openInfoWindow(event, windowdesc);
         });
     }
+
+
+    // ------- lables
+    if ((lable != null) && (lable != undefined) && (lable != '')) {
+        addLableToline(linecoordinates, lable);
+    }
+
+
+    // ------- fit to bounds
     if (linecoordinates.length > 0) {
         gmap_bounds.extend(linecoordinates[0]);
-        gmap_bounds.extend(linecoordinates[linecoordinates.length -1]);
+        gmap_bounds.extend(linecoordinates[linecoordinates.length - 1]);
         if (linecoordinates.length > 4)
             gmap_bounds.extend(linecoordinates[Math.round(linecoordinates.length / 2)]);
 
@@ -208,8 +273,27 @@ function addPolyline(opt_options) {
         gmap_moving_shape = path;
     }
     gmap_shaps.push(path)
+    return path;
 }
 
+function addLableToline(line, lable) {
+    var bound = new google.maps.LatLngBounds();
+    for (var i = 0; i < line.length; i++) {
+        bound.extend(line[i]);
+    }
+
+    marker = new MarkerWithLabel({
+        position: bound.getCenter(),
+        draggable: false,
+        map: gmap,
+        labelContent: lable,
+        labelAnchor: new google.maps.Point(100, 0),
+        icon:{ url: "../Content/img/pin/center.png", size: new google.maps.Size(6, 6), anchor: new google.maps.Point(3, 3) },
+        labelClass: "line-labels", // the CSS class for the label
+        labelStyle: { opacity: 0.60 }
+    });
+    gmap_markers.push(marker);
+}
 // ----------------------------------------------------------
 // Polygon
 // ----------------------------------------------------------
@@ -223,6 +307,7 @@ function addPolygon(opt_options) {
     var weight = options['weight'] || 2;
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
+    var lable = options['lable'] || '';
 
 
     var polygon = new google.maps.Polygon({
@@ -237,6 +322,10 @@ function addPolygon(opt_options) {
     // --------
     if ((windowdesc != null) && (windowdesc != undefined) && (windowdesc != '')) {
         polygon.addListener('click', openInfoWindow);
+    }
+    // ------- lables
+    if ((lable != null) && (lable != undefined) && (lable != '')) {
+        addLableToline(linecoordinates, lable);
     }
     // --------
     if (movingshape == true) {

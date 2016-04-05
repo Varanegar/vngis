@@ -36,27 +36,18 @@ $(document).ready(function () {
         scrollable: false,
         change: gridChange,
         dataBound: firstRowSelect,
-        columns: [{
-            field: "Title",
-            title: 'عنوان',
-        }
+        columns: [{  field: "Title", title: 'عنوان'    }
 
         ,{
             field: "Id",
             title: "&nbsp; &nbsp;",
-            attributes:{style:"width:60px;"},
+            attributes:{style:"width:90px;"},
             template: 
-                "<button  type='button' class='btn-link btn-grid' onclick='editArea()';><span class='glyphicon glyphicon-pencil color-gray'></span ></button>" +
-                "<button  type='button' class='btn-link btn-grid' onclick='removeArea()';><span class='glyphicon glyphicon-trash color-gray'></span ></button>"
-          }
-            ,{
-                field: "IsLeaf",
-                title: "&nbsp; &nbsp;",
-                attributes:{style:"width:15px;"},
-                //hidden: "#=IsLeaf == true#",
-                template: "<button  type='button' class='btn-link btn-grid' onclick=showDetail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray'></span ></button>"
-              }               
-        
+                "<button  type='button' class='btn-link btn-grid' onclick='editArea()';><span class='glyphicon glyphicon-pencil color-gray span-btn-grid'></span ></button>" +
+                "<button  type='button' class='btn-link btn-grid' onclick='removeArea()';><span class='glyphicon glyphicon-trash color-gray span-btn-grid'></span ></button>" +
+                "<button  type='button' class='btn-link btn-grid' onclick=showDetail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
+        }
+        , { field: "IsLeaf", hidden: true, }
         ]
     });
 
@@ -77,6 +68,10 @@ $(document).ready(function () {
         })
        .done(function (Result) {
        });
+    });
+
+    $("#btn_cancel").on("click", function (e) {
+        refreshMap(false);
     });
 
     $("#btn_detail").on("click", function (e) {
@@ -104,7 +99,7 @@ $(document).ready(function () {
                 transport: {
                     read: loadNotSelectedCustomer
                 },
-                pageSize: 30,
+                pageSize: 5,
                 serverPaging: false,
                 //serverFiltering: true,
                 //serverSorting: true
@@ -113,21 +108,36 @@ $(document).ready(function () {
             sortable: false,
             editable: false,
             selectable: "row",
-            pageable: false,
+            pageable: {
+                // we don't set any DataSource here
+                pageSize: 5
+            },
             scrollable: true,
+            filterable: {
+                extra: false,
+                operators: {
+                    string: {
+                        startswith: "Starts with",
+                        eq: "Is equal to",
+                        neq: "Is not equal to"
+                    }
+                }
+            },
             columns: [
                 {
                     field: "Id",
                     title: "&nbsp; &nbsp;",
                     width: 40,
+                    filterable: false,
                     //attributes: { style: "width:15px;" },
                     template: "<button  type='button' class='btn-link btn-grid' onclick=addToSelected('#=Id#'); ><span class='glyphicon glyphicon-chevron-down color-gray'></span ></button>"
                 },
                 {   field: "Code", title: "کد",   width: 100,     },
-                {   field: "Title", title: "عنوان"     },
+                {   field: "Title", title: "نام مشتری"     },
                 {   field: "Phone",  title: "تلفن", width: 100 },
                 {   field: "ShopTitle", title: "فروشگاه", width: 100, },
-                {   field: "Address", title: "آدرس" },
+                { field: "Activity", title: "فعالیت", width: 100, },
+                { field: "Address", title: "آدرس" },
             ]
         });
         $("#grid_customer_selected").kendoGrid({
@@ -136,7 +146,7 @@ $(document).ready(function () {
                 transport: {
                     read: loadSelectedCustomer
                 },
-                pageSize: 30,
+                pageSize: 5,
                 serverPaging: false,
                 //serverFiltering: true,
                 //serverSorting: true
@@ -145,19 +155,32 @@ $(document).ready(function () {
             sortable: false,
             editable: false,
             selectable: "row",
-            pageable: false,
+            pageable: true,
             scrollable: true,
+            filterable: {
+                extra: false,
+                operators: {
+                    string: {
+                        startswith: "Starts with",
+                        eq: "Is equal to",
+                        neq: "Is not equal to"
+                    }
+                }
+            },
+            
             columns: [
                 {
                     field: "Id",
                     title: "&nbsp; &nbsp;",
                     width: 40,
+                    filterable: false,
                     template: "<button  type='button' class='btn-link btn-grid' onclick=removeFromSelected('#=Id#'); ><span class='glyphicon glyphicon-chevron-up color-gray'></span ></button>"
                 },
                 { field: "Code", title: "کد", width: 100, },
-                { field: "Title", title: "عنوان" },
+                { field: "Title", title: "نام مشتری" },
                 { field: "Phone", title: "تلفن", width: 100 },
                 { field: "ShopTitle", title: "فروشگاه", width: 100, },
+                { field: "Activity", title: "فعالیت", width: 100, },
                 { field: "Address", title: "آدرس" },
             ]
         });
@@ -178,6 +201,7 @@ $(document).ready(function () {
 
 });
 
+
 function firstRowSelect(e) {
     e.sender.select("tr:eq(1)");
 };
@@ -197,7 +221,7 @@ function removeArea() {
             contentType: "application/json",
             data: JSON.stringify({ Id: selected_id }),
             success: function (data) {
-                if (data.success == true) {
+                if (data.Success == true) {
                     refreshMap(false);
                 }
                 else {
@@ -208,6 +232,11 @@ function removeArea() {
 };
 
 function showDetail(id) {
+
+    var gridData = $('.k-grid').data("kendoGrid");
+    var selectedRowData = gridData.dataItem($('.k-grid').find("tr.k-state-selected"));
+
+    if (selectedRowData.IsLeaf == false)
     $.ajax({
         type: "POST",
         url: url_haspoint,
@@ -381,6 +410,9 @@ function addToSelected(id, changeicon) {
                     var mrk = selected_markers[_index].marker;
                     mrk.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
                     selected_markers.splice(_index, 1);
+                    closeInfoWindow();
+                    addNewPoint(-1, mrk.getPosition().lat(), mrk.getPosition().lng());
+                    refreshAreaLine();
                 }
             }
             if (($('#grid_customer_not_selected').data('kendoGrid') != undefined) && ($('#grid_customer_not_selected').data('kendoGrid') != null)) {
@@ -440,6 +472,53 @@ function removePoint(id) {
     }
 
 }
+function savePoint(id) {
+    var index = findPointMarkerIndex(id);
+    var newindex = -1;
+    var newpr = parseInt($("#txt_priority_" + id).val());
+    var oldpr = parseInt(point_views[index].Pr);
+    if ( oldpr != newpr) {
+        if (newpr > oldpr) {
+            for (var i = 0; i < point_views.length - 1; i++) {
+                if (parseInt(point_views[i].Pr) == newpr)
+                    newindex = i;
+                if ((parseInt(point_views[i].Pr) > oldpr) && (parseInt(point_views[i].Pr) <= newpr))
+                    point_views[i].Pr = (parseInt(point_views[i].Pr) - 1).toString();
+                if (parseInt(point_views[i].Pr) > newpr) {
+                    if (newindex == -1) newindex = i; //not found new index
+                    break;
+                }
+            }
+        }
+        else {
+            for (var i = 0; i < point_views.length - 1; i++) {
+                if (parseInt(point_views[i].Pr) == newpr)
+                    newindex = i;
+                if ((parseInt(point_views[i].Pr) < oldpr) && (parseInt(point_views[i].Pr) >= newpr)) {
+                    if (newindex == -1) newindex = i; //not found new index
+                    point_views[i].Pr = (parseInt(point_views[i].Pr) + 1).toString();
+                }
+                if (parseInt(point_views[i].Pr) > oldpr) break;
+            }
+        }
+        var p = point_views[index]; 
+        if (newindex > -1) {
+            p.Pr = newpr.toString();
+            point_views.splice(index, 1);
+            point_views.splice(newindex, 0, p);
+        }
+        else {
+            p.Pr = parseInt(point_views[point_views.length - 1].Pr) + 1;
+            point_views.splice(index, 1);
+            point_views.push(p);
+        }
+
+        refreshAreaLable();
+        refreshAreaLine();
+        
+    }
+    closeInfoWindow();
+}
 
 function addPointByBtn(id) {
     var index = findPointMarkerIndex(id);
@@ -449,8 +528,8 @@ function addPointByBtn(id) {
         addNewPoint(parseInt(point.Pr) + 1, point.Lat - 0.02, point.Lng - 0.02);
         closeInfoWindow();
 
-        for (var i = index + 1; i < point_views.length - 2; i++) {
-            point_views[i].Pr++;
+        for (var i = index + 1; i < point_views.length - 1; i++) {
+            point_views[i].Pr = (parseInt(point_views[i].Pr)+1).toString();
         }
         var p = point_views[point_views.length-1];
 
@@ -459,6 +538,7 @@ function addPointByBtn(id) {
 
         point_views.sp
         refreshAreaLine();
+        refreshAreaLable();
     }
 }
 
@@ -472,10 +552,11 @@ function addPointByClick(args) {
 function addPoint(id, pr, lat, lng) {
     var _m = addMarker({
         id: "point_" + id,
-        lat: lat, lng: lng, tit: pr, draggable: true,
+        lat: lat, lng: lng, tit: pr, draggable: true,label:pr,
         windowdesc: "<br/>" +
-                     //   "<h1>اولویت : " + pr + "</h1>" +
-                     //"<br />" +
+                     "<input type='number' id='txt_priority_" + id+"' value="+pr+" class='form-control' />"+
+                     "<br />" +
+                     "<button id='btn_save_point_' onclick=savePoint('" + id + "') class='btn btn-default'>ذخیره</button>" +
                      "<button id='btn_add_point_' onclick=addPointByBtn('" + id + "') class='btn btn-default'>افزودن</button>" +
                      "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>",
         clustering: false
@@ -498,6 +579,13 @@ function refreshAreaLine() {
     });    
     refreshMovingShape(line);
 }
+function refreshAreaLable() {
+    
+    $.each(point_views, function (i, item) {
+        var _m = getMarkerById("point_" + item.Id);
+        _m.set("labelContent", item.Pr);
+    });
+}
 
 function addNewPoint(pr, lat, lng) {
     new_id++;
@@ -516,10 +604,27 @@ function refreshMap(edit) {
     }
     else {
         $("#mapContainer").show();
-        if (edit == true)
+        if (edit == true){
             $("#btn_save").show();
-        else
+            $("#btn_cancel").show();            
+            $("#grid_area").prop('disabled', true);
+            $("#grid_area").attr("disabled","true");
+            //$(".btn-grid").hide();
+            $(".btn-grid").prop('disabled', true);
+            $(".span-btn-grid").removeClass("color-gray");
+            $(".span-btn-grid").addClass("color-light-gray");
+        }
+        else {
             $("#btn_save").hide();
+            $("#btn_cancel").hide();
+
+            $("#grid_area").prop('disabled', false);
+            $("#grid_area").children().prop('disabled', false);
+            //$(".btn-grid").show();
+            $(".btn-grid").prop('disabled', false);
+            $(".span-btn-grid").removeClass("color-light-gray");
+            $(".span-btn-grid").addClass("color-gray");
+        }
 
         var grid = $("#grid_area").data("kendoGrid");
         var selectedItem = grid.dataItem(grid.select());
@@ -560,7 +665,7 @@ function drawAreaParentLine() {
                     arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                 });
                 if (arealine.length > 0) {
-                    addPolyline({ line: arealine, color: '#001100' });
+                    addPolyline({ line: arealine, color: '#001100', dashed : true });
                     fitPointBounds();
                 }
             }
@@ -584,7 +689,7 @@ function drawAreaSibilingLine(){
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
-                        addPolyline({ line: arealine, color: '#777777' });
+                        addPolyline({ line: arealine, color: '#777777' , lable:'sdjkfh jsdfh hhdg io'});
                     }
                 })
             }
@@ -608,7 +713,7 @@ function drawAreaChildLine(){
                         arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                     });
                     if (arealine.length > 0) {
-                        addPolyline({ line: arealine, color: '#777777' });
+                        addPolyline({ line: arealine, color: '#777777' , lable:'test lable for poly line'});
                     }
                 })
             }
@@ -718,8 +823,12 @@ function drawAreaLinePoints(edit, isleaf) {
                     arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                 });
                 if (arealine.length > 0) {
-                    if (isleaf)
-                        addPolyline({line:arealine, color:data.Color, weight:3, windowdesc:data.Desc, movingshape:true});
+                    if (isleaf){
+                        var l = addPolyline({
+                            line: arealine, color: data.Color, weight: 3, windowdesc: data.Desc,
+                            movingshape: true, direction: true
+                        });
+                    }
                     else
                         addPolygon({ line: arealine, color: data.Color, weight: 3, windowdesc: data.Desc, movingshape: true });
 

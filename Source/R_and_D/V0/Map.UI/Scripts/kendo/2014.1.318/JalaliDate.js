@@ -303,6 +303,18 @@
         return this.jalalidate[0] + "/" + this.jalalidate[1] + "/" + this.jalalidate[2];
     }
 
+    this.toFullDateString = function () {
+        var y = this.jalalidate[0];
+
+        var m = this.jalalidate[1]+1+''; 
+        if (m.length < 2) m = '0' + m;
+
+        var d = this.jalalidate[2] + '';
+        if (d.length < 2) d = '0' + d;
+
+        return y + "/" + m + "/" + d;
+    }
+
     this.toISOString = function () {
         return this.toDateString();
     }

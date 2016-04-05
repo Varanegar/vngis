@@ -324,4 +324,13 @@
   <data name="AddPoint" xml:space="preserve">
     <value>افزودن نقطه</value>
   </data>
+  <data name="Activities" xml:space="preserve">
+    <value>فعالیت ها</value>
+  </data>
+  <data name="Header" xml:space="preserve">
+    <value>سرپرست</value>
+  </data>
+  <data name="Team" xml:space="preserve">
+    <value>تیم</value>
+  </data>
 </root>
