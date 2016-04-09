@@ -120,3 +120,4 @@ Source/R_and_D/V0/Map.Service/bin/Release/TrackingMap.Service.dll.config
 Source/R_and_D/V0/Map.Service/bin/Release/TrackingMap.Service.pdb
 Source/R_and_D/V0/Map.v12.suo
 Source/R_and_D/V0/Map/User_Data/log/
+*.cache
