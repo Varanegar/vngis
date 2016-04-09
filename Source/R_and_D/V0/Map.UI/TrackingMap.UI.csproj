@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LastStatusController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Global.asax.cs">
@@ -482,6 +483,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\view\area.js" />
     <Content Include="Scripts\view\general.js" />
+    <Content Include="Scripts\view\laststatus.js" />
     <Content Include="Scripts\view\urls.js" />
     <Content Include="Scripts\view\visitor.js" />
     <Content Include="Scripts\vn.googlemap.js" />
@@ -568,6 +570,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Visitor\Index.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\LastStatus\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

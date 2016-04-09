@@ -13,8 +13,7 @@ namespace TrackingMap.Service.BL
     {
         private readonly IDbContext _ctx;
 
-        public CustomerService(IDbContext ctx)
-           
+        public CustomerService(IDbContext ctx)           
         {
             _ctx = ctx;          
         }
@@ -53,6 +52,44 @@ namespace TrackingMap.Service.BL
                                                           ).ToList();
 
             return list;
+        }
+
+        public List<CustomerView> LoadCustomerSelectedByAreaId(Guid? areaid, bool selected)
+        {
+
+            List<CustomerView> list;
+
+            SqlParameter areaid_param = new SqlParameter("@areaid", areaid);
+            SqlParameter selected_param = new SqlParameter("@selected", selected);
+
+            list = _ctx.GetDatabase().SqlQuery<CustomerView>("LoadSelectedCustomerByPathId @AreaId, @Selected ", areaid_param, selected_param).ToList();
+
+            return list;
+
+            //List<CustomerView> list;
+            //if (selected)
+            //{
+            //    var q = from cust in _customerRepository.Table
+            //        join
+            //            are in _customerAreaRepository.Table on cust.Id equals are.CustomerEntityId
+            //        where (are.AreaEntityId == areaid)
+            //        select new CustomerView() {Id = cust.Id, Title = cust.Title};
+
+            //    list = q.ToList();
+            //}
+            //else
+            //{
+
+            //    var customer_in_area_list = _customerAreaRepository.Table.Where(x => x.AreaEntityId == areaid).ToList();
+
+            //    var q = from cust in _customerRepository.Table
+            //            where ( !(customer_in_area_list.Any(x => x.CustomerEntityId == cust.Id)) )
+            //            select new CustomerView() { Id = cust.Id, Title = cust.Title };
+
+            //    list = q.ToList();
+
+            //}
+            //return list;
         }
 
     }

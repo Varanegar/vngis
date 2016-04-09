@@ -333,4 +333,7 @@
   <data name="Team" xml:space="preserve">
     <value>تیم</value>
   </data>
+  <data name="LastStatus" xml:space="preserve">
+    <value>آخرین وضعیت</value>
+  </data>
 </root>

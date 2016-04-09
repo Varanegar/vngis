@@ -412,6 +412,15 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آخرین وضعیت.
+        /// </summary>
+        public static string LastStatus {
+            get {
+                return ResourceManager.GetString("LastStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نقشه.
         /// </summary>
         public static string Map {

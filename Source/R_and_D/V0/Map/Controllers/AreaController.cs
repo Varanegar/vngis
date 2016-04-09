@@ -56,14 +56,14 @@ namespace TrackingMap.Controllers
         [HttpPost]
         public List<CustomerView> LoadSelectedCustomer(IdView parentId)
         {
-            var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId.Id, true);
+            var CustomerList = _customerService.LoadCustomerSelectedByAreaId(parentId.Id, true);
             return CustomerList;
         }
 
         [HttpPost]
         public List<CustomerView> LoadNotSelectedCustomer(IdView parentId)
         {
-            var CustomerList = _areaService.LoadCustomerSelectedByAreaId(parentId.Id, false);
+            var CustomerList = _customerService.LoadCustomerSelectedByAreaId(parentId.Id, false);
             return CustomerList;
         }
 
@@ -71,14 +71,14 @@ namespace TrackingMap.Controllers
         public bool AddCustomerToSelected(CustomerAreaView customer)
         {
             
-            var r = _areaService.AddCustomerToSelected(customer.CustomerId, customer.AreaId);
+            var r = _areaPointService.AddCustomerToSelected(customer.CustomerId, customer.AreaId);
             return r;
         }
 
         [HttpPost]
         public bool RemoveCustomerFromSelected(CustomerAreaView customer)
         {
-            return _areaService.RemoveCustomerFromSelected(customer.CustomerId, customer.AreaId);
+            return _areaPointService.RemoveCustomerFromSelected(customer.CustomerId, customer.AreaId);
         }
         
         //-----------------------------------------------------------------------------------------------------------
@@ -143,7 +143,12 @@ namespace TrackingMap.Controllers
             {
                 var siblingpoints = _areaPointService.LoadAreaPointByParentId(parentid, areaId.Id).ToList();
                 polies = GeneralTools.PointListToPolyList(siblingpoints, true, false);
-            }            
+            }
+            foreach (var poly in polies)
+            {
+               var view = _areaService.GetViewById(poly.MasterId);
+               poly.Lable = view.Title;
+            }
             return polies;
         }
 
@@ -152,7 +157,12 @@ namespace TrackingMap.Controllers
             var polies = new List<PolyView>();
 
             var childgpoints = _areaPointService.LoadAreaPointByParentId(areaId.Id).ToList();
-            polies = GeneralTools.PointListToPolyList(childgpoints, true, false);                    
+            polies = GeneralTools.PointListToPolyList(childgpoints, true, false);
+            foreach (var poly in polies)
+            {
+                var view = _areaService.GetViewById(poly.MasterId);
+                poly.Lable = view.Title;
+            }
 
             return polies;
         }

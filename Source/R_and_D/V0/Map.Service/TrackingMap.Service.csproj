@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="BL\AreaService.cs" />
     <Compile Include="BL\ConfigService.cs" />
+    <Compile Include="BL\LastStatusService.cs" />
     <Compile Include="BL\TransactionService.cs" />
     <Compile Include="DataSourceResult.cs" />
     <Compile Include="DBManagement\EfRepository.cs" />

@@ -21,6 +21,7 @@ namespace TrackingMap.Common.ViewModel
         public int SubType { set; get; }
 
         public Guid MasterId { set; get; }
+        public Guid? ReferId { set; get; }
 
         public bool IsLeaf { set; get; }
     }

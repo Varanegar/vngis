@@ -126,6 +126,7 @@ function drawMarkers() {
             $.each(data, function (i, item) {
                 var _m = addMarker({
                     id: "marker_" + item.Id,
+                    fit: true,
                     lat: item.Latitude, lng: item.Longitude,
                     windowdesc: item.Desc, clustering: true, label: item.Lable
                 });

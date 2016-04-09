@@ -49,7 +49,8 @@ namespace TrackingMap.Service.Tools
                         
 
                     lines.Add(new PolyView()
-                    {
+                    {                
+                        MasterId = group,
                         Points = line,
                         Color = color.ToArgb().ToString()
                     });
@@ -66,6 +67,7 @@ namespace TrackingMap.Service.Tools
             if (randomColor) color = GetRandomColor();
             lines.Add(new PolyView()
                 {
+                    MasterId = group,
                     Points = line,
                     Color = color.ToArgb().ToString()
                 });

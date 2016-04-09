@@ -15,6 +15,9 @@ namespace TrackingMap.Service.Entity
         public Guid AreaEntityId { get; set; }
         public virtual AreaEntity AreaEntity { set; get; }
 
+        [Column("CustomerId")]
+        public Guid? CustomerEntityId { get; set; }
+
         [Column("Priority")]
         public int Priority { get; set; }
 
@@ -34,6 +37,7 @@ namespace TrackingMap.Service.Entity
             this.Longitude = view.Lng;
             this.Priority = view.Pr;
             this.AreaEntityId = view.AreaId;
+            this.CustomerEntityId = view.CstId;
         }
 
     }
