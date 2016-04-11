@@ -14,9 +14,7 @@ D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.Razor.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.WebPages.Deployment.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.WebPages.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.WebPages.Razor.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\TrackingMap.Common.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\WebGrease.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\TrackingMap.Common.pdb
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\Newtonsoft.Json.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.Helpers.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.Mvc.xml
@@ -29,8 +27,8 @@ D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Net.Http.Formatting.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.Http.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\System.Web.Http.WebHost.xml
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\bin\Antlr3.Runtime.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.csprojResolveAssemblyReference.cache
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.CaptionResource.resources
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.csproj.GenerateResource.Cache
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.pdb
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.UI\obj\Debug\TrackingMap.UI.csprojResolveAssemblyReference.cache

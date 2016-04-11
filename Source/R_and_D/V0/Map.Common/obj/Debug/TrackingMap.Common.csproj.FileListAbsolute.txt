@@ -1,7 +1,0 @@
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\bin\Debug\TrackingMap.Common.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\bin\Debug\TrackingMap.Common.pdb
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\bin\Debug\Newtonsoft.Json.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\bin\Debug\Newtonsoft.Json.xml
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\obj\Debug\TrackingMap.Common.csprojResolveAssemblyReference.cache
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\obj\Debug\TrackingMap.Common.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\obj\Debug\TrackingMap.Common.pdb

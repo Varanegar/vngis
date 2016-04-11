@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Web.Mvc;
-using TrackingMap.Common.Tools;
-using TrackingMap.Common.ViewModel;
 using TrackingMap.UI.ServiceCall;
 
 namespace TrackingMap.UI.Controllers

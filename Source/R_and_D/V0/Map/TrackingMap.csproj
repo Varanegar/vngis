@@ -197,6 +197,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CustomerReportController.cs" />
+    <Compile Include="Controllers\GoodReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\LastStatusController.cs" />
@@ -438,13 +440,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Map.Common\TrackingMap.Common.csproj">
-      <Project>{08aee2d5-4e10-4765-9d8a-f44d31846076}</Project>
-      <Name>TrackingMap.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Map.Service\TrackingMap.Service.csproj">
       <Project>{38c82039-12e3-4c4d-a972-ad1d1a216d7b}</Project>
       <Name>TrackingMap.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrackingMap.Vn\TrackingMap.Vn.csproj">
+      <Project>{398dd256-29f2-451a-bf83-ca1d99db7381}</Project>
+      <Name>TrackingMap.Vn</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

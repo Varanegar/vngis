@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Map.Common")]
+[assembly: AssemblyTitle("TrackingMap.Vn")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Map.Common")]
+[assembly: AssemblyProduct("TrackingMap.Vn")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("157144f5-204e-48f0-af77-6b6ac9ab0712")]
+[assembly: Guid("46a83559-1d4c-4058-9cc9-89f4c88ed0cd")]
 
 // Version information for an assembly consists of the following four values:
 //

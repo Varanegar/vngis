@@ -1,4 +1,8 @@
-﻿$(document).ready(function () {
+﻿var areaId;
+
+$(document).ready(function () {
+    areaId = '';
+
     $("#div_advance_condition").hide();
 
     kendo.culture("fa-IR");
@@ -22,4 +26,79 @@
         }
     });
 
+    $("#btn_run").on("click", function (e) {
+        refreshMap();
+    });
+
 });
+
+function refreshMap() {
+    clearOverlays();
+    drawAreaInfo();
+}
+
+function getFilter() {
+    return{
+        ParentId: areaId,
+        FromDate: $("#dte_from").val(),
+        ToDate : $("#dte_to").val(),
+        SaleOffice :$("#ddl_sale_office").val(),
+        Header :$("#ddl_header").val(),
+        Seller :$("#ddl_seller").val(),
+        CustomerClass : $("#ddl_customer_class").val(),
+        CustomerActivity : $("#ddl_customer_activity").val(),
+        CustomerDegree : $("#ddl_customer_degree").val(),
+        GoodGroup : $("#ddl_good_group").val(),
+        DynamicGroup : $("#ddl_dynamic_group").val(),
+        Good : $("#ddl_good").val(),
+        CommercialName : $("#txt_commercial_good_name").val(),
+        DayCount : $("#txt_day_not_visit").val(),
+        ActiveCustomerCount : $("#chk_active_customer_count").is(":checked"),
+        VisitCount : $("#chk_visit_count").is(":checked"),
+        LackOfVisitCount : $("#chk_lack_of_visit").is(":checked"),
+        LackOfSaleCount : $("#chk_lack_of_sale").is(":checked"),
+        NewCustomerCount : $("#chk_new_customer_count").is(":checked"),
+        DuringCheck : $("#chk_during_check").is(":checked"),
+        RejectCheck : $("#chk_reject_check").is(":checked")
+       }
+}
+
+function drawAreaInfo() {
+    $.ajax({
+        type: "POST",
+        url: url_loadcustomerreport,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(getFilter()),
+        success: function (data) {
+            if (data != null) {
+                $.each(data, function (i, line) {
+                    var arealine = [];
+                    if (line.Points != null)
+                        $.each(line.Points, function (j, item) {
+                            arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                        });
+                    if (arealine.length > 0) {
+                       poly = addPolygon({
+                            line: arealine,
+                            color: '#777777',
+                            lable: line.Lable,
+                            windowdesc: line.Desc,
+                            showWindowAlways : true,
+                            fit: true
+                       });
+
+                       poly.addListener('click', function (event) {
+                           areaId = line.MasterId;
+                           refreshMap();
+                       });
+
+                    }
+                })
+                fitPointBounds();
+
+            }
+        }
+    });
+
+}

@@ -1,4 +1,0 @@
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\bin\Debug\Map.Common.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\bin\Debug\Map.Common.pdb
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\obj\Debug\Map.Common.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map.Common\obj\Debug\Map.Common.pdb

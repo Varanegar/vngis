@@ -3,6 +3,7 @@ var gmap;
 var gmap_markers = [];
 var gmap_markers_cluster = [];
 var gmap_shaps = [];
+var gmap_infoBubble = [];
 var gmap_moving_shape;
 var gmap_bounds = new google.maps.LatLngBounds();
 var gmap_infoWindow;
@@ -36,6 +37,12 @@ function clearOverlays() {
         gmap_shaps[i].setMap(null);
     }
     gmap_shaps = [];
+
+    for (var i = 0; i < gmap_infoBubble.length; i++) {
+        gmap_infoBubble[i].setMap(null);
+    }
+    gmap_infoBubble = [];
+    
     gmap_markers = [];
     gmap_bounds = new google.maps.LatLngBounds();
     closeInfoWindow();
@@ -161,12 +168,14 @@ function closeInfoWindow() {
         gmap_infoWindow.close();
     }
     gmap_infoWindow = new google.maps.InfoWindow()
+    
 }
 
 function openInfoWindow(event, windowdesc) {
     closeInfoWindow();
-    gmap_infoWindow.setContent(windowdesc);
+    gmap_infoWindow.setContent("<div id='infoWindow'>"+windowdesc+"</div>");
     gmap_infoWindow.setPosition(event.latLng);
+    //gmap_infoWindow.setMaxWidth(300);
     gmap_infoWindow.open(gmap);
 }
 
@@ -280,7 +289,9 @@ function addPolyline(opt_options) {
     return path;
 }
 
-function addLableToline(line, lable) {
+function addLableToline(line, lable, windowdesc) {
+    if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
+
     var bound = new google.maps.LatLngBounds();
     for (var i = 0; i < line.length; i++) {
         bound.extend(line[i]);
@@ -296,7 +307,36 @@ function addLableToline(line, lable) {
         labelClass: "line-labels", // the CSS class for the label
         labelStyle: { opacity: 0.5 }
     });
+
+    if (windowdesc != '')
+        openInfoBubble(marker, windowdesc);
+
     gmap_markers.push(marker);
+}
+
+function openInfoBubble(marker, windowdesc) {
+
+
+    infoBubble = new InfoBubble({
+        map: gmap,
+        content: windowdesc,
+        position: marker.getPosition(),
+        shadowStyle: 1,
+        padding: 10,
+        backgroundColor: '#fefefe',
+        borderRadius: 4,
+        arrowSize: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        disableAutoPan: true,
+        hideCloseButton: true,
+        arrowPosition: 30,
+        backgroundClassName: 'phoney',
+        arrowStyle: 2,
+        minWidth: 200
+    });
+    gmap_infoBubble.push(infoBubble);
+    infoBubble.open();
 }
 // ----------------------------------------------------------
 // Polygon
@@ -313,6 +353,15 @@ function addPolygon(opt_options) {
     var movingshape = options['movingshape'] || false;
     var lable = options['lable'] || '';
     var fit = options['fit'] || false;
+    var showwindowalways = options['showWindowAlways'] || false;
+    var bubbledesc = '';
+
+    if ((lable == null) || (lable == undefined)) lable = '';
+    if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
+    if (showwindowalways == true) {
+        bubbledesc = windowdesc;
+        windowdesc = '';
+    }
 
     var polygon = new google.maps.Polygon({
         path: linecoordinates,
@@ -324,12 +373,15 @@ function addPolygon(opt_options) {
     });
     polygon.setMap(gmap);
     // --------
-    if ((windowdesc != null) && (windowdesc != undefined) && (windowdesc != '')) {
-        polygon.addListener('click', openInfoWindow);
+    if ((windowdesc != '') && (showwindowalways != true)) {
+        polygon.addListener('click', function (event) {
+            openInfoWindow(event, windowdesc);
+        });
     }
     // ------- lables
-    if ((lable != null) && (lable != undefined) && (lable != '')) {
-        addLableToline(linecoordinates, lable);
+    if ((lable != '') || (bubbledesc != '')) {
+        
+        addLableToline(linecoordinates, lable, bubbledesc);
     }
     // --------
     if (movingshape == true) {
@@ -341,6 +393,7 @@ function addPolygon(opt_options) {
     for (var i = 0; i < linecoordinates.length; i++) {
         gmap_bounds.extend(linecoordinates[i]);
     }
+    return polygon;
 }
 // ----------------------------------------------------------
 // Moving shape

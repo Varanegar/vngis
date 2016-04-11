@@ -31,6 +31,8 @@ namespace TrackingMap.Infrastructure
             builder.RegisterType<VisitorService>().InstancePerLifetimeScope();
             builder.RegisterType<LastStatusService>().InstancePerLifetimeScope();
             builder.RegisterType<TransactionService>().InstancePerLifetimeScope();
+            builder.RegisterType<CustomerReportService>().InstancePerLifetimeScope();
+            builder.RegisterType<GoodReportService>().InstancePerLifetimeScope();
 
             var container = builder.Build();
 

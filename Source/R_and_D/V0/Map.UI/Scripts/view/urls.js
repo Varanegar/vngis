@@ -44,4 +44,12 @@ url_loadmarkers = url_server + "Visitor/LoadMarkers";
 //--------------------------------------------------------
 url_loadlaststatusmarkers = url_server + "LastStatus/LoadMarkers";
 
+//--------------------------------------------------------
+// customer Report
+//--------------------------------------------------------
+url_loadcustomerreport = url_server + "CustomerReport/Load";
 
+//--------------------------------------------------------
+// good Report
+//--------------------------------------------------------
+url_loadgoodreport = url_server + "GoodReport/Load";
