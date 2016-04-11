@@ -270,6 +270,7 @@ function refreshGrid() {
                 for (var i = data.length - 1 ; i >= 0 ; i--) {
                     list += ">> <button id = 'btn_back_'" + data[i].Id + " class='btn btn-link color-gray' onclick=back('" + data[i].Id + "') >" + data[i].Title + "</button> ";
                 }
+                location.hash = selected_id;
                 $("#pnl_path").html(list);
             }
         });
@@ -356,7 +357,6 @@ function loadSelectedCustomer(options) {
     });
 }
 
-
 function addToSelectedBtn(id) {
     $.ajax({
         type: "POST",
@@ -393,8 +393,6 @@ function removeFromSelectedBtn(id) {
     });
 }
 
-
-
 //-----------------------------------------
 // map
 //-----------------------------------------
@@ -408,7 +406,6 @@ function emptySelectedMarkers(reverticon) {
     $("#btn_add_customer_list").hide();
     $("#btn_remove_customer_list").hide();
 }
-
 
 function onCustomerMarkerClick(e, id, marker, desc, editable) {
     if (!ctr) {
@@ -573,12 +570,10 @@ function addPointByBtn(id) {
     }
 }
 
-
 function addPointByClick(args) {
     addNewPoint(-1, args.latLng.lat(), args.latLng.lng());
     refreshAreaLine();
 }
-
 
 function addPoint(id, pr, lat, lng, cust) {
     if ((cust == undefined) || (cust == null))
@@ -619,6 +614,7 @@ function refreshAreaLine() {
     });    
     refreshMovingShape(line);
 }
+
 function refreshAreaLable() {
     
     $.each(point_views, function (i, item) {
@@ -689,6 +685,7 @@ function refreshMap(edit) {
         drawAreaLinePoints(edit, isleaf);
     }
 }
+
 function drawAreaParentLine(fitparent) {
     $.ajax({
         type: "POST",
@@ -854,7 +851,6 @@ function drawAreaLinePoints(edit, isleaf) {
     });
 }
 
-
 function onDragEnd(args) {
     var index = findPointMarkerIndex(args.id);
     if (index > -1) {
@@ -886,8 +882,22 @@ function findPointMarkerIndexByCustomer(id) {
     return -1
 }
 
+//---------------------------------------------------------------------------
+// window
+//---------------------------------------------------------------------------
+window.onhashchange = function () {
+    if (location.hash.length > 0) {
+        var _id = location.hash.replace('#', '');
+        if (_id != selected_id) {
+            back(_id);
+        }
+            
+    }
+};
+//window.onbeforeunload = function () { return "You work will be lost."; };
 
-window.onkeydown = function(e) {
+
+window.onkeydown = function (e) {
     ctr = ((e.keyIdentifier == 'Control') || (e.ctrlKey == true));
 };
 window.onkeyup = function(e) {

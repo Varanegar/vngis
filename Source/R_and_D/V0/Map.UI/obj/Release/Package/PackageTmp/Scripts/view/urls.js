@@ -36,3 +36,10 @@ url_loadlevel1area = url_server + "Visitor/LoadLevel1Area";
 
 url_loadvisitorspath = url_server + "Visitor/LoadVisitorsPath";
 url_loadmarkers = url_server + "Visitor/LoadMarkers";
+
+//--------------------------------------------------------
+// laststatus
+//--------------------------------------------------------
+url_loadlaststatusmarkers = url_server + "LastStatus/LoadMarkers";
+
+

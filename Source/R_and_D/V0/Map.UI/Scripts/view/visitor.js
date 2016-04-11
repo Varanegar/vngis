@@ -96,8 +96,7 @@ $(document).ready(function () {
         clearOverlays();
 
         drawMarkers();
-        if ($("#chk_daily_path").is(":checked") || $("#chk_visitor_path").is(":checked"))
-            drawVisitorsPath();
+        drawVisitorsPath();
     });
 
     $('#mastercheckbox').click(function () {

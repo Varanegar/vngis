@@ -75,6 +75,7 @@ function addMarker(opt_options) {
     var windowdesc = options['windowdesc'] || '';
     var clustering = options['clustering'] || true; 
     var label = options['label'] || '';
+    var fit = options['fit'] || false;
 
     var marker;
 
@@ -115,7 +116,9 @@ function addMarker(opt_options) {
         gmap_markers_cluster.push(marker);
     }
     gmap_markers.push(marker);
-    gmap_bounds.extend(marker.position);
+    if (fit == true) {
+        gmap_bounds.extend(marker.position);
+    }
     return marker;
 }
 
@@ -185,6 +188,7 @@ function addPolyline(opt_options) {
     var movingshape = options['movingshape'] || false;
     var dashed = options['dashed'] || false;
     var lable = options['lable'] || '';
+    var fit = options['fit'] || false;
 
     var opacity = 1;
 
@@ -262,7 +266,7 @@ function addPolyline(opt_options) {
 
 
     // ------- fit to bounds
-    if (linecoordinates.length > 0) {
+    if ((fit == true)&&(linecoordinates.length > 0)) {
         gmap_bounds.extend(linecoordinates[0]);
         gmap_bounds.extend(linecoordinates[linecoordinates.length - 1]);
         if (linecoordinates.length > 4)
@@ -290,7 +294,7 @@ function addLableToline(line, lable) {
         labelAnchor: new google.maps.Point(100, 0),
         icon:{ url: "../Content/img/pin/center.png", size: new google.maps.Size(6, 6), anchor: new google.maps.Point(3, 3) },
         labelClass: "line-labels", // the CSS class for the label
-        labelStyle: { opacity: 0.60 }
+        labelStyle: { opacity: 0.5 }
     });
     gmap_markers.push(marker);
 }
@@ -308,7 +312,7 @@ function addPolygon(opt_options) {
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
     var lable = options['lable'] || '';
-
+    var fit = options['fit'] || false;
 
     var polygon = new google.maps.Polygon({
         path: linecoordinates,
@@ -331,7 +335,9 @@ function addPolygon(opt_options) {
     if (movingshape == true) {
         gmap_moving_shape = polygon;
     }
-    gmap_shaps.push(polygon)
+    if (fit == true) {
+        gmap_shaps.push(polygon)
+    }
     for (var i = 0; i < linecoordinates.length; i++) {
         gmap_bounds.extend(linecoordinates[i]);
     }

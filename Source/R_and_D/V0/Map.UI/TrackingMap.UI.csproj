@@ -344,6 +344,7 @@
     <Content Include="Content\img\icon.png" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\pin\area.png" />
+    <Content Include="Content\img\pin\center.png" />
     <Content Include="Content\img\pin\customer.png" />
     <Content Include="Content\img\pin\customer0.png" />
     <Content Include="Content\img\pin\customer1.png" />

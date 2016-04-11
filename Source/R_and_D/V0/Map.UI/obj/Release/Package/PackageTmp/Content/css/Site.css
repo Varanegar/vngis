@@ -577,6 +577,7 @@ btn-grid{
    color: black;
    font-family: Tahoma, "Arial", sans-serif;
    font-size: 14px;
+   font-weight: bold;
    text-align: center;
    width: 200px;
    white-space: nowrap;

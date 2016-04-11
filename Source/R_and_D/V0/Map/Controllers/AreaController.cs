@@ -145,7 +145,7 @@ namespace TrackingMap.Controllers
                 polies = GeneralTools.PointListToPolyList(siblingpoints, true, false);
             }
             foreach (var poly in polies)
-            {
+            {               
                var view = _areaService.GetViewById(poly.MasterId);
                poly.Lable = view.Title;
             }

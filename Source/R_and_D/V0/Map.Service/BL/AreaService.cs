@@ -59,6 +59,9 @@ namespace TrackingMap.Service.BL
 
         public AreaView GetViewById(Guid? id)
         {
+            if (id == null)
+                return new AreaView();
+
             return _areaRepository.GetById(id).GetView();
         }
 
