@@ -336,4 +336,43 @@
   <data name="LastStatus" xml:space="preserve">
     <value>آخرین وضعیت</value>
   </data>
+  <data name="CustomerActivity" xml:space="preserve">
+    <value>فعالیت</value>
+  </data>
+  <data name="CustomerClass" xml:space="preserve">
+    <value>طبقه مشتری</value>
+  </data>
+  <data name="CustomerDegree" xml:space="preserve">
+    <value>درجه</value>
+  </data>
+  <data name="CustomerReport" xml:space="preserve">
+    <value>گزارش فروش مشتری</value>
+  </data>
+  <data name="DayNotVisit" xml:space="preserve">
+    <value>تعداد روز ویزیت نشده</value>
+  </data>
+  <data name="DynamicGroup" xml:space="preserve">
+    <value>دسته بندی پویا</value>
+  </data>
+  <data name="Good" xml:space="preserve">
+    <value>کالا</value>
+  </data>
+  <data name="GoodCommercialName" xml:space="preserve">
+    <value>نام تجاری کالا</value>
+  </data>
+  <data name="GoodGroup" xml:space="preserve">
+    <value>گروه کالا</value>
+  </data>
+  <data name="GoodReport" xml:space="preserve">
+    <value>گزارش فروش کالا</value>
+  </data>
+  <data name="SaleOffice" xml:space="preserve">
+    <value>دفتر فروش</value>
+  </data>
+  <data name="Seller" xml:space="preserve">
+    <value>فروشنده</value>
+  </data>
+  <data name="Advance" xml:space="preserve">
+    <value>پیشرفته</value>
+  </data>
 </root>

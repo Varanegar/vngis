@@ -73,6 +73,22 @@
                             @CaptionResource.LastStatus
                         </a>
                     </li>
+                    <li>
+                        <a class="@(ViewBag.CurrMenu == "CustomerReport" ? "Active" : "")" href="/CustomerReport/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.CustomerReport
+                        </a>
+                    </li>
+                    <li>
+                        <a class="@(ViewBag.CurrMenu == "GoodReport" ? "Active" : "")" href="/GoodReport/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.GoodReport
+                        </a>
+                    </li>
 
                 </ul>
 

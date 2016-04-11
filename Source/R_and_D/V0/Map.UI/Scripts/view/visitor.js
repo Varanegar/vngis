@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
     $("#pnl_marker").hide();
-
     
     kendo.culture("fa-IR");
     var date = new JalaliDate();

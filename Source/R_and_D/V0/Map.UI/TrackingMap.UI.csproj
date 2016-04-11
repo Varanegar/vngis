@@ -141,6 +141,8 @@
       <DependentUpon>CaptionResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Controllers\CustomerReportController.cs" />
+    <Compile Include="Controllers\GoodReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LastStatusController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -483,6 +485,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\view\area.js" />
+    <Content Include="Scripts\view\customerreport.js" />
     <Content Include="Scripts\view\general.js" />
     <Content Include="Scripts\view\laststatus.js" />
     <Content Include="Scripts\view\urls.js" />
@@ -572,6 +575,8 @@
     <Content Include="Views\Visitor\Index.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\LastStatus\Index.cshtml" />
+    <Content Include="Views\CustomerReport\Index.cshtml" />
+    <Content Include="Views\GoodReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
