@@ -32,9 +32,35 @@ $(document).ready(function () {
 
 });
 
+function back(id) {
+    areaId = id;
+    refreshMap();
+}
+
 function refreshMap() {
+    if ((areaId != null)&&(areaId != undefined)) {
+        $.ajax({
+            type: "POST",
+            url: url_getareapath,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ Id: areaId }),
+            success: function (data) {
+                var list = "<button id = 'btn_back_0' class='btn btn-link color-gray' onclick='back(0)' > خانه</button>";
+                for (var i = data.length - 1 ; i >= 0 ; i--) {
+                    list += ">> <button id = 'btn_back_'" + data[i].Id + " class='btn btn-link color-gray' onclick=back('" + data[i].Id + "') >" + data[i].Title + "</button> ";
+                }
+                location.hash = areaId;
+                $("#pnl_path").html(list);
+            }
+        });
+    }
+    else {
+        $("#pnl_path").html("");
+    }
     clearOverlays();
     drawAreaInfo();
+
 }
 
 function getFilter() {
