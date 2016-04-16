@@ -8,7 +8,7 @@ namespace TrackingMap.Vn.ViewModel
 {
     public class CustomerReportFilter
     {
-        public Guid? ParentId { set; get; }
+        public Guid[] AreaIds { set; get; }
         public int Type { set; get; }
         public string FromDate { set; get; }
         public string ToDate { set; get; }

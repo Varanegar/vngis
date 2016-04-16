@@ -586,3 +586,7 @@ btn-grid{
 .large-btn{
     width :100px;
 }
+
+#infoWindow {
+    width: 200px;
+}

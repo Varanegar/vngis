@@ -351,6 +351,7 @@
     <Content Include="Content\img\pin\customer0.png" />
     <Content Include="Content\img\pin\customer1.png" />
     <Content Include="Content\img\pin\customer2.png" />
+    <Content Include="Content\img\pin\customernew.png" />
     <Content Include="Content\img\pin\customerselected.png" />
     <Content Include="Content\img\pin\distance.png" />
     <Content Include="Content\img\pin\gpsoff.png" />

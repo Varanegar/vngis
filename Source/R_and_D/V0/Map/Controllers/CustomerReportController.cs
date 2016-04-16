@@ -28,16 +28,19 @@ namespace TrackingMap.Controllers
         public List<PolyView> Load(CustomerReportFilter filter)
         {
             var polies = new List<PolyView>();
-
-            var childgpoints = _areaPointService.LoadAreaPointByParentId(filter.ParentId).ToList();
-            polies = GeneralTools.PointListToPolyList(childgpoints, true, false);
-            foreach (var poly in polies)
+            for (var i = 0; i < filter.AreaIds.Length; i++)
             {
-                var view = _areaService.GetViewById(poly.MasterId);
+                var view = _areaService.GetViewById(filter.AreaIds[i]);
+                var points = _areaPointService.LoadAreaPointById(filter.AreaIds[i]).ToList();
+                var poly = new PolyView();
+                poly.Points = points;
+                poly.MasterId = filter.AreaIds[i];
                 poly.Lable = view.Title;
-                
-                var viw  = _customerReportService.LoadCustomerReport(poly.MasterId ,filter);
-                poly.Desc = viw.GetHtml();
+                poly.IsLeaf = view.IsLeaf;
+                var rep  = _customerReportService.LoadCustomerReport(poly.MasterId ,filter);
+                poly.Desc = rep.GetHtml();
+
+                polies.Add(poly);
             }
 
             return polies;

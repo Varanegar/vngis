@@ -47,7 +47,7 @@ $(document).ready(function () {
             template: 
                 "<button  type='button' class='btn-link btn-grid' onclick='editArea()';><span class='glyphicon glyphicon-pencil color-gray span-btn-grid'></span ></button>" +
                 "<button  type='button' class='btn-link btn-grid' onclick='removeArea()';><span class='glyphicon glyphicon-trash color-gray span-btn-grid'></span ></button>" +
-                "<button  type='button' class='btn-link btn-grid' onclick=showDetail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
+                "<button  value='#=IsLeaf#' type='button' class='btn-link btn-grid btn-detail' onclick=showDetail('#=Id#');><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
         }
         , { field: "IsLeaf", hidden: true, }
         ]
@@ -191,8 +191,19 @@ $(document).ready(function () {
     $("#btn_add_new_customer").on("click", function (e) {
         refreshMapForCustomer();
     });
-
     
+    $("#chk_customer_without_route").on("change", function (e) {
+        refreshMap(false);
+    });
+    $("#chk_customer_other_route").on("change", function (e) {
+        refreshMap(false);
+    });
+    $("#chk_customer_route").on("change", function (e) {
+        refreshMap(false);
+    });
+    $("#chk_customer").on("change", function (e) {
+        refreshMap(false);
+    });
 });
 
 //--------------------------------------------------------------
@@ -201,6 +212,12 @@ $(document).ready(function () {
 
 function firstRowSelect(e) {
     e.sender.select("tr:eq(1)");
+    var details = $('#grid_area .btn-detail');
+    for (var i = 0; i < details.length; i++) {
+        if (details[i].value.toLowerCase() == "true")
+            details[i].hidden = true;
+    }
+
 };
 
 function editArea() {
@@ -210,6 +227,8 @@ function editArea() {
 
 function removeArea() {
     if (selected_id != null)
+      var r =  confirm("ایا اطلاعات محدوده حذف شود؟")
+    if (r = true) {
         $.ajax({
             type: "POST",
             url: url_removepointsbyareaid,
@@ -225,6 +244,8 @@ function removeArea() {
                 }
             }
         });
+    }
+
 };
 
 function showDetail(id) {
@@ -277,7 +298,7 @@ function refreshGrid() {
                 for (var i = data.length - 1 ; i >= 0 ; i--) {
                     list += ">> <button id = 'btn_back_'" + data[i].Id + " class='btn btn-link color-gray' onclick=back('" + data[i].Id + "') >" + data[i].Title + "</button> ";
                 }
-                location.hash = selected_id;
+
                 $("#pnl_path").html(list);
             }
         });
@@ -745,6 +766,7 @@ function refreshMap(edit) {
         $("#btn_save").hide();
     }
     else {
+        location.hash = selected_id;
         $("#mapContainer").show();
         if (edit == true){
             $("#btn_save").show();
@@ -1000,7 +1022,8 @@ window.onhashchange = function () {
     if (location.hash.length > 0) {
         var _id = location.hash.replace('#', '');
         if (_id != selected_id) {
-            back(_id);
+            selected_id = _id;
+            refreshMap(false);
         }
             
     }

@@ -1,5 +1,4 @@
-﻿var selectedIds = [];
-
+﻿
 $(document).ready(function () {
     $("#pnl_marker").hide();
     
@@ -41,8 +40,8 @@ $(document).ready(function () {
         columns: [
         {
             field: "Id",
-            headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
-            template: "<input type='checkbox' value='#=Id#' onchange=changeIdList(" + 'this' + ",'#=Id#') id=" + "chk" + "#=Id#" + " class='checkboxGroups'/>",
+            headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_visitor\")'/>",
+            template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_visitor\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
             attributes: { style: "width:5%;" }
         }, {
                     field: "Title",
@@ -96,10 +95,6 @@ $(document).ready(function () {
 
         drawMarkers();
         drawVisitorsPath();
-    });
-
-    $('#mastercheckbox').click(function () {
-        $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
     });
 
 });
@@ -233,37 +228,9 @@ function loadVisitorByGroupid(options)
     }
 }
     
-
-function changeIdList(e, id) {
-    var flag = e.checked;
-
-    if (flag) {
-        try {
-            selectedIds.push(id);
-        } catch (e) {
-            selectedIds = [id];
-        }
-
-    } else {
-
-        var idtoDelete = 0;
-        for (var i = 0; i < selectedIds.length; i++) {
-            if (selectedIds[i] == id) idtoDelete = i;
-        }
-        selectedIds.splice(idtoDelete, 1);
-    }
-    updateMasterCheckbox();
-}
-
-function updateMasterCheckbox() {
-    var numChkBoxes = $('#grid_visitor input[type=checkbox][id!=mastercheckbox]').length;
-    var numChkBoxesChecked = $('#grid_visitor input[type=checkbox][checked][id!=mastercheckbox]').length;
-    $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
-}
-
 function mapAditionaldata() {
     return {
-        VisitorIds: selectedIds,
+        VisitorIds: getSelectedIds("grid_visitor"),
         Date: $("#dte_date").val(),
         DailyPath: $("#chk_daily_path").is(":checked"),
         VisitorPath: $("#chk_visitor_path").is(":checked"),

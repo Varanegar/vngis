@@ -50,7 +50,9 @@
                     <div class="col-md-12">
                         <div class="left">
                             <input value=@CaptionResource.Save type="button" id="btn_save" class="btn btn-default">
+                            <input value=@CaptionResource.Save type="button" id="btn_customer_save" class="btn btn-default">
                             <input value=@CaptionResource.Cancel type="button" id="btn_cancel" class="btn btn-default">
+                            <button id='btn_add_new_customer' class='btn btn-default'>تعریف مکان مشتری</button>
                             <button id='btn_add_customer_list' class='btn btn-default'>اختصاص مشتریان به مسیر</button>
                             <button id='btn_remove_customer_list' class='btn btn-default'>حذف مشتریان از مسیر</button>
                         </div>
@@ -67,6 +69,7 @@
             </div>
 
             <div id="Report_Frame" class="frame-map-with-header">
+                
                 <div id="mapContainer"> </div>
                 <div id="customerContainer">
                     <div id="grid_customer_not_selected" class="full-width" style="height:250px"></div>

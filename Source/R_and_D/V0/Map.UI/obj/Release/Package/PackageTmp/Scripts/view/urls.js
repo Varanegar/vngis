@@ -1,4 +1,6 @@
 ﻿url_server = "http://localhost:8398/api/";
+//url_server = "http://217.218.53.71:2020/api/";
+
 
 //--------------------------------------------------------
 // area
@@ -42,4 +44,12 @@ url_loadmarkers = url_server + "Visitor/LoadMarkers";
 //--------------------------------------------------------
 url_loadlaststatusmarkers = url_server + "LastStatus/LoadMarkers";
 
+//--------------------------------------------------------
+// customer Report
+//--------------------------------------------------------
+url_loadcustomerreport = url_server + "CustomerReport/Load";
 
+//--------------------------------------------------------
+// good Report
+//--------------------------------------------------------
+url_loadgoodreport = url_server + "GoodReport/Load";

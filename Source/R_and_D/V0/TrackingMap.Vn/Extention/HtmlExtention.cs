@@ -11,7 +11,7 @@ namespace TrackingMap.Vn.Extention
     {
         public static string GetHtml(this CustomerReportView view)
         {
-            var html = "<br/>";
+            var html = "";
             if (!string.IsNullOrEmpty(view.Desc))
             {
                 html += "<h3>" + view.Desc + "</h3>";
