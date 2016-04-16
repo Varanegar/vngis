@@ -487,6 +487,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\view\area.js" />
+    <Content Include="Scripts\view\goodreport.js" />
     <Content Include="Scripts\view\customerreport.js" />
     <Content Include="Scripts\view\general.js" />
     <Content Include="Scripts\view\laststatus.js" />
