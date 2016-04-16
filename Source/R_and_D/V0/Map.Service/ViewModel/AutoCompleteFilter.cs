@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackingMap.Service.Entity
+namespace TrackingMap.Service.ViewModel
 {
-    public class BaseEntity
+    public class AutoCompleteFilter
     {
-        public int IntId { get; set; }
+        public string searchvalue { get; set; }
     }
 }

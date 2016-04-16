@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TrackingMap.Service.Entity
 {
     [Table("CustomerArea")]
-    public class CustomerAreaEntity : BaseEntity
+    public class CustomerAreaEntity : BaseEntityAutoIncId
     {
         [Column("CustomerId")]
         public Guid CustomerEntityId { get; set; }

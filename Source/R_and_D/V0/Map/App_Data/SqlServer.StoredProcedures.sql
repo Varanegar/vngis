@@ -1,4 +1,4 @@
-
+﻿
 CREATE PROCEDURE [dbo].[LoadCustomerByAreaId]
 	@AreaId uniqueidentifier,
 	@RoutId uniqueidentifier = null,
@@ -64,7 +64,7 @@ BEGIN
 				(
 					(	(@ShowCustRout = 1) AND (CustomerArea.AreaId  = @RoutId) )
 				or
-					(	(@ShowCustOtherRout = 1) AND (NOT CustomerArea.AreaId IS null) )
+					(	(@ShowCustOtherRout = 1) AND (NOT CustomerArea.AreaId IS null) AND (CustomerArea.AreaId <> @RoutId ) )
 				or
 					(	(@ShowCustEithoutRout = 1) AND (CustomerArea.AreaId  IS null) )
 				)
@@ -72,15 +72,57 @@ BEGIN
 		)
 
 	END
-	ELSE 
-		SELECT	customer.Id, [Desc] AS [Desc],				
-				Longitude, Latitude,
-				0 AS PointType
-		FROM customer 
 
+	--ELSE 
+	--	SELECT	0 customer.Id, 'hhhhhhh' AS [Desc],				
+	--			Longitude, Latitude,
+	--			0 AS PointType
+	--	FROM customer 
 
 END
 
+
+
+GO
+
+
+CREATE PROCEDURE [dbo].[LoadCustomerReport]
+        @AreaId uniqueidentifier,
+        @Type int =null,
+        @FromDate varchar(10)=null,
+        @ToDate varchar(10)=null,
+        @SaleOffice uniqueidentifier=null,
+        @Header uniqueidentifier=null,
+        @Seller uniqueidentifier=null,
+        @CustomerClass uniqueidentifier=null,
+        @CustomerActivity uniqueidentifier=null,
+		@CustomerDegree uniqueidentifier=null,
+        @GoodGroup uniqueidentifier=null,
+        @DynamicGroup uniqueidentifier=null,
+        @Good uniqueidentifier=null,
+        @CommercialName varchar(50)=null,
+        @DayCount int=null,
+        @VisitCount bit=null,
+		@LackOfVisitCount bit=null,
+        @LackOfSaleCount bit=null,
+        @NewCustomerCount bit=null,
+        @DuringCheck bit=null,
+        @RejectCheck bit=null
+AS
+BEGIN
+	select   null AreaId,
+        'عنوان منطقه' [Desc],
+        10 as  ActiveCustomerCount ,
+        null VisitCount ,
+        20 LackOfVisitCount ,
+        80 LackOfSaleCount ,
+        2000 NewCustomerCount,
+        12 DuringCheckCount ,
+        90000300.0 DuringCheckPrice ,
+        3 RejectCheckCount ,
+        3980000.0 RejectCheckPrice 
+
+END
 GO
 
 
@@ -133,19 +175,21 @@ BEGIN
 
 		SELECT	customer.Id, [Title],
 				Code, ShopTitle, Phone, [Address],
-			Longitude, Latitude,
-			ISNULL(	(SELECT 1 WHERE customerArea.Id <> null) ,0) AS PointType
+			Longitude, Latitude
+			--ISNULL(	(SELECT 1 WHERE customerArea.Id <> null) ,0) AS PointType
 		FROM (	
 				SELECT *,
 						(geometry::STPointFromText('POINT('+ CAST(longitude AS VARCHAR(20)) + ' ' + CAST(latitude AS VARCHAR(20)) +')', 4326)) As cPoint
 				FROM customer
-			) as customer LEFT JOIN customerArea ON (customer.Id = CustomerArea.CustomerId) AND (AreaId = @PathId)
+			) as customer -- LEFT JOIN customerArea ON (customer.Id = CustomerArea.CustomerId) AND (AreaId = @PathId)
 		WHERE	(cPoint.STIntersects(@polygon) = 1)
-
-
-		AND		(	(	(@Selected = 1)	AND (customerArea.Id <> null))
-				OR	(	(@Selected = 0)	AND (customerArea.Id = null))
+		And	(	(	(@Selected = 1)	AND exists(SELECT 1 FROM CustomerArea WHERE AreaId = @PathId AND CustomerId = customer.Id ))
+				OR	(	(@Selected = 0)	AND not exists(SELECT 1 FROM CustomerArea WHERE /*AreaId = @PathId AND*/ CustomerId = customer.Id ))
 				)
+
+		--AND		(	(	(@Selected = 1)	AND (not customerArea.Id is null))
+		--		OR	(	(@Selected = 0)	AND (customerArea.Id is null))
+		--		)
 
 
 	END
@@ -161,7 +205,10 @@ BEGIN
 
 END
 
+
 GO
+
+
 
 
 -- =============================================
@@ -169,7 +216,7 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-create PROCEDURE [dbo].[LoadVisitorsMarker]
+CREATE PROCEDURE [dbo].[LoadVisitorsMarker]
 	@VisitorIds VARCHAR(8000),
 	@Order bit,
     @LackOrder bit,
@@ -222,7 +269,7 @@ BEGIN
             ISNULL((SELECT trn.Latitude WHERE typ = 1), cst.Latitude) AS Latitude,
             ISNULL((SELECT trn.Longitude WHERE typ = 1), cst.Longitude) AS Longitude,           
 			ISNULL((SELECT TransactionType WHERE typ = 1), 5) AS PointType,
-            ISNULL((SELECT CustomerType WHERE typ = 1), 0) AS SubType,
+            ISNULL((SELECT ISNULL((SELECT CustomerType WHERE cPoint.STDistance(tPoint) <= 0.1),3 ) WHERE typ = 1), 0) AS SubType,
 			ISNULL((SELECT CAST(trn.intId AS VARCHAR(5)) WHERE (cPoint.STDistance(tPoint) > 0.1)), '' ) AS Lable
 	
 	 FROM 
@@ -247,6 +294,5 @@ BEGIN
 
 END
 
+
 GO
-
-

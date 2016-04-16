@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TrackingMap.Service.Entity
 {
     [Table("VisitorDailyPath")]
-    public class VisitorDailyPathEntity : BaseEntity
+    public class VisitorDailyPathEntity : BaseEntityAutoIncId
     {
         [Column("VisitorId")]
         public Guid VisitorEntityId { get; set; }

@@ -10,7 +10,7 @@ using TrackingMap.Common.Enum;
 namespace TrackingMap.Service.Entity
 {
     [Table("Transaction")]
-    public class TransactionEntity : BaseEntity
+    public class TransactionEntity : BaseEntityAutoIncId
     {
         [Column("VisitorId")]
         public Guid VisitorEntityId { get; set; }

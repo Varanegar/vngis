@@ -12,6 +12,7 @@ using TrackingMap.Models;
 using WebGrease.Css.Ast.Selectors;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Controllers
 {
@@ -180,105 +181,16 @@ namespace TrackingMap.Controllers
                 filter.Showcustrout, filter.Showcustotherrout, filter.Showcustwithoutrout);
             return customerpoints;
         }
-/*
-        public AreaModel MapAreaModel(AreaConditionModel condition)
+
+        //------------------------------------------------------------
+        // customer position
+        //------------------------------------------------------------
+        public ReturnValue SaveCustomerPosition(List<CustomerPointView> points)
         {
-            var model = new AreaModel();
-
-            var view = _areaService.GetViewById(condition.Id);
-            var parentid = _areaService.GetParentIdById(condition.Id);
-            //---------------------------------------
-            //  show parent limit
-            //---------------------------------------
-            if (parentid != null)
-            {
-                var parentpoints = _areaPointService.LoadAreaPointById(parentid).ToList();
-                if (parentpoints.Any())
-                {
-                    parentpoints.Add(parentpoints.ElementAt(0));
-                }
-                model.ParentPoints = parentpoints;
-            }
-
-
-
-
-            if (condition.Editable)
-            {
-                //---------------------------------------
-                //  show sibling limit
-                //---------------------------------------
-                if (parentid != null)
-                {
-                    var siblingpoints = _areaPointService.LoadAreaPointByParentId(parentid).ToList();
-                    model.SiblingPoints = GeneralTools.PointListToPolyList(siblingpoints, true , false);
-                }
-            }
-            else
-            {
-                //---------------------------------------
-                //  show child limit
-                //---------------------------------------
-                if (!view.IsLeaf)
-                {
-                    var childgpoints = _areaPointService.LoadAreaPointByParentId(view.Id).ToList();
-                    model.SiblingPoints = GeneralTools.PointListToPolyList(childgpoints, true, false);                    
-                }
-            }
-
-            if (view.IsLeaf)
-            {
-
-                //---------------------------------------
-                //  show customer markers
-                //---------------------------------------
-                if (condition.Showcustrout || condition.Showcustotherrout || condition.Showcustwithoutrout)
-                {
-                    var customerpoints = _customerService.LoadCustomerByAreaId(parentid, condition.Id,
-                        condition.Showcustrout, condition.Showcustotherrout, condition.Showcustwithoutrout);
-                    model.CustomerPoints = customerpoints;
-                }
-
-            }
-            else
-            {
-                //---------------------------------------
-                //  show customer markers
-                //---------------------------------------
-                if (condition.Showcust)
-                {
-                    var customerpoints = _customerService.LoadCustomerByAreaId(condition.Id);
-                    model.CustomerPoints = customerpoints;
-                }
-            }
-
-            //---------------------------------------
-            //  show curent area or route point
-            //---------------------------------------
-            var points = _areaPointService.LoadAreaPointById(condition.Id);
-            if (view.IsLeaf)
-            {
-                model.LinePoints = points;
-                model.Color = Color.Red;
-            }
-            else{
-                model.AreaPoints = points;
-                model.Color = Color.LightSalmon;
-            }
-            
-            if (points.Count > 0)
-                model.Center = points.ElementAt(0);
-            else
-            {
-                if (model.ParentPoints.Count > 0)
-                    model.Center = model.ParentPoints.ElementAt(0);
-                else
-                    model.Center = new PointView() { Longitude = 51.4230556, Latitude = 35.6961111 };
-            }
-            model.EditMode = condition.Editable;
-            model.IsLeaf = view.IsLeaf;
-            return model; // this.PartialView("_GooglemapAreaPartialView", model);
+            _customerService.SaveCustomerPointList(points);
+            return new ReturnValue { Success = true };
+            //Redirect("GooglemapLimiteView", new { id });
         }
- */ 
+
     }
 }

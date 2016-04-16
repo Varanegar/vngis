@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 namespace TrackingMap.Service.Entity
 {
     [Table("Customer")]
-    public class CustomerEntity : BaseEntity
+    public class CustomerEntity : BaseEntityWithouteAutoIncId
     {
+
         [Column("Title", TypeName = "varchar")]
         [MaxLength(200)]
         public string Title { set; get; }

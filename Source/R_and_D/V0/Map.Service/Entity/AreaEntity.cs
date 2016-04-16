@@ -10,7 +10,7 @@ using TrackingMap.Common.ViewModel;
 namespace TrackingMap.Service.Entity
 {
     [Table("Area")]
-    public class AreaEntity : BaseEntity
+    public class AreaEntity : BaseEntityAutoIncId
     {
         [Column("ParentId")]
         public Guid? ParentId { set; get; }

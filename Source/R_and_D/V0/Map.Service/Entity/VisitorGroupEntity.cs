@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TrackingMap.Service.Entity
 {
     [Table("VisitorGroup")]
-    public class VisitorGroupEntity : BaseEntity
+    public class VisitorGroupEntity : BaseEntityAutoIncId
     {
         [Column("Title", TypeName = "varchar")]
         [MaxLength(200)]

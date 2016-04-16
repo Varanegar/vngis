@@ -12,10 +12,14 @@ namespace TrackingMap.Service.BL
     public class CustomerService
     {
         private readonly IDbContext _ctx;
+        private readonly IRepository<CustomerEntity> _customerRepository;
 
-        public CustomerService(IDbContext ctx)           
+
+        public CustomerService(IDbContext ctx,
+            IRepository<CustomerEntity> customerRepository)           
         {
-            _ctx = ctx;          
+            _ctx = ctx;
+            _customerRepository = customerRepository;
         }
 
         public List<PointView> LoadCustomerByAreaId(Guid? areaid, Guid? routid = null,
@@ -92,5 +96,31 @@ namespace TrackingMap.Service.BL
             //return list;
         }
 
+
+        public void SaveCustomerPointList(List<ViewModel.CustomerPointView> points)
+        {
+            foreach (var cust in points)
+            {
+                CustomerEntity en;
+                en = _customerRepository.GetById(cust.Id);
+                if (en == null) {
+                    en = new CustomerEntity()
+                    {
+                        Id = cust.Id,
+                        Latitude = cust.Lat,
+                        Longitude = cust.Lng,
+                        Title = "test",
+                        IntId = 0
+                    };
+                    _customerRepository.Insert(en);
+                }
+                else
+                {
+                    en.Latitude = cust.Lat;
+                    en.Longitude = cust.Lng;
+                    _customerRepository.Update(en);
+                }
+            }
+        }
     }
 }

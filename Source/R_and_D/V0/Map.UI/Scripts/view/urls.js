@@ -28,7 +28,9 @@ url_loadselectedcustomer = url_server + "Area/LoadSelectedCustomer";
 url_addcustomertoselected = url_server + "Area/AddCustomerToSelected";
 url_removecustomerfromselected = url_server + "Area/RemoveCustomerFromSelected";
 
+url_savecustomerposition = url_server + "Area/SaveCustomerPosition";
 
+url_vnloadCustomer = url_server + "Vn/LoadCustomer";
 //--------------------------------------------------------
 // visitor
 //--------------------------------------------------------

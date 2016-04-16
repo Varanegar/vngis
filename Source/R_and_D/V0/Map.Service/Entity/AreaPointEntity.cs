@@ -9,7 +9,7 @@ using TrackingMap.Common.ViewModel;
 namespace TrackingMap.Service.Entity
 {
     [Table("AreaPoint")]
-    public class AreaPointEntity : BaseEntity
+    public class AreaPointEntity : BaseEntityAutoIncId
     {
         [Column("AreaId")]
         public Guid AreaEntityId { get; set; }

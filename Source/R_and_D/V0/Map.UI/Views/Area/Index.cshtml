@@ -1,5 +1,4 @@
-﻿
-@Scripts.Render("~/Scripts/view/area.js")
+﻿@Scripts.Render("~/Scripts/view/area.js")
 
 <div class="panel panel-default panel-main">
 
@@ -33,7 +32,7 @@
                             <label for="chk_customer_without_route">@CaptionResource.CustomerWithOutRoute</label>
                         </div>
 
-                        </div>
+                    </div>
                 </div>
 
                 <div id="pnl_Area">
@@ -43,10 +42,8 @@
         </div>
 
         <div class="col-md-9">
-
-            <div class="options-bar">
-                <div class="form-group row ">
-
+            <div calss="row">
+                <div class="options-bar">
                     <div class="col-md-12">
                         <div class="left">
                             <input value=@CaptionResource.Save type="button" id="btn_save" class="btn btn-default">
@@ -59,28 +56,50 @@
 
                         <div class="right">
                             @*<button id='btn_detail' class='btn btn-default'><i class='glyphicon glyphicon-zoom-in'></i></button>
-                        <button id='btn_edit' class='btn btn-default'><i class='glyphicon glyphicon-pencil'></i></button>*@
+                                <button id='btn_edit' class='btn btn-default'><i class='glyphicon glyphicon-pencil'></i></button>*@
                             <button id='btn_set_customer' class='btn btn-default'>مشتریان مسیر</button>
                             <button id='btn_map' class='btn btn-default'>@CaptionResource.Map</button>
                         </div>
                     </div>
-
                 </div>
-            </div>
 
-            <div id="Report_Frame" class="frame-map-with-header">
-                
-                <div id="mapContainer"> </div>
-                <div id="customerContainer">
-                    <div id="grid_customer_not_selected" class="full-width" style="height:250px"></div>
-                    <br />
-                    <div id="grid_customer_selected" class="full-width" style="height:250px"></div>
-                </div>
             </div>
 
 
+            <div calss="row">
+                <div id="Report_Frame" class="frame-map-with-header">
+                    <div id="dlg_customer" class="modal fade" role="dialog" >
+                        <div class="modal-dialog" style="width:300px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">تعریف مکان مشتری</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input id='customer' />
+                                    <input type="hidden" id="dlg_customer_hdn_lat" value="" />
+                                    <input type="hidden" id="dlg_customer_hdn_lng" value="" />
+                                    <input type="hidden" id="dlg_customer_hdn_id" value="" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button id='btn_save_customer_position' class='btn btn-primary large-btn'>ذخیره</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div id="mapContainer">  </div>
+
+                    <div id="customerContainer">
+                        <div id="grid_customer_not_selected" class="full-width" style="height:250px"></div>
+                        <br />
+                        <div id="grid_customer_selected" class="full-width" style="height:250px"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
 
     </div>
 
