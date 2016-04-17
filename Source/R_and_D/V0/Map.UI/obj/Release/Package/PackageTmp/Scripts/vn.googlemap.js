@@ -198,6 +198,16 @@ function addPolyline(opt_options) {
     var dashed = options['dashed'] || false;
     var lable = options['lable'] || '';
     var fit = options['fit'] || false;
+    var showbubble = options['showbubble'] || false;
+    var bubbledesc = '';
+
+    if ((lable == null) || (lable == undefined)) lable = '';
+    if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
+
+    if (showbubble == true) {
+        bubbledesc = windowdesc;
+        windowdesc = '';
+    }
 
     var opacity = 1;
 
@@ -269,11 +279,9 @@ function addPolyline(opt_options) {
 
 
     // ------- lables
-    if ((lable != null) && (lable != undefined) && (lable != '')) {
-        addLableToline(linecoordinates, lable);
+    if ((lable != '') || (bubbledesc != '')) {
+        addLableToPoly(linecoordinates, lable, false, bubbledesc );
     }
-
-
     // ------- fit to bounds
     if ((fit == true)&&(linecoordinates.length > 0)) {
         gmap_bounds.extend(linecoordinates[0]);
@@ -289,29 +297,49 @@ function addPolyline(opt_options) {
     return path;
 }
 
-function addLableToline(line, lable, windowdesc) {
+function addLableToPoly(line, lable, ispolygon , windowdesc) {
     if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
+    if (line.length > 0) {
+        var isline = false;
+        if ((ispolygon == false) &&
+            (line[0].lat() != line[line.length - 1].lat()) &&
+            (line[0].lng() != line[line.length - 1].lng()))
+            var isline = true;
 
-    var bound = new google.maps.LatLngBounds();
-    for (var i = 0; i < line.length; i++) {
-        bound.extend(line[i]);
+        var center;
+        if (isline == false) {
+
+            var bound = new google.maps.LatLngBounds();
+            for (var i = 0; i < line.length; i++) {
+                bound.extend(line[i]);
+            }
+            center = bound.getCenter()
+        }
+        else {
+            center = line[Math.round((line.length / 2))];
+        }
+
+        marker = new MarkerWithLabel({
+            position: center,
+            draggable: false,
+            map: gmap,
+            labelContent: lable,
+            labelAnchor: new google.maps.Point(100, 0),
+            icon:{ url: "../Content/img/pin/center.png", size: new google.maps.Size(6, 6), anchor: new google.maps.Point(3, 3) },
+            labelClass: "line-labels", // the CSS class for the label
+            labelStyle: { opacity: 0.5 }
+        });
+
+        if (windowdesc != '') {
+
+            marker.addListener('click', function (event) {
+                    openInfoBubble(marker, windowdesc);
+                });
+            openInfoBubble(marker, windowdesc);
+        }
+
+        gmap_markers.push(marker);
     }
-
-    marker = new MarkerWithLabel({
-        position: bound.getCenter(),
-        draggable: false,
-        map: gmap,
-        labelContent: lable,
-        labelAnchor: new google.maps.Point(100, 0),
-        icon:{ url: "../Content/img/pin/center.png", size: new google.maps.Size(6, 6), anchor: new google.maps.Point(3, 3) },
-        labelClass: "line-labels", // the CSS class for the label
-        labelStyle: { opacity: 0.5 }
-    });
-
-    if (windowdesc != '')
-        openInfoBubble(marker, windowdesc);
-
-    gmap_markers.push(marker);
 }
 
 function openInfoBubble(marker, windowdesc) {
@@ -333,7 +361,8 @@ function openInfoBubble(marker, windowdesc) {
         arrowPosition: 30,
         backgroundClassName: 'phoney',
         arrowStyle: 2,
-        minWidth: 200
+        minWidth: 200,
+        hideCloseButton: false
     });
     gmap_infoBubble.push(infoBubble);
     infoBubble.open();
@@ -353,12 +382,13 @@ function addPolygon(opt_options) {
     var movingshape = options['movingshape'] || false;
     var lable = options['lable'] || '';
     var fit = options['fit'] || false;
-    var showwindowalways = options['showWindowAlways'] || false;
+    var showbubble = options['showbubble'] || false;
     var bubbledesc = '';
 
     if ((lable == null) || (lable == undefined)) lable = '';
     if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
-    if (showwindowalways == true) {
+
+    if (showbubble == true) {
         bubbledesc = windowdesc;
         windowdesc = '';
     }
@@ -373,26 +403,25 @@ function addPolygon(opt_options) {
     });
     polygon.setMap(gmap);
     // --------
-    if ((windowdesc != '') && (showwindowalways != true)) {
+    if (windowdesc != '') {
         polygon.addListener('click', function (event) {
             openInfoWindow(event, windowdesc);
         });
     }
     // ------- lables
     if ((lable != '') || (bubbledesc != '')) {
-        
-        addLableToline(linecoordinates, lable, bubbledesc);
+        addLableToPoly(linecoordinates, lable, true, bubbledesc);
     }
     // --------
     if (movingshape == true) {
         gmap_moving_shape = polygon;
     }
     if (fit == true) {
-        gmap_shaps.push(polygon)
+        for (var i = 0; i < linecoordinates.length; i++) {
+            gmap_bounds.extend(linecoordinates[i]);
+        }
     }
-    for (var i = 0; i < linecoordinates.length; i++) {
-        gmap_bounds.extend(linecoordinates[i]);
-    }
+    gmap_shaps.push(polygon)
     return polygon;
 }
 // ----------------------------------------------------------

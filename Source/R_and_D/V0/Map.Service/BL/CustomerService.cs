@@ -13,13 +13,19 @@ namespace TrackingMap.Service.BL
     {
         private readonly IDbContext _ctx;
         private readonly IRepository<CustomerEntity> _customerRepository;
+        private IRepository<AreaPointEntity> _areaPointRepository;
+
 
 
         public CustomerService(IDbContext ctx,
-            IRepository<CustomerEntity> customerRepository)           
+            IRepository<CustomerEntity> customerRepository,
+            IRepository<AreaPointEntity>  areaPointRepository
+            )           
         {
             _ctx = ctx;
             _customerRepository = customerRepository;
+            _areaPointRepository = areaPointRepository;
+
         }
 
         public List<PointView> LoadCustomerByAreaId(Guid? areaid, Guid? routid = null,
@@ -119,6 +125,13 @@ namespace TrackingMap.Service.BL
                     en.Latitude = cust.Lat;
                     en.Longitude = cust.Lng;
                     _customerRepository.Update(en);
+                    var customerpoints = _areaPointRepository.Table.Where(x => x.CustomerEntityId == cust.Id).ToList();
+                    foreach (var cp in customerpoints) {
+                        cp.Latitude = cust.Lat;
+                        cp.Longitude = cust.Lng;
+                        _areaPointRepository.Update(cp);
+                    }
+
                 }
             }
         }
