@@ -375,4 +375,7 @@
   <data name="Advance" xml:space="preserve">
     <value>پیشرفته</value>
   </data>
+  <data name="GoodReport2" xml:space="preserve">
+    <value>گزارش عملکرد فروش کالا</value>
+  </data>
 </root>

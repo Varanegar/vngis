@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="BL\AreaService.cs" />
     <Compile Include="BL\ConfigService.cs" />
+    <Compile Include="BL\GoodByValueReportService.cs" />
     <Compile Include="BL\CustomerReportService.cs" />
     <Compile Include="BL\GoodReportService.cs" />
     <Compile Include="BL\LastStatusService.cs" />

@@ -13,6 +13,7 @@ url_loadareasibilingpoints = url_server + "Area/LoadAreaSibilingPoints";
 url_loadareachildgpoints = url_server + "Area/LoadAreaChildPoints";
 url_loadareacustomerpoints = url_server + "Area/LoadAreaCustomerPoints";
 url_loadarealeafcustomerpoints = url_server + "Area/LoadAreaLeafCustomerPoints";
+url_loadareasline = url_server + "Area/LoadAreasLine";
 
 
 url_savepoints = url_server + "Area/SaveAreaPoint";
@@ -31,6 +32,7 @@ url_removecustomerfromselected = url_server + "Area/RemoveCustomerFromSelected";
 url_savecustomerposition = url_server + "Area/SaveCustomerPosition";
 
 url_vnloadCustomer = url_server + "Vn/LoadCustomer";
+
 //--------------------------------------------------------
 // visitor
 //--------------------------------------------------------
@@ -55,3 +57,9 @@ url_loadcustomerreport = url_server + "CustomerReport/Load";
 // good Report
 //--------------------------------------------------------
 url_loadgoodreport = url_server + "GoodReport/Load";
+
+//--------------------------------------------------------
+// good by value Report
+//--------------------------------------------------------
+url_loadgoodbyvaluereport = url_server + "GoodByValueReport/Load";
+

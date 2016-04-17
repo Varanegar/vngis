@@ -417,11 +417,11 @@ function addPolygon(opt_options) {
         gmap_moving_shape = polygon;
     }
     if (fit == true) {
-        gmap_shaps.push(polygon)
+        for (var i = 0; i < linecoordinates.length; i++) {
+            gmap_bounds.extend(linecoordinates[i]);
+        }
     }
-    for (var i = 0; i < linecoordinates.length; i++) {
-        gmap_bounds.extend(linecoordinates[i]);
-    }
+    gmap_shaps.push(polygon)
     return polygon;
 }
 // ----------------------------------------------------------

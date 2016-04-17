@@ -112,6 +112,27 @@ namespace TrackingMap.Controllers
         }
 
         //---------------------------------------
+        //  load multi areas line
+        //---------------------------------------
+        public List<PolyView> LoadAreasLine(List<Guid> areaIds)
+        {
+            var polies = new List<PolyView>(); 
+            foreach (var areaId in areaIds)
+            {
+                var poly = new PolyView();
+                var points = _areaPointService.LoadAreaPointById(areaId);
+                var view = _areaService.GetViewById(areaId);
+                poly.MasterId = view.Id;
+                poly.Lable = view.Title;
+                poly.Color = "#000000";
+                poly.Desc = "";
+                poly.Points = points;
+                polies.Add(poly);
+
+            }
+            return polies;
+        }
+        //---------------------------------------
         //  load parent limit
         //---------------------------------------
         public PolyView LoadAreaParentPoints(IdView areaId)

@@ -9,7 +9,6 @@ using TrackingMap.Service.BL;
 using TrackingMap.Vn.ViewModel;
 using TrackingMap.Vn.Extention;
 
-
 namespace TrackingMap.Controllers
 {
     public class GoodReportController : ApiController
@@ -17,7 +16,7 @@ namespace TrackingMap.Controllers
 
         private readonly AreaPointService _areaPointService;
         private readonly AreaService _areaService;
-        public GoodReportController(CustomerReportService customerReportService,
+        public GoodReportController(
             AreaPointService areaPointService,
             AreaService areaService)
         {
@@ -36,7 +35,6 @@ namespace TrackingMap.Controllers
                 poly.MasterId = filter.AreaIds[i];
                 poly.Lable = view.Title;
                 poly.IsLeaf = view.IsLeaf;
-
 
                 var rep = new GoodReportView()
                 {

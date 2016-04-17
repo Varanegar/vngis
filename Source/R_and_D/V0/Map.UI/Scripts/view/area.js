@@ -835,7 +835,7 @@ function refreshMap(edit) {
         $("#btn_save").hide();
     }
     else {
-        location.hash = selected_id;
+        //location.hash = selected_id;
         $("#mapContainer").show();
         if (edit == true) {
             $("#btn_save").show();

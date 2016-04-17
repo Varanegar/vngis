@@ -19,6 +19,8 @@ $(document).ready(function () {
         selectable: "row",
         pageable: false,
         scrollable: false,
+        dataBound: dataBound,
+
         columns: [
         {
             field: "Id",
@@ -73,6 +75,9 @@ $(document).ready(function () {
 
 });
 
+function dataBound() {
+    $('#mastercheckbox').prop("checked", true).change();
+}
 
 //--------------------------------------
 function loadLevel1Area() {

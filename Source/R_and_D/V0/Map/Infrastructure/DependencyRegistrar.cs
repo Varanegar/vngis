@@ -33,7 +33,8 @@ namespace TrackingMap.Infrastructure
             builder.RegisterType<TransactionService>().InstancePerLifetimeScope();
             builder.RegisterType<CustomerReportService>().InstancePerLifetimeScope();
             builder.RegisterType<GoodReportService>().InstancePerLifetimeScope();
-
+            builder.RegisterType<GoodByValueReportService>().InstancePerLifetimeScope();
+            
             var container = builder.Build();
 
             //set api dependency

@@ -466,6 +466,15 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to گزارش عملکرد فروش کالا.
+        /// </summary>
+        public static string GoodReport2 {
+            get {
+                return ResourceManager.GetString("GoodReport2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to خاموش شدن GPS.
         /// </summary>
         public static string GpsOff {

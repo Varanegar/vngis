@@ -129,5 +129,17 @@ namespace TrackingMap.Vn.Extention
 
             return html;
         }
+
+        public static string GetHtml(this GoodByValueReportView view)
+        {
+            var html = "";
+            if (!string.IsNullOrEmpty(view.Desc))
+            {
+                html += "<h3>" + view.Desc + "</h3>";
+            }
+
+            return html;
+        }
+    
     }
 }

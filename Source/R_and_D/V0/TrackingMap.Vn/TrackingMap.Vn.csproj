@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Extention\HtmlExtention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\GoodByValueReportModel.cs" />
     <Compile Include="ViewModel\GoodReportModel.cs" />
     <Compile Include="ViewModel\CustomerReportModel.cs" />
     <Compile Include="ViewModel\VnCustomerView.cs" />
