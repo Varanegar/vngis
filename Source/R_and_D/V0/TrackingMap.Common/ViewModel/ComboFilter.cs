@@ -12,5 +12,7 @@ namespace TrackingMap.Common.ViewModel
         public string ValueName { set; get; }
         public string TextName { set; get; }
 
+        public bool AddEmptyRow { set; get; }
+
     }
 }

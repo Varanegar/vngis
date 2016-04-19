@@ -4,7 +4,7 @@ var client_id;
 var changed;
 
 $(window).unload(function () {
-  //  alert('kkkkkkkkk');
+    alert('kkkkkkkkk');
 });
 
 $(document).ready(function () {
@@ -70,28 +70,27 @@ $(document).ready(function () {
         }
     });
 
-    $("#pnl_condition input").on("change", function(e) {
+    $("#pnl_header_condition input").on("change", function (e) {
         changed = true;
     });
 
+    $("#pnl_header_condition select").on("change", function (e) {
+        changed = true;
+    });
+    
+
     loadDdlSaleOffice();
-
-
+    loadDdlHeader();
+    loadDdlSeller();
+    loadDdlCustomer();
+    loadDdlCustomerActivity();
+    loadDdlCustomerDegree();
+    loadDdlGoodGroup();
+    loadDdlDunamicGroup();
+    loadDdlGood();
 });
 
-function loadDdlSaleOffice() {
-    $.ajax({
-        type: "POST",
-        url: url_getareapath,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(["gnr.tblSaleOffice", "Id", "d"]),
-        success: function (data) {
-                addItemsToDroupdown("ddl_sale_office", data);
-        }
-    });
 
-}
 
 function back(id) {
     selected_id = id;
@@ -140,7 +139,7 @@ function loadAreaList(options) {
         dataType: "json",
         success: function (result) {
             options.success(result);
-            changed = false;
+
             if (map_auto_refresh == true) {
 
                 var ids = [];
@@ -158,6 +157,7 @@ function loadAreaList(options) {
 //map
 //--------------------------------------------------------------------------------
 function refreshMap(ids) {
+    showWating();
     clearOverlays();
     drawAreaInfo(ids);
 }
@@ -169,7 +169,7 @@ function drawAreaInfo(ids) {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(getFilter(ids)),
-        always: function () { map_auto_refresh = false; },
+       
         success: function (data) {
             if (data != null) {
                 $.each(data, function(i, line) {
@@ -210,8 +210,13 @@ function drawAreaInfo(ids) {
                     }
                 });
                 fitPointBounds();
+                changed = false;
             }
         }
+    })
+    .always(function() {
+        hideWating();
+        map_auto_refresh = false;
     });
 
 }

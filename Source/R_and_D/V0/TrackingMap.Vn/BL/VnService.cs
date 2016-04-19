@@ -16,11 +16,13 @@ namespace TrackingMap.Service.Vn.BL
             _ctx = ctx;
         }
 
-        public List<TextValueView> GetComboData(string tblName, string valueName, string txtName)
+        public List<TextValueView> GetComboData(ComboFilter filter)
         {
-            var list = _ctx.Database.SqlQuery<TextValueView>("select " + valueName + "as Title," + 
-                             txtName + " as Id " +
-                        "  from " + tblName).ToList();
+            var list = _ctx.Database.SqlQuery<TextValueView>("select " + filter.TextName + " as Title," + 
+                             filter.ValueName + " as Id " +
+                        "  from " + filter.TblName).ToList();
+            if (filter.AddEmptyRow)
+                list.Insert(0, new TextValueView(){Id = "-1", Title = "انتخاب کنید ..."});
             return list;
 
         }

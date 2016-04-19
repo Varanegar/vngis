@@ -18,56 +18,36 @@ namespace TrackingMap.Service.BL
     {
         private readonly IDbContext _ctx;
 
-        private readonly IRepository<GoodReportEntity> _goodReportRepository;
 
-        public GoodReportService(IDbContext ctx, 
-            IRepository<GoodReportEntity> goodReportRepository)
+        public GoodReportService(IDbContext ctx)
         {
             _ctx = ctx;
-            _goodReportRepository = goodReportRepository;
+        }
+
+        public void RemoveByClientId(Guid clientId)
+        {
+            _ctx.GetDatabase().ExecuteSqlCommand(string.Format("delete from GoodReportCache where ClientId = '{0}'", clientId));
         }
 
         public void UpdateReportCache(Guid clientId, List<VnGoodReportView> list)
         {
-            _ctx.GetDatabase().ExecuteSqlCommand(string.Format("delete from GoodReportCache where ClientId = '{0}'", clientId) );
-<<<<<<< HEAD
-            _ctx.Configuration.AutoDetectChangesEnabled = false;
-            _ctx.Configuration.ValidateOnSaveEnabled = false;
-=======
-            _goodReportRepository.GetDbContext().GetConfig().AutoDetectChangesEnabled = false;
-            _goodReportRepository.GetDbContext().GetConfig().ValidateOnSaveEnabled = false;
-            _ctx.GetConfig().AutoDetectChangesEnabled = false;
-            var sbCopy = new SqlBulkCopy("Data Source= 192.168.201.137;Initial Catalog=VnGIS_DB_Demo;Persist Security Info=True;User ID=sa;Password=Dr@gonfly");
-            sbCopy.DestinationTableName = "GoodReportCache";
-            var saveData = new List<GoodReportEntity>();
-            clientId = Guid.NewGuid();
->>>>>>> 1917e8f645449012a22cca0380a12d28edc720ef
-            foreach (var view in list)
+            RemoveByClientId(clientId);
+            var con = DbUtility.GetConnectionString("DBConnectionString_Map");
+            using (var bulk = new SqlBulkCopy(con) { DestinationTableName = "GoodReportCache" })
             {
-                saveData.Add(new GoodReportEntity(clientId, view));
-            }
-            var dd = saveData.AsDataReader();
-            dd.Read();
 
-            sbCopy.WriteToServer(dd);
-            //foreach (var view in list)
-            //{
+                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("Id", "Id"));
+                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("CPoint", "CPoint"));
+                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("ClientId", "ClientId"));
+                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("Desc", "Desc"));
+                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("OrderCount", "OrderCount"));
 
-            //    //_goodReportRepository.GetDbContext().bulk
-            //    //_goodReportRepository.InsertWithouteSave(new GoodReportEntity(clientId, view));
                 
-            //}
-
-            //if (list.Count > 0)
-            //    _goodReportRepository.SaveChange();
-
-<<<<<<< HEAD
-            _ctx.Configuration.AutoDetectChangesEnabled = true;
-            _ctx.Configuration.ValidateOnSaveEnabled = true;
-=======
-            //_goodReportRepository.GetDbContext().GetConfig().AutoDetectChangesEnabled = true;
->>>>>>> 1917e8f645449012a22cca0380a12d28edc720ef
-
+                var saveData = list.Select(view => new GoodReportEntity(clientId, view)).ToList();
+                var dd = saveData.AsDataReader();
+                bulk.WriteToServer(dd);
+                
+            }
         }
 
         public VnGoodReportView LoadGoodReport(Guid areaId,GoodReportFilter filter)

@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2016 00:59:57</publishTime>
     </File>
     <File Include="bin/TrackingMap.UI.dll">
-      <publishTime>04/18/2016 15:56:50</publishTime>
+      <publishTime>04/19/2016 08:25:00</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>02/05/2016 22:09:04</publishTime>
@@ -1258,19 +1258,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2016 21:41:00</publishTime>
     </File>
     <File Include="Scripts/view/general.js">
-      <publishTime>04/15/2016 02:40:02</publishTime>
+      <publishTime>04/19/2016 02:56:32</publishTime>
     </File>
     <File Include="Scripts/view/goodbyvaluereport.js">
       <publishTime>04/18/2016 03:59:53</publishTime>
     </File>
     <File Include="Scripts/view/goodreport.js">
-      <publishTime>04/18/2016 08:35:42</publishTime>
+      <publishTime>04/19/2016 08:14:35</publishTime>
     </File>
     <File Include="Scripts/view/laststatus.js">
       <publishTime>04/16/2016 23:09:20</publishTime>
     </File>
+    <File Include="Scripts/view/report.js">
+      <publishTime>04/19/2016 07:54:59</publishTime>
+    </File>
     <File Include="Scripts/view/urls.js">
-      <publishTime>04/17/2016 01:19:03</publishTime>
+      <publishTime>04/19/2016 04:49:59</publishTime>
     </File>
     <File Include="Scripts/view/visitor.js">
       <publishTime>04/15/2016 02:19:56</publishTime>
@@ -1285,10 +1288,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2016 02:54:36</publishTime>
     </File>
     <File Include="Views/GoodByValueReport/Index.cshtml">
-      <publishTime>04/16/2016 15:35:28</publishTime>
+      <publishTime>04/19/2016 07:33:44</publishTime>
     </File>
     <File Include="Views/GoodReport/Index.cshtml">
-      <publishTime>04/16/2016 13:39:05</publishTime>
+      <publishTime>04/19/2016 08:01:32</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>03/14/2016 02:06:56</publishTime>

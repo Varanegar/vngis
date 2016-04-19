@@ -41,6 +41,7 @@ namespace TrackingMap.Infrastructure
             builder.RegisterType<GoodByValueReportService>().InstancePerLifetimeScope();
             
             //Vn     
+            builder.RegisterType<VnService>().InstancePerLifetimeScope();
             builder.RegisterType<VnGoodReportService>().InstancePerLifetimeScope();
 
             //--------------------------------------------------------------------------

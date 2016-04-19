@@ -336,6 +336,7 @@
     <Content Include="Content\css\style_default.css" />
     <Content Include="Content\css\style_responsive.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\loader.gif" />
     <Content Include="Content\img\bg-default.jpg" />
     <Content Include="Content\img\body-bg.png" />
     <Content Include="Content\img\cluster\m1.png" />
@@ -493,6 +494,7 @@
     <Content Include="Scripts\view\customerreport.js" />
     <Content Include="Scripts\view\general.js" />
     <Content Include="Scripts\view\laststatus.js" />
+    <Content Include="Scripts\view\report.js" />
     <Content Include="Scripts\view\urls.js" />
     <Content Include="Scripts\view\visitor.js" />
     <Content Include="Scripts\vn.googlemap.js" />
@@ -583,6 +585,7 @@
     <Content Include="Views\CustomerReport\Index.cshtml" />
     <Content Include="Views\GoodReport\Index.cshtml" />
     <Content Include="Views\GoodByValueReport\Index.cshtml" />
+    <Content Include="Views\Shared\_Loading.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

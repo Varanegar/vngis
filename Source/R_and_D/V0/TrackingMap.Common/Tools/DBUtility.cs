@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Text;
 
@@ -8,7 +9,11 @@ namespace TrackingMap.Common.Tools
     public class DbUtility
     {
 
-        #region Utilities
+        public static string GetConnectionString(string name)
+        {
+            ConnectionStringSettings mySetting = ConfigurationManager.ConnectionStrings[name];
+            return mySetting.ToString();            
+        }
 
         public static string[] ParseCommands(string filePath, bool throwExceptionIfNonExists)
         {
@@ -61,7 +66,6 @@ namespace TrackingMap.Common.Tools
             return sb.ToString();
         }
 
-        #endregion
         public static object SetDbNull(object val)
         {
             if (val != null) return val;

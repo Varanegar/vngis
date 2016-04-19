@@ -10,7 +10,8 @@ namespace TrackingMap.Service.Entity
     {
         //  public DbGeometry CPoint { set; get; }
         public Guid Id { get; set; }
-
+        public double? Latitude { set; get; }
+        public double? Longitude { set; get; }
         public Guid ClientId { set; get; }
         public string Desc { set; get; }
         public int? OrderCount { set; get; }
@@ -39,8 +40,10 @@ namespace TrackingMap.Service.Entity
         public GoodReportEntity( Guid clientId, VnGoodReportView view)
         {
             this.Id = Guid.NewGuid();
-            this.ClientId = clientId; 
-           // this.CPoint = view.CPoint;
+            this.ClientId = clientId;
+
+            this.Latitude = view.CPoint.YCoordinate / 1000000;
+            this.Longitude = view.CPoint.XCoordinate / 1000000;
             this.OrderCount = view.OrderCount;
             this.SaleCount = view.SaleCount;
             this.RetSaleCount = view.RetSaleCount;
