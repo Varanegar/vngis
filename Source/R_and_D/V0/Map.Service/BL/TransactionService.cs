@@ -18,9 +18,9 @@ namespace TrackingMap.Service.BL
     {
         //private readonly IRepository<CustomerEntity> _customerRepository;
         //private readonly IRepository<TransactionEntity> _transactionRepository;
-        private readonly IDbContext _ctx;
+        private readonly MapContext _ctx;
 
-        public TransactionService(IDbContext ctx
+        public TransactionService(MapContext ctx
             //IRepository<CustomerEntity>  customerRepository,
             //IRepository<TransactionEntity> transactionRepository
             )

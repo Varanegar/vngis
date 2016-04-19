@@ -11,10 +11,10 @@ namespace TrackingMap.Service.DBManagement
     /// </summary>
     public partial class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
-        public  IDbContext _context;
+        public  MapContext _context;
         private IDbSet<T> _entities;
 
-        public IDbContext GetDbContext()
+        public MapContext GetDbContext()
         {
             return _context;
         }
@@ -23,7 +23,7 @@ namespace TrackingMap.Service.DBManagement
         /// Ctor
         /// </summary>
         /// <param name="context">Object context</param>
-        public EfRepository(IDbContext context)
+        public EfRepository(MapContext context)
         {
             this._context = context;
         }

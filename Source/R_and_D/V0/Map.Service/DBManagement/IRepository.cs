@@ -9,7 +9,7 @@ namespace TrackingMap.Service.DBManagement
     public partial interface IRepository<T> where T : BaseEntity
     {
 
-        IDbContext GetDbContext();
+       // IDbContext GetDbContext();
 
         /// <summary>
         /// Get entity by identifier

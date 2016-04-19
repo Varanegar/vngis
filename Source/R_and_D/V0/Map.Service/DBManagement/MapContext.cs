@@ -6,7 +6,7 @@ using TrackingMap.Service.Entity;
 
 namespace TrackingMap.Service.DBManagement
 {
-    public class MapContext : DbContext, IDbContext
+    public class MapContext : DbContext
     {
         public MapContext()
             : base("DBConnectionString_Map")
