@@ -11,8 +11,13 @@ namespace TrackingMap.Service.DBManagement
     /// </summary>
     public partial class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly IDbContext _context;
+        public  IDbContext _context;
         private IDbSet<T> _entities;
+
+        public IDbContext GetDbContext()
+        {
+            return _context;
+        }
 
         /// <summary>
         /// Ctor

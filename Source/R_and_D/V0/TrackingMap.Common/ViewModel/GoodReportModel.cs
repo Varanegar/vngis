@@ -45,8 +45,7 @@ namespace TrackingMap.Common.ViewModel
 
     }
     public class VnGoodReportView
-    {
-         
+    {         
         public int CustRef { set; get; }
         public DbGeometry CPoint { set; get; }	                                                                                                                                                                                                                                                           
         public int? OrderCount { set; get; }

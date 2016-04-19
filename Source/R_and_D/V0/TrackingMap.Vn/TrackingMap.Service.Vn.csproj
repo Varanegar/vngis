@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\VnGoodReportService.cs" />
+    <Compile Include="BL\VnService.cs" />
     <Compile Include="DBManagement\MapVnContext.cs" />
     <Compile Include="Extention\HtmlExtention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

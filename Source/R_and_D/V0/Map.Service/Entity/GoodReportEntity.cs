@@ -6,9 +6,9 @@ using TrackingMap.Common.ViewModel;
 namespace TrackingMap.Service.Entity
 {
     [Table("GoodReportCache")]
-    public class GoodReportEntity : BaseEntityAutoIncId
+    public class GoodReportEntity : BaseEntityWithouteAutoIncId
     {
-        public DbGeometry CPoint { set; get; }
+        //  public DbGeometry CPoint { set; get; }
 
         public Guid ClientId { set; get; }
         public string Desc { set; get; }
@@ -37,26 +37,28 @@ namespace TrackingMap.Service.Entity
 
         public GoodReportEntity( Guid clientId, VnGoodReportView view)
         {
+            this.Id = Guid.NewGuid();
             this.ClientId = clientId; 
-            this.CPoint = view.CPoint;
+           // this.CPoint = view.CPoint;
             this.OrderCount = view.OrderCount;
             this.SaleCount = view.SaleCount;
             this.RetSaleCount = view.RetSaleCount;
             this.SaleItemCount  = view.SaleItemCount;
             this.RetSaleItemCount = view.RetSaleItemCount;
-            this. SaleAmount  = view.SaleAmount;
+            this.SaleAmount  = view.SaleAmount;
             this.RetSaleAmount = view.RetSaleAmount;
-            this. SaleQty  = view.SaleQty;
+            this.SaleQty  = view.SaleQty;
             this.RetSaleQty = view.RetSaleQty;
-            this. SaleCarton  = view.SaleCarton;
+            this.SaleCarton  = view.SaleCarton;
             this.RetSaleCarton = view.RetSaleCarton;
-            this. SaleWeight  = view.SaleWeight;
+            this.SaleWeight  = view.SaleWeight;
             this.RetSaleWeight = view.RetSaleWeight;
-            this. SaleDiscount  = view.SaleDiscount;
+            this.SaleDiscount  = view.SaleDiscount;
             this.RetSaleDiscount = view.RetSaleDiscount;
             this.SalePrizeCount = view.SalePrizeCount;
             this.PrizeQty = view.PrizeQty;
             this.PrizeCarton = view.PrizeCarton;
+            this.IntId = view.CustRef;
         }
     }
 

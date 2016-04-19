@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using TrackingMap.Service.Entity;
 
 namespace TrackingMap.Service.DBManagement
@@ -19,7 +20,7 @@ namespace TrackingMap.Service.DBManagement
         int SaveChanges();
 
         Database GetDatabase();
-
+        DbContextConfiguration GetConfig();
 
     }
 }

@@ -4,11 +4,19 @@ using System.Linq;
 using System.Web.Http;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.ViewModel;
+using TrackingMap.Service.Vn.BL;
 
 namespace TrackingMap.Controllers
 {
     public class VnController : ApiController
     {
+        private readonly VnService _vnService;
+
+        public VnController(VnService vnService)
+        {
+            _vnService = vnService;
+        }
+
         [HttpPost]
         public List<VnCustomerView> LoadCustomer(AutoCompleteFilter filter)
         {
@@ -21,6 +29,11 @@ namespace TrackingMap.Controllers
             list.Add(new VnCustomerView { Id = Guid.NewGuid(), CustomerCode = "1", CustomerName = "مسیح علی نژاد" });
             list.Add(new VnCustomerView { Id = Guid.NewGuid(), CustomerCode = "1", CustomerName = "فریدون فرخزاد" });
             return list.Where(x => x.CustomerName.Contains(filter.searchvalue)).ToList();
+        }
+
+        public List<TextValueView> GetComboData(List<string> names)
+        {
+            return _vnService.GetComboData(names[0], names[1], names[2]);
         }
 
     }

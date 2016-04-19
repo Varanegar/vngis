@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using TrackingMap.Common.Tools;
 using TrackingMap.Service.Entity;
 
@@ -29,6 +30,10 @@ namespace TrackingMap.Service.DBManagement
         public Database GetDatabase()
         {
             return this.Database;
+        }
+        public DbContextConfiguration GetConfig()
+        {
+            return this.Configuration;
         }
 
         public DbSet<AreaEntity> Areas { get; set; }

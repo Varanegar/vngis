@@ -55,6 +55,7 @@
     <Compile Include="ViewModel\CustomerReportModel.cs" />
     <Compile Include="ViewModel\GoodByValueReportModel.cs" />
     <Compile Include="ViewModel\GoodReportModel.cs" />
+    <Compile Include="ViewModel\TextValueView.cs" />
     <Compile Include="ViewModel\VnCustomerView.cs" />
   </ItemGroup>
   <ItemGroup>

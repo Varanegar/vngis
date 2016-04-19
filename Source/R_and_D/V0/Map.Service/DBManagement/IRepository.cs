@@ -8,6 +8,9 @@ namespace TrackingMap.Service.DBManagement
     /// </summary>
     public partial interface IRepository<T> where T : BaseEntity
     {
+
+        IDbContext GetDbContext();
+
         /// <summary>
         /// Get entity by identifier
         /// </summary>
@@ -45,5 +48,8 @@ namespace TrackingMap.Service.DBManagement
         IQueryable<T> TableNoTracking { get; }
 
         void SaveChange();
+        
+
+
     }
 }

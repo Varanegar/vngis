@@ -1,9 +1,12 @@
 ﻿var selected_id = null;
 var map_auto_refresh = false;
 var client_id;
+var changed;
 
 $(document).ready(function () {
     client_id = get_new_guid();
+
+    changed = true;
     
     $("#div_advance_condition").hide();
     kendo.culture("fa-IR");
@@ -64,7 +67,28 @@ $(document).ready(function () {
         }
     });
 
+    $("#pnl_condition input").on("change", function(e) {
+        changed = true;
+    });
+
+    loadDdlSaleOffice();
+
+
 });
+
+function loadDdlSaleOffice() {
+    $.ajax({
+        type: "POST",
+        url: url_getareapath,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(["gnr.tblSaleOffice", "Id", "d"]),
+        success: function (data) {
+                addItemsToDroupdown("ddl_sale_office", data);
+        }
+    });
+
+}
 
 function back(id) {
     selected_id = id;
@@ -113,7 +137,7 @@ function loadAreaList(options) {
         dataType: "json",
         success: function (result) {
             options.success(result);
-
+            changed = false;
             if (map_auto_refresh == true) {
 
                 var ids = [];
@@ -199,7 +223,7 @@ function getFilter(ids) {
     return {
         AreaIds: ids,
         ClientId: client_id,
-        ChangeFilter: true,
+        ChangeFilter: changed,
         FromDate: $("#dte_from").val(),
         ToDate: $("#dte_to").val(),
         SaleOffice: $("#ddl_sale_office").val(),

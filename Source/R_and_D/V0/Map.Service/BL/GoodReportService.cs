@@ -28,13 +28,19 @@ namespace TrackingMap.Service.BL
         public void UpdateReportCache(Guid clientId, List<VnGoodReportView> list)
         {
             _ctx.GetDatabase().ExecuteSqlCommand(string.Format("delete from GoodReportCache where ClientId = '{0}'", clientId) );
-
+            _goodReportRepository.GetDbContext().GetConfig().AutoDetectChangesEnabled = false;
+            _ctx.GetConfig().AutoDetectChangesEnabled = false;
             foreach (var view in list)
             {
-                _goodReportRepository.InsertWithouteSave(new GoodReportEntity(clientId, view));     
+                _goodReportRepository.InsertWithouteSave(new GoodReportEntity(clientId, view));
+                
             }
+
             if (list.Count > 0)
-                _goodReportRepository.SaveChange();                           
+                _goodReportRepository.SaveChange();
+
+            _goodReportRepository.GetDbContext().GetConfig().AutoDetectChangesEnabled = true;
+
         }
 
         public VnGoodReportView LoadGoodReport(Guid areaId,GoodReportFilter filter)

@@ -101,7 +101,6 @@
     <Compile Include="ViewModel\PointView.cs" />
     <Compile Include="ViewModel\PolyView.cs" />
     <Compile Include="ViewModel\ReturnValue.cs" />
-    <Compile Include="ViewModel\TextValueView.cs" />
     <Compile Include="ViewModel\VisitorModel.cs" />
   </ItemGroup>
   <ItemGroup>
