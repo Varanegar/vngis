@@ -20,7 +20,9 @@ namespace TrackingMap.Service.DBManagement
         int SaveChanges();
 
         Database GetDatabase();
-        DbContextConfiguration GetConfig();
 
+
+        DbContextConfiguration GetConfig();
+        DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
     }
 }

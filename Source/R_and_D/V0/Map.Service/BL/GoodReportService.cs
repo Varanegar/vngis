@@ -9,16 +9,18 @@ using TrackingMap.Common.Tools;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
+using EntityFramework.BulkInsert.Extensions;
+using Microsoft.Samples.EntityDataReader;
 
 namespace TrackingMap.Service.BL
 {
     public class GoodReportService
     {
-        private readonly MapContext _ctx;
+        private readonly IDbContext _ctx;
 
         private readonly IRepository<GoodReportEntity> _goodReportRepository;
 
-        public GoodReportService(MapContext ctx, 
+        public GoodReportService(IDbContext ctx, 
             IRepository<GoodReportEntity> goodReportRepository)
         {
             _ctx = ctx;
@@ -28,19 +30,43 @@ namespace TrackingMap.Service.BL
         public void UpdateReportCache(Guid clientId, List<VnGoodReportView> list)
         {
             _ctx.GetDatabase().ExecuteSqlCommand(string.Format("delete from GoodReportCache where ClientId = '{0}'", clientId) );
+<<<<<<< HEAD
             _ctx.Configuration.AutoDetectChangesEnabled = false;
             _ctx.Configuration.ValidateOnSaveEnabled = false;
+=======
+            _goodReportRepository.GetDbContext().GetConfig().AutoDetectChangesEnabled = false;
+            _goodReportRepository.GetDbContext().GetConfig().ValidateOnSaveEnabled = false;
+            _ctx.GetConfig().AutoDetectChangesEnabled = false;
+            var sbCopy = new SqlBulkCopy("Data Source= 192.168.201.137;Initial Catalog=VnGIS_DB_Demo;Persist Security Info=True;User ID=sa;Password=Dr@gonfly");
+            sbCopy.DestinationTableName = "GoodReportCache";
+            var saveData = new List<GoodReportEntity>();
+            clientId = Guid.NewGuid();
+>>>>>>> 1917e8f645449012a22cca0380a12d28edc720ef
             foreach (var view in list)
             {
-                _goodReportRepository.InsertWithouteSave(new GoodReportEntity(clientId, view));
-                
+                saveData.Add(new GoodReportEntity(clientId, view));
             }
+            var dd = saveData.AsDataReader();
+            dd.Read();
 
-            if (list.Count > 0)
-                _goodReportRepository.SaveChange();
+            sbCopy.WriteToServer(dd);
+            //foreach (var view in list)
+            //{
 
+            //    //_goodReportRepository.GetDbContext().bulk
+            //    //_goodReportRepository.InsertWithouteSave(new GoodReportEntity(clientId, view));
+                
+            //}
+
+            //if (list.Count > 0)
+            //    _goodReportRepository.SaveChange();
+
+<<<<<<< HEAD
             _ctx.Configuration.AutoDetectChangesEnabled = true;
             _ctx.Configuration.ValidateOnSaveEnabled = true;
+=======
+            //_goodReportRepository.GetDbContext().GetConfig().AutoDetectChangesEnabled = true;
+>>>>>>> 1917e8f645449012a22cca0380a12d28edc720ef
 
         }
 

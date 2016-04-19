@@ -52,7 +52,6 @@
     <Compile Include="Tools\DateTools.cs" />
     <Compile Include="Tools\DBUtility.cs" />
     <Compile Include="Tools\GeneralTools.cs" />
-    <Compile Include="ViewModel\ComboFilter.cs" />
     <Compile Include="ViewModel\CustomerReportModel.cs" />
     <Compile Include="ViewModel\GoodByValueReportModel.cs" />
     <Compile Include="ViewModel\GoodReportModel.cs" />

@@ -16,13 +16,13 @@ namespace TrackingMap.Service.BL
 {
     public class AreaPointService
     {
-        private readonly MapContext _ctx;
+        private readonly IDbContext _ctx;
         private IRepository<AreaPointEntity> _areaPointRepository;
         private IRepository<AreaEntity> _areaRepository;
         private readonly IRepository<CustomerAreaEntity> _customerAreaRepository;
         private readonly IRepository<CustomerEntity> _customerRepository;
 
-        public AreaPointService(MapContext ctx,
+        public AreaPointService(IDbContext ctx,
             IRepository<AreaPointEntity>  areaPointRepository,
             IRepository<CustomerEntity> customerRepository,
             IRepository<CustomerAreaEntity> customerAreaRepository,

@@ -13,14 +13,14 @@ namespace TrackingMap.Service.BL
 {
     public class VisitorService
     {
-        private readonly MapContext _ctx;
+        private readonly IDbContext _ctx;
         private readonly IRepository<VisitorGroupEntity> _visitorGroupRepository;
         private readonly IRepository<VisitorEntity> _visitorRepository;
         private readonly IRepository<VisitorPathEntity> _visitorPathRepository;
         private readonly IRepository<VisitorDailyPathEntity> _visitorDailyPathRepository;
         private readonly IRepository<AreaPointEntity> _areaPointRepository;
 
-        public VisitorService(MapContext ctx,
+        public VisitorService(IDbContext ctx,
             IRepository<VisitorGroupEntity> visitorGroupRepository,
             IRepository<VisitorPathEntity> visitorPathRepository,
             IRepository<VisitorDailyPathEntity> visitorDailyPathRepository,

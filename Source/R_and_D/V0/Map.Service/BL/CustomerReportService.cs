@@ -12,9 +12,9 @@ namespace TrackingMap.Service.BL
 {
     public class CustomerReportService
     {
-        private readonly MapContext _ctx;
+        private readonly IDbContext _ctx;
 
-        public CustomerReportService(MapContext ctx)           
+        public CustomerReportService(IDbContext ctx)           
         {
             _ctx = ctx;          
         }

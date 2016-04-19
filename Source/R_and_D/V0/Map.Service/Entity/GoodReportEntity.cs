@@ -9,6 +9,7 @@ namespace TrackingMap.Service.Entity
     public class GoodReportEntity : BaseEntityWithouteAutoIncId
     {
         //  public DbGeometry CPoint { set; get; }
+        public Guid Id { get; set; }
 
         public Guid ClientId { set; get; }
         public string Desc { set; get; }

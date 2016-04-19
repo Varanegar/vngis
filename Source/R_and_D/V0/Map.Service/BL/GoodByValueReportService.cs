@@ -12,9 +12,9 @@ namespace TrackingMap.Service.BL
 {
     public class GoodByValueReportService
     {
-        private readonly MapContext _ctx;
+        private readonly IDbContext _ctx;
 
-        public GoodByValueReportService(MapContext ctx)           
+        public GoodByValueReportService(IDbContext ctx)           
         {
             _ctx = ctx;          
         }

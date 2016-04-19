@@ -22,9 +22,7 @@ namespace TrackingMap.Infrastructure
 
             //DbContext
             //builder.Register<IDbContext>(c => MapContextFactory.Create()).InstancePerLifetimeScope();
-            //builder.Register<IDbContext>(c => new MapContext()).InstancePerLifetimeScope();
-            
-            builder.RegisterType<MapContext>().InstancePerLifetimeScope();
+            builder.Register<IDbContext>(c => new MapContext()).InstancePerLifetimeScope();
             builder.RegisterType<MapVnContext>().InstancePerLifetimeScope();
             //repository
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
@@ -44,7 +42,6 @@ namespace TrackingMap.Infrastructure
             
             //Vn     
             builder.RegisterType<VnGoodReportService>().InstancePerLifetimeScope();
-            builder.RegisterType<VnService>().InstancePerLifetimeScope();
 
             //--------------------------------------------------------------------------
             var container = builder.Build();

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using TrackingMap.Service.Entity;
+using EntityFramework.BulkInsert.Extensions;
 
 namespace TrackingMap.Service.DBManagement
 {
@@ -11,10 +12,10 @@ namespace TrackingMap.Service.DBManagement
     /// </summary>
     public partial class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
-        public  MapContext _context;
+        public  IDbContext _context;
         private IDbSet<T> _entities;
 
-        public MapContext GetDbContext()
+        public IDbContext GetDbContext()
         {
             return _context;
         }
@@ -23,7 +24,7 @@ namespace TrackingMap.Service.DBManagement
         /// Ctor
         /// </summary>
         /// <param name="context">Object context</param>
-        public EfRepository(MapContext context)
+        public EfRepository(IDbContext context)
         {
             this._context = context;
         }
@@ -39,6 +40,7 @@ namespace TrackingMap.Service.DBManagement
             //http://stackoverflow.com/questions/11686225/dbset-find-method-ridiculously-slow-compared-to-singleordefault-on-id/11688189#comment34876113_11688189
             return this.Entities.Find(id);
         }
+
 
         /// <summary>
         /// Insert entity
@@ -75,7 +77,7 @@ namespace TrackingMap.Service.DBManagement
             {
                 if (entity == null)
                     throw new ArgumentNullException("entity");
-
+                //var dbEntity = _context.Entry(entity);
                 this.Entities.Add(entity);
                 //entity.CreatedOnUtc = DateTime.Now;
             }

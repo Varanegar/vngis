@@ -6,7 +6,7 @@ using TrackingMap.Service.Entity;
 
 namespace TrackingMap.Service.DBManagement
 {
-    public class MapContext : DbContext
+    public class MapContext : DbContext, IDbContext
     {
         public MapContext()
             : base("DBConnectionString_Map")
@@ -25,6 +25,11 @@ namespace TrackingMap.Service.DBManagement
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
         {
             return base.Set<TEntity>();
+        }
+
+        public new DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
+        {
+            return base.Entry(entity);
         }
 
         public Database GetDatabase()

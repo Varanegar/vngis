@@ -82,10 +82,10 @@ $(document).ready(function () {
 function loadDdlSaleOffice() {
     $.ajax({
         type: "POST",
-        url: url_getcombodata,
+        url: url_getareapath,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({TblName : "gnr.tblSaleOffice", ValueName : "ID", TextName:"Name"}),
+        data: JSON.stringify(["gnr.tblSaleOffice", "Id", "d"]),
         success: function (data) {
                 addItemsToDroupdown("ddl_sale_office", data);
         }

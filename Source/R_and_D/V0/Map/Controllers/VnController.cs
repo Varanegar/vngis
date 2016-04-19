@@ -31,10 +31,9 @@ namespace TrackingMap.Controllers
             return list.Where(x => x.CustomerName.Contains(filter.searchvalue)).ToList();
         }
 
-        [HttpPost]
-        public List<TextValueView> GetComboData(ComboFilter filter)
+        public List<TextValueView> GetComboData(List<string> names)
         {
-            return _vnService.GetComboData(filter);
+            return _vnService.GetComboData(names[0], names[1], names[2]);
         }
 
     }
