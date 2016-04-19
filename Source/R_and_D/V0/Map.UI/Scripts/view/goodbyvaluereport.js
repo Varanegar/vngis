@@ -194,21 +194,22 @@ function drawAreaMarker(ids) {
         always: function () { map_auto_refresh = false; },
         success: function (data) {
             if (data != null) {
-                $.each(data, function (i, item) {
+                $.each(data, function(i, item) {
                     var _m = addMarker({
                         id: "customer_point_" + item.Id,
-                        lat: item.Latitude, lng: item.Longitude,
-                        clustering: true, fit:true
+                        lat: item.Latitude,
+                        lng: item.Longitude,
+                        clustering: true,
+                        fit: true
                     });
                     _m.setIcon({ url: "../Content/img/pin/customerNew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
-                    _m.addListener('click', function (e) {
+                    _m.addListener('click', function(e) {
                         closeInfoWindow();
                         openInfoWindow(e, item.Desc);
                     });
-                })
-                fitPointBounds();
+                });
                 renderClusterMarkers();
-
+                fitPointBounds();
             }
         }
     });

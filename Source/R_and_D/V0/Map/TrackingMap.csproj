@@ -412,7 +412,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\css\kendo\2014.1.318\images\kendoui.ttf" />
     <Content Include="Content\css\kendo\2014.1.318\images\kendoui.woff" />
-    <Content Include="App_Data\Config.ini" />
     <None Include="Properties\PublishProfiles\map.pubxml" />
     <None Include="Properties\PublishProfiles\MapServer.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -446,9 +445,13 @@
       <Project>{38c82039-12e3-4c4d-a972-ad1d1a216d7b}</Project>
       <Name>TrackingMap.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TrackingMap.Vn\TrackingMap.Vn.csproj">
+    <ProjectReference Include="..\TrackingMap.Common\TrackingMap.Common.csproj">
+      <Project>{c41145ca-6052-4f74-833e-ac0c6bc89a10}</Project>
+      <Name>TrackingMap.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrackingMap.Vn\TrackingMap.Service.Vn.csproj">
       <Project>{398dd256-29f2-451a-bf83-ca1d99db7381}</Project>
-      <Name>TrackingMap.Vn</Name>
+      <Name>TrackingMap.Service.Vn</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

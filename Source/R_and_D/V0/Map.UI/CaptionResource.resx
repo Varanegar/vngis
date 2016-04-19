@@ -364,7 +364,7 @@
     <value>گروه کالا</value>
   </data>
   <data name="GoodReport" xml:space="preserve">
-    <value>گزارش فروش کالا</value>
+    <value>گزارش فروش</value>
   </data>
   <data name="SaleOffice" xml:space="preserve">
     <value>دفتر فروش</value>
@@ -376,6 +376,6 @@
     <value>پیشرفته</value>
   </data>
   <data name="GoodReport2" xml:space="preserve">
-    <value>گزارش عملکرد فروش کالا</value>
+    <value>گزارش عملکرد فروش</value>
   </data>
 </root>

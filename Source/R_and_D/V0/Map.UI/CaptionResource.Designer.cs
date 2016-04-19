@@ -457,7 +457,7 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to گزارش فروش کالا.
+        ///   Looks up a localized string similar to گزارش فروش.
         /// </summary>
         public static string GoodReport {
             get {
@@ -466,7 +466,7 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to گزارش عملکرد فروش کالا.
+        ///   Looks up a localized string similar to گزارش عملکرد فروش.
         /// </summary>
         public static string GoodReport2 {
             get {

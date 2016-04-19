@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2016 00:59:57</publishTime>
     </File>
     <File Include="bin/TrackingMap.UI.dll">
-      <publishTime>04/17/2016 08:08:52</publishTime>
+      <publishTime>04/18/2016 15:56:50</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>02/05/2016 22:09:04</publishTime>
@@ -1252,7 +1252,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2016 02:05:51</publishTime>
     </File>
     <File Include="Scripts/view/area.js">
-      <publishTime>04/17/2016 06:26:24</publishTime>
+      <publishTime>04/18/2016 05:20:27</publishTime>
     </File>
     <File Include="Scripts/view/customerreport.js">
       <publishTime>04/15/2016 21:41:00</publishTime>
@@ -1261,10 +1261,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2016 02:40:02</publishTime>
     </File>
     <File Include="Scripts/view/goodbyvaluereport.js">
-      <publishTime>04/17/2016 01:35:45</publishTime>
+      <publishTime>04/18/2016 03:59:53</publishTime>
     </File>
     <File Include="Scripts/view/goodreport.js">
-      <publishTime>04/16/2016 14:08:39</publishTime>
+      <publishTime>04/18/2016 08:35:42</publishTime>
     </File>
     <File Include="Scripts/view/laststatus.js">
       <publishTime>04/16/2016 23:09:20</publishTime>
@@ -1276,7 +1276,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2016 02:19:56</publishTime>
     </File>
     <File Include="Scripts/vn.googlemap.js">
-      <publishTime>04/17/2016 01:53:46</publishTime>
+      <publishTime>04/18/2016 05:34:13</publishTime>
     </File>
     <File Include="Views/Area/Index.cshtml">
       <publishTime>04/17/2016 02:45:25</publishTime>
@@ -1300,7 +1300,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2016 02:06:56</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/16/2016 14:43:15</publishTime>
+      <publishTime>04/18/2016 01:40:47</publishTime>
     </File>
     <File Include="Views/Visitor/Index.cshtml">
       <publishTime>04/05/2016 01:38:27</publishTime>

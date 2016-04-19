@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using TrackingMap.Common.Tools;
 using TrackingMap.Service.Entity;
 
 namespace TrackingMap.Service.DBManagement
 {
     public class MapContext : DbContext, IDbContext
     {
-        public MapContext(string constr)
-            : base(constr)
+        public MapContext()
+            : base("DBConnectionString_Map")
         {
             var customCommands = new List<string>();
             customCommands.AddRange(
-                DBUtility.ParseCommands(DefaultValue.GetAppDataPath() + "SqlServer.StoredProcedures.sql", false));
+                DbUtility.ParseCommands(DefaultValue.GetAppDataPath() + "SqlServer.StoredProcedures.sql", false));
             //
             var initializer = new MapDBInitializer(customCommands.ToArray());
             Database.SetInitializer<MapContext>(initializer);
@@ -40,6 +41,7 @@ namespace TrackingMap.Service.DBManagement
         public DbSet<VisitorDailyPathEntity> VisitorDailyPaths { get; set; }
         public DbSet<VisitorPathEntity> VisitorPaths { get; set; }
         public DbSet<TransactionEntity> Transactions { get; set; }
+        public DbSet<GoodReportEntity> GoodReports { get; set; }
     
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Common.ViewModel
 {

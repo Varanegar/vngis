@@ -164,7 +164,7 @@ namespace TrackingMap.Controllers
             if (parentid != null)
             {
                 var siblingpoints = _areaPointService.LoadAreaPointByParentId(parentid, areaId.Id).ToList();
-                polies = GeneralTools.PointListToPolyList(siblingpoints, true, false);
+                polies = PointTools.PointListToPolyList(siblingpoints, true, false);
             }
             foreach (var poly in polies)
             {               
@@ -179,7 +179,7 @@ namespace TrackingMap.Controllers
             var polies = new List<PolyView>();
 
             var childgpoints = _areaPointService.LoadAreaPointByParentId(areaId.Id).ToList();
-            polies = GeneralTools.PointListToPolyList(childgpoints, true, false);
+            polies = PointTools.PointListToPolyList(childgpoints, true, false);
             foreach (var poly in polies)
             {
                 var view = _areaService.GetViewById(poly.MasterId);

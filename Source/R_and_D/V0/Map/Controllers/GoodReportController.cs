@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.BL;
-using TrackingMap.Vn.ViewModel;
-using TrackingMap.Vn.Extention;
+using TrackingMap.Service.Vn.BL;
+using TrackingMap.Service.Vn.Extention;
 
 namespace TrackingMap.Controllers
 {
@@ -16,35 +14,44 @@ namespace TrackingMap.Controllers
 
         private readonly AreaPointService _areaPointService;
         private readonly AreaService _areaService;
+        private readonly GoodReportService _goodReportService;
+        private readonly VnGoodReportService _vnGoodReportService;
+
         public GoodReportController(
             AreaPointService areaPointService,
-            AreaService areaService)
+            AreaService areaService,
+            GoodReportService goodReportService,
+            VnGoodReportService vnGoodReportService)
         {
             _areaPointService = areaPointService;
             _areaService = areaService;
+            _vnGoodReportService = vnGoodReportService;
+            _goodReportService = goodReportService;
         }
+
         public List<PolyView> Load(GoodReportFilter filter)
         {
-            var polies = new List<PolyView>();
-            for (var i = 0; i < filter.AreaIds.Length; i++)
+            if (filter.ChangeFilter)
             {
-                var view = _areaService.GetViewById(filter.AreaIds[i]);
-                var points = _areaPointService.LoadAreaPointById(filter.AreaIds[i]).ToList();
-                var poly = new PolyView();
-                poly.Points = points;
-                poly.MasterId = filter.AreaIds[i];
-                poly.Lable = view.Title;
-                poly.IsLeaf = view.IsLeaf;
+                var list = _vnGoodReportService.LoadGoodReport(filter);
+                _goodReportService.UpdateReportCache(filter.ClientId, list);
+            }
 
-                var rep = new GoodReportView()
+            var polies = new List<PolyView>();
+            foreach (Guid id in filter.AreaIds)
+            {
+                var view = _areaService.GetViewById(id);
+                var points = _areaPointService.LoadAreaPointById(id).ToList();
+                var poly = new PolyView
                 {
-                    BonusAmount = 10,
-                    Desc = "test",
-                    SaleAmount = 20000,
-                    SalePrice = 9007000
+                    Points = points,
+                    MasterId = id,
+                    Lable = view.Title,
+                    IsLeaf = view.IsLeaf
                 };
 
-                poly.Desc = rep.GetHtml();
+                var rep = _goodReportService.LoadGoodReport(id, filter);
+                poly.Desc = rep.GetHtml(view.Title);
 
                 polies.Add(poly);
             }

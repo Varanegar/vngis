@@ -67,6 +67,7 @@
     <Compile Include="Entity\BaseEntityWithouteAutoIncId.cs" />
     <Compile Include="Entity\CustomerAreaEntity.cs" />
     <Compile Include="Entity\CustomerEntity.cs" />
+    <Compile Include="Entity\GoodReportEntity.cs" />
     <Compile Include="Entity\TransactionEntity.cs" />
     <Compile Include="Entity\VisitorPathEntity.cs" />
     <Compile Include="Entity\VisitorEntity.cs" />
@@ -78,13 +79,10 @@
     <Compile Include="BL\AreaPointService.cs" />
     <Compile Include="BL\SettingService.cs" />
     <Compile Include="PagingList.cs" />
-    <Compile Include="Tools\DateTools.cs" />
-    <Compile Include="Tools\GeneralTools.cs" />
+    <Compile Include="Tools\PointTools.cs" />
     <Compile Include="BL\VisitorService.cs" />
     <Compile Include="BL\CustomerService.cs" />
-    <Compile Include="DBManagement\DBUtility.cs" />
     <Compile Include="DBManagement\MapContext.cs" />
-    <Compile Include="DBManagement\MapContextFactory.cs" />
     <Compile Include="DBManagement\MapDBInitializer.cs" />
     <Compile Include="DefaultValue.cs" />
     <Compile Include="BL\LogService.cs" />
@@ -114,9 +112,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TrackingMap.Vn\TrackingMap.Vn.csproj">
-      <Project>{398dd256-29f2-451a-bf83-ca1d99db7381}</Project>
-      <Name>TrackingMap.Vn</Name>
+    <ProjectReference Include="..\TrackingMap.Common\TrackingMap.Common.csproj">
+      <Project>{c41145ca-6052-4f74-833e-ac0c6bc89a10}</Project>
+      <Name>TrackingMap.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,6 +6,8 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using TrackingMap.Service.BL;
 using TrackingMap.Service.DBManagement;
+using TrackingMap.Service.Vn.BL;
+using TrackingMap.Service.Vn.DBManagement;
 
 namespace TrackingMap.Infrastructure
 {
@@ -18,10 +20,13 @@ namespace TrackingMap.Infrastructure
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.Register<IDbContext>(c => MapContextFactory.Create()).InstancePerLifetimeScope();
-
+            //DbContext
+            //builder.Register<IDbContext>(c => MapContextFactory.Create()).InstancePerLifetimeScope();
+            builder.Register<IDbContext>(c => new MapContext()).InstancePerLifetimeScope();
+            builder.RegisterType<MapVnContext>().InstancePerLifetimeScope();
+            //repository
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
-
+            //services
             builder.RegisterType<ConfigService>().InstancePerLifetimeScope();
             builder.RegisterType<LogService>().InstancePerLifetimeScope();
             builder.RegisterType<AreaService>().InstancePerLifetimeScope();
@@ -35,6 +40,10 @@ namespace TrackingMap.Infrastructure
             builder.RegisterType<GoodReportService>().InstancePerLifetimeScope();
             builder.RegisterType<GoodByValueReportService>().InstancePerLifetimeScope();
             
+            //Vn     
+            builder.RegisterType<VnGoodReportService>().InstancePerLifetimeScope();
+
+            //--------------------------------------------------------------------------
             var container = builder.Build();
 
             //set api dependency

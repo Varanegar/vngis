@@ -20,7 +20,8 @@ namespace TrackingMap.Service.DBManagement
         /// </summary>
         /// <param name="entity">Entity</param>
         void Insert(T entity);
-
+        void InsertWithouteSave(T entity);
+        
         /// <summary>
         /// Update entity
         /// </summary>
@@ -42,5 +43,7 @@ namespace TrackingMap.Service.DBManagement
         /// Gets a table with "no tracking" enabled (EF feature) Use it only when you load record(s) only for read-only operations
         /// </summary>
         IQueryable<T> TableNoTracking { get; }
+
+        void SaveChange();
     }
 }

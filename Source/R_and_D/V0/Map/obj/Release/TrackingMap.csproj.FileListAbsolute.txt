@@ -150,5 +150,7 @@ E:\ProjectSource\VnGIS\V0\Map\obj\Release\TrackingMap.pdb
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\System.Web.Cors.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\System.Web.Http.Cors.dll
 D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\System.Web.Http.Cors.xml
-D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\TrackingMap.Vn.dll
-D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\TrackingMap.Vn.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\TrackingMap.Common.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\TrackingMap.Service.Vn.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\TrackingMap.Common.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\Map\bin\TrackingMap.Service.Vn.pdb

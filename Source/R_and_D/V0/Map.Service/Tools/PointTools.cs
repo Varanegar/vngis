@@ -2,26 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrackingMap.Common.ViewModel;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.Tools
 {
-    public class GeneralTools
+    public class PointTools
     {
-        public static string IntListTostring(List<int> list )
-        {
-            return list.Aggregate("", (current, i) => current + (i + ','));
-        }
-        public static string GuidListTostring(List<Guid> list)
-        {
-            var str = list.Aggregate("", (current, i) => current + (i.ToString() + ','));
-            if (str.Length > 0)
-              str = str.Remove(str.Length - 1);
-            return str;
-        }
-
         public static Color GetRandomColor()
         {   var randonGen = new Random();
             var c = Color.FromArgb(randonGen.Next(1, 255), randonGen.Next(1, 255), 

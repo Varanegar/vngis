@@ -58,7 +58,8 @@ function renderClusterMarkers() {
 }
 
 function fitPointBounds() {
-    gmap.fitBounds(gmap_bounds);
+    if (! gmap_bounds.isEmpty())
+        gmap.fitBounds(gmap_bounds);
 }
 
 function addListener(event, fn) {
@@ -80,7 +81,7 @@ function addMarker(opt_options) {
     var tit = options['tit'] || '';
     var drg = options['draggable'] || false;
     var windowdesc = options['windowdesc'] || '';
-    var clustering = options['clustering'] || true; 
+    var clustering = options['clustering'] || false; 
     var label = options['label'] || '';
     var fit = options['fit'] || false;
 
@@ -91,7 +92,6 @@ function addMarker(opt_options) {
             Id: id,
             position: new google.maps.LatLng(lat, lng),
             draggable: drg,
-            map: gmap,
             optimized: false
         });
     }
@@ -99,8 +99,7 @@ function addMarker(opt_options) {
         marker = new MarkerWithLabel({
             Id: id,
             position: new google.maps.LatLng(lat, lng),
-            draggable: drg,
-            map: gmap,
+            draggable: drg,            
             labelContent: label,
             labelAnchor: new google.maps.Point(22, 30),
             labelClass: "labels", // the CSS class for the label
@@ -108,7 +107,10 @@ function addMarker(opt_options) {
         });
     }
 
-
+    if (clustering == false) {
+        marker.setMap(gmap);
+    }
+    
     if ((tit != null) && (tit != undefined) && (tit != '')) {
         marker.Title = tit;
     }

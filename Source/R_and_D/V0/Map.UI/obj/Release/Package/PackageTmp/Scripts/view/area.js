@@ -604,11 +604,14 @@ function removePoint(id) {
 
     var index = findPointMarkerIndex(id);
     if (index > -1) {
+        var pr = parseInt(point_views[index].Pr);
         for (var i = index; i < point_views.length - 1; i++) {
             point_views[i].Pr = (parseInt(point_views[i].Pr) - 1).toString();
         }
         point_views.splice(index, 1);
         removeMarkerById("point_" + id);
+        if (new_id == pr) new_id--;
+        
         refreshAreaLable();
         refreshAreaLine();
     }
@@ -711,21 +714,34 @@ function addPoint(id, pr, lat, lng, cust) {
 
     if ((cust == undefined) || (cust == null))
         cust = '';
-    var transformcustomerbtn = "";
-    if (selectedRowIsLeaf() == true)
-        transformcustomerbtn = "<button id='btn_customer_transform_point_' onclick=transformCustomerPoint('" + id + "') class='btn btn-default'>تبدیل به مشتری</button>";
 
     var _m = addMarker({
         id: "point_" + id,
         lat: lat, lng: lng, tit: pr, draggable: cust == '', label: pr,
-        windowdesc: "<br/>" +
-                     "<input type='number' id='txt_priority_" + id + "' value=" + pr + " class='form-control' />" +
-                     "<br />" +
-                     "<button id='btn_save_point_' onclick=savePoint('" + id + "') class='btn btn-default'>ذخیره</button>" +
-                     "<button id='btn_add_point_' onclick=addPointByBtn('" + id + "') class='btn btn-default'>افزودن</button>" +
-                     "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>"+ transformcustomerbtn,
         clustering: false,
     });
+    _m.addListener('click', function (event) {
+        var index = findPointMarkerIndex(id);
+        if (index > -1) {
+            var cpr = point_views[index].Pr;
+
+            var transformcustomerbtn = "";
+            if (selectedRowIsLeaf() == true)
+                transformcustomerbtn = "<button id='btn_customer_transform_point_' onclick=transformCustomerPoint('" + id + "') class='btn btn-default'>تبدیل به مشتری</button>";
+            var windowdesc = "<br/>" +
+                "<input type='number' id='txt_priority_" + id + "' value=" + cpr + " class='form-control' />" +
+                "<br />" +
+                "<button id='btn_save_point_' onclick=savePoint('" + id + "') class='btn btn-default'>ذخیره</button>" +
+                "<button id='btn_add_point_' onclick=addPointByBtn('" + id + "') class='btn btn-default'>افزودن</button>" +
+                "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>" +
+                transformcustomerbtn;
+
+            openInfoWindow(event, windowdesc);
+            
+        }
+    });
+
+
 
     if (cust != undefined && cust != null && cust != '') { // customer point
         _m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(1, 1), anchor: new google.maps.Point(0, 0) })
@@ -765,7 +781,7 @@ function addNewPoint(pr, lat, lng, cust) {
     var guid = get_temp_guid(new_id);
     if (pr == -1) { pr = new_id; }
 
-    addPoint(guid, pr, lat, lng, cust)
+    addPoint(guid, pr, lat, lng, cust);
 }
 
 //---------------------------------------------------------------------------------------------------------

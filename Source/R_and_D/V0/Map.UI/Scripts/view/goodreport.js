@@ -1,9 +1,11 @@
 ﻿var selected_id = null;
 var map_auto_refresh = false;
+var client_id;
 
 $(document).ready(function () {
+    client_id = get_new_guid();
+    
     $("#div_advance_condition").hide();
-
     kendo.culture("fa-IR");
 
     intDate('dte_to', true);
@@ -143,10 +145,10 @@ function drawAreaInfo(ids) {
         always: function () { map_auto_refresh = false; },
         success: function (data) {
             if (data != null) {
-                $.each(data, function (i, line) {
+                $.each(data, function(i, line) {
                     var arealine = [];
                     if (line.Points != null)
-                        $.each(line.Points, function (j, item) {
+                        $.each(line.Points, function(j, item) {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
@@ -171,7 +173,7 @@ function drawAreaInfo(ids) {
                                 fit: true
                             });
 
-                            poly.addListener('click', function (event) {
+                            poly.addListener('click', function(event) {
                                 selected_id = line.MasterId;
                                 map_auto_refresh = true;
                                 refreshGrid();
@@ -179,7 +181,7 @@ function drawAreaInfo(ids) {
 
                         }
                     }
-                })
+                });
                 fitPointBounds();
             }
         }
@@ -193,8 +195,11 @@ function drawAreaInfo(ids) {
 function getFilter(ids) {
     if ((ids == undefined) || (ids == null))
         ids = getSelectedIds("grid_area");
+
     return {
         AreaIds: ids,
+        ClientId: client_id,
+        ChangeFilter: true,
         FromDate: $("#dte_from").val(),
         ToDate: $("#dte_to").val(),
         SaleOffice: $("#ddl_sale_office").val(),
@@ -224,7 +229,7 @@ function getFilter(ids) {
         RejectDiscount: $("#chk_reject_discount").is(":checked"),
         BonusCount: $("#chk_bonus_count").is(":checked"),
         BonusAmount: $("#chk_bonus_amount").is(":checked")
-    }
+    };
 }
 
 

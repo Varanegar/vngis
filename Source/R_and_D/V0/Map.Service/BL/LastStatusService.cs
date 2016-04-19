@@ -7,6 +7,7 @@ using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Common.Enum;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.BL
 {

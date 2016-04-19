@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackingMap.Service", "Map.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackingMap.UI", "Map.UI\TrackingMap.UI.csproj", "{80404C5B-A554-452E-AED4-58B094C8D0FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackingMap.Vn", "TrackingMap.Vn\TrackingMap.Vn.csproj", "{398DD256-29F2-451A-BF83-CA1D99DB7381}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackingMap.Service.Vn", "TrackingMap.Vn\TrackingMap.Service.Vn.csproj", "{398DD256-29F2-451A-BF83-CA1D99DB7381}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackingMap.Common", "TrackingMap.Common\TrackingMap.Common.csproj", "{C41145CA-6052-4F74-833E-AC0C6BC89A10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{398DD256-29F2-451A-BF83-CA1D99DB7381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{398DD256-29F2-451A-BF83-CA1D99DB7381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{398DD256-29F2-451A-BF83-CA1D99DB7381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C41145CA-6052-4F74-833E-AC0C6BC89A10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C41145CA-6052-4F74-833E-AC0C6BC89A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C41145CA-6052-4F74-833E-AC0C6BC89A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C41145CA-6052-4F74-833E-AC0C6BC89A10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

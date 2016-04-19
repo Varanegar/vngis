@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.BL;
-using TrackingMap.Vn.ViewModel;
-using TrackingMap.Vn.Extention;
+using TrackingMap.Service.ViewModel;
+using TrackingMap.Service.Vn.Extention;
 
 namespace TrackingMap.Controllers
 {

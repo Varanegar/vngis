@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TrackingMap.Vn.ViewModel;
+﻿using TrackingMap.Common.ViewModel;
 
-namespace TrackingMap.Vn.Extention
+namespace TrackingMap.Service.Vn.Extention
 {
     public static class HtmlExtention
     {
@@ -57,79 +52,80 @@ namespace TrackingMap.Vn.Extention
 
             return html;
         }
-        public static string GetHtml(this GoodReportView view)
+        
+        public static string GetHtml(this VnGoodReportView view, string desc)
         {
             var html = "";
-            if (!string.IsNullOrEmpty(view.Desc))
+            if (!string.IsNullOrEmpty(desc))
             {
-                html += "<h3>" + view.Desc + "</h3>";
+                html += "<h3>" + desc + "</h3>";
             }
-            if (view.RequestCount != null)
+            if (view.OrderCount != null)
             {
-                html += "<div>فعداد درخواست: " + view.RequestCount.Value.ToString("#,#") + "</div>";
+                html += "<div>تعداد درخواست: " + view.OrderCount.Value.ToString("#,#") + "</div>";
             }
-            if (view.FactorCount != null)
+            if (view.SaleCount != null)
             {
-                html += "<div>تعداد فاکتور: " + view.FactorCount.Value.ToString("#,#") + "</div>";
+                html += "<div>تعداد فاکتور: " + view.SaleCount.Value.ToString("#,#") + "</div>";
             }
-            if (view.RejectCount != null)
+            if (view.SaleCount != null)
             {
-                html += "<div>تعداد برگشتی: " + view.RejectCount.Value.ToString("#,#") + "</div>";
+                html += "<div>تعداد برگشتی: " + view.SaleCount.Value.ToString("#,#") + "</div>";
             }
             if (view.SaleItemCount != null)
             {
                 html += "<div>تعداد اقلام کالای فروش رفته: " + view.SaleItemCount.Value.ToString("#,#") + "</div>";
             }
-            if (view.RejectItemCount != null)
+            if (view.RetSaleItemCount != null)
             {
-                html += "<div>تعداد اقلام کالای برگشتی: " + view.RejectItemCount.Value.ToString("#,#") + "</div>";
+                html += "<div>تعداد اقلام کالای برگشتی: " + view.RetSaleItemCount.Value.ToString("#,#") + "</div>";
+            }
+
+            if (view.SaleQty != null)
+            {
+                html += "<div> تعداد کالای فروش رفته (کارتن : ظرف): " + view.SaleQty.Value.ToString("#,#") + "</div>";
+            }
+            if (view.RetSaleQty != null)
+            {
+                html += "<div> تعداد کالای برگشتی (کارتن : ظرف): " + view.RetSaleQty.Value.ToString("#,#") + "</div>";
             }
 
             if (view.SaleAmount != null)
             {
-                html += "<div> تعداد کالای فروش رفته (کارتن : ظرف): " + view.SaleAmount.Value.ToString("#,#") + "</div>";
+                html += "<div> ریال کالای فروش رفته: " + view.SaleAmount.Value.ToString("#,#") + "</div>";
             }
-            if (view.RejectAmount != null)
+            if (view.RetSaleAmount != null)
             {
-                html += "<div> تعداد کالای برگشتی (کارتن : ظرف): " + view.RejectAmount.Value.ToString("#,#") + "</div>";
-            }
-
-            if (view.SalePrice != null)
-            {
-                html += "<div> ریال کالای فروش رفته: " + view.SalePrice.Value.ToString("#,#") + "</div>";
-            }
-            if (view.RejectPrice != null)
-            {
-                html += "<div> ریال کالای برگشتی: " + view.RejectPrice.Value.ToString("#,#") + "</div>";
+                html += "<div> ریال کالای برگشتی: " + view.RetSaleAmount.Value.ToString("#,#") + "</div>";
             }
             if (view.SaleWeight != null)
             {
                 html += "<div> وزن کالای فروش رفته: " + view.SaleWeight.Value.ToString("#,#") + "</div>";
             }
-            if (view.RejectWeight != null)
+            if (view.RetSaleWeight != null)
             {
-                html += "<div> وزن کالای برگشتی: " + view.RejectWeight.Value.ToString("#,#") + "</div>";
+                html += "<div> وزن کالای برگشتی: " + view.RetSaleWeight.Value.ToString("#,#") + "</div>";
             }
             if (view.SaleDiscount != null)
             {
                 html += "<div> ریال تخفیف فروش رفته: " + view.SaleDiscount.Value.ToString("#,#") + "</div>";
             }
-            if (view.RejectDiscount != null)
+            if (view.RetSaleDiscount != null)
             {
-                html += "<div> ریال تخفیف برگشتی: " + view.RejectDiscount.Value.ToString("#,#") + "</div>";
+                html += "<div> ریال تخفیف برگشتی: " + view.RetSaleDiscount.Value.ToString("#,#") + "</div>";
             }
-            if (view.BonusCount != null)
+            if (view.SalePrizeCount != null)
             {
-                html += "<div> تعداد اقلام جایزه: " + view.BonusCount.Value.ToString("#,#") + "</div>";
+                html += "<div> تعداد اقلام جایزه: " + view.SalePrizeCount.Value.ToString("#,#") + "</div>";
             }
-            if (view.BonusAmount != null)
+            if (view.PrizeQty != null)
             {
-                html += "<div> تعداد جایزه (کارتن : ظرف: " + view.BonusAmount.Value.ToString("#,#") + "</div>";
+                html += "<div> تعداد جایزه (کارتن : ظرف: " + view.PrizeQty.Value.ToString("#,#") + "</div>";
             }
 
             return html;
-        }
-
+        }        
+       
         public static string GetHtml(this GoodByValueReportView view)
         {
             var html = "";
@@ -141,5 +137,7 @@ namespace TrackingMap.Vn.Extention
             return html;
         }
     
+
+
     }
 }

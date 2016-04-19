@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace TrackingMap.Service.DBManagement
+namespace TrackingMap.Common.Tools
 {
-    public class DBUtility
+    public class DbUtility
     {
 
         #region Utilities
@@ -62,6 +62,17 @@ namespace TrackingMap.Service.DBManagement
         }
 
         #endregion
-
+        public static object SetDbNull(object val)
+        {
+            if (val != null) return val;
+            return DBNull.Value; 
+        }
+        public static object IsNull(object val, object def)
+        {
+            if (val != null) return val;
+            return def;
+        }
     }
+
+
 }

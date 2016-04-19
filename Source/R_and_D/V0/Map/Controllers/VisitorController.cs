@@ -7,6 +7,7 @@ using TrackingMap.Service.BL;
 using TrackingMap.Service.Tools;
 using TrackingMap.Common.ViewModel;
 using System.Web.Http;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Controllers
 {
@@ -65,13 +66,13 @@ namespace TrackingMap.Controllers
             if (filter.VisitorPath)
             {
                 var points = _visitorService.LoadVisitorPath(filter.Date, filter.VisitorIds);
-                lines.AddRange(GeneralTools.PointListToPolyList(points, false, false));
+                lines.AddRange(PointTools.PointListToPolyList(points, false, false));
             }
 
             if (filter.DailyPath)
             {
                 var points = _visitorService.LoadDailyPath(filter.Date, filter.VisitorIds);
-                lines.AddRange(GeneralTools.PointListToPolyList(points, false, false));
+                lines.AddRange(PointTools.PointListToPolyList(points, false, false));
             }
             return lines;
         }

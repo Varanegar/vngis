@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.DBManagement;
-using TrackingMap.Vn.ViewModel;
 
 namespace TrackingMap.Service.BL
 {

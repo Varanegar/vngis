@@ -64,6 +64,30 @@ namespace TrackingMap.Service.DBManagement
             }
         }
 
+        public virtual void InsertWithouteSave(T entity)
+        {
+            try
+            {
+                if (entity == null)
+                    throw new ArgumentNullException("entity");
+
+                this.Entities.Add(entity);
+                //entity.CreatedOnUtc = DateTime.Now;
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                var msg = string.Empty;
+
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                        msg += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage) + Environment.NewLine;
+
+                var fail = new Exception(msg, dbEx);
+                //Debug.WriteLine(fail.Message, fail);
+                throw fail;
+            }
+        }
+
         /// <summary>
         /// Update entity
         /// </summary>
@@ -142,6 +166,11 @@ namespace TrackingMap.Service.DBManagement
             {
                 return this.Entities.AsNoTracking();
             }
+        }
+
+        public void SaveChange()
+        {
+            this._context.SaveChanges();            
         }
 
 

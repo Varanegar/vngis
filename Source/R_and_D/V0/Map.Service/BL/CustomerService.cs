@@ -6,6 +6,7 @@ using System.Linq;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
 using TrackingMap.Common.ViewModel;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.BL
 {
@@ -13,7 +14,7 @@ namespace TrackingMap.Service.BL
     {
         private readonly IDbContext _ctx;
         private readonly IRepository<CustomerEntity> _customerRepository;
-        private IRepository<AreaPointEntity> _areaPointRepository;
+        private readonly IRepository<AreaPointEntity> _areaPointRepository;
 
 
 
@@ -35,19 +36,19 @@ namespace TrackingMap.Service.BL
         {
             List<PointView> list;
             
-            SqlParameter areaid_param = new SqlParameter("@AreaId",SqlDbType.UniqueIdentifier);
+            var areaid_param = new SqlParameter("@AreaId",SqlDbType.UniqueIdentifier);
             areaid_param.SqlValue = areaid;
 
-            SqlParameter routid_param = new SqlParameter("@RoutId", SqlDbType.UniqueIdentifier);
+            var routid_param = new SqlParameter("@RoutId", SqlDbType.UniqueIdentifier);
             routid_param.IsNullable = true;
             if (routid == null)
                 routid_param.SqlValue = DBNull.Value;
             else
                 routid_param.SqlValue = routid;
             
-            SqlParameter showcustrout_param = new SqlParameter("@ShowCustRout", showcustrout);
-            SqlParameter showcustotherrout_param = new SqlParameter("@ShowCustOtherRout", showcustotherrout);
-            SqlParameter showcustwithoutrout_param = new SqlParameter("@ShowCustEithoutRout", showcustwithoutrout);
+            var showcustrout_param = new SqlParameter("@ShowCustRout", showcustrout);
+            var showcustotherrout_param = new SqlParameter("@ShowCustOtherRout", showcustotherrout);
+            var showcustwithoutrout_param = new SqlParameter("@ShowCustEithoutRout", showcustwithoutrout);
 
             list = _ctx.GetDatabase().SqlQuery<PointView>("LoadCustomerByAreaId @AreaId," +
                                                           "@RoutId," +
@@ -101,7 +102,6 @@ namespace TrackingMap.Service.BL
             //}
             //return list;
         }
-
 
         public void SaveCustomerPointList(List<ViewModel.CustomerPointView> points)
         {

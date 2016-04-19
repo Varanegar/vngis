@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace TrackingMap.Service.Tools
+namespace TrackingMap.Common.Tools
 {
     public class DateTools
     {

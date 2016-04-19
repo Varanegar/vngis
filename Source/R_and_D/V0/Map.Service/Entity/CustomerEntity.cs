@@ -32,14 +32,18 @@ namespace TrackingMap.Service.Entity
         [MaxLength(500)]
         public string Address { set; get; }
 
+        [Column("Activity", TypeName = "varchar")]
+        [MaxLength(100)]
+        public string Activity { set; get; }
+
         [Column("Desc", TypeName = "varchar(MAX)")]
         public string Desc { set; get; }
 
         [Column("Latitude")]
-        public double Latitude { set; get; }
+        public double? Latitude { set; get; }
 
         [Column("Longitude")]
-        public double Longitude { set; get; }
+        public double? Longitude { set; get; }
 
     }
 }

@@ -10,6 +10,7 @@ using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
 using TrackingMap.Common.Enum;
 using TrackingMap.Common.ViewModel;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.BL
 {
@@ -198,8 +199,8 @@ namespace TrackingMap.Service.BL
                     {
                         AreaId = areaId,
                         CstId = customerId,
-                        Lat = cust.Latitude,
-                        Lng = cust.Longitude
+                        Lat = cust.Latitude ?? 0,
+                        Lng = cust.Longitude ?? 0
                     };
                     AddAreaPoint(entityview);
                 }

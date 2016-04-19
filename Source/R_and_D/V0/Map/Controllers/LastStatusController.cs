@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.BL;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Controllers
 {
