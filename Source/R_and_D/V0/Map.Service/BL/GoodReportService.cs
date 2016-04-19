@@ -16,7 +16,7 @@ namespace TrackingMap.Service.BL
     {
         private readonly MapContext _ctx;
 
-        private IRepository<GoodReportEntity> _goodReportRepository;
+        private readonly IRepository<GoodReportEntity> _goodReportRepository;
 
         public GoodReportService(MapContext ctx, 
             IRepository<GoodReportEntity> goodReportRepository)
@@ -29,7 +29,7 @@ namespace TrackingMap.Service.BL
         {
             _ctx.GetDatabase().ExecuteSqlCommand(string.Format("delete from GoodReportCache where ClientId = '{0}'", clientId) );
             _ctx.Configuration.AutoDetectChangesEnabled = false;
-         //   _ctx.Configuration.ValidateOnSaveEnabled = false;
+            _ctx.Configuration.ValidateOnSaveEnabled = false;
             foreach (var view in list)
             {
                 _goodReportRepository.InsertWithouteSave(new GoodReportEntity(clientId, view));
@@ -40,7 +40,7 @@ namespace TrackingMap.Service.BL
                 _goodReportRepository.SaveChange();
 
             _ctx.Configuration.AutoDetectChangesEnabled = true;
-         //   _ctx.Configuration.ValidateOnSaveEnabled = true;
+            _ctx.Configuration.ValidateOnSaveEnabled = true;
 
         }
 

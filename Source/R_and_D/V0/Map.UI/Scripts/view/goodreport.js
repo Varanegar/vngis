@@ -3,9 +3,12 @@ var map_auto_refresh = false;
 var client_id;
 var changed;
 
+$(window).unload(function () {
+  //  alert('kkkkkkkkk');
+});
+
 $(document).ready(function () {
     client_id = get_new_guid();
-
     changed = true;
     
     $("#div_advance_condition").hide();
