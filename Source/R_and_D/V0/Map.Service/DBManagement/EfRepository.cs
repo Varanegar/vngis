@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using TrackingMap.Service.Entity;
+using EntityFramework.BulkInsert.Extensions;
 
 namespace TrackingMap.Service.DBManagement
 {
@@ -40,6 +41,7 @@ namespace TrackingMap.Service.DBManagement
             return this.Entities.Find(id);
         }
 
+
         /// <summary>
         /// Insert entity
         /// </summary>
@@ -75,7 +77,7 @@ namespace TrackingMap.Service.DBManagement
             {
                 if (entity == null)
                     throw new ArgumentNullException("entity");
-
+                //var dbEntity = _context.Entry(entity);
                 this.Entities.Add(entity);
                 //entity.CreatedOnUtc = DateTime.Now;
             }

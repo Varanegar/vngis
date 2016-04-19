@@ -27,6 +27,11 @@ namespace TrackingMap.Service.DBManagement
             return base.Set<TEntity>();
         }
 
+        public new DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
+        {
+            return base.Entry(entity);
+        }
+
         public Database GetDatabase()
         {
             return this.Database;
