@@ -984,16 +984,16 @@ function drawAreaSibilingLine() {
         data: JSON.stringify({ Id: selected_id }),
         success: function (data) {
             if (data != null) {
-                $.each(data, function (i, line) {
+                $.each(data, function(i, line) {
                     var arealine = [];
                     if (line.Points != null)
-                        $.each(line.Points, function (j, item) {
+                        $.each(line.Points, function(j, item) {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
                         addPolyline({ line: arealine, color: '#777777', lable: line.Lable });
                     }
-                })
+                }); 
             }
         }
     });
@@ -1175,20 +1175,20 @@ function findPointMarkerIndex(id) {
 
     for (var i = 0; i < point_views.length; i++) {
         if (point_views[i].Id == _id) {
-            return i
+            return i;
         }
     }
-    return -1
+    return -1;
 }
 
 function findPointMarkerIndexByCustomer(id) {
 
     for (var i = 0; i < point_views.length; i++) {
         if (point_views[i].CstId == id) {
-            return i
+            return i;
         }
     }
-    return -1
+    return -1;
 }
 
 //---------------------------------------------------------------------------

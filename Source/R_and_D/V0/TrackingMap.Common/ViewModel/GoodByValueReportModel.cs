@@ -2,24 +2,9 @@
 
 namespace TrackingMap.Common.ViewModel
 {
-    public class GoodByValueReportFilter
+    public class GoodByValueReportFilter : GoodReportFilter
     {
-        public Guid[] AreaIds { set; get; }
-        public int Type { set; get; }
-        public string FromDate { set; get; }
-        public string ToDate { set; get; }
-        public Guid? SaleOffice { set; get; }
-        public Guid? Header { set; get; }
-        public Guid? Seller { set; get; }
-        public Guid? CustomerClass { set; get; }
-        public Guid? CustomerActivity { set; get; }
-        public Guid? CustomerDegree { set; get; }
-        public Guid? GoodGroup { set; get; }
-        public Guid? DynamicGroup { set; get; }
-        public Guid? Good { set; get; }
-        public string CommercialName { set; get; }
-        public int? DayCount { set; get; }
-
+        
         public int? FromRequestCount { set; get; }
         public int? ToRequestCount { set; get; }
 
@@ -41,11 +26,16 @@ namespace TrackingMap.Common.ViewModel
         public decimal? FromRejectAmount { set; get; }
         public decimal? ToRejectAmount { set; get; }
 
-        public decimal? FromSalePrice { set; get; }
-        public decimal? ToSalePrice { set; get; }
+        public float? FromSaleQty { set; get; }
+        public float? ToSaleQty { set; get; }
+        public float? FromSaleCarton { set; get; }
+        public float? ToSaleCarton { set; get; }
 
-        public decimal? FromRejectPrice { set; get; }
-        public decimal? ToRejectPrice { set; get; }
+        public float? FromRejectQty { set; get; }
+        public float? ToRejectQty { set; get; }
+
+        public float? FromRejectCarton { set; get; }
+        public float? ToRejectCarton { set; get; }
 
         public decimal? FromSaleWeight { set; get; }
         public decimal? ToSaleWeight { set; get; }
@@ -61,6 +51,12 @@ namespace TrackingMap.Common.ViewModel
 
         public int? FromBonusCount { set; get; }
         public int? ToBonusCount { set; get; }
+
+        public float? FromBonusCarton { set; get; }
+        public float? ToBonusCarton { set; get; }
+
+        public float? FromBonusQty { set; get; }
+        public float? ToBonusQty { set; get; }
 
         public decimal? FromBonusAmount { set; get; }
         public decimal? ToBonusAmount { set; get; }

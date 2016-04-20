@@ -459,6 +459,7 @@ footer {
     background: #ddd;
     height: 650px;
     border: solid 1px #ccc;
+    overflow-y: scroll;
 }
 
 .frame-map {

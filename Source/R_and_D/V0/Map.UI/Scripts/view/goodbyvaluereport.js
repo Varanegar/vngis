@@ -1,7 +1,13 @@
 ﻿var selected_id = null;
 var map_auto_refresh = false;
+var client_id;
+var changed;
+var line_load = true;
+var marker_load = true;
 
 $(document).ready(function () {
+    client_id = get_new_guid();
+    changed = true;
     $("#div_advance_condition").hide();
     $("#pnl_marker .panel-value").hide();
 
@@ -79,6 +85,24 @@ $(document).ready(function () {
 
     });
 
+    $("#pnl_header_condition input").on("change", function (e) {
+        changed = true;
+    });
+
+    $("#pnl_header_condition select").on("change", function (e) {
+        changed = true;
+    });
+
+    loadDdlSaleOffice();
+    loadDdlHeader();
+    loadDdlSeller();
+    loadDdlCustomer();
+    loadDdlCustomerActivity();
+    loadDdlCustomerDegree();
+    loadDdlGoodGroup();
+    loadDdlDunamicGroup();
+    loadDdlGood();
+    
 });
 
 function back(id) {
@@ -146,6 +170,8 @@ function loadAreaList(options) {
 //map
 //--------------------------------------------------------------------------------
 function refreshMap(ids) {
+
+    showWating();
     clearOverlays();
     if ((ids == undefined) || (ids == null))
         ids = getSelectedIds("grid_area");
@@ -154,6 +180,7 @@ function refreshMap(ids) {
 }
 
 function drawAreasLine(ids) {
+    line_load = false;
     $.ajax({
         type: "POST",
         url: url_loadareasline,
@@ -162,36 +189,40 @@ function drawAreasLine(ids) {
         data: JSON.stringify(ids),
         success: function (data) {
             if (data != null) {
-                $.each(data, function (i, line) {
+                $.each(data, function(i, line) {
                     var arealine = [];
                     if (line.Points != null)
-                        $.each(line.Points, function (j, item) {
+                        $.each(line.Points, function(j, item) {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
                         poly = addPolygon({ line: arealine, color: '#777777', lable: line.Lable });
 
-                        poly.addListener('click', function (event) {
+                        poly.addListener('click', function(event) {
                             selected_id = line.MasterId;
                             map_auto_refresh = true;
                             refreshGrid();
                         });
 
                     }
-                })
+                });
             }
         }
+    }).always(function () {
+        line_load = true;
+    if (marker_load)
+        hideWating();
     });
 }
 
 function drawAreaMarker(ids) {
+    marker_load = false;
     $.ajax({
         type: "POST",
         url: url_loadgoodbyvaluereport,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(getFilter(ids)),
-        always: function () { map_auto_refresh = false; },
         success: function (data) {
             if (data != null) {
                 $.each(data, function(i, item) {
@@ -210,8 +241,14 @@ function drawAreaMarker(ids) {
                 });
                 renderClusterMarkers();
                 fitPointBounds();
+                changed = false;
             }
         }
+    }).always(function () {
+        map_auto_refresh = false;
+        marker_load = true;
+        if (line_load)
+            hideWating();
     });
 
 }
@@ -222,6 +259,8 @@ function drawAreaMarker(ids) {
 function getFilter(ids) {
     return {
         AreaIds: ids,
+        ClientId: client_id,
+        ChangeFilter: changed,
         FromDate: $("#dte_from").val(),
         ToDate: $("#dte_to").val(),
         SaleOffice: $("#ddl_sale_office").val(),
@@ -236,51 +275,58 @@ function getFilter(ids) {
         CommercialName: $("#txt_commercial_good_name").val(),
         DayCount: $("#txt_day_not_visit").val(),
 
-        RequestCountFrom: $("#from_request_count").val(),
-        RequestCountTo: $("#to_request_count").val(),
+        FromRequestCount: $("#from_request_count").val(),
+        ToRequestCount: $("#to_request_count").val(),
 
-        FactorCountFrom: $("#from_factor_count").val(),
+        FromFactorCount: $("#from_factor_count").val(),
         FactorCountTo: $("#to_factor_count").val(),
 
-        RejectCountFrom: $("#from_reject_count").val(),
+        FromRejectCount: $("#from_reject_count").val(),
         RejectCountTo: $("#to_reject_count").val(),
 
-        SaleItemCountFrom: $("#from_sale_item_count").val(),
+        FromSaleItemCount: $("#from_sale_item_count").val(),
         SaleItemCountTo: $("#to_sale_item_count").val(),
 
-        RejectItemCountFrom: $("#from_reject_item_count").val(),
+        FromRejectItemCount: $("#from_reject_item_count").val(),
         RejectItemCountTo: $("#to_reject_item_count").val(),
 
-        SaleAmountFrom: $("#from_sale_amount").val(),
+        FromSaleAmount: $("#from_sale_amount").val(),
         SaleAmountTo: $("#to_sale_amount").val(),
 
-        RejectAmountFrom: $("#from_reject_amount").val(),
+        FromRejectAmount: $("#from_reject_amount").val(),
         RejectAmountTo: $("#to_reject_amount").val(),
 
-        SalePriceFrom: $("#from_sale_price").val(),
+        FromSalePrice: $("#from_sale_price").val(),
         SalePriceTo: $("#to_sale_price").val(),
 
-        RejectPriceFrom: $("#from_reject_price").val(),
+        FromRejectPrice: $("#from_reject_price").val(),
         RejectPriceTo: $("#to_reject_price").val(),
 
-        SaleWeightFrom: $("#from_sale_weight").val(),
+        FromSaleWeight: $("#from_sale_weight").val(),
         SaleWeightTo: $("#to_sale_weight").val(),
 
-        RejectWeightFrom: $("#from_reject_weight").val(),
+        FromRejectWeight: $("#from_reject_weight").val(),
         RejectWeightTo: $("#to_reject_weight").val(),
 
-        SaleDiscountFrom: $("#from_sale_discount").val(),
+        FromSaleDiscount: $("#from_sale_discount").val(),
         SaleDiscountTo: $("#to_sale_discount").val(),
 
-        RejectDiscountFrom: $("#from_reject_discount").val(),
+        FromRejectDiscount: $("#from_reject_discount").val(),
         RejectDiscountTo: $("#to_reject_discount").val(),
 
-        BonusCountFrom: $("#from_bonus_count").val(),
+        FromBonusCount: $("#from_bonus_count").val(),
         BonusCountTo: $("#to_bonus_count").val(),
 
-        BonusAmountFrom: $("#from_bonus_amount").val(),
+        FromBonusAmount: $("#from_bonus_amount").val(),
         BonusAmountTo: $("#to_bonus_amount").val()
-    }
+    };
 
 }
 
+
+//--------------------------------------------------------------------------------
+//window
+//--------------------------------------------------------------------------------
+window.onbeforeunload = function (event) {
+    removeCacheData(client_id);
+};

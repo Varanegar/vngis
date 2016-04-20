@@ -6,7 +6,7 @@
 
     <div class="panel-body">
         <div class="header-bar">
-            <div class="form-group">
+            <div class="form-group" id="pnl_header_condition">
                 <div class="row">
                     <div class="col-md-1">
                         <label>@CaptionResource.FromDate</label>
@@ -223,7 +223,7 @@
                                 <label for="chk_sale_price">ریال کالای فروش رفته</label>
                                 <div id="div_sale_price" class="panel-value">
                                     <label for="from_sale_price">از</label>
-                                    <input id="to_sale_price" type="number" class="form-control" />
+                                    <input id="from_sale_price" type="number" class="form-control" />
 
                                     <label for="to_sale_price">تا</label>
                                     <input id="to_sale_price" type="number" class="form-control" />
@@ -234,11 +234,11 @@
                                 @Html.CheckBox("chk_reject_price", false, new { @id = "chk_reject_price", @class = "control-label" })
                                 <label for="chk_reject_price">ریال کالای برگشتی</label>
                                 <div id="div_reject_pric" class="panel-value">
-                                    <label for="from_reject_pric">از</label>
-                                    <input id="from_reject_pric" type="number" class="form-control" />
+                                    <label for="from_reject_price">از</label>
+                                    <input id="from_reject_price" type="number" class="form-control" />
 
-                                    <label for="to_reject_pric">تا</label>
-                                    <input id="to_reject_pric" type="number" class="form-control" />
+                                    <label for="to_reject_price">تا</label>
+                                    <input id="to_reject_price" type="number" class="form-control" />
 
                                 </div>
                                 <br />

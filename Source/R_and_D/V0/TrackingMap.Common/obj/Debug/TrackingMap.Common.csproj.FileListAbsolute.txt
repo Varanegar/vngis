@@ -7,3 +7,4 @@ d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Common\bin\Debug\EntityFramework.xml
 d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Common\bin\Debug\EntityFramework.SqlServer.xml
 d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Common\obj\Debug\TrackingMap.Common.dll
 d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Common\obj\Debug\TrackingMap.Common.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\TrackingMap.Common\obj\Debug\TrackingMap.Common.csprojResolveAssemblyReference.cache
