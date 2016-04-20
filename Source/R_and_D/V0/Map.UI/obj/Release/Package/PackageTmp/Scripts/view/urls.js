@@ -3,7 +3,6 @@
 
 
 url_getcombodata = url_server + "Vn/GetComboData";
-
 //--------------------------------------------------------
 // area
 //--------------------------------------------------------
@@ -59,6 +58,7 @@ url_loadcustomerreport = url_server + "CustomerReport/Load";
 // good Report
 //--------------------------------------------------------
 url_loadgoodreport = url_server + "GoodReport/Load";
+url_removecachedata = url_server + "GoodReport/RemoveCacheData";
 
 //--------------------------------------------------------
 // good by value Report

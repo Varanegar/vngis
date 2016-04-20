@@ -3,9 +3,6 @@ var map_auto_refresh = false;
 var client_id;
 var changed;
 
-$(window).unload(function () {
-    alert('kkkkkkkkk');
-});
 
 $(document).ready(function () {
     client_id = get_new_guid();
@@ -268,6 +265,11 @@ function getFilter(ids) {
 //--------------------------------------------------------------------------------
 //window
 //--------------------------------------------------------------------------------
+
+window.onbeforeunload = function (event) {
+    removeCacheData(client_id);
+};
+
 //window.onhashchange = function () {
 //    var _id = '';
 //    if (location.hash.length > 0) {

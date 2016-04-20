@@ -1,4 +1,20 @@
-﻿function loadDdlSaleOffice() {
+﻿
+function removeCacheData(clientid) {
+    $.ajax({
+        type: "POST",
+        url: url_removecachedata,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ Id: clientid }),
+
+        success: function(data) {
+        }
+    });
+}
+
+function loadDdlSaleOffice() {
+
+
     $.ajax({
         type: "POST",
         url: url_getcombodata,

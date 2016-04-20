@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2016 00:59:57</publishTime>
     </File>
     <File Include="bin/TrackingMap.UI.dll">
-      <publishTime>04/19/2016 08:25:00</publishTime>
+      <publishTime>04/19/2016 22:28:03</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>02/05/2016 22:09:04</publishTime>
@@ -671,6 +671,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/img/icon.png">
       <publishTime>03/14/2016 02:06:38</publishTime>
+    </File>
+    <File Include="Content/img/loader.gif">
+      <publishTime>04/19/2016 10:32:37</publishTime>
     </File>
     <File Include="Content/img/logo.png">
       <publishTime>03/14/2016 02:06:38</publishTime>
@@ -1252,28 +1255,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2016 02:05:51</publishTime>
     </File>
     <File Include="Scripts/view/area.js">
-      <publishTime>04/18/2016 05:20:27</publishTime>
+      <publishTime>04/19/2016 11:11:14</publishTime>
     </File>
     <File Include="Scripts/view/customerreport.js">
       <publishTime>04/15/2016 21:41:00</publishTime>
     </File>
     <File Include="Scripts/view/general.js">
-      <publishTime>04/19/2016 02:56:32</publishTime>
+      <publishTime>04/19/2016 10:34:47</publishTime>
     </File>
     <File Include="Scripts/view/goodbyvaluereport.js">
-      <publishTime>04/18/2016 03:59:53</publishTime>
+      <publishTime>04/19/2016 22:05:29</publishTime>
     </File>
     <File Include="Scripts/view/goodreport.js">
-      <publishTime>04/19/2016 08:14:35</publishTime>
+      <publishTime>04/19/2016 22:26:32</publishTime>
     </File>
     <File Include="Scripts/view/laststatus.js">
       <publishTime>04/16/2016 23:09:20</publishTime>
     </File>
     <File Include="Scripts/view/report.js">
-      <publishTime>04/19/2016 07:54:59</publishTime>
+      <publishTime>04/19/2016 22:24:05</publishTime>
     </File>
     <File Include="Scripts/view/urls.js">
-      <publishTime>04/19/2016 04:49:59</publishTime>
+      <publishTime>04/19/2016 22:04:24</publishTime>
     </File>
     <File Include="Scripts/view/visitor.js">
       <publishTime>04/15/2016 02:19:56</publishTime>
@@ -1288,10 +1291,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2016 02:54:36</publishTime>
     </File>
     <File Include="Views/GoodByValueReport/Index.cshtml">
-      <publishTime>04/19/2016 07:33:44</publishTime>
+      <publishTime>04/19/2016 21:28:28</publishTime>
     </File>
     <File Include="Views/GoodReport/Index.cshtml">
-      <publishTime>04/19/2016 08:01:32</publishTime>
+      <publishTime>04/19/2016 21:09:43</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>03/14/2016 02:06:56</publishTime>
@@ -1304,6 +1307,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>04/18/2016 01:40:47</publishTime>
+    </File>
+    <File Include="Views/Shared/_Loading.cshtml">
+      <publishTime>04/19/2016 10:33:34</publishTime>
     </File>
     <File Include="Views/Visitor/Index.cshtml">
       <publishTime>04/05/2016 01:38:27</publishTime>

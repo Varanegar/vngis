@@ -105,7 +105,8 @@
             <div id="main-content">
                 <div class="container-fluid">
                     <div class="row-fluid">
-                            @RenderBody()
+                        @Html.Partial("../Shared/_Loading")
+                        @RenderBody()
                     </div>
                 </div>
             </div>

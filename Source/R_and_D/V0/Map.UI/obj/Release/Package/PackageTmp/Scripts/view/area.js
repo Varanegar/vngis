@@ -3,7 +3,7 @@ var customer_views = [];
 var selected_markers = [];
 var ctr = false;
 var gridchange_flag = true;
-
+var customerLoad = false;
 var new_id = 0;
 var selected_id = null;
 
@@ -76,7 +76,7 @@ $(document).ready(function () {
     initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
 
 
-    
+
     $("#btn_customer_save").on("click", function (e) {
         saveCustomerPositions(false);
     });
@@ -229,7 +229,7 @@ $(document).ready(function () {
             alert('مشتری انتخاب شده معتبر نمی باشد.');
         else
             addCustomerpoint(id, lat, lng, pointid);
-        closeCustomerDialog
+        closeCustomerDialog();
     });
 });
 function savePoints() {
@@ -268,7 +268,7 @@ function saveCustomerPositions(savepoint) {
         else
             refreshMap(false)
     }
-    
+
 
 }
 //--------------------------------------------------------------
@@ -611,7 +611,7 @@ function removePoint(id) {
         point_views.splice(index, 1);
         removeMarkerById("point_" + id);
         if (new_id == pr) new_id--;
-        
+
         refreshAreaLable();
         refreshAreaLine();
     }
@@ -737,7 +737,7 @@ function addPoint(id, pr, lat, lng, cust) {
                 transformcustomerbtn;
 
             openInfoWindow(event, windowdesc);
-            
+
         }
     });
 
@@ -819,7 +819,7 @@ function refreshMapForCustomer() {
         point_views = [];
         customer_views = [];
         addListener('click', addCustomerByClick);
-       
+
         var isleaf = selectedRowIsLeaf();
 
         drawAreaCustomerPoints(false, isleaf, true);
@@ -905,6 +905,7 @@ function findCustomerViewIndex(id) {
 // Area
 //----------------------------
 function refreshMap(edit) {
+    showWating();
     $("#btn_customer_save").hide();
     if (selected_id == null) {
         $("#mapContainer").hide();
@@ -983,16 +984,16 @@ function drawAreaSibilingLine() {
         data: JSON.stringify({ Id: selected_id }),
         success: function (data) {
             if (data != null) {
-                $.each(data, function (i, line) {
+                $.each(data, function(i, line) {
                     var arealine = [];
                     if (line.Points != null)
-                        $.each(line.Points, function (j, item) {
+                        $.each(line.Points, function(j, item) {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
                         addPolyline({ line: arealine, color: '#777777', lable: line.Lable });
                     }
-                })
+                }); 
             }
         }
     });
@@ -1007,16 +1008,16 @@ function drawAreaChildLine() {
         data: JSON.stringify({ Id: selected_id }),
         success: function (data) {
             if (data != null) {
-                $.each(data, function (i, line) {
+                $.each(data, function(i, line) {
                     var arealine = [];
                     if (line.Points != null)
-                        $.each(line.Points, function (j, item) {
+                        $.each(line.Points, function(j, item) {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
                         addPolyline({ line: arealine, color: '#777777', lable: line.Lable });
                     }
-                })
+                });
             }
         }
     });
@@ -1024,13 +1025,15 @@ function drawAreaChildLine() {
 
 function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
     editcustomer = editcustomer || false;
+    customerLoad = true;
 
     if (isleaf) {
         var showcustrout = editcustomer || $("#chk_customer_route").is(':checked');
         var showcustotherrout = editcustomer || $("#chk_customer_other_route").is(':checked');
         var showcustwithoutrout = editcustomer || $("#chk_customer_without_route").is(':checked');
 
-        if (showcustrout || showcustotherrout || showcustwithoutrout)
+        if (showcustrout || showcustotherrout || showcustwithoutrout) {
+            customerLoad = false;
             $.ajax({
                 type: "POST",
                 url: url_loadarealeafcustomerpoints,
@@ -1042,30 +1045,37 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                     Showcustotherrout: showcustotherrout,
                     Showcustwithoutrout: showcustwithoutrout
                 }),
-                success: function (data) {
-                    $.each(data, function (i, item) {
+                success: function(data) {
+                    $.each(data, function(i, item) {
                         var _m = addMarker({
                             id: "customer_point_" + item.Id,
-                            lat: item.Latitude, lng: item.Longitude,
-                            draggable: editcustomer, clustering: false
+                            lat: item.Latitude,
+                            lng: item.Longitude,
+                            draggable: editcustomer,
+                            clustering: false
                         });
                         _m.setIcon({ url: "../Content/img/pin/customer" + item.PointType + ".png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
-                        _m.addListener('click', function (e) {
+                        _m.addListener('click', function(e) {
                             onCustomerMarkerClick(e, item.Id, _m, item.Desc, (!editcustomer && edit && isleaf))
                         });
 
                         if (editcustomer)
-                            _m.addListener("dragend", function (e) {
+                            _m.addListener("dragend", function(e) {
                                 onCustomerDragEnd({ id: "customer_point_" + item.Id, latLng: e.latLng });
                             });
 
                     });
                 }
-            });
-
+            })
+                .always(function() {
+                    hideWating();
+                    customerLoad = true;
+                });
+        }
     }
     else {
         if (editcustomer || $("#chk_customer").is(':checked')) {
+            customerLoad = false;
             $.ajax({
                 type: "POST",
                 url: url_loadareacustomerpoints,
@@ -1088,9 +1098,12 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                     });
                     renderClusterMarkers();
                 }
-            });
+            })
+            .always(function () {
+                hideWating();
+                customerLoad = true;
+            });            
         }
-
     }
 }
 
@@ -1138,7 +1151,11 @@ function drawAreaLinePoints(edit, isleaf, editcustomer) {
 
             }
         }
+    }).always(function () {
+        if (customerLoad)
+            hideWating();
     });
+
 }
 
 function onDragEnd(args) {
@@ -1158,20 +1175,20 @@ function findPointMarkerIndex(id) {
 
     for (var i = 0; i < point_views.length; i++) {
         if (point_views[i].Id == _id) {
-            return i
+            return i;
         }
     }
-    return -1
+    return -1;
 }
 
 function findPointMarkerIndexByCustomer(id) {
 
     for (var i = 0; i < point_views.length; i++) {
         if (point_views[i].CstId == id) {
-            return i
+            return i;
         }
     }
-    return -1
+    return -1;
 }
 
 //---------------------------------------------------------------------------

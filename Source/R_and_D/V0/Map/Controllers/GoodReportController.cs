@@ -58,7 +58,12 @@ namespace TrackingMap.Controllers
 
             return polies;
         }
-
+        [HttpPost]
+        public void RemoveCacheData(IdView id)
+        {
+            if ((id != null) && (id.Id != null))
+                _goodReportService.RemoveByClientId(id.Id.Value);
+        }
     }
 
 
