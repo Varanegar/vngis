@@ -1,5 +1,4 @@
-﻿var selectedIds = [];
-
+﻿
 $(document).ready(function () {
     loadLevel1Area();
     $("#grid_visitor").kendoGrid({
@@ -18,15 +17,15 @@ $(document).ready(function () {
         editable: false,
         selectable: "row",
         pageable: false,
-        scrollable: false,
+        scrollable: true,
         dataBound: dataBound,
-
+        height:400,
         columns: [
         {
             field: "Id",
-            headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
-            template: "<input type='checkbox' value='#=Id#' onchange=changeIdList(" + 'this' + ",'#=Id#') id=" + "chk" + "#=Id#" + " class='checkboxGroups'/>",
-            attributes: { style: "width:5%;" }
+            headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_visitor\")' />",
+            template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_visitor\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
+            width: 20
         }, {
             field: "Title",
             title: 'عنوان',
@@ -58,10 +57,11 @@ $(document).ready(function () {
     $("#ddl_visitor_group").on("change", function (event) {
         $('#grid_visitor').data('kendoGrid').dataSource.read();
         $('#grid_visitor').data('kendoGrid').refresh();
-        selectedIds = [];
     });
 
     $("#btn_run").on("click", function (e) {
+        showWating();
+
         clearOverlays();
 
         drawLastStatusMarkers();
@@ -113,32 +113,7 @@ function loadVisitorByGroupid(options) {
 }
 
 
-function changeIdList(e, id) {
-    var flag = e.checked;
 
-    if (flag) {
-        try {
-            selectedIds.push(id);
-        } catch (e) {
-            selectedIds = [id];
-        }
-
-    } else {
-
-        var idtoDelete = 0;
-        for (var i = 0; i < selectedIds.length; i++) {
-            if (selectedIds[i] == id) idtoDelete = i;
-        }
-        selectedIds.splice(idtoDelete, 1);
-    }
-    updateMasterCheckbox();
-}
-
-function updateMasterCheckbox() {
-    var numChkBoxes = $('#grid_visitor input[type=checkbox][id!=mastercheckbox]').length;
-    var numChkBoxesChecked = $('#grid_visitor input[type=checkbox][checked][id!=mastercheckbox]').length;
-    $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
-}
 
 function drawLastStatusMarkers() {
     $.ajax({
@@ -147,7 +122,7 @@ function drawLastStatusMarkers() {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            VisitorIds: selectedIds
+            VisitorIds: getSelectedIds("grid_visitor"),
         }),
         success: function (data) {
             $.each(data, function (i, item) {
@@ -192,5 +167,7 @@ function drawLastStatusMarkers() {
             fitPointBounds();
 
         }
+    }).always(function () {
+            hideWating();
     });
 }

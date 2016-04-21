@@ -20,8 +20,8 @@ namespace TrackingMap.Service.BL
 
         public CustomerService(IDbContext ctx,
             IRepository<CustomerEntity> customerRepository,
-            IRepository<AreaPointEntity>  areaPointRepository
-            )           
+            IRepository<AreaPointEntity> areaPointRepository
+            )
         {
             _ctx = ctx;
             _customerRepository = customerRepository;
@@ -35,8 +35,8 @@ namespace TrackingMap.Service.BL
                 bool showcustwithoutrout = false)
         {
             List<PointView> list;
-            
-            var areaid_param = new SqlParameter("@AreaId",SqlDbType.UniqueIdentifier);
+
+            var areaid_param = new SqlParameter("@AreaId", SqlDbType.UniqueIdentifier);
             areaid_param.SqlValue = areaid;
 
             var routid_param = new SqlParameter("@RoutId", SqlDbType.UniqueIdentifier);
@@ -45,7 +45,7 @@ namespace TrackingMap.Service.BL
                 routid_param.SqlValue = DBNull.Value;
             else
                 routid_param.SqlValue = routid;
-            
+
             var showcustrout_param = new SqlParameter("@ShowCustRout", showcustrout);
             var showcustotherrout_param = new SqlParameter("@ShowCustOtherRout", showcustotherrout);
             var showcustwithoutrout_param = new SqlParameter("@ShowCustEithoutRout", showcustwithoutrout);
@@ -54,7 +54,7 @@ namespace TrackingMap.Service.BL
                                                           "@RoutId," +
                                                           "@ShowCustRout," +
                                                           "@ShowCustOtherRout," +
-                                                          "@ShowCustEithoutRout ", 
+                                                          "@ShowCustEithoutRout ",
                                                           areaid_param,
                                                           routid_param,
                                                           showcustrout_param,
@@ -109,7 +109,8 @@ namespace TrackingMap.Service.BL
             {
                 CustomerEntity en;
                 en = _customerRepository.GetById(cust.Id);
-                if (en == null) {
+                if (en == null)
+                {
                     en = new CustomerEntity()
                     {
                         Id = cust.Id,
@@ -126,7 +127,8 @@ namespace TrackingMap.Service.BL
                     en.Longitude = cust.Lng;
                     _customerRepository.Update(en);
                     var customerpoints = _areaPointRepository.Table.Where(x => x.CustomerEntityId == cust.Id).ToList();
-                    foreach (var cp in customerpoints) {
+                    foreach (var cp in customerpoints)
+                    {
                         cp.Latitude = cust.Lat;
                         cp.Longitude = cust.Lng;
                         _areaPointRepository.Update(cp);
@@ -135,5 +137,18 @@ namespace TrackingMap.Service.BL
                 }
             }
         }
+        public List<VnCustomerView> LoadCustomerAutoComplete(AutoCompleteFilter filter)
+        {
+            return _customerRepository.TableNoTracking
+                .Where(x => (x.Title + " " + x.Code + " " + x.ShopTitle).Contains(filter.SearchValue))
+                .Select(x => new VnCustomerView
+                {
+                    Id = x.Id,
+                    CustomerName = x.Code + " " + x.Title,
+                    HasLatLng = ((x.Latitude + x.Longitude) != 0)
+                })
+                .ToList();
+        }
     }
+
 }

@@ -28,12 +28,12 @@ $(document).ready(function () {
             //serverFiltering: true,
             //serverSorting: true
         },
-
+        height:550,
         sortable: false,
         editable: false,
         selectable: "row",
         pageable: false,
-        scrollable: false,
+        scrollable: true,
         change: gridChange,
         dataBound: firstRowSelect,
         columns: [{ field: "Title", title: 'عنوان' }
@@ -56,22 +56,28 @@ $(document).ready(function () {
         filter: 'contains',
         placeholder: 'مشتری را انتخاب کنید...',
         minLength: 3,
+        width:300,
         dataSource: {
             serverFiltering: true,
             //serverPaging: true,
             transport: { read: loadCustomerAutoComplete }
         },
         select: function (e) {
+            
             var dataItem = this.dataItem(e.item.index());
-            if ((dataItem != null) && (dataItem != undefined))
+            
+            if ((dataItem != null) && (dataItem != undefined)) {
+                if (dataItem.HasLatLng == true)
+                    alert('مکان مشتری مورد نظر قبلا مشخص شده است، در صورت ذخیره اطلاعات جدید، مکان قبلی مشتری اصلاح خواهد شد.');
                 $("#dlg_customer_hdn_id").val(dataItem.Id);
+
+            }
             else
                 $("#dlg_customer_hdn_id").val('');
 
             // Use the selected item or its text
         }
     });
-
 
     initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
 
@@ -99,7 +105,7 @@ $(document).ready(function () {
         $("#customerContainer").hide(1000);
         $("#btn_set_customer").show();
         $("#btn_map").hide();
-        refreshMap(false)
+        refreshMap(false);
     });
 
     $("#btn_set_customer").on("click", function (e) {
@@ -220,6 +226,7 @@ $(document).ready(function () {
     });
 
     $("#btn_save_customer_position").on("click", function (e) {
+        
         var lat = $("#dlg_customer_hdn_lat").val();
         var lng = $("#dlg_customer_hdn_lng").val();
         var id = $("#dlg_customer_hdn_id").val();
@@ -233,13 +240,13 @@ $(document).ready(function () {
     });
 });
 function savePoints() {
-    var _id = selected_id;
+    var id = selected_id;
     $.ajax({
         type: "POST",
         url: url_savepoints,
         dataType: "json",
         contentType: "application/json",
-        data: JSON.stringify({ Id: _id, Points: point_views }),
+        data: JSON.stringify({ Id: id, Points: point_views }),
         success: function (data) {
             refreshMap(false);
         }
@@ -259,14 +266,14 @@ function saveCustomerPositions(savepoint) {
                 if (savepoint == true)
                     savePoints();
                 else
-                    refreshMap(false)
+                    refreshMap(false);
             }
         });
     else {
         if (savepoint == true)
             savePoints();
         else
-            refreshMap(false)
+            refreshMap(false);
     }
 
 
@@ -291,32 +298,30 @@ function editArea() {
 };
 
 function removeArea() {
-    if (selected_id != null)
-        var r = confirm("ایا اطلاعات محدوده حذف شود؟")
-    if (r = true) {
-        $.ajax({
-            type: "POST",
-            url: url_removepointsbyareaid,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify({ Id: selected_id }),
-            success: function (data) {
-                if (data.Success == true) {
-                    refreshMap(false);
+    if (selected_id != null) {
+        var r = confirm("ایا اطلاعات محدوده حذف شود؟");
+        if (r == true) {
+            $.ajax({
+                type: "POST",
+                url: url_removepointsbyareaid,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ Id: selected_id }),
+                success: function(data) {
+                    if (data.Success == true) {
+                        refreshMap(false);
+                    } else {
+                        alert('محدوده مورد نظر دارای زیر شاخه می باشد. امکان حذف وجود ندارد.');
+                    }
                 }
-                else {
-                    alert('محدوده مورد نظر دارای زیر شاخه می باشد. امکان حذف وجود ندارد.');
-                }
-            }
-        });
+            });
+        }
     }
 
 };
 
 function showDetail(id) {
-
-    var gridData = $('.k-grid').data("kendoGrid");
-    var selectedRowData = gridData.dataItem($('.k-grid').find("tr.k-state-selected"));
+    var selectedRowData = getSelectedRow("grid_area");
 
     if (selectedRowData.IsLeaf == false)
         $.ajax({
@@ -344,12 +349,14 @@ function loadAreaList(options) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
+            gridchange_flag = true;
             options.success(result);
         }
     });
 }
 
 function refreshGrid() {
+    gridchange_flag = false;
     if (selected_id != null) {
         $.ajax({
             type: "POST",
@@ -371,10 +378,8 @@ function refreshGrid() {
     else {
         $("#pnl_path").html("");
     }
-    gridchange_flag = false;
     $('#grid_area').data('kendoGrid').dataSource.read();
     $('#grid_area').data('kendoGrid').refresh();
-    gridchange_flag = true;
 }
 
 function gridChange(arg) {
@@ -430,7 +435,7 @@ function loadCustomerAutoComplete(options) {
     $.ajax({
         type: "POST",
         url: url_vnloadCustomer,
-        data: JSON.stringify({ searchvalue: $("#customer").val() }),
+        data: JSON.stringify({ SearchValue: $("#customer").val() }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
@@ -830,7 +835,7 @@ function refreshMapForCustomer() {
 
 function addCustomerpoint(guid, lat, lng, pointid) {
 
-    var _m = addMarker({
+    var m = addMarker({
         id: "customer_point_" + guid,
         lat: lat, lng: lng,
         tit: '', draggable: true, label: '',
@@ -840,11 +845,11 @@ function addCustomerpoint(guid, lat, lng, pointid) {
     if (pointid != '') {
         var index = findPointMarkerIndex(pointid);
         point_views[index].CstId = guid;
-        _m.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+        m.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
     }
     else {
-        _m.setIcon({ url: "../Content/img/pin/customernew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) })
-        _m.addListener("dragend", function (e) {
+        m.setIcon({ url: "../Content/img/pin/customernew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) })
+        m.addListener("dragend", function (e) {
             onCustomerDragEnd({ id: "customer_point_" + guid, latLng: e.latLng });
         });
     }
@@ -852,7 +857,7 @@ function addCustomerpoint(guid, lat, lng, pointid) {
     customer_views.push({ Id: guid, Lat: lat, Lng: lng });
 
     closeCustomerDialog();
-    return _m;
+    return m;
 
 }
 
@@ -862,7 +867,7 @@ function closeCustomerDialog() {
     $("#dlg_customer_hdn_point_id").val('');
     $("#dlg_customer_hdn_lat").val('');
     $("#dlg_customer_hdn_lng").val('');
-    $("#dlg_customer").modal('toggle');
+    $("#dlg_customer").modal('hide');
 }
 
 function addCustomerByClick(args) {
@@ -1052,7 +1057,7 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                             lat: item.Latitude,
                             lng: item.Longitude,
                             draggable: editcustomer,
-                            clustering: false
+                            clustering: true
                         });
                         _m.setIcon({ url: "../Content/img/pin/customer" + item.PointType + ".png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
                         _m.addListener('click', function(e) {
@@ -1065,6 +1070,7 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                             });
 
                     });
+                    renderClusterMarkers();
                 }
             })
                 .always(function() {

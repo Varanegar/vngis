@@ -9,7 +9,7 @@ namespace TrackingMap.Service.Vn.Extention
             var html = "";
             if (!string.IsNullOrEmpty(view.Desc))
             {
-                html += "<h3>" + view.Desc + "</h3>";
+                html += "<h5>" + view.Desc + "</h5><hr/>";
             }
             if (view.ActiveCustomerCount != null)
             {
@@ -58,7 +58,7 @@ namespace TrackingMap.Service.Vn.Extention
             var html = "";
             if (!string.IsNullOrEmpty(desc))
             {
-                html += "<h3>" + desc + "</h3>";
+                html += "<h5>" + desc + "</h5>";
             }
             if (view.OrderCount != null)
             {
@@ -68,9 +68,9 @@ namespace TrackingMap.Service.Vn.Extention
             {
                 html += "<div>تعداد فاکتور: " + view.SaleCount.Value.ToString("#,#") + "</div>";
             }
-            if (view.SaleCount != null)
+            if (view.RetSaleCount != null)
             {
-                html += "<div>تعداد برگشتی: " + view.SaleCount.Value.ToString("#,#") + "</div>";
+                html += "<div>تعداد برگشتی: " + view.RetSaleCount.Value.ToString("#,#") + "</div>";
             }
             if (view.SaleItemCount != null)
             {

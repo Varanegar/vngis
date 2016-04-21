@@ -49,7 +49,9 @@
                             <label for="ddl_seller">@CaptionResource.Seller</label>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-control" id="ddl_seller"></select>
+                            <input type="hidden" id="ddl_seller" value="" />
+                            <input id='auto_seller' />
+@*                            <select class="form-control" id="ddl_seller"></select>*@
                         </div>
                     </div>
 
@@ -81,25 +83,30 @@
                             <label for="ddl_good_group">@CaptionResource.GoodGroup</label>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-control" id="ddl_good_group"></select>
+                            <input type="hidden" id="ddl_good_group" value="" />
+                            <input id='auto_good_group'  />
+@*                            <select class="form-control" id="ddl_good_group"></select>*@
                         </div>
 
-                        <div class="col-md-1">
+                        @*<div class="col-md-1">
                             <label for="ddl_dynamic_group">@CaptionResource.DynamicGroup</label>
                         </div>
                         <div class="col-md-3">
                             <select class="form-control" id="ddl_dynamic_group"></select>
-                        </div>
+                        </div>*@
 
                         <div class="col-md-1">
                             <label for="ddl_good">@CaptionResource.Good</label>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-control" id="ddl_good"></select>
+                            <input type="hidden" id="ddl_good" value="" />
+                            <input id='auto_good' />
+
+                           @* <select class="form-control" id="ddl_good"></select>*@
                         </div>
                     </div>
 
-                    <div class="row">
+                    @*<div class="row">
                         <div class="col-md-1">
                             <label>@CaptionResource.GoodCommercialName</label>
                         </div>
@@ -112,7 +119,7 @@
                         <div class="col-md-3">
                             <input type="number" id="txt_day_not_visit" class="form-control" />
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>
@@ -122,18 +129,18 @@
             <div class="col-md-3">
                 <div class="side-bar">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#pnl_condition">خروجی ها</a></li>
-                        <li><a data-toggle="tab" href="#pnl_area">محدوده ها</a></li>
+                        <li class ="active"><a data-toggle="tab" href="#pnl_area">محدوده ها</a></li>
+                        <li><a data-toggle="tab" href="#pnl_condition">خروجی ها</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="pnl_area" class="tab-pane fade">
+                        <div id="pnl_area" class="tab-pane fade in active">
                             <br />
                             <div id="grid_area" class="full-width"></div>
                         </div>
 
 
-                        <div id="pnl_condition" class="tab-pane fade in active">
-                            <div id="pnl_marker" class="frame-border">
+                        <div id="pnl_condition" class="tab-pane fade ">
+                            <div id="pnl_marker" class="frame-border" style="height: 520px">
 
                                 @Html.CheckBox("chk_request_count", false, new { @id = "chk_request_count", @class = "control-label" })
                                 <label for="chk_request_count">تعداد درخواست</label>
@@ -195,8 +202,32 @@
                                 </div>
                                 <br />
 
+                                @Html.CheckBox("chk_sale_qty", false, new { @id = "chk_sale_qty", @class = "control-label" })
+                                <label for="chk_sale_qty">تعداد کالای فروش رفته (کارتن : ظرف)</label>
+                                <div id="div_sale_qty" class="panel-value">
+                                    <label for="from_sale_qty">از</label>
+                                    <input id="from_sale_qty" type="number" class="form-control" />
+
+                                    <label for="to_sale_qty">تا</label>
+                                    <input id="to_sale_qty" type="number" class="form-control" />
+
+                                </div>
+                                <br />
+
+                                @Html.CheckBox("chk_reject_qty", false, new { @id = "chk_reject_qty", @class = "control-label" })
+                                <label for="chk_reject_qty">تعداد کالای برگشتی (کارتن : ظرف)</label>
+                                <div id="div_reject_qty" class="panel-value">
+                                    <label for="from_reject_qty">از</label>
+                                    <input id="from_reject_qty" type="number" class="form-control" />
+
+                                    <label for="to_reject_qty">تا</label>
+                                    <input id="to_reject_qty" type="number" class="form-control" />
+
+                                </div>
+                                <br />
+
                                 @Html.CheckBox("chk_sale_amount", false, new { @id = "chk_sale_amount", @class = "control-label" })
-                                <label for="chk_sale_amount">تعداد کالای فروش رفته (کارتن : ظرف)</label>
+                                <label for="chk_sale_amount">ریال کالای فروش رفته</label>
                                 <div id="div_sale_amount" class="panel-value">
                                     <label for="from_sale_amount">از</label>
                                     <input id="from_sale_amount" type="number" class="form-control" />
@@ -208,37 +239,13 @@
                                 <br />
 
                                 @Html.CheckBox("chk_reject_amount", false, new { @id = "chk_reject_amount", @class = "control-label" })
-                                <label for="chk_reject_amount">تعداد کالای برگشتی (کارتن : ظرف)</label>
+                                <label for="chk_reject_amount">ریال کالای برگشتی</label>
                                 <div id="div_reject_amount" class="panel-value">
                                     <label for="from_reject_amount">از</label>
                                     <input id="from_reject_amount" type="number" class="form-control" />
 
                                     <label for="to_reject_amount">تا</label>
                                     <input id="to_reject_amount" type="number" class="form-control" />
-
-                                </div>
-                                <br />
-
-                                @Html.CheckBox("chk_sale_price", false, new { @id = "chk_sale_price", @class = "control-label" })
-                                <label for="chk_sale_price">ریال کالای فروش رفته</label>
-                                <div id="div_sale_price" class="panel-value">
-                                    <label for="from_sale_price">از</label>
-                                    <input id="from_sale_price" type="number" class="form-control" />
-
-                                    <label for="to_sale_price">تا</label>
-                                    <input id="to_sale_price" type="number" class="form-control" />
-
-                                </div>
-                                <br />
-
-                                @Html.CheckBox("chk_reject_price", false, new { @id = "chk_reject_price", @class = "control-label" })
-                                <label for="chk_reject_price">ریال کالای برگشتی</label>
-                                <div id="div_reject_pric" class="panel-value">
-                                    <label for="from_reject_price">از</label>
-                                    <input id="from_reject_price" type="number" class="form-control" />
-
-                                    <label for="to_reject_price">تا</label>
-                                    <input id="to_reject_price" type="number" class="form-control" />
 
                                 </div>
                                 <br />
@@ -303,14 +310,14 @@
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_bonus_amount", false, new { @id = "chk_bonus_amount", @class = "control-label" })
-                                <label for="chk_bonus_amount">تعداد جایزه (کارتن : ظرف)</label>
-                                <div id="div_bonus_amount" class="panel-value">
-                                    <label for="from_bonus_amount">از</label>
-                                    <input id="from_bonus_amount" type="number" class="form-control" />
+                                @Html.CheckBox("chk_bonus_qty", false, new { @id = "chk_bonus_qty", @class = "control-label" })
+                                <label for="chk_bonus_qty">تعداد جایزه (کارتن : ظرف)</label>
+                                <div id="div_bonus_qty" class="panel-value">
+                                    <label for="from_bonus_qty">از</label>
+                                    <input id="from_bonus_qty" type="number" class="form-control" />
 
-                                    <label for="to_bonus_amount">تا</label>
-                                    <input id="to_bonus_amount" type="number" class="form-control" />
+                                    <label for="to_bonus_qty">تا</label>
+                                    <input id="to_bonus_qty" type="number" class="form-control" />
 
                                 </div>
                                 <br />

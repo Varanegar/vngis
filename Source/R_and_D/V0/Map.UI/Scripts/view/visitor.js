@@ -1,7 +1,10 @@
-﻿
+﻿var line_load = true;
+var marker_load = true;
+
 $(document).ready(function () {
+
     $("#pnl_marker").hide();
-    
+
     kendo.culture("fa-IR");
     var date = new JalaliDate();
     $("#dte_date").kendoDatePicker({
@@ -22,12 +25,13 @@ $(document).ready(function () {
 
     $("#grid_visitor").kendoGrid({
         autoBind: false,
+        height:440,
         dataSource: {
             transport: {
                 read: loadVisitorByGroupid
             },
             pageSize: 30,
-            serverPaging: true,
+            serverPaging: false,
             //serverFiltering: true,
             //serverSorting: true
         },
@@ -36,13 +40,13 @@ $(document).ready(function () {
         editable: false,
         selectable: "row",
         pageable: false,
-        scrollable: false,
+        scrollable: true,
         columns: [
         {
             field: "Id",
-            headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_visitor\")'/>",
+            headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_visitor\")'  style: 'width:10px;'/>",
             template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_visitor\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
-            attributes: { style: "width:5%;" }
+            width:20
         }, {
                     field: "Title",
                     title: 'عنوان',
@@ -63,6 +67,7 @@ $(document).ready(function () {
             $("#spn_marker").addClass("glyphicon-chevron-down");
         }
     });
+    
 
     $("#ddl_area").on("change", function (event) {
         var value = $("#ddl_area").val();
@@ -87,12 +92,11 @@ $(document).ready(function () {
     $("#ddl_visitor_group").on("change", function (event) {        
         $('#grid_visitor').data('kendoGrid').dataSource.read();
         $('#grid_visitor').data('kendoGrid').refresh();
-        selectedIds = [];
     });
 
     $("#btn_run").on("click", function (e) {
+        showWating();
         clearOverlays();
-
         drawMarkers();
         drawVisitorsPath();
     });
@@ -101,13 +105,14 @@ $(document).ready(function () {
 
 //-------------------------------------
 function drawMarkers() {
+    marker_load = false;
     $.ajax({
         type: "POST",
         url: url_loadmarkers,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            VisitorIds: selectedIds,
+            VisitorIds: getSelectedIds("grid_visitor"),
             Date: $("#dte_date").val(),
             Order: $("#chk_order").is(":checked"),
             LackOrder: $("#chk_lack_order").is(":checked"),
@@ -162,36 +167,45 @@ function drawMarkers() {
             renderClusterMarkers();
             fitPointBounds();
         }
+    }).always(function () {
+        marker_load = true;
+        if (line_load)
+            hideWating();
     });
 
 }
 
 function drawVisitorsPath() {
+    line_load = false;
     $.ajax({
         type: "POST",
         url: url_loadvisitorspath,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({
-            VisitorIds: selectedIds,
+            VisitorIds: getSelectedIds("grid_visitor"),
             Date: $("#dte_date").val(),
             DailyPath: $("#chk_daily_path").is(":checked"),
             VisitorPath: true // $("#chk_visitor_path").is(":checked"),
         }),
         success: function (data) {
             if (data != null) {
-                $.each(data, function (i, line) {
+                $.each(data, function(i, line) {
                     var arealine = [];
                     if (line.Points != null)
-                        $.each(line.Points, function (j, item) {
+                        $.each(line.Points, function(j, item) {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
-                        addPolyline({ line: arealine, color: line.Color, weight: 2, direction:true });
+                        addPolyline({ line: arealine, color: line.Color, weight: 2, direction: true });
                     }
-                })
+                });
             }
         }
+    }).always(function () {
+        line_load = true;
+         if (marker_load)
+            hideWating();
     });
 }
 //--------------------------------------
@@ -228,24 +242,6 @@ function loadVisitorByGroupid(options)
     }
 }
     
-function mapAditionaldata() {
-    return {
-        VisitorIds: getSelectedIds("grid_visitor"),
-        Date: $("#dte_date").val(),
-        DailyPath: $("#chk_daily_path").is(":checked"),
-        VisitorPath: $("#chk_visitor_path").is(":checked"),
-        Order: $("#chk_order").is(":checked"),
-        LackOrder: $("#chk_lack_order").is(":checked"),
-        LackVisit: $("#chk_lack_visit").is(":checked"),
-        StopWithoutCustomer: $("#chk_wait").is(":checked"),
-        StopWithoutActivity: $("#chk_daily_path").is(":checked") //$("#chk_without_activity").is(":checked")
-    };    
-}
-
-
-
-
-
 function onMapLoadHandler(args) {
     for (var mark in args.markers) {
        args.markers[mark].setLabel(args.markers[mark].title);

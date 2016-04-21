@@ -501,6 +501,7 @@ footer {
     margin: 5px !important;
     padding: 5px !important;
     border: solid 1px #ccc;
+        overflow-y: auto;
 }
 
 .frame-list {
@@ -561,7 +562,7 @@ footer {
     color: #ffffff;
 }
 
-btn-grid{
+.btn-grid{
     padding: 1px;
     color: #555;
 }

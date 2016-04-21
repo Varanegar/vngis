@@ -169,8 +169,8 @@ function closeInfoWindow() {
     if (gmap_infoWindow) {
         gmap_infoWindow.close();
     }
-    gmap_infoWindow = new google.maps.InfoWindow()
-    
+    gmap_infoWindow = new google.maps.InfoWindow();
+
 }
 
 function openInfoWindow(event, windowdesc) {
@@ -295,7 +295,7 @@ function addPolyline(opt_options) {
     if (movingshape == true) {
         gmap_moving_shape = path;
     }
-    gmap_shaps.push(path)
+    gmap_shaps.push(path);
     return path;
 }
 
@@ -347,24 +347,24 @@ function addLableToPoly(line, lable, ispolygon , windowdesc) {
 function openInfoBubble(marker, windowdesc) {
 
 
-    infoBubble = new InfoBubble({
+   var infoBubble = new InfoBubble({
         map: gmap,
         content: windowdesc,
         position: marker.getPosition(),
         shadowStyle: 1,
-        padding: 10,
-        backgroundColor: '#fefefe',
-        borderRadius: 4,
-        arrowSize: 10,
+        padding: 13,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        arrowSize: 20,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#aaa',
         disableAutoPan: true,
-        hideCloseButton: true,
         arrowPosition: 30,
-        backgroundClassName: 'phoney',
+        //backgroundClassName: 'phoney',
         arrowStyle: 2,
-        minWidth: 200,
-        hideCloseButton: false
+        minWidth: 250,
+        maxHeight:150,
+        hideCloseButton: true
     });
     gmap_infoBubble.push(infoBubble);
     infoBubble.open();
@@ -378,7 +378,7 @@ function addPolygon(opt_options) {
     var options = opt_options || {};
     var linecoordinates = options['line'] || [];
     var color = options['color'] || '#000000';
-    var fillcolor = options['fillcolor'] || '#ff1100';
+    var fillcolor = options['fillcolor'] || '#F46717';
     var weight = options['weight'] || 2;
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
@@ -401,7 +401,7 @@ function addPolygon(opt_options) {
         strokeOpacity: 0.8,
         strokeWeight: 2,
         fillColor: fillcolor,
-        fillOpacity: 0.35
+        fillOpacity: 0.15
     });
     polygon.setMap(gmap);
     // --------

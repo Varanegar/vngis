@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using TrackingMap.Common.Enum;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.BL;
 using TrackingMap.Service.ViewModel;
@@ -27,8 +28,10 @@ namespace TrackingMap.Controllers
 
         public List<PointView> Load(GoodByValueReportFilter filter)
         {
+            LogService.InsertLog("start ", "good value report", ELogLevel.DEBUG);
             if (filter.ChangeFilter)
             {
+                LogService.InsertLog("insert date to chach ", "good value report", ELogLevel.DEBUG);
                 var list = _vnGoodReportService.LoadGoodReport(filter);
                 _goodReportService.UpdateReportCache(filter.ClientId, list);
             }
@@ -36,6 +39,7 @@ namespace TrackingMap.Controllers
             var points = new List<PointView>();
             foreach (Guid id in filter.AreaIds)
             {
+                LogService.InsertLog("get data ", "good value report", ELogLevel.DEBUG);
                 var point = _goodByValueReportService.LoadGoodByValueReport(id, filter);
                 points.AddRange(point);
             }
@@ -50,6 +54,7 @@ namespace TrackingMap.Controllers
             //        Longitude = good.Longitude
             //    });
             //}
+            LogService.InsertLog("end ", "good value report", ELogLevel.DEBUG);
 
             return points;
         }

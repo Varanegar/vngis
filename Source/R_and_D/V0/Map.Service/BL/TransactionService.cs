@@ -16,19 +16,33 @@ namespace TrackingMap.Service.BL
 {
     public class TransactionService
     {
-        //private readonly IRepository<CustomerEntity> _customerRepository;
-        //private readonly IRepository<TransactionEntity> _transactionRepository;
+        private readonly IRepository<TransactionEntity> _transactionRepository;
+        private readonly IRepository<VisitorEntity> _visitorRepository;
         private readonly IDbContext _ctx;
 
-        public TransactionService(IDbContext ctx
-            //IRepository<CustomerEntity>  customerRepository,
-            //IRepository<TransactionEntity> transactionRepository
+        public TransactionService(IDbContext ctx,
+            IRepository<VisitorEntity> visitorRepository,
+            IRepository<TransactionEntity> transactionRepository
             )
         {
-            //_customerRepository = customerRepository;
-            //_transactionRepository = transactionRepository;
+            _visitorRepository = visitorRepository;
+            _transactionRepository = transactionRepository;
             _ctx = ctx;
         }
+
+        public List<PointView> LoadLastStatus(List<Guid> visitorIds)
+        {
+            List<PointView> list;
+            var str = GeneralTools.GuidListTostring(visitorIds);
+            SqlParameter ids_param = new SqlParameter("@VisitorIds", str);
+
+            list = _ctx.GetDatabase().SqlQuery<PointView>("LoadLastStatus @VisitorIds",
+                                                          ids_param
+                                                          ).ToList();
+
+            return list;
+        }
+
 
         public List<PointView> LoadTransactionList(List<Guid> visitorIds,
             bool order,
