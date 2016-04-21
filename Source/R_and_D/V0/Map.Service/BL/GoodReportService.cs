@@ -33,18 +33,11 @@ namespace TrackingMap.Service.BL
         public void UpdateReportCache(Guid clientId, List<GoodReportView> list)
         {
             LogService.InsertLog("start ", "UpdateReportCache", ELogLevel.DEBUG);
-
+            RemoveByClientId(clientId);
             var con = DbUtility.GetConnectionString("DBConnectionString_Map");
             using (var bulk = new SqlBulkCopy(con) { DestinationTableName = "GoodReportCache" })
             {
 
-                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("Id", "Id"));
-                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("CPoint", "CPoint"));
-                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("ClientId", "ClientId"));
-                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("Desc", "Desc"));
-                //bulk.ColumnMappings.Add(new SqlBulkCopyColumnMapping("OrderCount", "OrderCount"));
-
-                
                 var saveData = list.Select(view => new GoodReportEntity(clientId, view)).ToList();
                 var dd = saveData.AsDataReader();
                 bulk.WriteToServer(dd);

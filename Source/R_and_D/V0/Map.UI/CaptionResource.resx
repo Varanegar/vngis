@@ -378,4 +378,7 @@
   <data name="GoodReport2" xml:space="preserve">
     <value>گزارش عملکرد فروش</value>
   </data>
+  <data name="Tracking" xml:space="preserve">
+    <value>ردیابی</value>
+  </data>
 </root>

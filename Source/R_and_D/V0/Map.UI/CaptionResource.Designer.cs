@@ -799,6 +799,15 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ردیابی.
+        /// </summary>
+        public static string Tracking {
+            get {
+                return ResourceManager.GetString("Tracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to بازاریاب.
         /// </summary>
         public static string Visitor {
