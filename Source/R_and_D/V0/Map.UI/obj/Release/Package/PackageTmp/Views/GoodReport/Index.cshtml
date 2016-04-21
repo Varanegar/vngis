@@ -1,0 +1,221 @@
+﻿@Scripts.Render("~/Scripts/infobubble.js")
+@Scripts.Render("~/Scripts/view/report.js")
+@Scripts.Render("~/Scripts/view/goodreport.js")
+
+<div class="panel panel-default panel-main">
+    <div id="pnl_path" class="path-bar"></div>
+
+    <div class="panel-body">
+        <div class="header-bar">
+            <div class="form-group" id ="pnl_header_condition">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>@CaptionResource.FromDate</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="dte_from" />
+                    </div>
+                    <div class="col-md-1">
+                        <label>@CaptionResource.ToDate</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="dte_to" />
+                    </div>
+
+                    <div class="col-md-offset-1 col-md-3">
+                        <div class="left">
+                            <button id='btn_adv_con' class='btn btn-default color-gray'>@CaptionResource.Advance</button>
+                            <button id='btn_run' class='btn btn-primary color-gray large-btn'>@CaptionResource.Run</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="div_advance_condition">
+
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label>@CaptionResource.SaleOffice</label>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" id="ddl_sale_office"></select>
+                        </div>
+
+                        <div class="col-md-1">
+                            <label for="ddl_header">@CaptionResource.Header</label>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" id="ddl_header"></select>
+                        </div>
+
+                        <div class="col-md-1">
+                            <label for="ddl_seller">@CaptionResource.Seller</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="hidden" id="ddl_seller" value="" />
+                            <input id='auto_seller' />
+                            @*                            <select class="form-control" id="ddl_seller"></select>*@
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="ddl_customer_class">@CaptionResource.CustomerClass</label>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" id="ddl_customer_class"></select>
+                        </div>
+
+                        <div class="col-md-1">
+                            <label for="ddl_customer_activity">@CaptionResource.CustomerActivity</label>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" id="ddl_customer_activity"></select>
+                        </div>
+
+                        <div class="col-md-1">
+                            <label for="ddl_customer_degree">@CaptionResource.CustomerDegree</label>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" id="ddl_customer_degree"></select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="ddl_good_group">@CaptionResource.GoodGroup</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="hidden" id="ddl_good_group" value="" />
+                            <input id='auto_good_group' />
+                            @*  <select class="form-control" id="ddl_good_group"></select>*@
+                        </div>
+
+                        @*<div class="col-md-1">
+                            <label for="ddl_dynamic_group">@CaptionResource.DynamicGroup</label>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" id="ddl_dynamic_group"></select>
+                        </div>*@
+
+                        <div class="col-md-1">
+                            <label for="ddl_good">@CaptionResource.Good</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="hidden" id="ddl_good" value="" />
+                            <input id='auto_good' />
+                            @*<select class="form-control" id="ddl_good"></select>*@
+                        </div>
+                    </div>
+
+                    @*<div class="row">
+                        <div class="col-md-1">
+                            <label>@CaptionResource.GoodCommercialName</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="txt_commercial_good_name" class="form-control" />
+                        </div>
+                        <div class="col-md-1">
+                            <label>@CaptionResource.DayNotVisit</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" id="txt_day_not_visit" class="form-control" />
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row ">
+
+            <div class="col-md-3">
+                <div class="side-bar">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#pnl_area">محدوده ها</a></li>
+                        <li ><a data-toggle="tab" href="#pnl_condition">خروجی ها</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="pnl_area" class="tab-pane fade in active">
+                            <br />
+                            <div id="grid_area" class="full-width"></div>
+                        </div>
+
+
+                        <div id="pnl_condition" class="tab-pane fade">
+                            <div id="pnl_marker" class="frame-border">
+
+                                @Html.CheckBox("chk_request_count", false, new { @id = "chk_request_count", @class = "control-label" })
+                                <label for="chk_request_count">تعداد درخواست</label>
+                                <br />
+
+                                @Html.CheckBox("chk_factor_count", false, new { @id = "chk_factor_count", @class = "control-label" })
+                                <label for="chk_factor_count">تعداد فاکتور</label>
+                                <br />
+
+                                @Html.CheckBox("chk_reject_count", false, new { @id = "chk_reject_count", @class = "control-label" })
+                                <label for="chk_reject_count">تعداد برگشت فاکتور</label>
+                                <br />
+
+                                @Html.CheckBox("chk_sale_item_count", false, new { @id = "chk_sale_item_count", @class = "control-label" })
+                                <label for="chk_sale_item_count">تعداد اقلام کالای فروش رفته</label>
+                                <br />
+
+                                @Html.CheckBox("chk_reject_item_count", false, new { @id = "chk_reject_item_count", @class = "control-label" })
+                                <label for="chk_reject_item_count">تعداد اقلام کالای برگشتی</label>
+                                <br />
+
+                                @Html.CheckBox("chk_sale_qty", false, new { @id = "chk_sale_qty", @class = "control-label" })
+                                <label for="chk_sale_qty">تعداد کالای فروش رفته (کارتن : ظرف)</label>
+                                <br />
+
+                                @Html.CheckBox("chk_reject_qty", false, new { @id = "chk_reject_qty", @class = "control-label" })
+                                <label for="chk_reject_qty">تعداد کالای برگشتی (کارتن : ظرف)</label>
+                                <br />
+
+                                @Html.CheckBox("chk_sale_amount", false, new { @id = "chk_sale_amount", @class = "control-label" })
+                                <label for="chk_sale_amount">ریال کالای فروش رفته</label>
+                                <br />
+
+                                @Html.CheckBox("chk_reject_amount", false, new { @id = "chk_reject_amount", @class = "control-label" })
+                                <label for="chk_reject_amount">ریال کالای برگشتی</label>
+                                <br />
+
+                                @Html.CheckBox("chk_sale_weight", false, new { @id = "chk_sale_weight", @class = "control-label" })
+                                <label for="chk_sale_weight">وزن کالای فروش رفته</label>
+                                <br />
+
+                                @Html.CheckBox("chk_reject_weight", false, new { @id = "chk_reject_weight", @class = "control-label" })
+                                <label for="chk_reject_weight">وزن کالای برگشتی</label>
+                                <br />
+
+                                @Html.CheckBox("chk_sale_discount", false, new { @id = "chk_sale_discount", @class = "control-label" })
+                                <label for="chk_sale_discount">ریال تخفیف فروش رفته</label>
+                                <br />
+
+                                @Html.CheckBox("chk_reject_discount", false, new { @id = "chk_reject_discount", @class = "control-label" })
+                                <label for="chk_reject_discount">ریال تخفیف برگشتی</label>
+                                <br />
+
+                                @Html.CheckBox("chk_bonus_count", false, new { @id = "chk_bonus_count", @class = "control-label" })
+                                <label for="chk_bonus_count">تعداد اقلام جایزه</label>
+                                <br />
+
+                                @Html.CheckBox("chk_bonus_qty", false, new { @id = "chk_bonus_qty", @class = "control-label" })
+                                <label for="chk_bonus_qty">تعداد جایزه (کارتن : ظرف)</label>
+                                <br />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div id="Report_Frame" class="frame-map">
+                    <div id="mapContainer"> </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
