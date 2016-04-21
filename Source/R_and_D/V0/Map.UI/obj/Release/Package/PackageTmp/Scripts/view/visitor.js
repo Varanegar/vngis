@@ -234,7 +234,7 @@ function drawDailyPath() {
                                 arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                             });
                         if (arealine.length > 0) {
-                            addPolyline({ line: arealine, color: '#888888', weight: 5, direction: true });
+                            addPolyline({ line: arealine, color: '#888888', weight: 2, direction: true });
                         }
                     });
                 }

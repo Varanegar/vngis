@@ -8,3 +8,5 @@ d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Common\bin\Debug\EntityFramework.SqlS
 d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Common\obj\Debug\TrackingMap.Common.dll
 d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Common\obj\Debug\TrackingMap.Common.pdb
 D:\GIT\VnGIS\Source\R_and_D\V0\TrackingMap.Common\obj\Debug\TrackingMap.Common.csprojResolveAssemblyReference.cache
+D:\GIT\VnGIS\Source\R_and_D\V0\TrackingMap.Common\bin\Debug\Newtonsoft.Json.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\TrackingMap.Common\bin\Debug\Newtonsoft.Json.xml

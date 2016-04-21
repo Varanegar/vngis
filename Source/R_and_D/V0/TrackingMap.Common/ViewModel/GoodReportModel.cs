@@ -44,8 +44,12 @@ namespace TrackingMap.Common.ViewModel
         public bool BonusCarton { set; get; }
 
     }
-    public class VnGoodReportView
-    {         
+    public class GoodReportView
+    {
+        public double? Latitude { set; get; }
+        public double? Longitude { set; get; }
+        public string Title { set; get; }
+
         public int CustRef { set; get; }
         public DbGeometry CPoint { set; get; }	                                                                                                                                                                                                                                                           
         public int? OrderCount { set; get; }

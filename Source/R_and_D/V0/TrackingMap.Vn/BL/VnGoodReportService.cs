@@ -19,10 +19,10 @@ namespace TrackingMap.Service.Vn.BL
             _ctx = ctx;
         }
 
-        public List<VnGoodReportView> LoadGoodReport(GoodReportFilter filter)
+        public List<GoodReportView> LoadGoodReport(GoodReportFilter filter)
         {
 
-            List<VnGoodReportView> views = _ctx.Database.SqlQuery<VnGoodReportView>("Usp_GIS_Load_getList " +
+            List<GoodReportView> views = _ctx.Database.SqlQuery<GoodReportView>("Usp_GIS_Load_getList " +
                                                                                     "@ReportType , " +
                                                                                     "@DcList, " +
                                                                                     "@Startdate , " +

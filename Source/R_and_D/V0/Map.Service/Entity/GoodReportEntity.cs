@@ -37,7 +37,7 @@ namespace TrackingMap.Service.Entity
         {
         }
 
-        public GoodReportEntity( Guid clientId, VnGoodReportView view)
+        public GoodReportEntity( Guid clientId, GoodReportView view)
         {
             this.Id = Guid.NewGuid();
             this.ClientId = clientId;

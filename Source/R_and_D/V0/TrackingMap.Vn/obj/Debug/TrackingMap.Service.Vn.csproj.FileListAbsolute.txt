@@ -10,3 +10,5 @@ d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Vn\bin\Debug\EntityFramework.SqlServe
 d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Vn\obj\Debug\TrackingMap.Service.Vn.csprojResolveAssemblyReference.cache
 d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Vn\obj\Debug\TrackingMap.Service.Vn.dll
 d:\GIT\VNGis\Source\R_and_D\V0\TrackingMap.Vn\obj\Debug\TrackingMap.Service.Vn.pdb
+D:\GIT\VnGIS\Source\R_and_D\V0\TrackingMap.Vn\bin\Debug\Newtonsoft.Json.dll
+D:\GIT\VnGIS\Source\R_and_D\V0\TrackingMap.Vn\bin\Debug\Newtonsoft.Json.xml

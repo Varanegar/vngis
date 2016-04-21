@@ -6,7 +6,7 @@ namespace TrackingMap.Service.ViewModel
     public class PointView
     {
         public Guid Id { set; get; }
-
+        public string JData { set; get; }
         public string Desc { set; get; }
         
         public string Lable { set; get; }

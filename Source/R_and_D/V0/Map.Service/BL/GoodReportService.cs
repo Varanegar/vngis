@@ -30,7 +30,7 @@ namespace TrackingMap.Service.BL
             _ctx.GetDatabase().ExecuteSqlCommand(string.Format("delete from GoodReportCache where ClientId = '{0}'", clientId));
         }
 
-        public void UpdateReportCache(Guid clientId, List<VnGoodReportView> list)
+        public void UpdateReportCache(Guid clientId, List<GoodReportView> list)
         {
             LogService.InsertLog("start ", "UpdateReportCache", ELogLevel.DEBUG);
 
@@ -52,10 +52,10 @@ namespace TrackingMap.Service.BL
             }
         }
 
-        public VnGoodReportView LoadGoodReport(Guid areaId,GoodReportFilter filter)
+        public GoodReportView LoadGoodReport(Guid areaId,GoodReportFilter filter)
         {
 
-            VnGoodReportView views = _ctx.GetDatabase().SqlQuery<VnGoodReportView>("LoadGoodReport " +
+            GoodReportView views = _ctx.GetDatabase().SqlQuery<GoodReportView>("LoadGoodReport " +
                         "@ClientId," +
                         "@AreaId," +
                         "@ShowOrderCount ," +

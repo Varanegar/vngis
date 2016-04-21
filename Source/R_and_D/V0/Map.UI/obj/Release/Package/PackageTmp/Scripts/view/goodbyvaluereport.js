@@ -245,20 +245,19 @@ function drawAreaMarker(ids) {
         success: function (data) {
             if (data != null) {
                 $.each(data, function(i, item) {
-                    var _m = addMarker({
+                    var m = addMarker({
                         id: "customer_point_" + item.Id,
                         lat: item.Latitude,
                         lng: item.Longitude,
                         clustering: true,
                         fit: true
                     });
-                    _m.setIcon({ url: "../Content/img/pin/customerNew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+                    m.setIcon({ url: "../Content/img/pin/customerNew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
 
-                    _m.addListener('click', function (e) {
-                        closeInfoWindow();
-                        
-                        openInfoWindow(e, '<br/>' + (item.Lable || '') + '<br/>');
-                        setCustomerInfoPanel(item.Desc);
+                    m.addListener('click', function (e) {
+                        closeInfoWindow();                        
+                        openInfoWindow(e, '<br/><h5>' + (item.Lable || '') + '</h5>');
+                        setCustomerInfoPanel(getGoodReportHtml(item.JData));
                     });
                     
                 });
@@ -278,6 +277,8 @@ function drawAreaMarker(ids) {
 
 function setCustomerInfoPanel(desc) {
     $("#div_customer_info").html(desc);
+    $('#tab_customer_info').trigger('click');
+
 }
 
     //--------------------------------------------------------------------------------

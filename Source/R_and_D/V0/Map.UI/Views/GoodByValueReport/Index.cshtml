@@ -1,5 +1,6 @@
-﻿@Scripts.Render("~/Scripts/view/goodbyvaluereport.js")
-@Scripts.Render("~/Scripts/view/report.js")
+﻿@Scripts.Render("~/Scripts/view/report.js")
+@Scripts.Render("~/Scripts/view/goodbyvaluereport.js")
+@Scripts.Render("~/Scripts/view/gethtml.js")
 
 <div class="panel panel-default panel-main">
     <div id="pnl_path" class="path-bar"></div>
@@ -127,11 +128,11 @@
         <div class="form-group row ">
 
             <div class="col-md-3">
-                <div class="side-bar">
+                <div class="side-bar" id="tabs">
                     <ul class="nav nav-tabs">
                         <li class ="active"><a data-toggle="tab" href="#pnl_area">محدوده ها</a></li>
                         <li><a data-toggle="tab" href="#pnl_condition">شروط</a></li>
-                        <li><a data-toggle="tab" href="#pnl_customer_info">اطلاعات مشتری</a></li>
+                        <li><a id="tab_customer_info" data-toggle="tab" href="#pnl_customer_info">اطلاعات مشتری</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="pnl_area" class="tab-pane fade in active">
@@ -141,7 +142,7 @@
 
 
                         <div id="pnl_condition" class="tab-pane fade ">
-                            <div id="pnl_marker" class="frame-border" style="height: 520px">
+                            <div id="pnl_marker" class="frame-border color-back-ligt-gray" style="height: 520px">
 
                                 @Html.CheckBox("chk_request_count", false, new { @id = "chk_request_count", @class = "control-label" })
                                 <label for="chk_request_count">تعداد درخواست</label>
@@ -327,17 +328,18 @@
                         </div>
                     
                         <div id="pnl_customer_info" class="tab-pane fade">
-                            <br />
-                            <div id="div_customer_info" class="full-width"></div>
+                            <div style="height: 520px" class="frame-border color-back-ligt-gray">
+                                <br />
+                                <div id="div_customer_info" class="full-width"></div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
 
             <div class="col-md-9">
                 <div id="Report_Frame" class="frame-map">
-                    <div id="mapContainer"> </div>
+                        <div id="mapContainer"> </div>
                 </div>
             </div>
 

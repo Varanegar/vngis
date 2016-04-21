@@ -21,7 +21,7 @@ namespace TrackingMap.Service.BL
             _ctx = ctx;          
         }
 
-        public List<PointView> LoadGoodByValueReport(Guid areaId ,GoodByValueReportFilter filter)
+        public List<GoodReportView> LoadGoodByValueReport(Guid areaId, GoodByValueReportFilter filter)
         {
 
             var where = "";
@@ -121,7 +121,7 @@ namespace TrackingMap.Service.BL
             //if (filter.ToBonusAmount != null)
             //    where = "AND ( SaleCount <= " + filter.ToBonusAmount + ")";
 
-            var view = _ctx.GetDatabase().SqlQuery<PointView>("LoadGoodByValueReport " +
+            var view = _ctx.GetDatabase().SqlQuery<GoodReportView>("LoadGoodByValueReport " +
                 "@ClientId," +
                 "@AreaId, " +
                 "@HavingCondition ",

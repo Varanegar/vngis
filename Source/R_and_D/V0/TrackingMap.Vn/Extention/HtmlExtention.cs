@@ -53,7 +53,7 @@ namespace TrackingMap.Service.Vn.Extention
             return html;
         }
         
-        public static string GetHtml(this VnGoodReportView view, string desc)
+        public static string GetHtml(this GoodReportView view, string desc)
         {
             var html = "";
             if (!string.IsNullOrEmpty(desc))
