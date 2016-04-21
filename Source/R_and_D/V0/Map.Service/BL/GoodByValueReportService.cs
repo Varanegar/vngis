@@ -31,20 +31,25 @@ namespace TrackingMap.Service.BL
             if (filter.ToRequestCount != null)
                 where += "AND ( OrderCount <= " + filter.ToRequestCount + ")";
 
+            if (filter.FromFactorCount != null)
+                where += "AND ( SaleCount >= " + filter.FromFactorCount + ")";
+            if (filter.ToFactorCount != null)
+                where += "AND ( SaleCount <= " + filter.ToFactorCount + ")";
+                
             if (filter.FromRejectCount != null)
                 where += "AND ( RetSaleCount >= " + filter.FromRejectCount + ")";
             if (filter.ToRejectCount != null)
                 where += "AND ( RetSaleCount <= " + filter.ToRejectCount + ")";
 
-            if (filter.FromSaleAmount != null)
-                where += "AND ( SaleAmount >= " + filter.FromSaleAmount + ")";
-            if (filter.ToSaleAmount != null)
-                where += "AND ( SaleAmount <= " + filter.ToSaleAmount + ")";
+            if (filter.FromSaleItemCount != null)
+                where += "AND ( SaleItemCount >= " + filter.FromSaleItemCount + ")";
+            if (filter.ToSaleItemCount != null)
+                where += "AND ( SaleItemCount <= " + filter.ToSaleItemCount + ")";
 
-            if (filter.FromRejectAmount != null)
-                where += "AND ( RetSaleAmount >= " + filter.FromRejectAmount + ")";
-            if (filter.ToRejectAmount != null)
-                where += "AND ( RetSaleAmount <= " + filter.ToRejectAmount + ")";
+            if (filter.FromRejectItemCount != null)
+                where += "AND ( RetSaleItemCount >= " + filter.FromRejectItemCount + ")";
+            if (filter.ToRejectItemCount != null)
+                where += "AND ( RetSaleItemCount <= " + filter.ToRejectItemCount + ")";
 
             if (filter.FromSaleQty != null)
                 where += "AND ( SaleQty >= " + filter.FromSaleQty + ")";
@@ -56,6 +61,11 @@ namespace TrackingMap.Service.BL
             if (filter.ToSaleCarton != null)
                 where += "AND ( SaleCarton <= " + filter.ToSaleCarton + ")";
 
+            if (filter.FromSaleAmount != null)
+                where += "AND ( SaleAmount >= " + filter.FromSaleAmount + ")";
+            if (filter.ToSaleAmount != null)
+                where += "AND ( SaleAmount <= " + filter.ToSaleAmount + ")";
+
             if (filter.FromRejectQty != null)
                 where += "AND ( RetSaleQty >= " + filter.FromRejectQty + ")";
             if (filter.ToRejectQty != null)
@@ -65,6 +75,11 @@ namespace TrackingMap.Service.BL
                 where += "AND ( RetSaleCarton >= " + filter.FromRejectCarton + ")";
             if (filter.ToRejectCarton != null)
                 where += "AND ( RetSaleCarton <= " + filter.ToRejectCarton + ")";
+
+            if (filter.FromRejectAmount != null)
+                where += "AND ( RetSaleAmount >= " + filter.FromRejectAmount + ")";
+            if (filter.ToRejectAmount != null)
+                where += "AND ( RetSaleAmount <= " + filter.ToRejectAmount + ")";
 
             if (filter.FromSaleWeight != null)
                 where += "AND ( SaleWeight >= " + filter.FromSaleWeight + ")";

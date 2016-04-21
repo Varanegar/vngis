@@ -25,23 +25,30 @@ $(document).ready(function () {
             //serverFiltering: true,
             //serverSorting: true
         },
-
+        height: 520,
         sortable: false,
         editable: false,
         selectable: "row",
         pageable: false,
-        scrollable: false,
+        scrollable: true,
         dataBound: dataBound,
         columns: [
             {
                 field: "Id",
                 headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_area\")' />",
                 template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_area\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
-                attributes: { style: "width:10px;" }
+                width: 20
             },
-        { field: "Id", title: '', hidden: true },
-        { field: "IsLeaf", hidden: true, },
-        { field: "Title", title: 'عنوان' }
+            { field: "Id", title: '', hidden: true },
+            { field: "IsLeaf", hidden: true, },
+            { field: "Title", title: 'عنوان' },
+            {
+                field: "Id",
+                title: "&nbsp; &nbsp;",
+                width: 40,
+                template:
+                    "<button  value='#=IsLeaf#' type='button' class='btn-link btn-grid btn-detail' onclick=showDetail();><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
+            }
         ]
     });
 
@@ -60,11 +67,7 @@ $(document).ready(function () {
     });
 
     $("#grid_area").on("dblclick", "tr.k-state-selected", function (e) {
-        var row = getSelectedRow("grid_area");
-        if (row.IsLeaf != true) {
-            selected_id = row.Id;
-            refreshGrid();
-        }
+        showDetail();
     });
 
     $("#pnl_header_condition input").on("change", function (e) {
@@ -83,11 +86,18 @@ $(document).ready(function () {
     loadDdlCustomerActivity();
     loadDdlCustomerDegree();
     loadDdlGoodGroup();
-    loadDdlDunamicGroup();
+    //loadDdlDunamicGroup();
     loadDdlGood();
 });
 
 
+function showDetail() {
+    var row = getSelectedRow("grid_area");
+    if (row.IsLeaf != true) {
+        selected_id = row.Id;
+        refreshGrid();
+    }
+}
 
 function back(id) {
     selected_id = id;
@@ -100,6 +110,13 @@ function back(id) {
 //--------------------------------------------------------------------------------
 function dataBound() {
     $('#mastercheckbox').prop("checked", true).change();
+
+    var details = $('#grid_area .btn-detail');
+    for (var i = 0; i < details.length; i++) {
+        if (details[i].value.toLowerCase() == "true")
+            details[i].hidden = true;
+    }
+
 }
 
 function refreshGrid() {
@@ -238,26 +255,28 @@ function getFilter(ids) {
         CustomerActivity: $("#ddl_customer_activity").val(),
         CustomerDegree: $("#ddl_customer_degree").val(),
         GoodGroup: $("#ddl_good_group").val(),
-        DynamicGroup: $("#ddl_dynamic_group").val(),
+      //  DynamicGroup: $("#ddl_dynamic_group").val(),
         Good: $("#ddl_good").val(),
-        CommercialName: $("#txt_commercial_good_name").val(),
-        DayCount: $("#txt_day_not_visit").val(),
+       // CommercialName: $("#txt_commercial_good_name").val(),
+       // DayCount: $("#txt_day_not_visit").val(),
 
         RequestCount: $("#chk_request_count").is(":checked"),
         FactorCount: $("#chk_factor_count").is(":checked"),
         RejectCount: $("#chk_reject_count").is(":checked"),
         SaleItemCount: $("#chk_sale_item_count").is(":checked"),
         RejectItemCount: $("#chk_reject_item_count").is(":checked"),
+        SaleQty: $("#chk_sale_qty").is(":checked"),
+        RejectQty: $("#chk_reject_qty").is(":checked"),
         SaleAmount: $("#chk_sale_amount").is(":checked"),
         RejectAmount: $("#chk_reject_amount").is(":checked"),
-        SalePrice: $("#chk_sale_price").is(":checked"),
-        RejectPrice: $("#chk_reject_price").is(":checked"),
+        SaleCarton: false,
+        RejectCarton : false,
         SaleWeight: $("#chk_sale_weight").is(":checked"),
         RejectWeight: $("#chk_reject_weight").is(":checked"),
         SaleDiscount: $("#chk_sale_discount").is(":checked"),
         RejectDiscount: $("#chk_reject_discount").is(":checked"),
         BonusCount: $("#chk_bonus_count").is(":checked"),
-        BonusAmount: $("#chk_bonus_amount").is(":checked")
+        BonusQty: $("#chk_bonus_qty").is(":checked")
     };
 }
 

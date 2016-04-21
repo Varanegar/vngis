@@ -101,7 +101,6 @@
     <Compile Include="ViewModel\AreaPointListView.cs" />
     <Compile Include="ViewModel\AreaPointView.cs" />
     <Compile Include="ViewModel\AreaView.cs" />
-    <Compile Include="ViewModel\AutoCompleteFilter.cs" />
     <Compile Include="ViewModel\ConfigView.cs" />
     <Compile Include="ViewModel\CustomerAreaView.cs" />
     <Compile Include="ViewModel\CustomerPointView.cs" />

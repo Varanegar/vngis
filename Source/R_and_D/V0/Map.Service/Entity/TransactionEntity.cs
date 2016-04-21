@@ -18,7 +18,7 @@ namespace TrackingMap.Service.Entity
 
 
         [Column("CustomerId")]
-        public Guid CustomerEntityId { get; set; }
+        public Guid? CustomerEntityId { get; set; }
         public virtual CustomerEntity CustomerEntity { set; get; }
 
         [Column("TransactionType", TypeName = "int")]
@@ -36,6 +36,7 @@ namespace TrackingMap.Service.Entity
         [Column("Desc", TypeName = "varchar(MAX)")]
         public string Desc { set; get; }
 
+        public DateTime DateTime { set; get; }
 
     }
 }

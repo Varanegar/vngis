@@ -3,6 +3,7 @@
 
 
 url_getcombodata = url_server + "Vn/GetComboData";
+url_getautocompletedata = url_server + "Vn/GetAutoCompleteData";
 //--------------------------------------------------------
 // area
 //--------------------------------------------------------
