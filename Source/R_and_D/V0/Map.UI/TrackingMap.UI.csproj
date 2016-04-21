@@ -336,6 +336,7 @@
     <Content Include="Content\css\style_default.css" />
     <Content Include="Content\css\style_responsive.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\iw_close.gif" />
     <Content Include="Content\img\loader.gif" />
     <Content Include="Content\img\bg-default.jpg" />
     <Content Include="Content\img\body-bg.png" />

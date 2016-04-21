@@ -4,6 +4,7 @@ url_server = "http://192.168.201.149:2020/api/";
 
 
 url_getcombodata = url_server + "Vn/GetComboData";
+url_getautocompletedata = url_server + "Vn/GetAutoCompleteData";
 //--------------------------------------------------------
 // area
 //--------------------------------------------------------

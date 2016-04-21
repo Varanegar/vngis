@@ -27,25 +27,34 @@ $(document).ready(function () {
             //serverFiltering: true,
             //serverSorting: true
         },
-
+        height:520,
         sortable: false,
         editable: false,
         selectable: "row",
         pageable: false,
-        scrollable: false,
+        scrollable: true,
         dataBound: dataBound,
         columns: [
             {
                 field: "Id",
                 headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_area\")' />",
                 template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_area\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
-                attributes: { style: "width:10px;" }
+                width: 20
             },
-        { field: "Id", title: '', hidden: true },
-        { field: "IsLeaf", hidden: true, },
-        { field: "Title", title: 'عنوان' }
+            { field: "Id", title: '', hidden: true },
+            { field: "IsLeaf", hidden: true, },
+            { field: "Title", title: 'عنوان' },
+            {
+                field: "Id",
+                title: "&nbsp; &nbsp;",
+                width: 40,
+                template:
+                    "<button  value='#=IsLeaf#' type='button' class='btn-link btn-grid btn-detail' onclick=showDetail();><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
+            }
+
         ]
     });
+
 
     $("#btn_adv_con").on("click", function (e) {
         if ($("#div_advance_condition").is(':hidden')) {
@@ -62,11 +71,7 @@ $(document).ready(function () {
     });
 
     $("#grid_area").on("dblclick", "tr.k-state-selected", function (e) {
-        var row = getSelectedRow("grid_area");
-        if (row.IsLeaf != true) {
-            selected_id = row.Id;
-            refreshGrid();
-        }
+        showDetail();
     });
 
     $("#pnl_marker input[type='checkbox']").on("change", function (e) {
@@ -100,7 +105,7 @@ $(document).ready(function () {
     loadDdlCustomerActivity();
     loadDdlCustomerDegree();
     loadDdlGoodGroup();
-    loadDdlDunamicGroup();
+    //loadDdlDunamicGroup();
     loadDdlGood();
     
 });
@@ -111,11 +116,25 @@ function back(id) {
     refreshGrid();
 }
 
+function showDetail() {
+    var row = getSelectedRow("grid_area");
+    if (row.IsLeaf != true) {
+        selected_id = row.Id;
+        refreshGrid();
+    }
+}
+
 //--------------------------------------------------------------------------------
 //grid
 //--------------------------------------------------------------------------------
 function dataBound() {
     $('#mastercheckbox').prop("checked", true).change();
+    var details = $('#grid_area .btn-detail');
+    for (var i = 0; i < details.length; i++) {
+        if (details[i].value.toLowerCase() == "true")
+            details[i].hidden = true;
+    }
+
 }
 
 function refreshGrid() {
@@ -270,55 +289,55 @@ function getFilter(ids) {
         CustomerActivity: $("#ddl_customer_activity").val(),
         CustomerDegree: $("#ddl_customer_degree").val(),
         GoodGroup: $("#ddl_good_group").val(),
-        DynamicGroup: $("#ddl_dynamic_group").val(),
+//        DynamicGroup: $("#ddl_dynamic_group").val(),
         Good: $("#ddl_good").val(),
-        CommercialName: $("#txt_commercial_good_name").val(),
-        DayCount: $("#txt_day_not_visit").val(),
+//        CommercialName: $("#txt_commercial_good_name").val(),
+//        DayCount: $("#txt_day_not_visit").val(),
 
         FromRequestCount: $("#from_request_count").val(),
         ToRequestCount: $("#to_request_count").val(),
 
         FromFactorCount: $("#from_factor_count").val(),
-        FactorCountTo: $("#to_factor_count").val(),
+        ToFactorCount: $("#to_factor_count").val(),
 
         FromRejectCount: $("#from_reject_count").val(),
-        RejectCountTo: $("#to_reject_count").val(),
+        ToRejectCount: $("#to_reject_count").val(),
 
         FromSaleItemCount: $("#from_sale_item_count").val(),
-        SaleItemCountTo: $("#to_sale_item_count").val(),
+        ToSaleItemCount: $("#to_sale_item_count").val(),
 
         FromRejectItemCount: $("#from_reject_item_count").val(),
-        RejectItemCountTo: $("#to_reject_item_count").val(),
+        ToRejectItemCount: $("#to_reject_item_count").val(),
 
         FromSaleAmount: $("#from_sale_amount").val(),
-        SaleAmountTo: $("#to_sale_amount").val(),
+        ToSaleAmount: $("#to_sale_amount").val(),
 
         FromRejectAmount: $("#from_reject_amount").val(),
-        RejectAmountTo: $("#to_reject_amount").val(),
+        ToRejectAmount: $("#to_reject_amount").val(),
 
-        FromSalePrice: $("#from_sale_price").val(),
-        SalePriceTo: $("#to_sale_price").val(),
+        FromSaleQty: $("#from_sale_qty").val(),
+        ToSaleQty: $("#to_sale_qty").val(),
 
-        FromRejectPrice: $("#from_reject_price").val(),
-        RejectPriceTo: $("#to_reject_price").val(),
+        FromRejectQty: $("#from_reject_qty").val(),
+        ToRejectQty: $("#to_reject_qty").val(),
 
         FromSaleWeight: $("#from_sale_weight").val(),
-        SaleWeightTo: $("#to_sale_weight").val(),
+        ToSaleWeight: $("#to_sale_weight").val(),
 
         FromRejectWeight: $("#from_reject_weight").val(),
-        RejectWeightTo: $("#to_reject_weight").val(),
+        ToRejectWeight: $("#to_reject_weight").val(),
 
         FromSaleDiscount: $("#from_sale_discount").val(),
-        SaleDiscountTo: $("#to_sale_discount").val(),
+        ToSaleDiscount: $("#to_sale_discount").val(),
 
         FromRejectDiscount: $("#from_reject_discount").val(),
-        RejectDiscountTo: $("#to_reject_discount").val(),
+        ToRejectDiscount: $("#to_reject_discount").val(),
 
         FromBonusCount: $("#from_bonus_count").val(),
-        BonusCountTo: $("#to_bonus_count").val(),
+        ToBonusCount: $("#to_bonus_count").val(),
 
-        FromBonusAmount: $("#from_bonus_amount").val(),
-        BonusAmountTo: $("#to_bonus_amount").val()
+        FromBonusQty: $("#from_bonus_qty").val(),
+        ToBonusQty: $("#to_bonus_qty").val()
     };
 
 }

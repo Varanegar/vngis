@@ -3,11 +3,12 @@ function removeCacheData(clientid) {
     $.ajax({
         type: "POST",
         url: url_removecachedata,
+        async: false,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ Id: clientid }),
 
-        success: function(data) {
+        success: function (data) {
         }
     });
 }
@@ -44,18 +45,47 @@ function loadDdlHeader() {
 }
 
 function loadDdlSeller() {
+    $('#auto_seller').kendoAutoComplete({
+        dataTextField: 'Title',
+        filter: 'contains',
+        placeholder: 'انتخاب کنید...',
+        minLength: 3,
+        dataSource: {
+            serverFiltering: true,
+            //serverPaging: true,
+            transport: { read: loadAutoSeller }
+        },
+        select: function (e) {
+
+            var dataItem = this.dataItem(e.item.index());
+
+            if ((dataItem != null) && (dataItem != undefined)) {
+                $("#ddl_seller").val(dataItem.Id);
+            } else
+                $("#ddl_seller").val('');
+
+            // Use the selected item or its text
+        }
+    });
+}
+
+function loadAutoSeller(options) {
     $.ajax({
         type: "POST",
-        url: url_getcombodata,
+        url: url_getautocompletedata,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.vwDealer", ValueName: "PersCode", TextName: "FullName", AddEmptyRow: true }),
-        success: function (data) {
-            addItemsToDroupdown("ddl_seller", data);
+        data: JSON.stringify({ TblName: "gnr.vwDealer", 
+            SearchValue: $("#auto_seller").val(),
+            ValueName: "PersCode",
+            TextName: "FullName", AddEmptyRow: true }),
+        success: function (result) {
+            options.success(result);
         }
     });
 
 }
+
 function loadDdlCustomer() {
     $.ajax({
         type: "POST",
@@ -96,18 +126,48 @@ function loadDdlCustomerDegree() {
 
 }
 function loadDdlGoodGroup() {
+    $('#auto_good_group').kendoAutoComplete({
+        dataTextField: 'Title',
+        filter: 'contains',
+        placeholder: 'انتخاب کنید...',
+        minLength: 3,
+        dataSource: {
+            serverFiltering: true,
+            //serverPaging: true,
+            transport: { read: loadAutoGoodGroup }
+        },
+        select: function (e) {
+
+            var dataItem = this.dataItem(e.item.index());
+
+            if ((dataItem != null) && (dataItem != undefined)) {
+                $("#ddl_good_group").val(dataItem.Id);
+            } else
+                $("#ddl_good_group").val('');
+
+            // Use the selected item or its text
+        }
+    });
+}
+
+function loadAutoGoodGroup(options) {
     $.ajax({
         type: "POST",
-        url: url_getcombodata,
+        url: url_getautocompletedata,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.tblGoodsGroup", ValueName: "Id", TextName: "GoodsGroupName", AddEmptyRow: true }),
-        success: function (data) {
-            addItemsToDroupdown("ddl_good_group", data);
+        data: JSON.stringify({
+            SearchValue: $("#auto_good_group").val(),
+            TblName: "gnr.tblGoodsGroup", ValueName: "Id",
+            TextName: "GoodsGroupName", AddEmptyRow: true
+        }),
+        success: function (result) {
+            options.success(result);
         }
     });
 
 }
+
 function loadDdlDunamicGroup() {
     //$.ajax({
     //    type: "POST",
@@ -122,15 +182,47 @@ function loadDdlDunamicGroup() {
 
 }
 
+
 function loadDdlGood() {
+    $('#auto_good').kendoAutoComplete({
+        dataTextField: 'Title',
+        filter: 'contains',
+        placeholder: 'انتخاب کنید...',
+        minLength: 3,
+        dataSource: {
+            serverFiltering: true,
+            //serverPaging: true,
+            transport: { read: loadAutoGood }
+        },
+        select: function (e) {
+
+            var dataItem = this.dataItem(e.item.index());
+
+            if ((dataItem != null) && (dataItem != undefined)) {
+                $("#ddl_good").val(dataItem.Id);
+            } else
+                $("#ddl_good").val('');
+
+            // Use the selected item or its text
+        }
+    });
+}
+
+function loadAutoGood(options) {
     $.ajax({
         type: "POST",
-        url: url_getcombodata,
+        url: url_getautocompletedata,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.tblGoods", ValueName: "GoodsCode", TextName: "GoodsName ", AddEmptyRow: true }),
-        success: function (data) {
-            addItemsToDroupdown("ddl_good", data);
+        data: JSON.stringify({
+            SearchValue: $("#auto_good").val(),
+            TblName: "gnr.tblGoods",
+            ValueName: "GoodsCode",
+            TextName: "GoodsName ",
+            AddEmptyRow: true
+        }),
+        success: function (result) {
+            options.success(result);
         }
     });
 

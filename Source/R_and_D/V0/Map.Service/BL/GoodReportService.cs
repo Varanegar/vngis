@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrackingMap.Common.Enum;
 using TrackingMap.Common.Tools;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.DBManagement;
@@ -31,7 +32,8 @@ namespace TrackingMap.Service.BL
 
         public void UpdateReportCache(Guid clientId, List<VnGoodReportView> list)
         {
-            RemoveByClientId(clientId);
+            LogService.InsertLog("start ", "UpdateReportCache", ELogLevel.DEBUG);
+
             var con = DbUtility.GetConnectionString("DBConnectionString_Map");
             using (var bulk = new SqlBulkCopy(con) { DestinationTableName = "GoodReportCache" })
             {
