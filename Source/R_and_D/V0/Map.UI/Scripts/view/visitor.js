@@ -1,5 +1,6 @@
 ﻿var line_load = true;
 var marker_load = true;
+var line_load_daily = true;
 
 $(document).ready(function () {
 
@@ -99,6 +100,8 @@ $(document).ready(function () {
         clearOverlays();
         drawMarkers();
         drawVisitorsPath();
+        drawDailyPath();
+
     });
 
 });
@@ -128,7 +131,6 @@ function drawMarkers() {
                     lat: item.Latitude, lng: item.Longitude,
                     windowdesc: item.Desc, clustering: true, label: item.Lable
                 });
-
 
                 var icon = "marker0";
                 var color = "";
@@ -169,7 +171,7 @@ function drawMarkers() {
         }
     }).always(function () {
         marker_load = true;
-        if (line_load)
+        if (line_load && line_load_daily)
             hideWating();
     });
 
@@ -185,7 +187,7 @@ function drawVisitorsPath() {
         data: JSON.stringify({
             VisitorIds: getSelectedIds("grid_visitor"),
             Date: $("#dte_date").val(),
-            DailyPath: $("#chk_daily_path").is(":checked"),
+            DailyPath: false,
             VisitorPath: true // $("#chk_visitor_path").is(":checked"),
         }),
         success: function (data) {
@@ -204,9 +206,48 @@ function drawVisitorsPath() {
         }
     }).always(function () {
         line_load = true;
-         if (marker_load)
+        if (marker_load && line_load_daily)
             hideWating();
     });
+}
+
+function drawDailyPath() {
+    line_load_daily = false;
+    if ($("#chk_daily_path").is(":checked") == true) {
+        $.ajax({
+            type: "POST",
+            url: url_loadvisitorspath,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                VisitorIds: getSelectedIds("grid_visitor"),
+                Date: $("#dte_date").val(),
+                DailyPath: $("#chk_daily_path").is(":checked"),
+                VisitorPath: false // $("#chk_visitor_path").is(":checked"),
+            }),
+            success: function(data) {
+                if (data != null) {
+                    $.each(data, function(i, line) {
+                        var arealine = [];
+                        if (line.Points != null)
+                            $.each(line.Points, function(j, item) {
+                                arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                            });
+                        if (arealine.length > 0) {
+                            addPolyline({ line: arealine, color: '#888888', weight: 2, direction: true });
+                        }
+                    });
+                }
+            }
+        }).always(function() {
+            line_load_daily = true;
+            if (marker_load && line_load_daily)
+                hideWating();
+        });
+
+    } else {
+        line_load_daily = true;
+    }
 }
 //--------------------------------------
 function loadLevel1Area() {

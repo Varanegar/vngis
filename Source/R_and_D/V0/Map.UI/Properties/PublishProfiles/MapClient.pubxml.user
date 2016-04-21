@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2016 00:59:57</publishTime>
     </File>
     <File Include="bin/TrackingMap.UI.dll">
-      <publishTime>04/20/2016 21:51:32</publishTime>
+      <publishTime>04/21/2016 02:02:01</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>02/05/2016 22:09:04</publishTime>
@@ -1267,7 +1267,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/19/2016 10:34:47</publishTime>
     </File>
     <File Include="Scripts/view/goodbyvaluereport.js">
-      <publishTime>04/20/2016 14:14:09</publishTime>
+      <publishTime>04/20/2016 23:14:06</publishTime>
     </File>
     <File Include="Scripts/view/goodreport.js">
       <publishTime>04/20/2016 13:07:00</publishTime>
@@ -1279,10 +1279,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/20/2016 14:40:39</publishTime>
     </File>
     <File Include="Scripts/view/urls.js">
-      <publishTime>04/20/2016 14:17:02</publishTime>
+      <publishTime>04/21/2016 01:33:27</publishTime>
     </File>
     <File Include="Scripts/view/visitor.js">
-      <publishTime>04/20/2016 11:01:05</publishTime>
+      <publishTime>04/21/2016 01:59:47</publishTime>
     </File>
     <File Include="Scripts/vn.googlemap.js">
       <publishTime>04/20/2016 06:24:20</publishTime>
@@ -1294,7 +1294,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2016 02:54:36</publishTime>
     </File>
     <File Include="Views/GoodByValueReport/Index.cshtml">
-      <publishTime>04/20/2016 14:43:21</publishTime>
+      <publishTime>04/20/2016 23:04:53</publishTime>
     </File>
     <File Include="Views/GoodReport/Index.cshtml">
       <publishTime>04/20/2016 14:48:28</publishTime>

@@ -60,6 +60,7 @@ namespace TrackingMap.Service.BL
             //return list;
 
             var list = _visitorPathRepository.Table.Where(x => visitorIds.Contains(x.VisitorEntityId))
+                .OrderBy(x => x.Date)
                 .Select(
                     x =>
                         new PointView()
@@ -68,7 +69,8 @@ namespace TrackingMap.Service.BL
                             MasterId = x.VisitorEntityId,
                             Latitude = x.Latitude,
                             Longitude = x.Longitude
-                        }).ToList();
+                        }).
+                         ToList();
             return list;
         }
 
