@@ -26,11 +26,11 @@
 
     if (obj.SaleQty != null)
     {
-        html += "<div> تعداد کالای فروش رفته (کارتن : ظرف): " + addCommaSeperator(obj.SaleQty) + "</div>";
+        html += "<div> تعداد کالای فروش رفته : " + addCommaSeperator(obj.SaleQty) + "</div>";
     }
     if (obj.RetSaleQty != null)
     {
-        html += "<div> تعداد کالای برگشتی (کارتن : ظرف): " + addCommaSeperator(obj.RetSaleQty) + "</div>";
+        html += "<div> تعداد کالای برگشتی : " + addCommaSeperator(obj.RetSaleQty) + "</div>";
     }
 
     if (obj.SaleAmount != null)

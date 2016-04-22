@@ -55,7 +55,7 @@ $(document).ready(function () {
         ]
     });
 
-    initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
+    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
 
     $("#btn_marker").on("click", function (e) {
         if ($("#pnl_marker").is(':hidden')) {

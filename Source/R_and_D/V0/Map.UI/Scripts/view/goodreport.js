@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     intDate('dte_to', true);
     intDate('dte_from', true);
-    initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
+    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
 
     $("#grid_area").kendoGrid({
         dataSource: {
