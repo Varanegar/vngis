@@ -59,15 +59,19 @@ $(document).ready(function () {
 
     $("#btn_marker").on("click", function (e) {
         if ($("#pnl_marker").is(':hidden')) {
-            $("#pnl_marker").show(500);
+            $("#pnl_marker").show();
             $("#spn_marker").removeClass("glyphicon-chevron-down");
             $("#spn_marker").addClass("glyphicon-chevron-up");
+            $("#grid_visitor .k-grid-content").height($("#grid_visitor .k-grid-content").height() - $("#pnl_marker").height());
             $("#grid_visitor").height($("#grid_visitor").height() - $("#pnl_marker").height());
         } else {
-            $("#pnl_marker").hide(500);
+            $("#pnl_marker").hide();
             $("#spn_marker").removeClass("glyphicon-chevron-up");
             $("#spn_marker").addClass("glyphicon-chevron-down");
+            
+            $("#grid_visitor .k-grid-content").height($("#grid_visitor .k-grid-content").height() + $("#pnl_marker").height());
             $("#grid_visitor").height($("#grid_visitor").height() + $("#pnl_marker").height());
+            
         }
     });
     
