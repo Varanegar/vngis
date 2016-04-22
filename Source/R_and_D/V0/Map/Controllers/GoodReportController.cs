@@ -59,6 +59,9 @@ namespace TrackingMap.Controllers
                     JData = rep.JDesc
                 };
 
+                if (GeneralTools.IsNumeric(poly.Lable))
+                    poly.Lable = GeneralTools.FormatNumber(poly.Lable, false);
+
 
                 polies.Add(poly);
             }
