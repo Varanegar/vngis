@@ -41,6 +41,7 @@ namespace TrackingMap.Common.ViewModel
         public decimal? DuringCheckPrice { set; get; }
         public int? RejectCheckCount { set; get; }
         public decimal? RejectCheckPrice { set; get; }
+
     }
 
 

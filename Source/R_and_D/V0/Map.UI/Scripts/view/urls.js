@@ -61,9 +61,9 @@ url_loadcustomerreport = url_server + "CustomerReport/Load";
 //--------------------------------------------------------
 url_loadgoodreport = url_server + "GoodReport/Load";
 url_removecachedata = url_server + "GoodReport/RemoveCacheData";
+url_loadgoodbyreportcustomer = url_server + "GoodReport/LoadCustomer";
 
 //--------------------------------------------------------
 // good by value Report
 //--------------------------------------------------------
 url_loadgoodbyvaluereport = url_server + "GoodByValueReport/Load";
-

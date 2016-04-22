@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using TrackingMap.Common.Tools;
 using TrackingMap.Common.ViewModel;
 using TrackingMap.Service.BL;
+using TrackingMap.Service.ViewModel;
 using TrackingMap.Service.Vn.Extention;
 
 namespace TrackingMap.Controllers
@@ -23,18 +26,20 @@ namespace TrackingMap.Controllers
         public List<PolyView> Load(CustomerReportFilter filter)
         {
             var polies = new List<PolyView>();
-            for (var i = 0; i < filter.AreaIds.Length; i++)
+            foreach (Guid id in filter.AreaIds)
             {
-                var view = _areaService.GetViewById(filter.AreaIds[i]);
-                var points = _areaPointService.LoadAreaPointById(filter.AreaIds[i]).ToList();
-                var poly = new PolyView();
-                poly.Points = points;
-                poly.MasterId = filter.AreaIds[i];
-                poly.Lable = view.Title;
-                poly.IsLeaf = view.IsLeaf;
-                var rep  = _customerReportService.LoadCustomerReport(poly.MasterId ,filter);
-                poly.Desc = rep.GetHtml();
-
+                var view = _areaService.GetViewById(id);
+                var points = _areaPointService.LoadAreaPointById(id).ToList();
+                var poly = new PolyView
+                {
+                    Points = points,
+                    MasterId = id,
+                    Lable = view.Title,
+                    Desc = view.Title,
+                    IsLeaf = view.IsLeaf
+                };
+                var rep = _customerReportService.LoadCustomerReport(poly.MasterId, filter);
+                poly.JData = JsonTools.ObjectToJson(rep);
                 polies.Add(poly);
             }
 

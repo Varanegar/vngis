@@ -1,6 +1,8 @@
 ﻿@Scripts.Render("~/Scripts/infobubble.js")
 @Scripts.Render("~/Scripts/view/report.js")
 @Scripts.Render("~/Scripts/view/goodreport.js")
+@Scripts.Render("~/Scripts/view/gethtml.js")
+
 
 <div class="panel panel-default panel-main">
     <div id="pnl_path" class="path-bar"></div>
@@ -12,17 +14,40 @@
                     <div class="col-md-1">
                         <label>@CaptionResource.FromDate</label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="text" id="dte_from" />
                     </div>
                     <div class="col-md-1">
                         <label>@CaptionResource.ToDate</label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="text" id="dte_to" />
                     </div>
+                    <div class="col-md-1">
+                        <label>@CaptionResource.DefaultField</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control"  id="ddl_default">
+                            <option value="0" selected="selected">عنوان</option>
+                            <option value="1" >تعداد درخواست</option>
+                            <option value="2" >تعداد فاکتور</option>
+                            <option value="3">تعداد برگشت فاکتور</option>
+                            <option value="4">تعداد اقلام کالای فروش رفته</option>
+                            <option value="5">تعداد اقلام کالای برگشتی</option>
+                            <option value="6">تعداد کالای فروش رفته (کارتن : ظرف)</option>
+                            <option value="7">تعداد کالای برگشتی (کارتن : ظرف)</option>
+                            <option value="8">ریال کالای فروش رفته</option>
+                            <option value="9">ریال کالای برگشتی</option>
+                            <option value="10">وزن کالای فروش رفته</option>
+                            <option value="11">وزن کالای برگشتی</option>
+                            <option value="12">ریال تخفیف فروش رفته</option>
+                            <option value="13">ریال تخفیف برگشتی</option>
+                            <option value="14">تعداد اقلام جایزه</option>
+                            <option value="15">تعداد جایزه (کارتن : ظرف)</option>
+                        </select>
+                    </div>
 
-                    <div class="col-md-offset-1 col-md-3">
+                    <div class="col-md-offset-1 col-md-2">
                         <div class="left">
                             <button id='btn_adv_con' class='btn btn-default color-gray'>@CaptionResource.Advance</button>
                             <button id='btn_run' class='btn btn-primary color-gray large-btn'>@CaptionResource.Run</button>
@@ -131,6 +156,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#pnl_area">محدوده ها</a></li>
                         <li ><a data-toggle="tab" href="#pnl_condition">خروجی ها</a></li>
+                        <li><a id="tab_area_info" data-toggle="tab" href="#pnl_area_info">اطلاعات مشتری</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="pnl_area" class="tab-pane fade in active">
@@ -140,7 +166,7 @@
 
 
                         <div id="pnl_condition" class="tab-pane fade">
-                            <div id="pnl_marker" class="frame-border">
+                            <div id="pnl_marker" style="height: 520px" class="frame-border color-back-ligt-gray">
 
                                 @Html.CheckBox("chk_request_count", false, new { @id = "chk_request_count", @class = "control-label" })
                                 <label for="chk_request_count">تعداد درخواست</label>
@@ -204,6 +230,13 @@
 
                             </div>
                         </div>
+                        <div id="pnl_area_info" class="tab-pane fade">
+                            <div style="height: 520px" class="frame-border color-back-ligt-gray">
+                                <br />
+                                <div id="div_area_info" class="full-width"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

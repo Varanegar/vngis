@@ -12,6 +12,7 @@ using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
 using EntityFramework.BulkInsert.Extensions;
 using Microsoft.Samples.EntityDataReader;
+using TrackingMap.Service.ViewModel;
 
 namespace TrackingMap.Service.BL
 {
@@ -45,10 +46,10 @@ namespace TrackingMap.Service.BL
             }
         }
 
-        public GoodReportView LoadGoodReport(Guid areaId,GoodReportFilter filter)
+        public GoodReportMapView LoadGoodReport(Guid areaId, GoodReportFilter filter)
         {
 
-            GoodReportView views = _ctx.GetDatabase().SqlQuery<GoodReportView>("LoadGoodReport " +
+            GoodReportMapView views = _ctx.GetDatabase().SqlQuery<GoodReportMapView>("LoadGoodReport " +
                         "@ClientId," +
                         "@AreaId," +
                         "@ShowOrderCount ," +
@@ -69,7 +70,8 @@ namespace TrackingMap.Service.BL
                         "@ShowPrizeCount ," +
                         "@ShowPrizeQty ," +
                         "@ShowPrizeCarton ," +
-                        "@HavingCondition ",
+                        "@HavingCondition, "+
+                        "@DefaultFieldIndex ",
 
             new SqlParameter("@ClientId", SqlDbType.UniqueIdentifier){SqlValue = filter.ClientId},
             new SqlParameter("@AreaId", SqlDbType.UniqueIdentifier){SqlValue = areaId},
@@ -91,7 +93,8 @@ namespace TrackingMap.Service.BL
             new SqlParameter("@ShowPrizeCount", SqlDbType.Bit) { SqlValue = filter.BonusCount },
             new SqlParameter("@ShowPrizeQty", SqlDbType.Bit) { SqlValue = filter.BonusQty },
             new SqlParameter("@ShowPrizeCarton", SqlDbType.Bit) { SqlValue = filter.BonusCarton },
-            new SqlParameter("@HavingCondition", SqlDbType.VarChar, -1) { SqlValue = "" }
+            new SqlParameter("@HavingCondition", SqlDbType.VarChar, -1) { SqlValue = "" },
+            new SqlParameter("@DefaultFieldIndex", SqlDbType.Int) { SqlValue = filter.DefaultField }
 
 
                 ).FirstOrDefault();
@@ -101,5 +104,18 @@ namespace TrackingMap.Service.BL
 
 
 
+        public List<PointView> LoadCustomer( GoodReportCustomerFilter filter)
+        {
+            var views = _ctx.GetDatabase().SqlQuery<PointView>("LoadGoodReportCustomer " +
+                        "@ClientId," +
+                        "@Ids ",
+            new SqlParameter("@ClientId", SqlDbType.UniqueIdentifier) { SqlValue = filter.ClientId },
+            new SqlParameter("@Ids", SqlDbType.VarChar, -1) { SqlValue = GeneralTools.GuidListTostring(filter.AreaIds) }
+
+
+                ).ToList();
+
+            return views;
+        }
     }
 }

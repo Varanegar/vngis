@@ -322,6 +322,15 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ستون پیشفرض.
+        /// </summary>
+        public static string DefaultField {
+            get {
+                return ResourceManager.GetString("DefaultField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تعریف ها.
         /// </summary>
         public static string Definition {

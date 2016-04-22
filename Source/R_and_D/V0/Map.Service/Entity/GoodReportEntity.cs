@@ -64,6 +64,8 @@ namespace TrackingMap.Service.Entity
             this.PrizeCarton = view.PrizeCarton;
             this.IntId = view.CustRef;
         }
+
+        
     }
 
 

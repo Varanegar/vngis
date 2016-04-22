@@ -2,7 +2,7 @@
     var obj = JSON.parse(jdata);
     var html = "";
 
-    html += "<h5>" + obj.Title + "</h5>";
+    html += "<h5>" + obj.Title + "</h5><hr>";
     if (obj.OrderCount != null)
     {
         html += "<div>تعداد درخواست: " + addCommaSeperator(obj.OrderCount) + "</div>";

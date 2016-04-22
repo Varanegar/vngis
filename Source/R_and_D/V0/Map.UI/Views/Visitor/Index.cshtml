@@ -6,18 +6,26 @@
     <div class="panel-body">
         <div class="header-bar">
             <div class="form-group row">
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <label for="dte_date">@CaptionResource.Date</label>
+                </div>
+                <div class="col-md-2">
                     <input type="text" id="dte_date" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-1">
                     <label for="dte_date">@CaptionResource.FromTime</label>
-                    <input type="text" id="tim_from" />
                 </div>
                 <div class="col-md-2">
+                    <input type="text" id="tim_from" />
+                </div>
+
+                <div class="col-md-1">
                     <label for="dte_date">@CaptionResource.ToTime</label>
+                </div>
+                <div class="col-md-2">
                     <input type="text" id="tim_to" />
                 </div>
+
                 <div class="col-md-2">
                     <div>
                         @Html.CheckBox("chk_daily_path", false, new { @id = "chk_daily_path", @class = "control-label" })
@@ -28,13 +36,13 @@
                     </div>
                 </div>
 
-                <div class="col-md-offset-3 col-md-1">
+                <div class="col-md-1">
                     <div class="left">
                         <button id='btn_run' class='btn btn-primary color-gray large-btn'>@CaptionResource.Run</button>
                     </div>
                 </div>
 
-                </div>
+            </div>
         </div>
         <div class="form-group row ">
 

@@ -381,4 +381,7 @@
   <data name="Tracking" xml:space="preserve">
     <value>ردیابی</value>
   </data>
+  <data name="DefaultField" xml:space="preserve">
+    <value>ستون پیشفرض</value>
+  </data>
 </root>

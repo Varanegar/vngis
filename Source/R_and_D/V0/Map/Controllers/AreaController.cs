@@ -127,6 +127,7 @@ namespace TrackingMap.Controllers
                 poly.Color = "#000000";
                 poly.Desc = "";
                 poly.Points = points;
+                poly.IsLeaf = view.IsLeaf;
                 polies.Add(poly);
 
             }

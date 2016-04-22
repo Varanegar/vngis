@@ -4,6 +4,14 @@ using System.Data.Entity.Spatial;
 
 namespace TrackingMap.Common.ViewModel
 {
+    public class GoodReportCustomerFilter
+    {
+        public Guid ClientId { set; get; }
+        public List<Guid> AreaIds { set; get; }
+    }
+
+
+
     public class GoodReportFilter
     {
         public Guid ClientId { set; get; }
@@ -42,6 +50,7 @@ namespace TrackingMap.Common.ViewModel
         public bool BonusCount { set; get; }
         public bool BonusQty { set; get; }
         public bool BonusCarton { set; get; }
+        public int DefaultField { set; get; }
 
     }
     public class GoodReportView
@@ -70,7 +79,17 @@ namespace TrackingMap.Common.ViewModel
         public int? SalePrizeCount { set; get; }
         public double? PrizeQty { set; get; }
         public double? PrizeCarton { set; get; }
+        
     }
 
+    public class GoodReportMapView
+    {
+        public Guid Id { get; set; }
+        public string JDesc { get; set; }
+        public string Lable { get; set; }
+        public string Title { get; set; }
+        
+        public bool IsLeaf { get; set; }
+    }
 
 }

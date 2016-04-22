@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using TrackingMap.Service.ViewModel;
 
-namespace TrackingMap.Common.ViewModel
+namespace TrackingMap.Service.ViewModel
 {
     public class PolyView
     {
@@ -13,6 +11,8 @@ namespace TrackingMap.Common.ViewModel
         public string Desc { set; get; }
         public string Lable { set; get; }
         public bool IsLeaf { set; get; }
+        public string JData { set; get; }
+
 
     }
 }
