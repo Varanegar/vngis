@@ -11,6 +11,9 @@ namespace TrackingMap.UI.Controllers
         // GET: LastStatus
         public ActionResult Index()
         {
+            ViewBag.CurrMenu = "LastStatus";
+            ViewBag.Title = CaptionResource.LastStatus;
+
             return View();
         }
     }

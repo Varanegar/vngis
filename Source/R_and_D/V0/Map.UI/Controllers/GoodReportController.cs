@@ -11,6 +11,8 @@ namespace TrackingMap.UI.Controllers
         // GET: GoodReport
         public ActionResult Index()
         {
+            ViewBag.CurrMenu = "GoodReport";
+            ViewBag.Title = CaptionResource.GoodReport;
             return View();
         }
     }

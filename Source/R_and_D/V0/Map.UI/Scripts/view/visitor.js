@@ -62,10 +62,12 @@ $(document).ready(function () {
             $("#pnl_marker").show(500);
             $("#spn_marker").removeClass("glyphicon-chevron-down");
             $("#spn_marker").addClass("glyphicon-chevron-up");
+            $("#grid_visitor").height($("#grid_visitor").height() - $("#pnl_marker").height());
         } else {
             $("#pnl_marker").hide(500);
             $("#spn_marker").removeClass("glyphicon-chevron-up");
             $("#spn_marker").addClass("glyphicon-chevron-down");
+            $("#grid_visitor").height($("#grid_visitor").height() + $("#pnl_marker").height());
         }
     });
     
@@ -80,13 +82,10 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ Id: value }),
             success: function (data) {
-                $.each(data, function (i, ItemDropdown) {
-                    $("#ddl_visitor_group").append
-                        ('<option value="' + ItemDropdown.Id + '">' + ItemDropdown.Title + '</option>');
-                });
+                addItemsToDroupdown("ddl_visitor_group",data);               
             }
         })
-        .done(function (Result) {
+        .done(function (result) {
         });       
     });
     

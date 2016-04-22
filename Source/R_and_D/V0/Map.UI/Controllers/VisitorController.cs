@@ -11,7 +11,8 @@ namespace TrackingMap.UI.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.CurrMenu = "Visitor";
+            ViewBag.CurrMenu = "Tracking";
+            ViewBag.Title = CaptionResource.Tracking;
             return View();
         }
 
