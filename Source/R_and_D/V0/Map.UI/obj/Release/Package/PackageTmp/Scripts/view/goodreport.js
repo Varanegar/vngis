@@ -2,6 +2,8 @@
 var map_auto_refresh = false;
 var client_id;
 var changed;
+var marker_load = true;
+var line_load = false;
 
 
 $(document).ready(function () {
@@ -37,7 +39,7 @@ $(document).ready(function () {
                 field: "Id",
                 headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_area\")' />",
                 template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_area\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
-                width: 20
+                width: 25
             },
             { field: "Id", title: '', hidden: true },
             { field: "IsLeaf", hidden: true, },
@@ -155,7 +157,6 @@ function loadAreaList(options) {
             options.success(result);
 
             if (map_auto_refresh == true) {
-
                 var ids = [];
                 $.each(result, function (i, item) {
                     ids.push(item.Id);
@@ -171,6 +172,8 @@ function loadAreaList(options) {
 //map
 //--------------------------------------------------------------------------------
 function refreshMap(ids) {
+    marker_load = false;
+    line_load = false;
     showWating();
     clearOverlays();
     drawAreaInfo(ids);
@@ -186,31 +189,37 @@ function drawAreaInfo(ids) {
        
         success: function (data) {
             if (data != null) {
-                $.each(data, function(i, line) {
+                var leafid = [];
+                $.each(data, function (i, line) {
                     var arealine = [];
                     if (line.Points != null)
                         $.each(line.Points, function(j, item) {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
-                        if (line.IsLeaf)
+                        var poly;
+                        if (line.IsLeaf) {
                             poly = addPolyline({
                                 line: arealine,
                                 color: '#777777',
                                 lable: line.Lable,
-                                windowdesc: line.Desc,
-                                showbubble: true,
+                                lableclass: 'good-report-labels',
+                                //windowdesc: line.Desc,
+                                //showbubble: true,
                                 direction: true,
                                 fit: true
                             });
+                            leafid.push(line.MasterId);
+                        }
                         else {
 
                             poly = addPolygon({
                                 line: arealine,
                                 color: '#777777',
                                 lable: line.Lable,
-                                windowdesc: line.Desc,
-                                showbubble: true,
+                                lableclass:'good-report-labels',
+                                //windowdesc: line.Desc,
+                                //showbubble: true,
                                 fit: true
                             });
 
@@ -221,20 +230,80 @@ function drawAreaInfo(ids) {
                             });
 
                         }
+                        poly.addListener('mouseover', function (e) {
+                            closeInfoWindow();
+                            openInfoWindow(e, '<br/><h5>' + (line.Desc || '') + '</h5>');
+                            setAreaInfoPanel(getGoodReportHtml(line.JData));
+                        });
                     }
                 });
+                if (leafid.length > 0) {
+
+                    drawAreaCustomer(leafid);
+                } else {
+                    marker_load = true;
+                }
+
                 fitPointBounds();
                 changed = false;
             }
         }
     })
-    .always(function() {
-        hideWating();
+    .always(function () {
+        line_load = true;
+        if (marker_load == true)
+            hideWating();
         map_auto_refresh = false;
     });
 
 }
 
+function drawAreaCustomer(leafids) {
+        marker_load = false;
+        $.ajax({
+            type: "POST",
+            url: url_loadgoodbyreportcustomer,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ ClientId: client_id, AreaIds: leafids }),
+            success: function (data) {
+                if (data != null) {
+                    $.each(data, function(i, item) {
+                        var m = addMarker({
+                            id: "customer_point_" + item.Id,
+                            lat: item.Latitude,
+                            lng: item.Longitude,
+                            clustering: true,
+                            fit: true
+                        });
+                        m.setIcon({ url: "../Content/img/pin/customerNew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+
+                        m.addListener('click', function (e) {
+                            closeInfoWindow();                        
+                            openInfoWindow(e, '<br/><h5>' + (item.Lable || '') + '</h5>');
+                            setAreaInfoPanel(getGoodReportHtml(item.JData));
+                        });
+                    
+                    });
+                    renderClusterMarkers();
+                    fitPointBounds();
+                    changed = false;
+                }
+            }
+        }).always(function () {
+            map_auto_refresh = false;
+            marker_load = true;
+            if (line_load)
+                hideWating();
+        });
+
+    }
+
+function setAreaInfoPanel(desc) {
+    $("#div_area_info").html(desc);
+    $('#tab_area_info').trigger('click');
+
+}
 //--------------------------------------------------------------------------------
 //condition
 //--------------------------------------------------------------------------------
@@ -246,6 +315,7 @@ function getFilter(ids) {
         AreaIds: ids,
         ClientId: client_id,
         ChangeFilter: changed,
+        DefaultField:$('#ddl_default').val(),
         FromDate: $("#dte_from").val(),
         ToDate: $("#dte_to").val(),
         SaleOffice: $("#ddl_sale_office").val(),

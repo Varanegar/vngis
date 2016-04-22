@@ -39,7 +39,7 @@ $(document).ready(function () {
                 field: "Id",
                 headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_area\")' />",
                 template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_area\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
-                width: 20
+                width: 25
             },
             { field: "Id", title: '', hidden: true },
             { field: "IsLeaf", hidden: true, },
@@ -215,13 +215,19 @@ function drawAreasLine(ids) {
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
-                        poly = addPolygon({ line: arealine, color: '#777777', lable: line.Lable });
+                        var poly;
+                        if (line.IsLeaf == true)
+                            poly = addPolyline({ line: arealine, color: '#777777', lable: line.Lable, fit: true });
+                        else {
+                            poly = addPolygon({ line: arealine, color: '#777777', lable: line.Lable, fit: true });
 
-                        poly.addListener('click', function(event) {
-                            selected_id = line.MasterId;
-                            map_auto_refresh = true;
-                            refreshGrid();
-                        });
+                            poly.addListener('click', function (event) {
+                                selected_id = line.MasterId;
+                                map_auto_refresh = true;
+                                refreshGrid();
+                            });
+
+                        }
 
                     }
                 });

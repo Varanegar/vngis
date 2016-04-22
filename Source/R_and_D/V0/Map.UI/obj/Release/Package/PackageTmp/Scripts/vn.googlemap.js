@@ -199,6 +199,8 @@ function addPolyline(opt_options) {
     var movingshape = options['movingshape'] || false;
     var dashed = options['dashed'] || false;
     var lable = options['lable'] || '';
+    var lableclass = options['lableclass'] || '';
+
     var fit = options['fit'] || false;
     var showbubble = options['showbubble'] || false;
     var bubbledesc = '';
@@ -282,7 +284,7 @@ function addPolyline(opt_options) {
 
     // ------- lables
     if ((lable != '') || (bubbledesc != '')) {
-        addLableToPoly(linecoordinates, lable, false, bubbledesc );
+        addLableToPoly(linecoordinates, lable, lableclass, false, bubbledesc );
     }
     // ------- fit to bounds
     if ((fit == true)&&(linecoordinates.length > 0)) {
@@ -299,7 +301,7 @@ function addPolyline(opt_options) {
     return path;
 }
 
-function addLableToPoly(line, lable, ispolygon , windowdesc) {
+function addLableToPoly(line, lable, lableclass, ispolygon , windowdesc) {
     if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
     if (line.length > 0) {
         var isline = false;
@@ -315,21 +317,22 @@ function addLableToPoly(line, lable, ispolygon , windowdesc) {
             for (var i = 0; i < line.length; i++) {
                 bound.extend(line[i]);
             }
-            center = bound.getCenter()
+            center = bound.getCenter();
         }
         else {
             center = line[Math.round((line.length / 2))];
         }
-
-        marker = new MarkerWithLabel({
+        if ((lableclass || '') == '')
+            lableclass = "line-labels";
+        var marker = new MarkerWithLabel({
             position: center,
             draggable: false,
             map: gmap,
             labelContent: lable,
             labelAnchor: new google.maps.Point(100, 0),
             icon:{ url: "../Content/img/pin/center.png", size: new google.maps.Size(6, 6), anchor: new google.maps.Point(3, 3) },
-            labelClass: "line-labels", // the CSS class for the label
-            labelStyle: { opacity: 0.5 }
+            labelClass: lableclass, // the CSS class for the label
+           // labelStyle: { opacity: 0.5 }
         });
 
         if (windowdesc != '') {
@@ -383,6 +386,7 @@ function addPolygon(opt_options) {
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
     var lable = options['lable'] || '';
+    var lableclass = options['lableclass'] || '';
     var fit = options['fit'] || false;
     var showbubble = options['showbubble'] || false;
     var bubbledesc = '';
@@ -412,7 +416,7 @@ function addPolygon(opt_options) {
     }
     // ------- lables
     if ((lable != '') || (bubbledesc != '')) {
-        addLableToPoly(linecoordinates, lable, true, bubbledesc);
+        addLableToPoly(linecoordinates, lable, lableclass, true, bubbledesc);
     }
     // --------
     if (movingshape == true) {
