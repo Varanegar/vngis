@@ -172,6 +172,9 @@ function loadAreaList(options) {
 //map
 //--------------------------------------------------------------------------------
 function refreshMap(ids) {
+    $("#div_area_info").html('');
+    $('#tab_area_list').trigger('click');
+
     marker_load = false;
     line_load = false;
     showWating();
@@ -218,7 +221,7 @@ function drawAreaInfo(ids) {
                                 color: '#777777',
                                 lable: line.Lable,
                                 lableclass:'good-report-labels',
-                                //windowdesc: line.Desc,
+                                lablewindowdesc: getGoodReportHtml(line.JData),
                                 //showbubble: true,
                                 fit: true
                             });
@@ -231,8 +234,6 @@ function drawAreaInfo(ids) {
 
                         }
                         poly.addListener('mouseover', function (e) {
-                            closeInfoWindow();
-                            openInfoWindow(e, '<br/><h5>' + (line.Desc || '') + '</h5>');
                             setAreaInfoPanel(getGoodReportHtml(line.JData));
                         });
                     }

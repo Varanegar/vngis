@@ -181,10 +181,6 @@ function openInfoWindow(event, windowdesc) {
     gmap_infoWindow.open(gmap);
 }
 
-function addInfoWindow(contentString) {
-    infoWindow = new google.maps.InfoWindow;
-}
-
 // ----------------------------------------------------------
 // Polyline
 // ----------------------------------------------------------
@@ -198,20 +194,16 @@ function addPolyline(opt_options) {
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
     var dashed = options['dashed'] || false;
+    var fit = options['fit'] || false;
+
     var lable = options['lable'] || '';
     var lableclass = options['lableclass'] || '';
-
-    var fit = options['fit'] || false;
-    var showbubble = options['showbubble'] || false;
-    var bubbledesc = '';
+    var lablewindowdesc = options['lableclass'] || '';
+    
 
     if ((lable == null) || (lable == undefined)) lable = '';
     if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
 
-    if (showbubble == true) {
-        bubbledesc = windowdesc;
-        windowdesc = '';
-    }
 
     var opacity = 1;
 
@@ -283,8 +275,8 @@ function addPolyline(opt_options) {
 
 
     // ------- lables
-    if ((lable != '') || (bubbledesc != '')) {
-        addLableToPoly(linecoordinates, lable, lableclass, false, bubbledesc );
+    if ((lable != '') ) {
+        addLableToPoly(linecoordinates, lable, lableclass, false, lablewindowdesc);
     }
     // ------- fit to bounds
     if ((fit == true)&&(linecoordinates.length > 0)) {
@@ -303,12 +295,13 @@ function addPolyline(opt_options) {
 
 function addLableToPoly(line, lable, lableclass, ispolygon , windowdesc) {
     if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
+
     if (line.length > 0) {
         var isline = false;
         if ((ispolygon == false) &&
             (line[0].lat() != line[line.length - 1].lat()) &&
             (line[0].lng() != line[line.length - 1].lng()))
-            var isline = true;
+            isline = true;
 
         var center;
         if (isline == false) {
@@ -336,16 +329,17 @@ function addLableToPoly(line, lable, lableclass, ispolygon , windowdesc) {
         });
 
         if (windowdesc != '') {
-
             marker.addListener('click', function (event) {
-                    openInfoBubble(marker, windowdesc);
+                  closeInfoWindow();
+                  openInfoWindow(event, windowdesc);
                 });
-            openInfoBubble(marker, windowdesc);
         }
-
         gmap_markers.push(marker);
+        return marker;
     }
+    return null;
 }
+
 
 function openInfoBubble(marker, windowdesc) {
 
@@ -379,25 +373,18 @@ function openInfoBubble(marker, windowdesc) {
 function addPolygon(opt_options) {
 
     var options = opt_options || {};
+    //polygon
     var linecoordinates = options['line'] || [];
     var color = options['color'] || '#000000';
     var fillcolor = options['fillcolor'] || '#F46717';
     var weight = options['weight'] || 2;
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
+    var fit = options['fit'] || false;
+    // lable
     var lable = options['lable'] || '';
     var lableclass = options['lableclass'] || '';
-    var fit = options['fit'] || false;
-    var showbubble = options['showbubble'] || false;
-    var bubbledesc = '';
-
-    if ((lable == null) || (lable == undefined)) lable = '';
-    if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
-
-    if (showbubble == true) {
-        bubbledesc = windowdesc;
-        windowdesc = '';
-    }
+    var lablewindowdesc = options['lablewindowdesc'] || '';
 
     var polygon = new google.maps.Polygon({
         path: linecoordinates,
@@ -415,8 +402,8 @@ function addPolygon(opt_options) {
         });
     }
     // ------- lables
-    if ((lable != '') || (bubbledesc != '')) {
-        addLableToPoly(linecoordinates, lable, lableclass, true, bubbledesc);
+    if ((lable != '') ) {
+        addLableToPoly(linecoordinates, lable, lableclass, true, lablewindowdesc);
     }
     // --------
     if (movingshape == true) {

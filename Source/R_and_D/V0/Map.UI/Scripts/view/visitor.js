@@ -203,7 +203,7 @@ function drawVisitorsPath() {
                                 id: "point" + item.Id,
                                 fit: true,
                                 lat: item.Latitude, lng: item.Longitude,
-                                clustering: false
+                                clustering: false, windowdesc: "<br/>"+item.Desc
                             });
                             m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
 

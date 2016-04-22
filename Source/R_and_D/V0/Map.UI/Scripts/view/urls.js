@@ -1,6 +1,6 @@
-﻿//url_server = "http://localhost:8398/api/";
+﻿url_server = "http://localhost:8398/api/";
 //url_server = "http://192.168.201.149:2020/api/";
-url_server = "http://217.218.53.71:2020/api/";
+//url_server = "http://217.218.53.71:2020/api/";
 
 
 url_getcombodata = url_server + "Vn/GetComboData";

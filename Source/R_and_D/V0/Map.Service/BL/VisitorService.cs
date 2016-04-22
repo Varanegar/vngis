@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using TrackingMap.Common.Tools;
 using TrackingMap.Service.DBManagement;
 using TrackingMap.Service.Entity;
 using TrackingMap.Service.Tools;
@@ -45,33 +46,36 @@ namespace TrackingMap.Service.BL
         public List<TextValueView> LoadVisitorByGroupId(Guid? groupId)
         {
             List<TextValueView> list = _visitorRepository.Table.Where(x => groupId == null || x.VisitorGroupEntityId == groupId)
-                .Select(x => new TextValueView() {Id = x.Id.ToString(), Title = x.Title})
+                .Select(x => new TextValueView() { Id = x.Id.ToString(), Title = x.Title })
                 .ToList();
             return list;
         }
 
-        public List<PointView> LoadVisitorPath(string date, List<Guid> visitorIds )
+        public List<PointView> LoadVisitorPath(string date, List<Guid> visitorIds)
         {
-            //List<PointView> list;
-            //var vis = GeneralTools.IntListTostring(visitorIds);
-            //SqlParameter date_param = new SqlParameter("@Date", date);
-            //SqlParameter ids_param = new SqlParameter("@VisitorIds", vis);
-            //list = _ctx.GetDatabase().SqlQuery<PointView>("LoadVisitorsPath @Date, @VisitorIds ", date_param, ids_param).ToList();
-            //return list;
 
             var list = _visitorPathRepository.Table.Where(x => visitorIds.Contains(x.VisitorEntityId))
                 .OrderBy(x => x.Date)
                 .Select(
                     x =>
-                        new PointView()
+                        new
                         {
-                            Id = x.Id,
+                            x.Id,
                             MasterId = x.VisitorEntityId,
-                            Latitude = x.Latitude,
-                            Longitude = x.Longitude
+                            x.Latitude,
+                            x.Longitude,
+                            x.Date 
                         }).
                          ToList();
-            return list;
+            var listpoint = list.Select(x => new PointView()
+            {
+                Id = x.Id,
+                MasterId = x.MasterId,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude,
+                Desc = DateTools.DateTimeToPersianDateTime(x.Date)
+            }).ToList();
+            return listpoint;
         }
 
         public List<PointView> LoadDailyPath(string date, List<Guid> visitorIds)
@@ -84,16 +88,16 @@ namespace TrackingMap.Service.BL
             //return list;
 
             var q = from path in _areaPointRepository.Table
-                join vispath in _visitorDailyPathRepository.Table on path.AreaEntityId equals vispath.AreaEntityId
-                where (visitorIds.Contains(vispath.VisitorEntityId))
-                select
-                    new PointView()
-                    {
-                        Id = path.Id,
-                        Latitude = path.Latitude,
-                        Longitude = path.Longitude,
-                        MasterId = vispath.VisitorEntityId
-                    };
+                    join vispath in _visitorDailyPathRepository.Table on path.AreaEntityId equals vispath.AreaEntityId
+                    where (visitorIds.Contains(vispath.VisitorEntityId))
+                    select
+                        new PointView()
+                        {
+                            Id = path.Id,
+                            Latitude = path.Latitude,
+                            Longitude = path.Longitude,
+                            MasterId = vispath.VisitorEntityId
+                        };
             var list = q.ToList();
             return list;
         }
