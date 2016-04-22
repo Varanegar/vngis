@@ -199,6 +199,14 @@ function drawVisitorsPath() {
                     var arealine = [];
                     if (line.Points != null)
                         $.each(line.Points, function(j, item) {
+                            var m = addMarker({
+                                id: "point" + item.Id,
+                                fit: true,
+                                lat: item.Latitude, lng: item.Longitude,
+                                clustering: false
+                            });
+                            m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {
