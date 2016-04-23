@@ -39,14 +39,14 @@ namespace TrackingMap.Service.BL
 
         public IList<TextValueView> LoadVisitorGroup(Guid? areaid)
         {
-            IList<TextValueView> list = _visitorGroupRepository.Table.Where(x => areaid == null || x.AreaEntityId == areaid).Select(x => new TextValueView() { Id = x.Id.ToString(), Title = x.Title }).ToList();
+            IList<TextValueView> list = _visitorGroupRepository.Table.Where(x => areaid == null || x.AreaEntityId == areaid).Select(x => new TextValueView() { Id = x.Id, Title = x.Title }).ToList();
             return list;
         }
 
         public List<TextValueView> LoadVisitorByGroupId(Guid? groupId)
         {
             List<TextValueView> list = _visitorRepository.Table.Where(x => groupId == null || x.VisitorGroupEntityId == groupId)
-                .Select(x => new TextValueView() { Id = x.Id.ToString(), Title = x.Title })
+                .Select(x => new TextValueView() { Id = x.Id, Title = x.Title })
                 .ToList();
             return list;
         }

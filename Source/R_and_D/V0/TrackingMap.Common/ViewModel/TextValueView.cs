@@ -3,7 +3,8 @@ namespace TrackingMap.Common.ViewModel
 {
     public class TextValueView
     {
-        public Object Id { set; get; }
+        public Guid? Id { set; get; }
+        public int IntId { set; get; }
         public string Title { set; get; }
         
     }

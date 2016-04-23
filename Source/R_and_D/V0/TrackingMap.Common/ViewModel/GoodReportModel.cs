@@ -21,15 +21,15 @@ namespace TrackingMap.Common.ViewModel
         public int Type { set; get; }
         public string FromDate { set; get; }
         public string ToDate { set; get; }
-        public Guid? SaleOffice { set; get; }
-        public Guid? Header { set; get; }
-        public Guid? Seller { set; get; }
-        public Guid? CustomerClass { set; get; }
-        public Guid? CustomerActivity { set; get; }
-        public Guid? CustomerDegree { set; get; }
-        public Guid? GoodGroup { set; get; }
-        public Guid? DynamicGroup { set; get; }
-        public Guid? Good { set; get; }
+        public string SaleOffice { set; get; }
+        public string Header { set; get; }
+        public string Seller { set; get; }
+        public string CustomerClass { set; get; }
+        public string CustomerActivity { set; get; }
+        public string CustomerDegree { set; get; }
+        public string GoodGroup { set; get; }
+        public string DynamicGroup { set; get; }
+        public string Good { set; get; }
         public string CommercialName { set; get; }
         public int? DayCount { set; get; }
         public bool RequestCount { set; get; }

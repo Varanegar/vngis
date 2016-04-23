@@ -325,7 +325,7 @@ function getFilter(ids) {
         CustomerClass: $("#ddl_customer_class").val(),
         CustomerActivity: $("#ddl_customer_activity").val(),
         CustomerDegree: $("#ddl_customer_degree").val(),
-        GoodGroup: $("#ddl_good_group").val(),
+        GoodGroup: parseInt( $("#ddl_good_group").val()),
       //  DynamicGroup: $("#ddl_dynamic_group").val(),
         Good: $("#ddl_good").val(),
        // CommercialName: $("#txt_commercial_good_name").val(),

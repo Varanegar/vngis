@@ -21,7 +21,7 @@ function loadDdlSaleOffice() {
         url: url_getcombodata,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.tblSaleOffice", ValueName: "Id", TextName: "Name", AddEmptyRow: true }),
+        data: JSON.stringify({ TblName: "gnr.tblSaleOffice", ValueName: "ID", TextName: "Name", AddEmptyRow: true }),
         success: function (data) {
             addItemsToDroupdown("ddl_sale_office", data);
         }
@@ -60,11 +60,16 @@ function loadDdlSeller() {
             var dataItem = this.dataItem(e.item.index());
 
             if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_seller").val(dataItem.Id);
+                $("#ddl_seller").val(dataItem.Id || dataItem.IntId);
             } else
                 $("#ddl_seller").val('');
 
             // Use the selected item or its text
+        },
+        change: function(e) {
+            if ($("#auto_seller").data("kendoAutoComplete").value() == "") {
+                $("#ddl_seller").val('');
+            } 
         }
     });
 }
@@ -141,13 +146,18 @@ function loadDdlGoodGroup() {
             var dataItem = this.dataItem(e.item.index());
 
             if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_good_group").val(dataItem.Id);
+                $("#ddl_good_group").val(dataItem.Id || dataItem.IntId);
             } else
                 $("#ddl_good_group").val('');
 
             // Use the selected item or its text
-        }
-    });
+        },
+        change: function(e) {
+            if ($("#auto_good_group").data("kendoAutoComplete").value() == "") {
+            $("#ddl_good_group").val('');
+        } 
+    }
+});
 }
 
 function loadAutoGoodGroup(options) {
@@ -199,12 +209,18 @@ function loadDdlGood() {
             var dataItem = this.dataItem(e.item.index());
 
             if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_good").val(dataItem.Id);
+                $("#ddl_good").val(dataItem.Id || dataItem.IntId);
             } else
                 $("#ddl_good").val('');
 
             // Use the selected item or its text
-        }
+        },
+        change: function (e) {
+        if ($("#auto_good").data("kendoAutoComplete").value() == "") {
+            $("#ddl_good").val('');
+        } 
+    }
+
     });
 }
 

@@ -37,7 +37,7 @@ namespace TrackingMap.Service.BL
             var list = _areaRepository.Table.Where(x => x.ParentId == null)
                 .Select(x => new TextValueView()
                 {
-                    Id = x.Id.ToString(),
+                    Id = x.Id,
                     Title = x.Title,                   
                 }).ToList();
             return list;

@@ -18,11 +18,11 @@ namespace TrackingMap.Service.Vn.BL
 
         public List<TextValueView> GetComboData(ComboFilter filter)
         {
-            var list = _ctx.Database.SqlQuery<TextValueView>("select " + filter.TextName + " as Title," + 
-                             filter.ValueName + " as Id " +
+            var list = _ctx.Database.SqlQuery<TextValueView>("select " + filter.TextName + " as Title," +
+                              "cast(" + filter.ValueName + " as int) as IntId " +
                         "  from " + filter.TblName).ToList();
             if (filter.AddEmptyRow)
-                list.Insert(0, new TextValueView(){Id = "-1", Title = "انتخاب کنید ..."});
+                list.Insert(0, new TextValueView() { IntId = -1, Title = "انتخاب کنید ..." });
             return list;
 
         }
@@ -31,11 +31,11 @@ namespace TrackingMap.Service.Vn.BL
         public List<TextValueView> GetAutoCompleteData(AutoCompleteFilter filter)
         {
             var list = _ctx.Database.SqlQuery<TextValueView>("select " + filter.TextName + " as Title," +
-                             filter.ValueName + " as Id " +
+                             "cast("+filter.ValueName + " as int) as IntId " +
                         "  from " + filter.TblName+
                         " where " + filter.TextName + " like '%" + filter.SearchValue + "%'").ToList();
             if (filter.AddEmptyRow)
-                list.Insert(0, new TextValueView() { Id = "-1", Title = "انتخاب کنید ..." });
+                list.Insert(0, new TextValueView() { IntId = -1, Title = "انتخاب کنید ..." });
             return list;
         }
     }
