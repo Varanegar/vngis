@@ -69,6 +69,19 @@ function removeListener(event) {
     google.maps.event.clearListeners(gmap, event);
 }
 
+function getSpace() {
+    var zoom = gmap.getZoom();
+    if (zoom < 5) return 1;
+    if (zoom < 10) return 0.1;
+    if (zoom < 11) return 0.02;
+    if (zoom < 12) return 0.008;
+    if (zoom < 13) return 0.005;
+    if (zoom < 14) return 0.002;
+    if (zoom < 16) return 0.0015;
+    if (zoom < 18) return 0.001;
+    else return 0.1;
+}
+
 // ----------------------------------------------------------
 // Markers
 // ----------------------------------------------------------

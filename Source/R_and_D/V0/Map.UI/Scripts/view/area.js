@@ -693,7 +693,8 @@ function addPointByBtn(id) {
 
     if (index > -1) {
         var point = point_views[index];
-        addNewPoint(parseInt(point.Pr) + 1, point.Lat - 0.02, point.Lng - 0.02);
+        gmap.getZoom();
+        addNewPoint(parseInt(point.Pr) + 1, point.Lat - getSpace(), point.Lng - getSpace());
         closeInfoWindow();
 
         for (var i = index + 1; i < point_views.length - 1; i++) {
