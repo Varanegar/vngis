@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     intDate('dte_to', true);
     intDate('dte_from', true);
-    initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
+    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
 
     $("#grid_area").kendoGrid({
         dataSource: {
@@ -172,6 +172,9 @@ function loadAreaList(options) {
 //map
 //--------------------------------------------------------------------------------
 function refreshMap(ids) {
+    $("#div_area_info").html('');
+    $('#tab_area_list').trigger('click');
+
     marker_load = false;
     line_load = false;
     showWating();
@@ -218,7 +221,7 @@ function drawAreaInfo(ids) {
                                 color: '#777777',
                                 lable: line.Lable,
                                 lableclass:'good-report-labels',
-                                //windowdesc: line.Desc,
+                                lablewindowdesc: getGoodReportHtml(line.JData),
                                 //showbubble: true,
                                 fit: true
                             });
@@ -231,8 +234,6 @@ function drawAreaInfo(ids) {
 
                         }
                         poly.addListener('mouseover', function (e) {
-                            closeInfoWindow();
-                            openInfoWindow(e, '<br/><h5>' + (line.Desc || '') + '</h5>');
                             setAreaInfoPanel(getGoodReportHtml(line.JData));
                         });
                     }
@@ -280,7 +281,7 @@ function drawAreaCustomer(leafids) {
 
                         m.addListener('click', function (e) {
                             closeInfoWindow();                        
-                            openInfoWindow(e, '<br/><h5>' + (item.Lable || '') + '</h5>');
+                            openInfoWindow(new google.maps.LatLng(item.Latitude, item.Longitude), '<br/><h5>' + (item.Lable || '') + '</h5>');
                             setAreaInfoPanel(getGoodReportHtml(item.JData));
                         });
                     
@@ -324,7 +325,7 @@ function getFilter(ids) {
         CustomerClass: $("#ddl_customer_class").val(),
         CustomerActivity: $("#ddl_customer_activity").val(),
         CustomerDegree: $("#ddl_customer_degree").val(),
-        GoodGroup: $("#ddl_good_group").val(),
+        GoodGroup: parseInt( $("#ddl_good_group").val()),
       //  DynamicGroup: $("#ddl_dynamic_group").val(),
         Good: $("#ddl_good").val(),
        // CommercialName: $("#txt_commercial_good_name").val(),

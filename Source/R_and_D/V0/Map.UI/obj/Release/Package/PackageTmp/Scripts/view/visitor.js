@@ -55,17 +55,23 @@ $(document).ready(function () {
         ]
     });
 
-    initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
+    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
 
     $("#btn_marker").on("click", function (e) {
         if ($("#pnl_marker").is(':hidden')) {
-            $("#pnl_marker").show(500);
+            $("#pnl_marker").show();
             $("#spn_marker").removeClass("glyphicon-chevron-down");
             $("#spn_marker").addClass("glyphicon-chevron-up");
+            $("#grid_visitor .k-grid-content").height($("#grid_visitor .k-grid-content").height() - $("#pnl_marker").height());
+            $("#grid_visitor").height($("#grid_visitor").height() - $("#pnl_marker").height());
         } else {
-            $("#pnl_marker").hide(500);
+            $("#pnl_marker").hide();
             $("#spn_marker").removeClass("glyphicon-chevron-up");
             $("#spn_marker").addClass("glyphicon-chevron-down");
+            
+            $("#grid_visitor .k-grid-content").height($("#grid_visitor .k-grid-content").height() + $("#pnl_marker").height());
+            $("#grid_visitor").height($("#grid_visitor").height() + $("#pnl_marker").height());
+            
         }
     });
     
@@ -80,13 +86,10 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ Id: value }),
             success: function (data) {
-                $.each(data, function (i, ItemDropdown) {
-                    $("#ddl_visitor_group").append
-                        ('<option value="' + ItemDropdown.Id + '">' + ItemDropdown.Title + '</option>');
-                });
+                addItemsToDroupdown("ddl_visitor_group",data);               
             }
         })
-        .done(function (Result) {
+        .done(function (result) {
         });       
     });
     
@@ -196,6 +199,14 @@ function drawVisitorsPath() {
                     var arealine = [];
                     if (line.Points != null)
                         $.each(line.Points, function(j, item) {
+                            var m = addMarker({
+                                id: "point" + item.Id,
+                                fit: true,
+                                lat: item.Latitude, lng: item.Longitude,
+                                clustering: false, windowdesc: "<br/>"+item.Desc
+                            });
+                            m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });
                     if (arealine.length > 0) {

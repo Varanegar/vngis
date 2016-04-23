@@ -79,7 +79,7 @@ $(document).ready(function () {
         }
     });
 
-    initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
+    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
 
 
 
@@ -551,12 +551,12 @@ function onCustomerMarkerClick(e, id, marker, desc, editable) {
                     windowdesc = "<br />" + desc + "<br />" +
                     "<button id='btn_remove_customer_' onclick='removeFromSelected(\"" + id + "\", true)' class='btn btn-default'>حذف از مسیر</button>"
                 }
-                openInfoWindow(e, windowdesc);
+                openInfoWindow(e.latLng, windowdesc);
             }
         }
     }
     else {
-        openInfoWindow(e, "<br />" + desc);
+        openInfoWindow(e.LatLng, "<br />" + desc);
     }
 
 }
@@ -693,7 +693,8 @@ function addPointByBtn(id) {
 
     if (index > -1) {
         var point = point_views[index];
-        addNewPoint(parseInt(point.Pr) + 1, point.Lat - 0.02, point.Lng - 0.02);
+        gmap.getZoom();
+        addNewPoint(parseInt(point.Pr) + 1, point.Lat - getSpace(), point.Lng - getSpace());
         closeInfoWindow();
 
         for (var i = index + 1; i < point_views.length - 1; i++) {
@@ -704,7 +705,6 @@ function addPointByBtn(id) {
         point_views.splice(point_views.length - 1, 1);
         point_views.splice(index + 1, 0, p);
 
-        point_views.sp
         refreshAreaLine();
         refreshAreaLable();
     }
@@ -720,12 +720,12 @@ function addPoint(id, pr, lat, lng, cust) {
     if ((cust == undefined) || (cust == null))
         cust = '';
 
-    var _m = addMarker({
+    var m = addMarker({
         id: "point_" + id,
         lat: lat, lng: lng, tit: pr, draggable: cust == '', label: pr,
         clustering: false,
     });
-    _m.addListener('click', function (event) {
+    m.addListener('click', function (event) {
         var index = findPointMarkerIndex(id);
         if (index > -1) {
             var cpr = point_views[index].Pr;
@@ -741,7 +741,7 @@ function addPoint(id, pr, lat, lng, cust) {
                 "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>" +
                 transformcustomerbtn;
 
-            openInfoWindow(event, windowdesc);
+            openInfoWindow(new google.maps.LatLng(lat, lng), windowdesc);
 
         }
     });
@@ -749,11 +749,11 @@ function addPoint(id, pr, lat, lng, cust) {
 
 
     if (cust != undefined && cust != null && cust != '') { // customer point
-        _m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(1, 1), anchor: new google.maps.Point(0, 0) })
+        m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(1, 1), anchor: new google.maps.Point(0, 0) });
     }
     else { // normal point
-        _m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) })
-        _m.addListener("dragend", function (e) {
+        m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+        m.addListener("dragend", function (e) {
             onDragEnd({ id: id, latLng: e.latLng });
         });
     }
@@ -762,7 +762,7 @@ function addPoint(id, pr, lat, lng, cust) {
     _id = id.substring(id.lastIndexOf('_') + 1);
 
     point_views.push({ Id: _id, Lat: lat, Lng: lng, Pr: pr, CstId: cust });
-    return _m;
+    return m;
 }
 
 function refreshAreaLine() {
@@ -1143,14 +1143,21 @@ function drawAreaLinePoints(edit, isleaf, editcustomer) {
                         if (arealine.length > 0)
                             arealine.push(arealine[0]);
                         var l = addPolyline({
-                            line: arealine, color: data.Color, weight: 3,
+                            line: arealine,
+                            color: data.Color,
+                            weight: 3,
                             windowdesc: data.Desc,
                             fit: true
                         });
 
+                    } else {
+                        
+                        var poly = addPolygon({ line: arealine, color: data.Color, weight: 3, windowdesc: data.Desc, movingshape: true, fit: true });
+                        poly.addListener('click', function (event) {
+                            showDetail(selected_id);
+                        });
+
                     }
-                    else
-                        addPolygon({ line: arealine, color: data.Color, weight: 3, windowdesc: data.Desc, movingshape: true, fit: true });
                 }
                 if (!editcustomer)
                     drawAreaParentLine(arealine.length == 0);

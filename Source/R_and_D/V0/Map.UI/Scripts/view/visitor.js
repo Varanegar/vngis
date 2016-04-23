@@ -55,7 +55,7 @@ $(document).ready(function () {
         ]
     });
 
-    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
+    initMap('mapContainer', MapCenterPosition);
 
     $("#btn_marker").on("click", function (e) {
         if ($("#pnl_marker").is(':hidden')) {
@@ -128,7 +128,7 @@ function drawMarkers() {
         }),
         success: function (data) {
             $.each(data, function (i, item) {
-                var _m = addMarker({
+                var m = addMarker({
                     id: "marker_" + item.Id,
                     fit: true,
                     lat: item.Latitude, lng: item.Longitude,
@@ -137,17 +137,19 @@ function drawMarkers() {
 
                 var icon = "marker0";
                 var color = "";
-                if ((item.PointType == 5 /*PointType.Customer*/) || (item.PointType == 7 /*PointType.GpsOff*/))
-                {
-                    if (item.PointType == 5 /*PointType.Customer*/){ icon = "customer"; }
-                    else if (item.PointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
+                //if ((item.PointType == 5 /*PointType.Customer*/) || (item.PointType == 7 /*PointType.GpsOff*/))
+                //{
+                //    if (item.PointType == 5 /*PointType.Customer*/){ icon = "customer"; }
+                //    else if (item.PointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
                         
-                    _m.setIcon("../../Content/img/pin/" + icon + ".png", new google.maps.Size(16, 16), new google.maps.Point(0, 0)
-                        , new google.maps.Point(8, 8));
-                }
-                else
-                {
-                        if (item.SubType == 1 /*(int)ESubType.OUTE_LINE*/) { icon = "outeline"; }
+                //    m.setIcon("../../Content/img/pin/" + icon + ".png", new google.maps.Size(16, 16), new google.maps.Point(0, 0)
+                //        , new google.maps.Point(8, 8));
+                //}
+                //else
+                //{
+                    if (item.SubType == 1 /*(int)ESubType.OUTE_LINE*/) { icon = "outeline"; }
+                    else if (item.PointType == 5 /*PointType.Customer*/) { icon = "customer"; }
+                    else if (item.PointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
                     else if (item.SubType == 3 /*(int)ESubType.DISTANCE*/) { icon = "distance"; }
                     else if (item.PointType == 0 /*PointType.Order*/) { icon = "order"; }
                     else if (item.PointType == 2 /*PointType.LackOfVisit*/) { icon = "lackvisit"; }
@@ -158,16 +160,9 @@ function drawMarkers() {
 
                     if (item.SubType == 2 /*(int)ESubType.NEW*/ ) { color = "1"; }
 
-                    
+                    m.setIcon({ url: "../../Content/img/pin/" + icon + color + ".png", size: MarkersIcon.Event.Size, anchor: MarkersIcon.Event.Anchor });
 
-                    _m.setIcon({ url: "../../Content/img/pin/" + icon + color + ".png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
-
-                    //test
-                    //if (item.PointType == 2) {                        
-                    //    _m.setIcon({ url: "../../Content/img/pin/test.gif" });
-                    //}
-
-                }
+                //}
             });
             renderClusterMarkers();
             fitPointBounds();
@@ -205,7 +200,7 @@ function drawVisitorsPath() {
                                 lat: item.Latitude, lng: item.Longitude,
                                 clustering: false, windowdesc: "<br/>"+item.Desc
                             });
-                            m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+                            m.setIcon({ url: MarkersIcon.Point.Url, size: MarkersIcon.Point.Size, anchor: MarkersIcon.Point.Anchor });
 
                             arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                         });

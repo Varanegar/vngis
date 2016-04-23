@@ -9,8 +9,8 @@ namespace TrackingMap.Infrastructure
         public static void Execute()
         {
             DefaultValue.SetServerPath(System.Web.HttpContext.Current.Server.MapPath("").Replace("\\", "/"));
-            ConfigService.ResetConfig();
             MakeDirectory();
+            ConfigService.ResetConfig();
         }
 
         private static void MakeDirectory()

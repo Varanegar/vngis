@@ -33,7 +33,7 @@ $(document).ready(function () {
         ]
     });
 
-    initMap('mapContainer', { lng: 51.4230556, lat: 35.6961111 });
+    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
     $("#ddl_area").on("change", function (event) {
         var value = $("#ddl_area").val();
         $("#ddl_visitor_group").empty();

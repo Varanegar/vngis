@@ -154,8 +154,8 @@
             <div class="col-md-3">
                 <div class="side-bar">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#pnl_area">محدوده ها</a></li>
-                        <li ><a data-toggle="tab" href="#pnl_condition">خروجی ها</a></li>
+                        <li class="active"><a id="tab_area_list" data-toggle="tab" href="#pnl_area">محدوده ها</a></li>
+                        <li ><a id="tab_result_check" data-toggle="tab" href="#pnl_condition">خروجی ها</a></li>
                         <li><a id="tab_area_info" data-toggle="tab" href="#pnl_area_info">اطلاعات مشتری</a></li>
                     </ul>
                     <div class="tab-content">
@@ -168,63 +168,63 @@
                         <div id="pnl_condition" class="tab-pane fade">
                             <div id="pnl_marker" style="height: 520px" class="frame-border color-back-ligt-gray">
 
-                                @Html.CheckBox("chk_request_count", false, new { @id = "chk_request_count", @class = "control-label" })
+                                @Html.CheckBox("chk_request_count", true, new { @id = "chk_request_count", @class = "control-label" })
                                 <label for="chk_request_count">تعداد درخواست</label>
                                 <br />
 
-                                @Html.CheckBox("chk_factor_count", false, new { @id = "chk_factor_count", @class = "control-label" })
+                                @Html.CheckBox("chk_factor_count", true, new { @id = "chk_factor_count", @class = "control-label" })
                                 <label for="chk_factor_count">تعداد فاکتور</label>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_count", false, new { @id = "chk_reject_count", @class = "control-label" })
+                                @Html.CheckBox("chk_reject_count", true, new { @id = "chk_reject_count", @class = "control-label" })
                                 <label for="chk_reject_count">تعداد برگشت فاکتور</label>
                                 <br />
 
-                                @Html.CheckBox("chk_sale_item_count", false, new { @id = "chk_sale_item_count", @class = "control-label" })
+                                @Html.CheckBox("chk_sale_item_count", true, new { @id = "chk_sale_item_count", @class = "control-label" })
                                 <label for="chk_sale_item_count">تعداد اقلام کالای فروش رفته</label>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_item_count", false, new { @id = "chk_reject_item_count", @class = "control-label" })
+                                @Html.CheckBox("chk_reject_item_count", true, new { @id = "chk_reject_item_count", @class = "control-label" })
                                 <label for="chk_reject_item_count">تعداد اقلام کالای برگشتی</label>
                                 <br />
 
-                                @Html.CheckBox("chk_sale_qty", false, new { @id = "chk_sale_qty", @class = "control-label" })
+                                @Html.CheckBox("chk_sale_qty", true, new { @id = "chk_sale_qty", @class = "control-label" })
                                 <label for="chk_sale_qty">تعداد کالای فروش رفته (کارتن : ظرف)</label>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_qty", false, new { @id = "chk_reject_qty", @class = "control-label" })
+                                @Html.CheckBox("chk_reject_qty", true, new { @id = "chk_reject_qty", @class = "control-label" })
                                 <label for="chk_reject_qty">تعداد کالای برگشتی (کارتن : ظرف)</label>
                                 <br />
 
-                                @Html.CheckBox("chk_sale_amount", false, new { @id = "chk_sale_amount", @class = "control-label" })
+                                @Html.CheckBox("chk_sale_amount", true, new { @id = "chk_sale_amount", @class = "control-label" })
                                 <label for="chk_sale_amount">ریال کالای فروش رفته</label>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_amount", false, new { @id = "chk_reject_amount", @class = "control-label" })
+                                @Html.CheckBox("chk_reject_amount", true, new { @id = "chk_reject_amount", @class = "control-label" })
                                 <label for="chk_reject_amount">ریال کالای برگشتی</label>
                                 <br />
 
-                                @Html.CheckBox("chk_sale_weight", false, new { @id = "chk_sale_weight", @class = "control-label" })
+                                @Html.CheckBox("chk_sale_weight", true, new { @id = "chk_sale_weight", @class = "control-label" })
                                 <label for="chk_sale_weight">وزن کالای فروش رفته</label>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_weight", false, new { @id = "chk_reject_weight", @class = "control-label" })
+                                @Html.CheckBox("chk_reject_weight", true, new { @id = "chk_reject_weight", @class = "control-label" })
                                 <label for="chk_reject_weight">وزن کالای برگشتی</label>
                                 <br />
 
-                                @Html.CheckBox("chk_sale_discount", false, new { @id = "chk_sale_discount", @class = "control-label" })
+                                @Html.CheckBox("chk_sale_discount", true, new { @id = "chk_sale_discount", @class = "control-label" })
                                 <label for="chk_sale_discount">ریال تخفیف فروش رفته</label>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_discount", false, new { @id = "chk_reject_discount", @class = "control-label" })
+                                @Html.CheckBox("chk_reject_discount", true, new { @id = "chk_reject_discount", @class = "control-label" })
                                 <label for="chk_reject_discount">ریال تخفیف برگشتی</label>
                                 <br />
 
-                                @Html.CheckBox("chk_bonus_count", false, new { @id = "chk_bonus_count", @class = "control-label" })
+                                @Html.CheckBox("chk_bonus_count", true, new { @id = "chk_bonus_count", @class = "control-label" })
                                 <label for="chk_bonus_count">تعداد اقلام جایزه</label>
                                 <br />
 
-                                @Html.CheckBox("chk_bonus_qty", false, new { @id = "chk_bonus_qty", @class = "control-label" })
+                                @Html.CheckBox("chk_bonus_qty", true, new { @id = "chk_bonus_qty", @class = "control-label" })
                                 <label for="chk_bonus_qty">تعداد جایزه (کارتن : ظرف)</label>
                                 <br />
 

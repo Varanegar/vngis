@@ -65,7 +65,7 @@ function intDate(dateId, setToday) {
 function addItemsToDroupdown(elementId, data) {
     $.each(data, function (i, item) {
         $("#" + elementId).append
-            ('<option value="' + item.Id + '">' + item.Title + '</option>');
+            ('<option value="' + (item.Id || item.IntId)  + '">' + item.Title + '</option>');
     });
 }
 //--------------------------------------------------

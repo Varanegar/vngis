@@ -69,6 +69,20 @@ function removeListener(event) {
     google.maps.event.clearListeners(gmap, event);
 }
 
+function getSpace() {
+    var zoom = gmap.getZoom();
+    if (zoom <= 5) return 1;
+    if (zoom <= 8) return 0.2;
+    if (zoom <= 10) return 0.1;
+    if (zoom <= 11) return 0.02;
+    if (zoom <= 12) return 0.008;
+    if (zoom <= 13) return 0.005;
+    if (zoom <= 14) return 0.002;
+    if (zoom <= 16) return 0.0015;
+    if (zoom <= 18) return 0.001;
+    else return 0.1;
+}
+
 // ----------------------------------------------------------
 // Markers
 // ----------------------------------------------------------
@@ -101,7 +115,7 @@ function addMarker(opt_options) {
             position: new google.maps.LatLng(lat, lng),
             draggable: drg,            
             labelContent: label,
-            labelAnchor: new google.maps.Point(22, 30),
+            labelAnchor: new google.maps.Point(22, 35),
             labelClass: "labels", // the CSS class for the label
             labelStyle: { opacity: 0.75 }
         });
@@ -117,7 +131,7 @@ function addMarker(opt_options) {
     // -------
     if ((windowdesc != null) && (windowdesc != undefined) && (windowdesc != '')) {
         marker.addListener('click', function (event) {
-            openInfoWindow(event, windowdesc);
+            openInfoWindow(new google.maps.LatLng(lat, lng), windowdesc);
         });
     }
     // -------
@@ -173,16 +187,12 @@ function closeInfoWindow() {
 
 }
 
-function openInfoWindow(event, windowdesc) {
+function openInfoWindow(latlng, windowdesc) {
     closeInfoWindow();
     gmap_infoWindow.setContent("<div id='infoWindow'>"+windowdesc+"</div>");
-    gmap_infoWindow.setPosition(event.latLng);
+    gmap_infoWindow.setPosition(latlng);
     //gmap_infoWindow.setMaxWidth(300);
     gmap_infoWindow.open(gmap);
-}
-
-function addInfoWindow(contentString) {
-    infoWindow = new google.maps.InfoWindow;
 }
 
 // ----------------------------------------------------------
@@ -198,20 +208,16 @@ function addPolyline(opt_options) {
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
     var dashed = options['dashed'] || false;
+    var fit = options['fit'] || false;
+
     var lable = options['lable'] || '';
     var lableclass = options['lableclass'] || '';
-
-    var fit = options['fit'] || false;
-    var showbubble = options['showbubble'] || false;
-    var bubbledesc = '';
+    var lablewindowdesc = options['lableclass'] || '';
+    
 
     if ((lable == null) || (lable == undefined)) lable = '';
     if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
 
-    if (showbubble == true) {
-        bubbledesc = windowdesc;
-        windowdesc = '';
-    }
 
     var opacity = 1;
 
@@ -277,14 +283,14 @@ function addPolyline(opt_options) {
     // -------- window
     if ((windowdesc != null) && (windowdesc != undefined) && (windowdesc != '')) {
         path.addListener('click', function (event) {
-            openInfoWindow(event, windowdesc);
+            openInfoWindow(event.latLng, windowdesc);
         });
     }
 
 
     // ------- lables
-    if ((lable != '') || (bubbledesc != '')) {
-        addLableToPoly(linecoordinates, lable, lableclass, false, bubbledesc );
+    if ((lable != '') ) {
+        addLableToPoly(linecoordinates, lable, lableclass, false, lablewindowdesc);
     }
     // ------- fit to bounds
     if ((fit == true)&&(linecoordinates.length > 0)) {
@@ -303,12 +309,13 @@ function addPolyline(opt_options) {
 
 function addLableToPoly(line, lable, lableclass, ispolygon , windowdesc) {
     if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
+
     if (line.length > 0) {
         var isline = false;
         if ((ispolygon == false) &&
             (line[0].lat() != line[line.length - 1].lat()) &&
             (line[0].lng() != line[line.length - 1].lng()))
-            var isline = true;
+            isline = true;
 
         var center;
         if (isline == false) {
@@ -329,23 +336,24 @@ function addLableToPoly(line, lable, lableclass, ispolygon , windowdesc) {
             draggable: false,
             map: gmap,
             labelContent: lable,
-            labelAnchor: new google.maps.Point(100, 0),
+            labelAnchor: new google.maps.Point(100, -5),
             icon:{ url: "../Content/img/pin/center.png", size: new google.maps.Size(6, 6), anchor: new google.maps.Point(3, 3) },
             labelClass: lableclass, // the CSS class for the label
            // labelStyle: { opacity: 0.5 }
         });
 
         if (windowdesc != '') {
-
             marker.addListener('click', function (event) {
-                    openInfoBubble(marker, windowdesc);
+                  closeInfoWindow();
+                  openInfoWindow(center, windowdesc);
                 });
-            openInfoBubble(marker, windowdesc);
         }
-
         gmap_markers.push(marker);
+        return marker;
     }
+    return null;
 }
+
 
 function openInfoBubble(marker, windowdesc) {
 
@@ -379,25 +387,18 @@ function openInfoBubble(marker, windowdesc) {
 function addPolygon(opt_options) {
 
     var options = opt_options || {};
+    //polygon
     var linecoordinates = options['line'] || [];
     var color = options['color'] || '#000000';
     var fillcolor = options['fillcolor'] || '#F46717';
     var weight = options['weight'] || 2;
     var windowdesc = options['windowdesc'] || '';
     var movingshape = options['movingshape'] || false;
+    var fit = options['fit'] || false;
+    // lable
     var lable = options['lable'] || '';
     var lableclass = options['lableclass'] || '';
-    var fit = options['fit'] || false;
-    var showbubble = options['showbubble'] || false;
-    var bubbledesc = '';
-
-    if ((lable == null) || (lable == undefined)) lable = '';
-    if ((windowdesc == null) || (windowdesc == undefined)) windowdesc = '';
-
-    if (showbubble == true) {
-        bubbledesc = windowdesc;
-        windowdesc = '';
-    }
+    var lablewindowdesc = options['lablewindowdesc'] || '';
 
     var polygon = new google.maps.Polygon({
         path: linecoordinates,
@@ -411,12 +412,12 @@ function addPolygon(opt_options) {
     // --------
     if (windowdesc != '') {
         polygon.addListener('click', function (event) {
-            openInfoWindow(event, windowdesc);
+            openInfoWindow(event.latLng, windowdesc);
         });
     }
     // ------- lables
-    if ((lable != '') || (bubbledesc != '')) {
-        addLableToPoly(linecoordinates, lable, lableclass, true, bubbledesc);
+    if ((lable != '') ) {
+        addLableToPoly(linecoordinates, lable, lableclass, true, lablewindowdesc);
     }
     // --------
     if (movingshape == true) {
