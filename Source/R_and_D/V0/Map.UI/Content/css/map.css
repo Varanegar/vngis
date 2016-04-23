@@ -32,7 +32,8 @@
    text-align: center;
    width: 200px;
    white-space: nowrap;
-    opacity: 1;
+   opacity: 1;
+   border-radius: 20px;
 }
 
 #infoWindow {

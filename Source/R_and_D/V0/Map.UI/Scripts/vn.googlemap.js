@@ -101,7 +101,7 @@ function addMarker(opt_options) {
             position: new google.maps.LatLng(lat, lng),
             draggable: drg,            
             labelContent: label,
-            labelAnchor: new google.maps.Point(22, 30),
+            labelAnchor: new google.maps.Point(22, 35),
             labelClass: "labels", // the CSS class for the label
             labelStyle: { opacity: 0.75 }
         });
@@ -322,7 +322,7 @@ function addLableToPoly(line, lable, lableclass, ispolygon , windowdesc) {
             draggable: false,
             map: gmap,
             labelContent: lable,
-            labelAnchor: new google.maps.Point(100, 0),
+            labelAnchor: new google.maps.Point(100, -5),
             icon:{ url: "../Content/img/pin/center.png", size: new google.maps.Size(6, 6), anchor: new google.maps.Point(3, 3) },
             labelClass: lableclass, // the CSS class for the label
            // labelStyle: { opacity: 0.5 }

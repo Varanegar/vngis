@@ -1142,14 +1142,21 @@ function drawAreaLinePoints(edit, isleaf, editcustomer) {
                         if (arealine.length > 0)
                             arealine.push(arealine[0]);
                         var l = addPolyline({
-                            line: arealine, color: data.Color, weight: 3,
+                            line: arealine,
+                            color: data.Color,
+                            weight: 3,
                             windowdesc: data.Desc,
                             fit: true
                         });
 
+                    } else {
+                        
+                        var poly = addPolygon({ line: arealine, color: data.Color, weight: 3, windowdesc: data.Desc, movingshape: true, fit: true });
+                        poly.addListener('click', function (event) {
+                            showDetail(selected_id);
+                        });
+
                     }
-                    else
-                        addPolygon({ line: arealine, color: data.Color, weight: 3, windowdesc: data.Desc, movingshape: true, fit: true });
                 }
                 if (!editcustomer)
                     drawAreaParentLine(arealine.length == 0);
