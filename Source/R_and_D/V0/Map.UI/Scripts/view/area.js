@@ -551,12 +551,12 @@ function onCustomerMarkerClick(e, id, marker, desc, editable) {
                     windowdesc = "<br />" + desc + "<br />" +
                     "<button id='btn_remove_customer_' onclick='removeFromSelected(\"" + id + "\", true)' class='btn btn-default'>حذف از مسیر</button>"
                 }
-                openInfoWindow(e, windowdesc);
+                openInfoWindow(e.latLng, windowdesc);
             }
         }
     }
     else {
-        openInfoWindow(e, "<br />" + desc);
+        openInfoWindow(e.LatLng, "<br />" + desc);
     }
 
 }
@@ -720,12 +720,12 @@ function addPoint(id, pr, lat, lng, cust) {
     if ((cust == undefined) || (cust == null))
         cust = '';
 
-    var _m = addMarker({
+    var m = addMarker({
         id: "point_" + id,
         lat: lat, lng: lng, tit: pr, draggable: cust == '', label: pr,
         clustering: false,
     });
-    _m.addListener('click', function (event) {
+    m.addListener('click', function (event) {
         var index = findPointMarkerIndex(id);
         if (index > -1) {
             var cpr = point_views[index].Pr;
@@ -741,7 +741,7 @@ function addPoint(id, pr, lat, lng, cust) {
                 "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>" +
                 transformcustomerbtn;
 
-            openInfoWindow(event, windowdesc);
+            openInfoWindow(new google.maps.LatLng(lat, lng), windowdesc);
 
         }
     });
@@ -749,11 +749,11 @@ function addPoint(id, pr, lat, lng, cust) {
 
 
     if (cust != undefined && cust != null && cust != '') { // customer point
-        _m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(1, 1), anchor: new google.maps.Point(0, 0) });
+        m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(1, 1), anchor: new google.maps.Point(0, 0) });
     }
     else { // normal point
-        _m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
-        _m.addListener("dragend", function (e) {
+        m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+        m.addListener("dragend", function (e) {
             onDragEnd({ id: id, latLng: e.latLng });
         });
     }
@@ -762,7 +762,7 @@ function addPoint(id, pr, lat, lng, cust) {
     _id = id.substring(id.lastIndexOf('_') + 1);
 
     point_views.push({ Id: _id, Lat: lat, Lng: lng, Pr: pr, CstId: cust });
-    return _m;
+    return m;
 }
 
 function refreshAreaLine() {

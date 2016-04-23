@@ -262,7 +262,7 @@ function drawAreaMarker(ids) {
 
                     m.addListener('click', function (e) {
                         closeInfoWindow();                        
-                        openInfoWindow(e, '<br/><h5>' + (item.Lable || '') + '</h5>');
+                        openInfoWindow(e.latLng, '<br/><h5>' + (item.Lable || '') + '</h5>');
                         setCustomerInfoPanel(getGoodReportHtml(item.JData));
                     });
                     

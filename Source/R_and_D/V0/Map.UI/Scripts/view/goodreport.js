@@ -281,7 +281,7 @@ function drawAreaCustomer(leafids) {
 
                         m.addListener('click', function (e) {
                             closeInfoWindow();                        
-                            openInfoWindow(e, '<br/><h5>' + (item.Lable || '') + '</h5>');
+                            openInfoWindow(new google.maps.LatLng(item.Latitude, item.Longitude), '<br/><h5>' + (item.Lable || '') + '</h5>');
                             setAreaInfoPanel(getGoodReportHtml(item.JData));
                         });
                     

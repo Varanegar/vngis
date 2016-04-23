@@ -71,14 +71,15 @@ function removeListener(event) {
 
 function getSpace() {
     var zoom = gmap.getZoom();
-    if (zoom < 5) return 1;
-    if (zoom < 10) return 0.1;
-    if (zoom < 11) return 0.02;
-    if (zoom < 12) return 0.008;
-    if (zoom < 13) return 0.005;
-    if (zoom < 14) return 0.002;
-    if (zoom < 16) return 0.0015;
-    if (zoom < 18) return 0.001;
+    if (zoom <= 5) return 1;
+    if (zoom <= 8) return 0.2;
+    if (zoom <= 10) return 0.1;
+    if (zoom <= 11) return 0.02;
+    if (zoom <= 12) return 0.008;
+    if (zoom <= 13) return 0.005;
+    if (zoom <= 14) return 0.002;
+    if (zoom <= 16) return 0.0015;
+    if (zoom <= 18) return 0.001;
     else return 0.1;
 }
 
@@ -130,7 +131,7 @@ function addMarker(opt_options) {
     // -------
     if ((windowdesc != null) && (windowdesc != undefined) && (windowdesc != '')) {
         marker.addListener('click', function (event) {
-            openInfoWindow(event, windowdesc);
+            openInfoWindow(new google.maps.LatLng(lat, lng), windowdesc);
         });
     }
     // -------
@@ -186,10 +187,10 @@ function closeInfoWindow() {
 
 }
 
-function openInfoWindow(event, windowdesc) {
+function openInfoWindow(latlng, windowdesc) {
     closeInfoWindow();
     gmap_infoWindow.setContent("<div id='infoWindow'>"+windowdesc+"</div>");
-    gmap_infoWindow.setPosition(event.latLng);
+    gmap_infoWindow.setPosition(latlng);
     //gmap_infoWindow.setMaxWidth(300);
     gmap_infoWindow.open(gmap);
 }
@@ -282,7 +283,7 @@ function addPolyline(opt_options) {
     // -------- window
     if ((windowdesc != null) && (windowdesc != undefined) && (windowdesc != '')) {
         path.addListener('click', function (event) {
-            openInfoWindow(event, windowdesc);
+            openInfoWindow(event.latLng, windowdesc);
         });
     }
 
@@ -344,7 +345,7 @@ function addLableToPoly(line, lable, lableclass, ispolygon , windowdesc) {
         if (windowdesc != '') {
             marker.addListener('click', function (event) {
                   closeInfoWindow();
-                  openInfoWindow(event, windowdesc);
+                  openInfoWindow(center, windowdesc);
                 });
         }
         gmap_markers.push(marker);
@@ -411,7 +412,7 @@ function addPolygon(opt_options) {
     // --------
     if (windowdesc != '') {
         polygon.addListener('click', function (event) {
-            openInfoWindow(event, windowdesc);
+            openInfoWindow(event.latLng, windowdesc);
         });
     }
     // ------- lables
