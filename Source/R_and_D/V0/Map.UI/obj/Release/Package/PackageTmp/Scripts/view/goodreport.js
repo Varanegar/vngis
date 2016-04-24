@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     intDate('dte_to', true);
     intDate('dte_from', true);
-    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
+    initMap('mapContainer', MapCenterPosition);
 
     $("#grid_area").kendoGrid({
         dataSource: {
@@ -277,7 +277,7 @@ function drawAreaCustomer(leafids) {
                             clustering: true,
                             fit: true
                         });
-                        m.setIcon({ url: "../Content/img/pin/customerNew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+                        m.setIcon({ url: "../Content/img/pin/customerNew.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
 
                         m.addListener('click', function (e) {
                             closeInfoWindow();                        

@@ -79,7 +79,7 @@ $(document).ready(function () {
         }
     });
 
-    initMap('mapContainer', { lng: 46.293039, lat: 38.0732100 });
+    initMap('mapContainer', MapCenterPosition);
 
 
 
@@ -190,7 +190,7 @@ $(document).ready(function () {
                 { field: "Phone", title: "تلفن", width: 100, filterable: { cell: { operator: "contains" } } },
                 { field: "ShopTitle", title: "فروشگاه", width: 100, filterable: { cell: { operator: "contains" } } },
                 { field: "Activity", title: "فعالیت", width: 100, filterable: { cell: { operator: "contains" } } },
-                { field: "Address", title: "آدرس", filterable: { cell: { operator: "contains" } } },
+                { field: "Address", title: "آدرس", filterable: { cell: { operator: "contains" } } }
             ]
         });
 
@@ -533,7 +533,7 @@ function onCustomerMarkerClick(e, id, marker, desc, editable) {
         var oicon = marker.icon;
         if ((oicon.url.indexOf("customerselected") < 0) && (oicon.url.indexOf("customer2") < 0)) {
             selected_markers.push({ marker: marker, oldicon: oicon });
-            marker.setIcon({ url: "../Content/img/pin/customerselected.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+            marker.setIcon({ url: "../Content/img/pin/customerselected.png", size: MarkersIcon.Customer.Size, anchor:  MarkersIcon.Customer.Anchor });
 
             if (selected_markers.length > 1) {
                 closeInfoWindow();
@@ -545,11 +545,11 @@ function onCustomerMarkerClick(e, id, marker, desc, editable) {
                 var windowdesc = '';
                 if (oicon.url.indexOf("customer0") > 0) {
                     windowdesc = "<br />" + desc + "<br />" +
-                   "<button id='btn_add_customer_' onclick='addToSelected(\"" + id + "\", true)' class='btn btn-default'>افزودن به مسیر</button>"
+                        "<button id='btn_add_customer_' onclick='addToSelected(\"" + id + "\", true)' class='btn btn-default'>افزودن به مسیر</button>";
                 }
                 else {
                     windowdesc = "<br />" + desc + "<br />" +
-                    "<button id='btn_remove_customer_' onclick='removeFromSelected(\"" + id + "\", true)' class='btn btn-default'>حذف از مسیر</button>"
+                        "<button id='btn_remove_customer_' onclick='removeFromSelected(\"" + id + "\", true)' class='btn btn-default'>حذف از مسیر</button>";
                 }
                 openInfoWindow(e.latLng, windowdesc);
             }
@@ -571,11 +571,11 @@ function findCustomerMarkerIndex(id) {
 }
 
 function addToSelected(id) {
-    var _index = findCustomerMarkerIndex(id)
-    if (_index > -1) {
-        var mrk = selected_markers[_index].marker;
-        mrk.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
-        selected_markers.splice(_index, 1);
+    var index = findCustomerMarkerIndex(id);
+    if (index > -1) {
+        var mrk = selected_markers[index].marker;
+        mrk.setIcon({ url: "../Content/img/pin/customer1.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+        selected_markers.splice(index, 1);
         closeInfoWindow();
         addNewPoint(-1, mrk.getPosition().lat(), mrk.getPosition().lng(), id);
         refreshAreaLine();
@@ -583,19 +583,19 @@ function addToSelected(id) {
 }
 
 function removeFromSelected(id) {
-    var _index = findCustomerMarkerIndex(id)
-    if (_index > -1) {
-        var mrk = selected_markers[_index].marker;
-        mrk.setIcon({ url: "../Content/img/pin/customer0.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
-        selected_markers.splice(_index, 1);
+    var index = findCustomerMarkerIndex(id);
+    if (index > -1) {
+        var mrk = selected_markers[index].marker;
+        mrk.setIcon({ url: "../Content/img/pin/customer0.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+        selected_markers.splice(index, 1);
 
-        var _pointindex = findPointMarkerIndexByCustomer(id);
-        if (_pointindex > -1) {
-            removeMarkerById("point_" + point_views[_pointindex].Id);
-            for (var i = _pointindex; i < point_views.length - 1; i++) {
+        var pointindex = findPointMarkerIndexByCustomer(id);
+        if (pointindex > -1) {
+            removeMarkerById("point_" + point_views[pointindex].Id);
+            for (var i = pointindex; i < point_views.length - 1; i++) {
                 point_views[i].Pr = (parseInt(point_views[i].Pr) - 1).toString();
             }
-            point_views.splice(_pointindex, 1);
+            point_views.splice(pointindex, 1);
             refreshAreaLable();
             refreshAreaLine();
         }
@@ -748,11 +748,11 @@ function addPoint(id, pr, lat, lng, cust) {
 
 
 
-    if (cust != undefined && cust != null && cust != '') { // customer point
-        m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(1, 1), anchor: new google.maps.Point(0, 0) });
+    if ((cust != undefined) && (cust != null) && (cust != '')) { // customer point
+        m.setIcon({ url: MarkersIcon.PointMini.Url, size: MarkersIcon.PointMini.Size, anchor: MarkersIcon.PointMini.Anchor });
     }
     else { // normal point
-        m.setIcon({ url: "../Content/img/pin/point.png", size: new google.maps.Size(10, 10), anchor: new google.maps.Point(5, 5) });
+        m.setIcon({ url: MarkersIcon.Point.Url, size: MarkersIcon.Point.Size, anchor: MarkersIcon.Point.Anchor });
         m.addListener("dragend", function (e) {
             onDragEnd({ id: id, latLng: e.latLng });
         });
@@ -845,10 +845,10 @@ function addCustomerpoint(guid, lat, lng, pointid) {
     if (pointid != '') {
         var index = findPointMarkerIndex(pointid);
         point_views[index].CstId = guid;
-        m.setIcon({ url: "../Content/img/pin/customer1.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+        m.setIcon({ url: "../Content/img/pin/customer1.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
     }
     else {
-        m.setIcon({ url: "../Content/img/pin/customernew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) })
+        m.setIcon({ url: "../Content/img/pin/customernew.png", size: MarkersIcon.Customer.Size, anchor: new MarkersIcon.Customer.Anchor });
         m.addListener("dragend", function (e) {
             onCustomerDragEnd({ id: "customer_point_" + guid, latLng: e.latLng });
         });
@@ -888,22 +888,22 @@ function onCustomerDragEnd(args) {
         customer_views[index].Lat = args.latLng.lat();
         customer_views[index].Lng = args.latLng.lng();
     }
-    var _m = getMarkerById(args.id);
-    _m.setIcon({ url: "../Content/img/pin/customernew.png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
+    var m = getMarkerById(args.id);
+    m.setIcon({ url: "../Content/img/pin/customernew.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
 }
 
 function findCustomerViewIndex(id) {
-    var _id;
-    _id = id.substring(id.lastIndexOf('_') + 1);
+    var gid;
+    gid = id.substring(id.lastIndexOf('_') + 1);
 
     for (var i = 0; i < customer_views.length; i++) {
-        if (customer_views[i].Id == _id) {
-            return i
+        if (customer_views[i].Id == gid) {
+            return i;
         }
     }
 
     //if not found
-    customer_views.push({ Id: _id, Lat: 0, Lng: 0 });
+    customer_views.push({ Id: gid, Lat: 0, Lng: 0 });
     return customer_views.length - 1;
 }
 //----------------------------
@@ -1052,20 +1052,20 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                 }),
                 success: function(data) {
                     $.each(data, function(i, item) {
-                        var _m = addMarker({
+                        var m = addMarker({
                             id: "customer_point_" + item.Id,
                             lat: item.Latitude,
                             lng: item.Longitude,
                             draggable: editcustomer,
                             clustering: true
                         });
-                        _m.setIcon({ url: "../Content/img/pin/customer" + item.PointType + ".png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) });
-                        _m.addListener('click', function(e) {
-                            onCustomerMarkerClick(e, item.Id, _m, item.Desc, (!editcustomer && edit && isleaf))
+                        m.setIcon({ url: "../Content/img/pin/customer" + item.PointType + ".png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+                        m.addListener('click', function(e) {
+                            onCustomerMarkerClick(e, item.Id, m, item.Desc, (!editcustomer && edit && isleaf));
                         });
 
                         if (editcustomer)
-                            _m.addListener("dragend", function(e) {
+                            m.addListener("dragend", function(e) {
                                 onCustomerDragEnd({ id: "customer_point_" + item.Id, latLng: e.latLng });
                             });
 
@@ -1090,15 +1090,15 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                 data: JSON.stringify({ Id: selected_id }),
                 success: function (data) {
                     $.each(data, function (i, item) {
-                        var _m = addMarker({
+                        var m = addMarker({
                             id: "customer_point_" + item.Id,
                             lat: item.Latitude, lng: item.Longitude,
                             draggable: editcustomer,
                             windowdesc: item.Desc, clustering: true
                         });
-                        _m.setIcon({ url: "../Content/img/pin/customer" + item.PointType + ".png", size: new google.maps.Size(16, 16), anchor: new google.maps.Point(8, 8) })
+                        m.setIcon({ url: "../Content/img/pin/customer" + item.PointType + ".png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
                         if (editcustomer)
-                            _m.addListener("dragend", function (e) {
+                            m.addListener("dragend", function (e) {
                                 onCustomerDragEnd({ id: "customer_point_" + item.Id, latLng: e.latLng });
                             });
                     });
@@ -1126,14 +1126,14 @@ function drawAreaLinePoints(edit, isleaf, editcustomer) {
             if ((data != null) && (data.Points != null)) {
                 $.each(data.Points, function (i, item) {
                     if (edit) {
-                        m = addPoint(item.Id, item.Lable, item.Latitude, item.Longitude, item.ReferId);
+                        addPoint(item.Id, item.Lable, item.Latitude, item.Longitude, item.ReferId);
                         new_id = item.Lable;
                     }
                     arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
                 });
 
                 if (isleaf) {
-                    var l = addPolyline({
+                    addPolyline({
                         line: arealine, color: data.Color, weight: 3, windowdesc: data.Desc,
                         movingshape: true, direction: true, fit: true
                     });
@@ -1142,7 +1142,7 @@ function drawAreaLinePoints(edit, isleaf, editcustomer) {
                     if (editcustomer) {
                         if (arealine.length > 0)
                             arealine.push(arealine[0]);
-                        var l = addPolyline({
+                            addPolyline({
                             line: arealine,
                             color: data.Color,
                             weight: 3,
@@ -1181,13 +1181,13 @@ function onDragEnd(args) {
 }
 
 function findPointMarkerIndex(id) {
-    var _id;
+    var gid;
     if (id.lastIndexOf('_') > -1)
-        _id = id.substring(id.lastIndexOf('_') + 1);
-    else _id = id;
+        gid = id.substring(id.lastIndexOf('_') + 1);
+    else gid = id;
 
     for (var i = 0; i < point_views.length; i++) {
-        if (point_views[i].Id == _id) {
+        if (point_views[i].Id == gid) {
             return i;
         }
     }
@@ -1209,9 +1209,9 @@ function findPointMarkerIndexByCustomer(id) {
 //---------------------------------------------------------------------------
 window.onhashchange = function () {
     if (location.hash.length > 0) {
-        var _id = location.hash.replace('#', '');
-        if (_id != selected_id) {
-            selected_id = _id;
+        var id = location.hash.replace('#', '');
+        if (id != selected_id) {
+            selected_id = id;
             refreshMap(false);
         }
 

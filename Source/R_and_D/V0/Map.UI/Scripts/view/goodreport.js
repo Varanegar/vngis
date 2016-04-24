@@ -207,7 +207,7 @@ function drawAreaInfo(ids) {
                                 color: '#777777',
                                 lable: line.Lable,
                                 lableclass: 'good-report-labels',
-                                //windowdesc: line.Desc,
+                                lablewindowdesc: getGoodReportHtml(line.JData),
                                 //showbubble: true,
                                 direction: true,
                                 fit: true

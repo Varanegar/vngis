@@ -212,7 +212,7 @@ function addPolyline(opt_options) {
 
     var lable = options['lable'] || '';
     var lableclass = options['lableclass'] || '';
-    var lablewindowdesc = options['lableclass'] || '';
+    var lablewindowdesc = options['lablewindowdesc'] || '';
     
 
     if ((lable == null) || (lable == undefined)) lable = '';
@@ -319,7 +319,6 @@ function addLableToPoly(line, lable, lableclass, ispolygon , windowdesc) {
 
         var center;
         if (isline == false) {
-
             var bound = new google.maps.LatLngBounds();
             for (var i = 0; i < line.length; i++) {
                 bound.extend(line[i]);
@@ -428,7 +427,7 @@ function addPolygon(opt_options) {
             gmap_bounds.extend(linecoordinates[i]);
         }
     }
-    gmap_shaps.push(polygon)
+    gmap_shaps.push(polygon);
     return polygon;
 }
 // ----------------------------------------------------------
