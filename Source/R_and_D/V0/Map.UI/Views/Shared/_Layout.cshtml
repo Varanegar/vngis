@@ -5,39 +5,17 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     
-    @{
-        var kendoVersion = "2014.1.318";
-    }
 
-    @Styles.Render(string.Format("~/Content/css/kendo/{0}/kendo.default.min.css", kendoVersion))
-    @Styles.Render(string.Format("~/Content/css/kendo/{0}/kendo.common.min.css", kendoVersion))
-    @Styles.Render("~/Content/css/bootstrap-rtl.css")
-    @Styles.Render("~/Content/css/Site.css")
-    @Styles.Render("~/Content/css/map.css")
-    @Styles.Render("~/Content/css/style_responsive.css")
-    @Styles.Render("~/Content/css/sb-admin-2.css")
-
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Content/js/scripts.js")
-  
-
-    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.web.min.js", kendoVersion))
-    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/fa-IR.js", kendoVersion))
-    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/JalaliDate.js", kendoVersion))
-    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.core.js", kendoVersion))
-    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.calendar.js", kendoVersion))
-    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.popup.js", kendoVersion))
-    @Scripts.Render(string.Format("~/Scripts/kendo/{0}/kendo.datepicker.js", kendoVersion))
+    @Styles.Render("~/Content/kendocss")
+    @Styles.Render("~/Content/sitecss")
 
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyD7cqEKEjKQxbcOgFs92w9V1Do281bfv0E&v=3")
-    @Scripts.Render("~/Scripts/markerclusterer.js")
-    @Scripts.Render("~/Scripts/markerwithlabel.js")
-
-    @Scripts.Render("~/Scripts/vn.googlemap.js")
-    @Scripts.Render("~/Scripts/view/mapgeneral.js")
-
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/map")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/js/scripts.js")
 
     @Scripts.Render("~/Scripts/view/general.js")
     @Scripts.Render("~/Scripts/view/urls.js")

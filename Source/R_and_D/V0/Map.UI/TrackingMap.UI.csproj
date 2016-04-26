@@ -400,7 +400,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Properties\PublishProfiles\MapClient.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\infobubble.js" />
+    <Content Include="Scripts\map\infobubble.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -485,8 +485,8 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.view.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.web.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js" />
-    <Content Include="Scripts\markerclusterer.js" />
-    <Content Include="Scripts\markerwithlabel.js" />
+    <Content Include="Scripts\map\markerclusterer.js" />
+    <Content Include="Scripts\map\markerwithlabel.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -497,11 +497,11 @@
     <Content Include="Scripts\view\customerreport.js" />
     <Content Include="Scripts\view\general.js" />
     <Content Include="Scripts\view\laststatus.js" />
-    <Content Include="Scripts\view\mapgeneral.js" />
+    <Content Include="Scripts\map\mapgeneral.js" />
     <Content Include="Scripts\view\report.js" />
     <Content Include="Scripts\view\urls.js" />
     <Content Include="Scripts\view\visitor.js" />
-    <Content Include="Scripts\vn.googlemap.js" />
+    <Content Include="Scripts\map\vn.googlemap.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

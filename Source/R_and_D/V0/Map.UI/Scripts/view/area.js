@@ -848,7 +848,7 @@ function addCustomerpoint(guid, lat, lng, pointid) {
         m.setIcon({ url: "../Content/img/pin/customer1.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
     }
     else {
-        m.setIcon({ url: "../Content/img/pin/customernew.png", size: MarkersIcon.Customer.Size, anchor: new MarkersIcon.Customer.Anchor });
+        m.setIcon({ url: "../Content/img/pin/customernew.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
         m.addListener("dragend", function (e) {
             onCustomerDragEnd({ id: "customer_point_" + guid, latLng: e.latLng });
         });
