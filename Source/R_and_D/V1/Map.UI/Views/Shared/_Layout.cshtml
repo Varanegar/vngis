@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    
+
+    @Styles.Render("~/Content/kendocss")
+    @Styles.Render("~/Content/sitecss")
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/js/scripts.js")
+
+
+    @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyD7cqEKEjKQxbcOgFs92w9V1Do281bfv0E&v=3")
+    @Scripts.Render("~/Scripts/view/urls.js")
+    @Scripts.Render("~/Scripts/app.js")
+    @Scripts.Render("~/bundles/map")
+
+    @Scripts.Render("~/Scripts/view/general.js")
+
+    </head>
+    <body>
+      
+
+        <div id="container" >
+            <div id="sidebar" class="nav-collapse">
+                <div class="sidebar-toggler">
+                </div>
+                <ul id="side-menu" class="sidebar-menu">
+                    <li class="@(ViewBag.CurrMenu == "Road"? "active" : "" )">
+                        <a href="/Area/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.Route
+                        </a>
+                    </li>
+                    <li class="@(ViewBag.CurrMenu == "Tracking" ? "active" : "")">
+                        <a href="/Visitor/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                            @CaptionResource.Tracking
+                        </a>
+                    </li>
+                    <li class="@(ViewBag.CurrMenu == "LastStatus" ? "active" : "")">
+                        <a href="/LastStatus/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.LastStatus
+                        </a>
+                    </li>
+                    @*<li>
+                        <a class="@(ViewBag.CurrMenu == "CustomerReport" ? "Active" : "")" href="/CustomerReport/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.CustomerReport
+                        </a>
+                    </li>*@
+                    <li class="@(ViewBag.CurrMenu == "GoodReport" ? "active" : "")">
+                        <a href="/GoodReport/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.GoodReport
+                        </a>
+                    </li>
+                    <li class="@(ViewBag.CurrMenu == "GoodReport2" ? "active" : "")">
+                        <a href="/GoodByValueReport/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.GoodReport2
+                        </a>
+                    </li>
+                    <li id="menuExit">
+                        <a  href="#">
+                            <span class="icon-box">
+                                <i class='glyphicon glyphicon-log-out'></i>
+                            </span>
+                            @CaptionResource.Exit
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+          
+            <div id="main-content">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                        @RenderBody()
+                        @Html.Partial("../Shared/_Login")
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <footer>
+                <p>&copy; @DateTime.Now.Year - @CaptionResource.AppName</p>
+            </footer>
+        </div>
+        
+        
+
+        <script>
+            $(function () {
+            //$(document).ready(function () {
+            //      ko.applyBindings(headerMenu, $(".header-menu")[0]);
+            //$("#win").removeClass('hide');
+            //$("#win").kendoWindow({
+            //    width: "450px",
+            //    title: "ورود",
+            //    actions: [],
+            //    modal: true,
+            //    visible: false,
+            //    resizable: false
+            //});
+
+            //$(".login-form").removeClass('hide');
+            //$(".login-form").kendoWindow({
+            //    width: "450px",
+            //    title: "ورود",
+            //    actions: [],
+            //    modal: true,
+            //    visible: false,
+            //    resizable: false
+            //});
+
+            ko.applyBindings(accountManagerApp, $(".login-form")[0]);
+
+            $(document).on("click", ".glyphicon-log-out", function () {
+                accountManagerApp.logout();
+            });
+
+            //        headerMenu.refreshHeaderMenu();
+            });
+            
+            function openwindow() {
+                //$(".login-form").data("kendoWindow").center();
+                //$(".login-form").data("kendoWindow").open();
+
+                accountManagerApp.openLogin();
+            }
+        </script>
+
+        @RenderSection("scripts", required: false)
+
+
+
+
+       @* <script>jQuery(document).ready(function () { App.init(); });</script>*@
+
+</body>
+</html>

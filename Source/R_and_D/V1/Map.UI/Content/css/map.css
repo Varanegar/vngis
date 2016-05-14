@@ -1,0 +1,43 @@
+﻿
+.labels {
+   color: red;
+   background-color: white;
+   border: 2px solid black;
+   font-family: far_Yekan,Tahoma, "Arial", sans-serif;
+   font-size: 10px;
+   text-align: center;
+   width: 50px;
+   white-space: nowrap;
+    opacity: 0.5;
+}
+
+.line-labels {
+   color: black;
+   font-family: far_Yekan,Tahoma, "Arial", sans-serif;
+   font-size: 14px;
+   font-weight: bold;
+   text-align: center;
+   width: 200px;
+   white-space: nowrap;
+    opacity: 0.5;
+}
+
+.good-report-labels {
+   color: black;
+   background-color: white;
+   border: 1px solid #ee4f4f;
+   font-family: far_Yekan,Tahoma, "Arial", sans-serif;
+   font-size: 12px;
+   /*font-weight: bold;*/
+   text-align: center;
+   width: 200px;
+   white-space: nowrap;
+   opacity: 1;
+   border-radius: 20px;
+    padding: 5px;
+}
+
+#infoWindow {
+    min-width: 200px;
+    max-width: 600px;
+}
