@@ -1,52 +1,36 @@
 ﻿
 function removeCacheData(clientid) {
-    $.ajax({
-        type: "POST",
-        url: url_removecachedata,
-        async: false,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ Id: clientid }),
+    accountManagerApp.callApi(urls.removeproductreportcache, 'POST',
+    {
+        productFilter: { ClientId: clientid }
+    },
 
-        success: function (data) {
-        }
-    });
+    function (data) {
+    }, false);
 }
 
 function loadDdlSaleOffice() {
-
-
-    $.ajax({
-        type: "POST",
-        url: url_getcombodata,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.tblSaleOffice", ValueName: "ID", TextName: "Name", AddEmptyRow: true }),
-        success: function (data) {
-            addItemsToDroupdown("ddl_sale_office", data);
-        }
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+         { TblName: "gnr.tblSaleOffice", ValueName: "ID", TextName: "Name" },
+         function (data) {
+             addItemsToDroupdown({ elementId: "ddl_sale_office", data: data, addSelectRow: true });
     });
 
 }
 
 
 function loadDdlHeader() {
-    $.ajax({
-        type: "POST",
-        url: url_getcombodata,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.vwSupervisor", ValueName: "SupervisorCode", TextName: "FullName", AddEmptyRow: true }),
-        success: function (data) {
-            addItemsToDroupdown("ddl_header", data);
-        }
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+        { TblName: "gnr.vwSupervisor", ValueName: "SupervisorCode", TextName: "FullName", AddEmptyRow: true },
+        function (data) {
+            addItemsToDroupdown({ elementId: "ddl_header", data: data, addSelectRow: true });
     });
 
 }
 
 function loadDdlSeller() {
     $('#auto_seller').kendoAutoComplete({
-        dataTextField: 'Title',
+        dataTextField: 'title',
         filter: 'contains',
         placeholder: 'انتخاب کنید...',
         minLength: 3,
@@ -60,7 +44,7 @@ function loadDdlSeller() {
             var dataItem = this.dataItem(e.item.index());
 
             if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_seller").val(dataItem.Id || dataItem.IntId);
+                $("#ddl_seller").val(dataItem.uniqueId || dataItem.intId);
             } else
                 $("#ddl_seller").val('');
 
@@ -75,58 +59,37 @@ function loadDdlSeller() {
 }
 
 function loadAutoSeller(options) {
-    $.ajax({
-        type: "POST",
-        url: url_getautocompletedata,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.vwDealer", 
-            SearchValue: $("#auto_seller").val(),
-            ValueName: "PersCode",
-            TextName: "FullName", AddEmptyRow: true }),
-        success: function (result) {
+    accountManagerApp.callApi(urls.getautocompletedata, 'POST', 
+            { tblName: "gnr.vwDealer", 
+            searchTerm: $("#auto_seller").val(),
+            valueName: "PersCode",
+            textName: "FullName" },
+        function (result) {
             options.success(result);
-        }
     });
 
 }
 
 function loadDdlCustomer() {
-    $.ajax({
-        type: "POST",
-        url: url_getcombodata,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "sle.tblCustCtgrSle", ValueName: "CustCtgrCode", TextName: "CustCtgrName", AddEmptyRow: true }),
-        success: function (data) {
-            addItemsToDroupdown("ddl_customer_class", data);
-        }
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+        { TblName: "sle.tblCustCtgrSle", ValueName: "CustCtgrCode", TextName: "CustCtgrName", AddEmptyRow: true },
+        function (data) {
+            addItemsToDroupdown({ elementId: "ddl_customer_class", data: data, addSelectRow: true });
     });
 
 }
 function loadDdlCustomerActivity() {
-    $.ajax({
-        type: "POST",
-        url: url_getcombodata,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.tblCustAct", ValueName: "CustActCode", TextName: "CustActName", AddEmptyRow: true }),
-        success: function (data) {
-            addItemsToDroupdown("ddl_customer_activity", data);
-        }
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+        { TblName: "gnr.tblCustAct", ValueName: "CustActCode", TextName: "CustActName"},
+        function (data) {
+            addItemsToDroupdown({ elementId: "ddl_customer_activity", data: data, addSelectRow: true });
     });
-
 }
 function loadDdlCustomerDegree() {
-    $.ajax({
-        type: "POST",
-        url: url_getcombodata,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ TblName: "gnr.tblCustlevel", ValueName: "Code", TextName: "Title ", AddEmptyRow: true }),
-        success: function (data) {
-            addItemsToDroupdown("ddl_customer_degree", data);
-        }
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+        { TblName: "gnr.tblCustlevel", ValueName: "Code", TextName: "Title ", AddEmptyRow: true },
+        function (data) {
+            addItemsToDroupdown({ elementId: "ddl_customer_degree", data: data, addSelectRow: true });
     });
 
 }

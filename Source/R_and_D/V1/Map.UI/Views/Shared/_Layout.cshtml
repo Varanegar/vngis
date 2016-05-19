@@ -16,13 +16,16 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Content/js/scripts.js")
 
+    @Scripts.Render("~/Scripts/JalaliDate.js")
+
 
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyD7cqEKEjKQxbcOgFs92w9V1Do281bfv0E&v=3")
-    @Scripts.Render("~/Scripts/view/urls.js")
-    @Scripts.Render("~/Scripts/app.js")
     @Scripts.Render("~/bundles/map")
-
+    @Scripts.Render("~/Scripts/view/urls.js")
     @Scripts.Render("~/Scripts/view/general.js")
+
+
+
 
     </head>
     <body>
@@ -109,56 +112,25 @@
                 <p>&copy; @DateTime.Now.Year - @CaptionResource.AppName</p>
             </footer>
         </div>
-        
-        
+
+
+        @Scripts.Render("~/Scripts/app.js")
+        @RenderSection("scripts", required: false)
 
         <script>
             $(function () {
-            //$(document).ready(function () {
-            //      ko.applyBindings(headerMenu, $(".header-menu")[0]);
-            //$("#win").removeClass('hide');
-            //$("#win").kendoWindow({
-            //    width: "450px",
-            //    title: "ورود",
-            //    actions: [],
-            //    modal: true,
-            //    visible: false,
-            //    resizable: false
-            //});
+                ko.applyBindings(accountManagerApp, $(".login-form")[0]);
 
-            //$(".login-form").removeClass('hide');
-            //$(".login-form").kendoWindow({
-            //    width: "450px",
-            //    title: "ورود",
-            //    actions: [],
-            //    modal: true,
-            //    visible: false,
-            //    resizable: false
-            //});
+                $(document).on("click", ".glyphicon-log-out", function () {
+                    accountManagerApp.logout();
+                });
 
-            ko.applyBindings(accountManagerApp, $(".login-form")[0]);
-
-            $(document).on("click", ".glyphicon-log-out", function () {
-                accountManagerApp.logout();
+                //        headerMenu.refreshHeaderMenu();
             });
-
-            //        headerMenu.refreshHeaderMenu();
-            });
-            
-            function openwindow() {
-                //$(".login-form").data("kendoWindow").center();
-                //$(".login-form").data("kendoWindow").open();
-
-                accountManagerApp.openLogin();
-            }
         </script>
-
-        @RenderSection("scripts", required: false)
-
-
-
 
        @* <script>jQuery(document).ready(function () { App.init(); });</script>*@
 
 </body>
+
 </html>

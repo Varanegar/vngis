@@ -134,9 +134,11 @@ function accountManagerViewModel() {
 
         console.log(title + ': ' + message);
     }
-
-    self.callApi = function(url, callType, dataParams, callBackFunc) {
+    
+    self.callApi = function(url, callType, dataParams, callBackFunc, async) {
         freezUI();
+        async = async || true;
+        
         if (url == undefined || url == '')
             return;
 
@@ -160,7 +162,10 @@ function accountManagerViewModel() {
             type: callType,
             url: url,
             headers: headers,
-            data: dataParams
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataParams),
+            async: async
         }).done(function(data) {
             self.result(data);
             callBackFunc(data);

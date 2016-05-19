@@ -50,10 +50,18 @@ function intDate(dateId, setToday) {
 //--------------------------------------------------
 //--dropdown list
 //--------------------------------------------------
-function addItemsToDroupdown(elementId, data) {
+function addItemsToDroupdown(option) {
+    var elementId = option.elementId;
+    var data = option.data;
+    var addSelectRow = option || false; 
+    $("#" + elementId).empty();
+    if (addSelectRow)
+        $("#" + elementId).append
+            ('<option value="">انتخاب کنید ... </option>');
+
     $.each(data, function (i, item) {
         $("#" + elementId).append
-            ('<option value="' + (item.Id || item.IntId)  + '">' + item.Title + '</option>');
+            ('<option value="' + (item.uniqueId || item.intId)  + '">' + item.title + '</option>');
     });
 }
 //--------------------------------------------------
@@ -84,6 +92,7 @@ function mastercheckboxChange(e, gridId) {
 };
 function getSelectedRow(gridId) {
     var gridData = $("#"+gridId).data("kendoGrid");
-    var selectedRowData = gridData.dataItem($("#" + gridId).find("tr.k-state-selected"));
+    var selectedRowData = gridData.dataItem(gridData.select());
+    //var selectedRowData = gridData.dataItem($("#" + gridId).find("tr.k-state-selected"));
     return selectedRowData;
 }

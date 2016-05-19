@@ -36,20 +36,20 @@ $(document).ready(function () {
         dataBound: dataBound,
         columns: [
             {
-                field: "Id",
+                field: "uniqueId",
                 headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_area\")' />",
-                template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_area\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
+                template: "<input type='checkbox' value='#=uniqueId#' onchange='updateMasterCheckbox(\"grid_area\")' id=" + "chk" + "#=uniqueId#" + " class='checkboxGrid'/>",
                 width: 25
             },
-            { field: "Id", title: '', hidden: true },
-            { field: "IsLeaf", hidden: true, },
-            { field: "Title", title: 'عنوان' },
+            { field: "uniqueId", title: '', hidden: true },
+            { field: "isLeaf", hidden: true, },
+            { field: "areaName", title: 'عنوان' },
             {
-                field: "Id",
+                field: "uniqueId",
                 title: "&nbsp; &nbsp;",
                 width: 40,
                 template:
-                    "<button  value='#=IsLeaf#' type='button' class='btn-link btn-grid btn-detail' onclick=showDetail();><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
+                    "<button  value='#=isLeaf#' type='button' class='btn-link btn-grid btn-detail' onclick=showDetail();><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
             }
 
         ]
@@ -139,20 +139,14 @@ function dataBound() {
 
 function refreshGrid() {
     if ((selected_id != null) && (selected_id != undefined)) {
-        $.ajax({
-            type: "POST",
-            url: url_getareapath,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ Id: selected_id }),
-            success: function (data) {
+        accountManagerApp.callApi(urls.getareapath, 'POST', { regionAreaId: selected_id },
+            function (data) {
                 var list = "<button id = 'btn_back_0' class='btn btn-link color-gray' onclick='back(0)' > خانه</button>";
                 for (var i = data.length - 1 ; i >= 0 ; i--) {
-                    list += ">> <button id = 'btn_back_'" + data[i].Id + " class='btn btn-link color-gray' onclick=back('" + data[i].Id + "') >" + data[i].Title + "</button> ";
+                    list += ">> <button id = 'btn_back_'" + data[i].uniqueId + " class='btn btn-link color-gray' onclick=back('" + data[i].uniqueId + "') >" + data[i].title + "</button> ";
                 }
                 // location.hash = selected_id;
                 $("#pnl_path").html(list);
-            }
         });
     }
     else {
@@ -163,13 +157,8 @@ function refreshGrid() {
 }
 
 function loadAreaList(options) {
-    $.ajax({
-        type: "POST",
-        url: url_loadarealist,
-        data: JSON.stringify({ Id: selected_id }),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (result) {
+    accountManagerApp.callApi(urls.loadarealist, 'POST', { regionAreaParentId: selected_id },
+    function (result) {
             options.success(result);
 
             if (map_auto_refresh == true) {
@@ -180,8 +169,6 @@ function loadAreaList(options) {
                 });
                 refreshMap(ids);
             }
-
-        }
     });
 }
 
@@ -189,8 +176,6 @@ function loadAreaList(options) {
 //map
 //--------------------------------------------------------------------------------
 function refreshMap(ids) {
-
-    showWating();
     clearOverlays();
     if ((ids == undefined) || (ids == null))
         ids = getSelectedIds("grid_area");
@@ -200,29 +185,25 @@ function refreshMap(ids) {
 
 function drawAreasLine(ids) {
     line_load = false;
-    $.ajax({
-        type: "POST",
-        url: url_loadareasline,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(ids),
-        success: function (data) {
+    accountManagerApp.callApi(urls.loadareasline, 'POST',
+    { regionAreaIds: ids },
+    function(data) {
             if (data != null) {
                 $.each(data, function(i, line) {
                     var arealine = [];
-                    if (line.Points != null)
-                        $.each(line.Points, function(j, item) {
-                            arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                    if (line.points != null)
+                        $.each(line.points, function(j, item) {
+                            arealine.push(new google.maps.LatLng(item.latitude, item.longitude));
                         });
                     if (arealine.length > 0) {
                         var poly;
-                        if (line.IsLeaf == true)
-                            poly = addPolyline({ line: arealine, color: '#777777', lable: line.Lable, fit: true });
+                        if (line.isLeaf == true)
+                            poly = addPolyline({ line: arealine, color: '#777777', lable: line.lable, fit: true });
                         else {
-                            poly = addPolygon({ line: arealine, color: '#777777', lable: line.Lable, fit: true });
+                            poly = addPolygon({ line: arealine, color: '#777777', lable: line.lable, fit: true });
 
-                            poly.addListener('click', function (event) {
-                                selected_id = line.MasterId;
+                            poly.addListener('click', function(event) {
+                                selected_id = line.masterId;
                                 map_auto_refresh = true;
                                 refreshGrid();
                             });
@@ -232,53 +213,37 @@ function drawAreasLine(ids) {
                     }
                 });
             }
-        }
-    }).always(function () {
-        line_load = true;
-    if (marker_load)
-        hideWating();
     });
 }
 
 function drawAreaMarker(ids) {
-    marker_load = false;
-    $.ajax({
-        type: "POST",
-        url: url_loadgoodbyvaluereport,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(getFilter(ids)),
-        success: function (data) {
+    accountManagerApp.callApi(urls.loadproductvaluereport, 'POST',
+        getFilter(ids),
+        function(data) {
             if (data != null) {
                 $.each(data, function(i, item) {
                     var m = addMarker({
-                        id: "customer_point_" + item.Id,
-                        lat: item.Latitude,
-                        lng: item.Longitude,
+                        id: "customer_point_" + item.id,
+                        lat: item.latitude,
+                        lng: item.longitude,
                         clustering: true,
                         fit: true
                     });
                     m.setIcon({ url: "../Content/img/pin/customerNew.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
 
-                    m.addListener('click', function (e) {
-                        closeInfoWindow();                        
-                        openInfoWindow(e.latLng, getGoodReportHtml(item.JData));
-                        setCustomerInfoPanel(getGoodReportHtml(item.JData));
+                    m.addListener('click', function(e) {
+                        closeInfoWindow();
+                        openInfoWindow(e.latLng, getGoodReportHtml(item.jData));
+                        setCustomerInfoPanel(getGoodReportHtml(item.jData));
                     });
-                    
+
                 });
                 renderClusterMarkers();
                 fitPointBounds();
                 changed = false;
             }
         }
-    }).always(function () {
-        map_auto_refresh = false;
-        marker_load = true;
-        if (line_load)
-            hideWating();
-    });
-
+    );
 }
 
 function setCustomerInfoPanel(desc) {

@@ -2,8 +2,7 @@
 var map_auto_refresh = false;
 var client_id;
 var changed;
-var marker_load = true;
-var line_load = false;
+
 
 
 $(document).ready(function () {
@@ -36,20 +35,20 @@ $(document).ready(function () {
         dataBound: dataBound,
         columns: [
             {
-                field: "Id",
+                field: "uniqueId",
                 headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_area\")' />",
-                template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_area\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
+                template: "<input type='checkbox' value='#=uniqueId#' onchange='updateMasterCheckbox(\"grid_area\")' id=" + "chk" + "#=uniqueId#" + " class='checkboxGrid'/>",
                 width: 25
             },
-            { field: "Id", title: '', hidden: true },
-            { field: "IsLeaf", hidden: true, },
-            { field: "Title", title: 'عنوان' },
+            { field: "uniqueId", title: '', hidden: true },
+            { field: "isLeaf", hidden: true, },
+            { field: "areaName", title: 'عنوان' },
             {
-                field: "Id",
+                field: "uniqueId",
                 title: "&nbsp; &nbsp;",
                 width: 40,
                 template:
-                    "<button  value='#=IsLeaf#' type='button' class='btn-link btn-grid btn-detail' onclick=showDetail();><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
+                    "<button  value='#=isLeaf#' type='button' class='btn-link btn-grid btn-detail' onclick=showDetail();><span class='glyphicon glyphicon-zoom-in color-gray span-btn-grid'></span ></button>"
             }
         ]
     });
@@ -96,7 +95,7 @@ $(document).ready(function () {
 function showDetail() {
     var row = getSelectedRow("grid_area");
     if (row.IsLeaf != true) {
-        selected_id = row.Id;
+        selected_id = row.uniqueId;
         refreshGrid();
     }
 }
@@ -123,20 +122,14 @@ function dataBound() {
 
 function refreshGrid() {
     if ((selected_id != null) && (selected_id != undefined)) {
-        $.ajax({
-            type: "POST",
-            url: url_getareapath,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ Id: selected_id }),
-            success: function (data) {
+        accountManagerApp.callApi(urls.getareapath, 'POST', { regionAreaId: selected_id },
+        function (data) {
                 var list = "<button id = 'btn_back_0' class='btn btn-link color-gray' onclick='back(0)' > خانه</button>";
                 for (var i = data.length - 1 ; i >= 0 ; i--) {
-                    list += ">> <button id = 'btn_back_'" + data[i].Id + " class='btn btn-link color-gray' onclick=back('" + data[i].Id + "') >" + data[i].Title + "</button> ";
+                    list += ">> <button id = 'btn_back_'" + data[i].uniqueId + " class='btn btn-link color-gray' onclick=back('" + data[i].uniqueId + "') >" + data[i].title + "</button> ";
                 }
                 // location.hash = selected_id;
                 $("#pnl_path").html(list);
-            }
         });
     }
     else {
@@ -147,25 +140,19 @@ function refreshGrid() {
 }
 
 function loadAreaList(options) {
-    $.ajax({
-        type: "POST",
-        url: url_loadarealist,
-        data: JSON.stringify({ Id: selected_id }),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (result) {
+    accountManagerApp.callApi(urls.loadarealist, 'POST', { regionAreaParentId: selected_id },
+        function(result) {
             options.success(result);
 
             if (map_auto_refresh == true) {
                 var ids = [];
-                $.each(result, function (i, item) {
+                $.each(result, function(i, item) {
                     ids.push(item.Id);
                 });
                 refreshMap(ids);
             }
 
-        }
-    });
+        });
 }
 
 //--------------------------------------------------------------------------------
@@ -175,29 +162,20 @@ function refreshMap(ids) {
     $("#div_area_info").html('');
     $('#tab_area_list').trigger('click');
 
-    marker_load = false;
-    line_load = false;
-    showWating();
     clearOverlays();
     drawAreaInfo(ids);
 }
 
 function drawAreaInfo(ids) {
-    $.ajax({
-        type: "POST",
-        url: url_loadgoodreport,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(getFilter(ids)),
-       
-        success: function (data) {
+    accountManagerApp.callApi(urls.loadproductreport, 'POST', getFilter(ids),
+         function (data) {
             if (data != null) {
                 var leafid = [];
                 $.each(data, function (i, line) {
                     var arealine = [];
-                    if (line.Points != null)
-                        $.each(line.Points, function(j, item) {
-                            arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                    if (line.points != null)
+                        $.each(line.points, function(j, item) {
+                            arealine.push(new google.maps.LatLng(item.latitude, item.longitude));
                         });
                     if (arealine.length > 0) {
                         var poly;
@@ -207,73 +185,58 @@ function drawAreaInfo(ids) {
                                 color: '#777777',
                                 lable: line.Lable,
                                 lableclass: 'good-report-labels',
-                                lablewindowdesc: getGoodReportHtml(line.JData),
+                                lablewindowdesc: getGoodReportHtml(line.jData),
                                 //showbubble: true,
                                 direction: true,
                                 fit: true
                             });
-                            leafid.push(line.MasterId);
+                            leafid.push(line.masterId);
                         }
                         else {
 
                             poly = addPolygon({
                                 line: arealine,
                                 color: '#777777',
-                                lable: line.Lable,
+                                lable: line.lable,
                                 lableclass:'good-report-labels',
-                                lablewindowdesc: getGoodReportHtml(line.JData),
+                                lablewindowdesc: getGoodReportHtml(line.jData),
                                 //showbubble: true,
                                 fit: true
                             });
 
                             poly.addListener('click', function(event) {
-                                selected_id = line.MasterId;
+                                selected_id = line.masterId;
                                 map_auto_refresh = true;
                                 refreshGrid();
                             });
 
                         }
                         poly.addListener('mouseover', function (e) {
-                            setAreaInfoPanel(getGoodReportHtml(line.JData));
+                            setAreaInfoPanel(getGoodReportHtml(line.jData));
                         });
                     }
                 });
                 if (leafid.length > 0) {
 
                     drawAreaCustomer(leafid);
-                } else {
-                    marker_load = true;
-                }
-
+                } 
                 fitPointBounds();
                 changed = false;
             }
-        }
-    })
-    .always(function () {
-        line_load = true;
-        if (marker_load == true)
-            hideWating();
-        map_auto_refresh = false;
     });
 
 }
 
 function drawAreaCustomer(leafids) {
-        marker_load = false;
-        $.ajax({
-            type: "POST",
-            url: url_loadgoodbyreportcustomer,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ ClientId: client_id, AreaIds: leafids }),
-            success: function (data) {
+    accountManagerApp.callApi(urls.loadproductreportcustomer, 'POST', 
+            { clientId: client_id, areaIds: leafids },
+            function (data) {
                 if (data != null) {
                     $.each(data, function(i, item) {
                         var m = addMarker({
-                            id: "customer_point_" + item.Id,
-                            lat: item.Latitude,
-                            lng: item.Longitude,
+                            id: "customer_point_" + item.uniqueId,
+                            lat: item.latitude,
+                            lng: item.longitude,
                             clustering: true,
                             fit: true
                         });
@@ -281,8 +244,8 @@ function drawAreaCustomer(leafids) {
 
                         m.addListener('click', function (e) {
                             closeInfoWindow();                        
-                            openInfoWindow(new google.maps.LatLng(item.Latitude, item.Longitude), '<br/><h5>' + (item.Lable || '') + '</h5>');
-                            setAreaInfoPanel(getGoodReportHtml(item.JData));
+                            openInfoWindow(new google.maps.LatLng(item.latitude, item.longitude), '<br/><h5>' + (item.lable || '') + '</h5>');
+                            setAreaInfoPanel(getGoodReportHtml(item.jData));
                         });
                     
                     });
@@ -290,12 +253,6 @@ function drawAreaCustomer(leafids) {
                     fitPointBounds();
                     changed = false;
                 }
-            }
-        }).always(function () {
-            map_auto_refresh = false;
-            marker_load = true;
-            if (line_load)
-                hideWating();
         });
 
     }
@@ -359,14 +316,3 @@ function getFilter(ids) {
 window.onbeforeunload = function (event) {
     removeCacheData(client_id);
 };
-
-//window.onhashchange = function () {
-//    var _id = '';
-//    if (location.hash.length > 0) {
-//        _id = location.hash.replace('#', '');
-//    }
-//    if (_id != selected_id) {
-//        selected_id = _id;
-//        refreshMap();
-//    }
-//};

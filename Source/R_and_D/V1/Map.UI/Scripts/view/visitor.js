@@ -1,7 +1,4 @@
-﻿var line_load = true;
-var marker_load = true;
-var line_load_daily = true;
-
+﻿
 $(document).ready(function () {
 
     $("#pnl_marker").hide();
@@ -43,12 +40,12 @@ $(document).ready(function () {
         scrollable: true,
         columns: [
         {
-            field: "Id",
+            field: "uniqueId",
             headerTemplate: "<input id='mastercheckbox' type='checkbox' onchange='mastercheckboxChange(this, \"grid_visitor\")'  style: 'width:10px;'/>",
-            template: "<input type='checkbox' value='#=Id#' onchange='updateMasterCheckbox(\"grid_visitor\")' id=" + "chk" + "#=Id#" + " class='checkboxGrid'/>",
+            template: "<input type='checkbox' value='#=uniqueId#' onchange='updateMasterCheckbox(\"grid_visitor\")' id=" + "chk" + "#=uniqueId#" + " class='checkboxGrid'/>",
             width:20
         }, {
-                    field: "Title",
+                    field: "title",
                     title: 'عنوان',
         }
         ]
@@ -77,28 +74,34 @@ $(document).ready(function () {
 
     $("#ddl_area").on("change", function (event) {
         var value = $("#ddl_area").val();
-        $("#ddl_visitor_group").empty();
-        $.ajax({
-            type: "POST",
-            url: url_loadvisitorgroupbyareaid,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ Id: value }),
-            success: function (data) {
-                addItemsToDroupdown("ddl_visitor_group",data);               
-            }
-        })
-        .done(function (result) {
-        });       
+        if ((value != "") && (value != null) && (value != undefined)) {
+            accountManagerApp.callApi(urls.loadlareabyevel, 'POST',
+                { regionAreaLevel: 2, regionAreaId: value },
+                function (data) {
+                    addItemsToDroupdown({ elementId: "ddl_team", data: data, addSelectRow: true });
+                });
+        }
+        
     });
-    
+
+    $("#ddl_team").on("change", function (event) {
+        var value = $("#ddl_team").val();
+        if ((value != "") && (value != null) && (value != undefined)) {
+            accountManagerApp.callApi(urls.loadvisitorgroupbyareaid, 'POST',
+                { regionAreaId: value },
+               function (data) {
+                   addItemsToDroupdown({ elementId: "ddl_visitor_group", data: data, addSelectRow: true });
+               });
+        }
+
+    });
+
     $("#ddl_visitor_group").on("change", function (event) {        
         $('#grid_visitor').data('kendoGrid').dataSource.read();
         $('#grid_visitor').data('kendoGrid').refresh();
     });
 
     $("#btn_run").on("click", function (e) {
-        showWating();
         clearOverlays();
         drawMarkers();
         drawVisitorsPath();
@@ -110,181 +113,128 @@ $(document).ready(function () {
 
 //-------------------------------------
 function drawMarkers() {
-    marker_load = false;
-    $.ajax({
-        type: "POST",
-        url: url_loadmarkers,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
-            VisitorIds: getSelectedIds("grid_visitor"),
-            Date: $("#dte_date").val(),
-            Order: $("#chk_order").is(":checked"),
-            LackOrder: $("#chk_lack_order").is(":checked"),
-            LackVisit: $("#chk_lack_visit").is(":checked"),
-            StopWithoutCustomer: $("#chk_wait").is(":checked"),
-            StopWithoutActivity: $("#chk_without_activity").is(":checked")
-        }),
-        success: function (data) {
-            $.each(data, function (i, item) {
-                var m = addMarker({
-                    id: "marker_" + item.Id,
-                    fit: true,
-                    lat: item.Latitude, lng: item.Longitude,
-                    windowdesc: item.Desc, clustering: true, label: item.Lable
-                });
-
-                var icon = "marker0";
-                var color = "";
-                //if ((item.PointType == 5 /*PointType.Customer*/) || (item.PointType == 7 /*PointType.GpsOff*/))
-                //{
-                //    if (item.PointType == 5 /*PointType.Customer*/){ icon = "customer"; }
-                //    else if (item.PointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
-                        
-                //    m.setIcon("../../Content/img/pin/" + icon + ".png", new google.maps.Size(16, 16), new google.maps.Point(0, 0)
-                //        , new google.maps.Point(8, 8));
-                //}
-                //else
-                //{
-                    if (item.SubType == 1 /*(int)ESubType.OUTE_LINE*/) { icon = "outeline"; }
-                    else if (item.PointType == 5 /*PointType.Customer*/) { icon = "customer"; }
-                    else if (item.PointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
-                    else if (item.SubType == 3 /*(int)ESubType.DISTANCE*/) { icon = "distance"; }
-                    else if (item.PointType == 0 /*PointType.Order*/) { icon = "order"; }
-                    else if (item.PointType == 2 /*PointType.LackOfVisit*/) { icon = "lackvisit"; }
-                    else if (item.PointType == 1 /*PointType.LackOfOrder*/) { icon = "lackorder"; }
-                    else if (item.PointType == 3 /*PointType.StopWithoutCustomer*/) { icon = "withoutcustomer"; }
-                    else if (item.PointType == 4 /*PointType.StopWithoutActivity*/) { icon = "withoutactivity"; }
-                    else if (item.PointType == 6 /*PointType.OuteLine*/) { icon = "outeline"; }
-
-                    if (item.SubType == 2 /*(int)ESubType.NEW*/ ) { color = "1"; }
-
-                    m.setIcon({ url: "../../Content/img/pin/" + icon + color + ".png", size: MarkersIcon.Event.Size, anchor: MarkersIcon.Event.Anchor });
-
-                //}
+    accountManagerApp.callApi(urls.loadpersonelactivity, 'POST',
+       {
+           personelIds: getSelectedIds("grid_visitor"),
+           date: $("#dte_date").val(),
+           order: $("#chk_order").is(":checked"),
+           lackOrder: $("#chk_lack_order").is(":checked"),
+           lackVisit: $("#chk_lack_visit").is(":checked"),
+           stopWithoutCustomer: $("#chk_wait").is(":checked"),
+           stopWithoutActivity: $("#chk_without_activity").is(":checked")
+       },
+    function (data) {
+        $.each(data, function (i, item) {
+            var m = addMarker({
+                id: "marker_" + item.uniqueId,
+                fit: true,
+                lat: item.latitude, lng: item.longitude,
+                windowdesc: item.desc, clustering: true, label: item.lable
             });
-            renderClusterMarkers();
-            fitPointBounds();
-        }
-    }).always(function () {
-        marker_load = true;
-        if (line_load && line_load_daily)
-            hideWating();
-    });
 
+            var icon = "marker0";
+            var color = "";
+            //if ((item.PointType == 5 /*PointType.Customer*/) || (item.PointType == 7 /*PointType.GpsOff*/))
+            //{
+            //    if (item.PointType == 5 /*PointType.Customer*/){ icon = "customer"; }
+            //    else if (item.PointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
+
+            //    m.setIcon("../../Content/img/pin/" + icon + ".png", new google.maps.Size(16, 16), new google.maps.Point(0, 0)
+            //        , new google.maps.Point(8, 8));
+            //}
+            //else
+            //{
+            if (item.subType == 1 /*(int)ESubType.OUTE_LINE*/) { icon = "outeline"; }
+            else if (item.pointType == 5 /*PointType.Customer*/) { icon = "customer"; }
+            else if (item.pointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
+            else if (item.subType == 3 /*(int)ESubType.DISTANCE*/) { icon = "distance"; }
+            else if (item.pointType == 0 /*PointType.Order*/) { icon = "order"; }
+            else if (item.pointType == 2 /*PointType.LackOfVisit*/) { icon = "lackvisit"; }
+            else if (item.pointType == 1 /*PointType.LackOfOrder*/) { icon = "lackorder"; }
+            else if (item.pointType == 3 /*PointType.StopWithoutCustomer*/) { icon = "withoutcustomer"; }
+            else if (item.pointType == 4 /*PointType.StopWithoutActivity*/) { icon = "withoutactivity"; }
+            else if (item.pointType == 6 /*PointType.OuteLine*/) { icon = "outeline"; }
+
+            if (item.subType == 2 /*(int)ESubType.NEW*/) { color = "1"; }
+
+            m.setIcon({ url: "../../Content/img/pin/" + icon + color + ".png", size: MarkersIcon.Event.Size, anchor: MarkersIcon.Event.Anchor });
+
+            //}
+        });
+        renderClusterMarkers();
+        fitPointBounds();
+    });
 }
 
 function drawVisitorsPath() {
-    line_load = false;
-    $.ajax({
-        type: "POST",
-        url: url_loadvisitorspath,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
-            VisitorIds: getSelectedIds("grid_visitor"),
-            Date: $("#dte_date").val(),
-            DailyPath: false,
-            VisitorPath: true // $("#chk_visitor_path").is(":checked"),
-        }),
-        success: function (data) {
+    accountManagerApp.callApi(urls.loadpersonelpath, 'POST',
+        {
+            personelIds: getSelectedIds("grid_visitor"),
+            date: $("#dte_date").val()
+        },
+        function (data) {
             if (data != null) {
                 $.each(data, function(i, line) {
                     var arealine = [];
                     if (line.Points != null)
                         $.each(line.Points, function(j, item) {
                             var m = addMarker({
-                                id: "point" + item.Id,
+                                id: "point" + item.id,
                                 fit: true,
-                                lat: item.Latitude, lng: item.Longitude,
-                                clustering: false, windowdesc: "<br/>"+item.Desc
+                                lat: item.latitude, lng: item.longitude,
+                                clustering: false, windowdesc: "<br/>"+item.desc
                             });
                             m.setIcon({ url: MarkersIcon.Point.Url, size: MarkersIcon.Point.Size, anchor: MarkersIcon.Point.Anchor });
 
-                            arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
+                            arealine.push(new google.maps.LatLng(item.latitude, item.longitude));
                         });
                     if (arealine.length > 0) {
                         addPolyline({ line: arealine, color: line.Color, weight: 2, direction: true });
                     }
                 });
             }
-        }
-    }).always(function () {
-        line_load = true;
-        if (marker_load && line_load_daily)
-            hideWating();
     });
 }
 
 function drawDailyPath() {
-    line_load_daily = false;
-    if ($("#chk_daily_path").is(":checked") == true) {
-        $.ajax({
-            type: "POST",
-            url: url_loadvisitorspath,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({
-                VisitorIds: getSelectedIds("grid_visitor"),
-                Date: $("#dte_date").val(),
-                DailyPath: $("#chk_daily_path").is(":checked"),
-                VisitorPath: false // $("#chk_visitor_path").is(":checked"),
-            }),
-            success: function(data) {
-                if (data != null) {
-                    $.each(data, function(i, line) {
-                        var arealine = [];
-                        if (line.Points != null)
-                            $.each(line.Points, function(j, item) {
-                                arealine.push(new google.maps.LatLng(item.Latitude, item.Longitude));
-                            });
-                        if (arealine.length > 0) {
-                            addPolyline({ line: arealine, color: '#888888', weight: 2, direction: true });
-                        }
-                    });
-                }
+    accountManagerApp.callApi(urls.loadpersonelprogrampath, 'POST',
+        {
+            personelIds: getSelectedIds("grid_visitor"),
+            date: $("#dte_date").val()
+        },
+        function(data) {
+            if (data != null) {
+                $.each(data, function(i, line) {
+                    var arealine = [];
+                    if (line.points != null)
+                        $.each(line.points, function(j, item) {
+                            arealine.push(new google.maps.LatLng(item.latitude, item.longitude));
+                        });
+                    if (arealine.length > 0) {
+                        addPolyline({ line: arealine, color: '#888888', weight: 2, direction: true });
+                    }
+                });
             }
-        }).always(function() {
-            line_load_daily = true;
-            if (marker_load && line_load_daily)
-                hideWating();
         });
-
-    } else {
-        line_load_daily = true;
-    }
 }
 //--------------------------------------
 function loadLevel1Area() {
-    $("#ddl_area").empty();
-    $.ajax({
-        type: "POST",
-        url: url_loadlevel1area,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            $.each(data, function (i, ItemDropdown) {
-                $("#ddl_area").append
-                    ('<option value="' + ItemDropdown.Id + '">' + ItemDropdown.Title + '</option>');
-            });
-        }
-    });
+    accountManagerApp.callApi(urls.loadlareabyevel, 'POST',
+        { regionAreaLevel: 1 },
+        function(data) {
+            addItemsToDroupdown({elementId:"ddl_area", data : data, addSelectRow : true });
+        });
 }
 
 
 function loadVisitorByGroupid(options)
 {
     if ($("#ddl_visitor_group").val() != null) {
-        $.ajax({
-            type: "POST",
-            url: url_loadvisitorbygroupid,
-            data: JSON.stringify({ Id: $("#ddl_visitor_group").val() }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
+        accountManagerApp.callApi(urls.loadpersonelbygroupid, 'POST',
+            { groupId: $("#ddl_visitor_group").val() },
+            function (result) {
                 options.success(result);
-            }
-        });
+            });
     }
 }
     

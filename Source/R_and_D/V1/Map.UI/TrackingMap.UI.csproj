@@ -249,6 +249,7 @@
     <Content Include="Content\css\kendo\images\kendoui.woff" />
     <None Include="Properties\PublishProfiles\MapClient.pubxml" />
     <None Include="Scripts\jquery\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\JalaliDate.js" />
     <Content Include="Scripts\jquery\jquery.blockUI.js" />
     <Content Include="Scripts\jquery\jquery.cookie.js" />
     <Content Include="Scripts\kendo\kendo.all.min.js" />
@@ -341,7 +342,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2334</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:2334/</IISUrl>
+          <IISUrl>http://localhost:2335/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
