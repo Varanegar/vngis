@@ -1,4 +1,12 @@
-﻿//------------------------------------------------------
+﻿orderEvent = "E780728B-9BAC-4E86-AFE0-9886AD101128",
+lackOfVisitEvent = "E68F7931-2189-4000-B173-D02719720923",
+lackOfOrderEvent = "E8ED4D92-CBC0-40F1-A732-53CFF4C91AC5",
+stopWithoutCustomerEvent = "3",
+customerPoint = "5",
+gpsOffEvent = 7;
+
+
+//------------------------------------------------------
 //number
 //------------------------------------------------------
 function addCommaSeperator(nStr) {

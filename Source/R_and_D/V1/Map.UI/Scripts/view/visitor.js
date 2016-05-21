@@ -129,35 +129,45 @@ function drawMarkers() {
                 id: "marker_" + item.uniqueId,
                 fit: true,
                 lat: item.latitude, lng: item.longitude,
-                windowdesc: item.desc, clustering: true, label: item.lable
+                clustering: true, label: item.lable
             });
 
             var icon = "marker0";
             var color = "";
-            //if ((item.PointType == 5 /*PointType.Customer*/) || (item.PointType == 7 /*PointType.GpsOff*/))
-            //{
-            //    if (item.PointType == 5 /*PointType.Customer*/){ icon = "customer"; }
-            //    else if (item.PointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
 
-            //    m.setIcon("../../Content/img/pin/" + icon + ".png", new google.maps.Size(16, 16), new google.maps.Point(0, 0)
-            //        , new google.maps.Point(8, 8));
-            //}
-            //else
-            //{
-            if (item.subType == 1 /*(int)ESubType.OUTE_LINE*/) { icon = "outeline"; }
-            else if (item.pointType == 5 /*PointType.Customer*/) { icon = "customer"; }
-            else if (item.pointType == 7 /*PointType.GpsOff*/) { icon = "gpsoff"; }
-            else if (item.subType == 3 /*(int)ESubType.DISTANCE*/) { icon = "distance"; }
-            else if (item.pointType == 0 /*PointType.Order*/) { icon = "order"; }
-            else if (item.pointType == 2 /*PointType.LackOfVisit*/) { icon = "lackvisit"; }
-            else if (item.pointType == 1 /*PointType.LackOfOrder*/) { icon = "lackorder"; }
-            else if (item.pointType == 3 /*PointType.StopWithoutCustomer*/) { icon = "withoutcustomer"; }
-            else if (item.pointType == 4 /*PointType.StopWithoutActivity*/) { icon = "withoutactivity"; }
-            else if (item.pointType == 6 /*PointType.OuteLine*/) { icon = "outeline"; }
+            var eventdesc = "";
+                 if (item.pointType == customerPoint) { icon = "customer"; }
+            else if (item.pointType == gpsOffEvent) { icon = "gpsoff"; }
+            //else if (item.subType == 3 /*(int)ESubType.DISTANCE*/) { icon = "distance"; }
 
-            if (item.subType == 2 /*(int)ESubType.NEW*/) { color = "1"; }
+            else if (item.pointType.toLowerCase() == orderEvent.toLowerCase()) {
+                     icon = "order";
+                     eventdesc = getOrderHtml(item.jData);
+                 }
+            else if (item.pointType.toLowerCase() == lackOfVisitEvent.toLowerCase()) {
+                     icon = "lackvisit";
+                     eventdesc = getLackOfVisitHtml(item.jData);
+                 }
+            else if (item.pointType.toLowerCase() == lackOfOrderEvent.toLowerCase()) {
+                    icon = "lackorder";
+                    eventdesc = getLackOfOrderHtml(item.jData);
+                }
+            else if (item.pointType.toLowerCase() == stopWithoutCustomerEvent.toLowerCase()) { icon = "withoutcustomer"; }
+            //else if (item.pointType == 4 /*PointType.StopWithoutActivity*/) { icon = "withoutactivity"; }
+            //else if (item.pointType == 6 /*PointType.OuteLine*/) { icon = "outeline"; }
 
-            m.setIcon({ url: "../../Content/img/pin/" + icon + color + ".png", size: MarkersIcon.Event.Size, anchor: MarkersIcon.Event.Anchor });
+            //if (item.subType == 2 /*(int)ESubType.NEW*/) { color = "1"; }
+
+
+            m.setIcon({ url: "../../Content/img/pin/" + icon + ".png", size: MarkersIcon.Event.Size, anchor: MarkersIcon.Event.Anchor });
+            if (eventdesc != "") {
+                m.addListener('click', function (e) {
+                    closeInfoWindow();
+                    openInfoWindow(new google.maps.LatLng(item.latitude, item.longitude), eventdesc);
+                    
+                });
+            }
+
 
             //}
         });
@@ -211,7 +221,7 @@ function drawDailyPath() {
                             arealine.push(new google.maps.LatLng(item.latitude, item.longitude));
                         });
                     if (arealine.length > 0) {
-                        addPolyline({ line: arealine, color: '#888888', weight: 2, direction: true });
+                        addPolyline({ line: arealine, color: '#ff0000', weight: 2, direction: true });
                     }
                 });
             }
