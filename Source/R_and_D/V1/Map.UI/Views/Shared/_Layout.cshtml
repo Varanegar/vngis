@@ -117,6 +117,14 @@
         @Scripts.Render("~/Scripts/app.js")
         @RenderSection("scripts", required: false)
 
+        <script>
+            $(function () {
+                ko.applyBindings(accountManagerApp, $(".login-form")[0]);
+            });
+        </script>
+
+       @* <script>jQuery(document).ready(function () { App.init(); });</script>*@
+
 </body>
 
 </html>
