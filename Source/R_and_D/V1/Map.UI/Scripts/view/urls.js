@@ -38,14 +38,14 @@ urls = {
     loadvisitorgroupbyareaid: url_server + url_prefix + "personnel/ldgrpbyarea",
     loadpersonelbygroupid: url_server + url_prefix + "personnel/ldperbygrp",
 
-    loadpersonelpath: url_server + url_prefix + "personnel/ldprspth",
-    loadpersonelprogrampath: url_server + url_prefix + "personnel/ldprsprgpth",
-    loadpersonelactivity: url_server + url_prefix + "personnel/ldprsacts",
+    loadpersonelpath: url_server + url_prefix + "tracking/ldprspth",
+    loadpersonelprogrampath: url_server + url_prefix + "tracking/ldprsprgpth",
+    loadpersonelactivity: url_server + url_prefix + "tracking/ldprsacts",
 
     //--------------------------------------------------------
     // laststatus
     //--------------------------------------------------------
-    loadlaststatusmarkers: url_server + url_prefix + "personnel/ldlstpnt",
+    loadlaststatusmarkers: url_server + url_prefix + "tracking/ldlstpnt",
 
     //--------------------------------------------------------
     // product Report

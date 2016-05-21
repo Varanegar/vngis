@@ -137,7 +137,7 @@ function accountManagerViewModel() {
     
     self.callApi = function(url, callType, dataParams, callBackFunc, async) {
         freezUI();
-        async = async || true;
+        if (async == undefined)  async = true;
         
         if (url == undefined || url == '')
             return;

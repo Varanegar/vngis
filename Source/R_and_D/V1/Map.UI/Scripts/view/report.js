@@ -2,7 +2,7 @@
 function removeCacheData(clientid) {
     accountManagerApp.callApi(urls.removeproductreportcache, 'POST',
     {
-        productFilter: { ClientId: clientid }
+        ClientId: clientid
     },
 
     function (data) {

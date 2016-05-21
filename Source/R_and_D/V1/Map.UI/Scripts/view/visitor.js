@@ -176,8 +176,8 @@ function drawVisitorsPath() {
             if (data != null) {
                 $.each(data, function(i, line) {
                     var arealine = [];
-                    if (line.Points != null)
-                        $.each(line.Points, function(j, item) {
+                    if (line.points != null)
+                        $.each(line.points, function(j, item) {
                             var m = addMarker({
                                 id: "point" + item.id,
                                 fit: true,
