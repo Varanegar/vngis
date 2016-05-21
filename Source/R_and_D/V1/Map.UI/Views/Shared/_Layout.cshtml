@@ -85,7 +85,7 @@
                         </a>
                     </li>
                     <li id="menuExit">
-                        <a  href="#">
+                        <a  href="javascript:void(0);" onclick="accountManagerApp.logout();">
                             <span class="icon-box">
                                 <i class='glyphicon glyphicon-log-out'></i>
                             </span>
@@ -116,20 +116,6 @@
 
         @Scripts.Render("~/Scripts/app.js")
         @RenderSection("scripts", required: false)
-
-        <script>
-            $(function () {
-                ko.applyBindings(accountManagerApp, $(".login-form")[0]);
-
-                $(document).on("click", ".glyphicon-log-out", function () {
-                    accountManagerApp.logout();
-                });
-
-                //        headerMenu.refreshHeaderMenu();
-            });
-        </script>
-
-       @* <script>jQuery(document).ready(function () { App.init(); });</script>*@
 
 </body>
 
