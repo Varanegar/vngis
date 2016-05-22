@@ -470,7 +470,7 @@ function emptySelectedMarkers(reverticon) {
     $("#btn_remove_customer_list").hide();
 }
 
-function onCustomerMarkerClick(e, id, marker, desc, editable) {
+function onCustomerMarkerClick(e, id, marker, desc, editable, lat , lng) {
     if (!ctr) {
         emptySelectedMarkers(true);
     }
@@ -496,12 +496,12 @@ function onCustomerMarkerClick(e, id, marker, desc, editable) {
                     windowdesc = "<br />" + desc + "<br />" +
                         "<button id='btn_remove_customer_' onclick='removeFromSelected(\"" + id + "\", true)' class='btn btn-default'>حذف از مسیر</button>";
                 }
-                openInfoWindow(e.latLng, windowdesc);
+                openInfoWindow(new google.maps.LatLng(lat, lng), windowdesc);
             }
         }
     }
     else {
-        openInfoWindow(e.LatLng, "<br />" + desc);
+        openInfoWindow(new google.maps.LatLng(lat, lng), "<br />" + desc);
     }
 
 }
@@ -991,7 +991,7 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                         m.setIcon({ url: "../Content/img/pin/customer" + icon + ".png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
 
                         m.addListener('click', function (e) {
-                            onCustomerMarkerClick(e, item.id, m, item.desc, (!editcustomer && edit && isleaf));
+                            onCustomerMarkerClick(e, item.id, m, item.desc, (!editcustomer && edit && isleaf), item.latitude, item.longitude);
                         });
 
                         if (editcustomer)
