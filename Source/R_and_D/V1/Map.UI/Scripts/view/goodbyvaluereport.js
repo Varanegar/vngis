@@ -119,7 +119,7 @@ function back(id) {
 function showDetail() {
     var row = getSelectedRow("grid_area");
     if (row.IsLeaf != true) {
-        selected_id = row.Id;
+        selected_id = row.uniqueId;
         refreshGrid();
     }
 }
@@ -165,7 +165,7 @@ function loadAreaList(options) {
 
                 var ids = [];
                 $.each(result, function (i, item) {
-                    ids.push(item.Id);
+                    ids.push(item.uniqueId);
                 });
                 refreshMap(ids);
             }
@@ -198,9 +198,9 @@ function drawAreasLine(ids) {
                     if (arealine.length > 0) {
                         var poly;
                         if (line.isLeaf == true)
-                            poly = addPolyline({ line: arealine, color: '#777777', lable: line.lable, fit: true });
+                            poly = addPolyline({ line: arealine, color: '#000000', lable: line.lable, fit: true });
                         else {
-                            poly = addPolygon({ line: arealine, color: '#777777', lable: line.lable, fit: true });
+                            poly = addPolygon({ line: arealine, color: '#000000', lable: line.lable, fit: true });
 
                             poly.addListener('click', function(event) {
                                 selected_id = line.masterId;

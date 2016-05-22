@@ -147,7 +147,7 @@ function loadAreaList(options) {
             if (map_auto_refresh == true) {
                 var ids = [];
                 $.each(result, function(i, item) {
-                    ids.push(item.Id);
+                    ids.push(item.uniqueId);
                 });
                 refreshMap(ids);
             }
@@ -179,11 +179,11 @@ function drawAreaInfo(ids) {
                         });
                     if (arealine.length > 0) {
                         var poly;
-                        if (line.IsLeaf) {
+                        if (line.isLeaf) {
                             poly = addPolyline({
                                 line: arealine,
                                 color: '#777777',
-                                lable: line.Lable,
+                                lable: line.lable,
                                 lableclass: 'good-report-labels',
                                 lablewindowdesc: getGoodReportHtml(line.jData),
                                 //showbubble: true,
@@ -244,7 +244,7 @@ function drawAreaCustomer(leafids) {
 
                         m.addListener('click', function (e) {
                             closeInfoWindow();                        
-                            openInfoWindow(new google.maps.LatLng(item.latitude, item.longitude), '<br/><h5>' + (item.lable || '') + '</h5>');
+                            openInfoWindow(new google.maps.LatLng(item.latitude, item.longitude), getGoodReportHtml(item.jData));
                             setAreaInfoPanel(getGoodReportHtml(item.jData));
                         });
                     

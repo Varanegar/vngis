@@ -199,9 +199,9 @@
     <Content Include="Content\img\pin\area.png" />
     <Content Include="Content\img\pin\center.png" />
     <Content Include="Content\img\pin\customer.png" />
-    <Content Include="Content\img\pin\customer0.png" />
-    <Content Include="Content\img\pin\customer1.png" />
-    <Content Include="Content\img\pin\customer2.png" />
+    <Content Include="Content\img\pin\customerwithoutrout.png" />
+    <Content Include="Content\img\pin\customerrout.png" />
+    <Content Include="Content\img\pin\customerotherrout.png" />
     <Content Include="Content\img\pin\customernew.png" />
     <Content Include="Content\img\pin\customerselected.png" />
     <Content Include="Content\img\pin\distance.png" />

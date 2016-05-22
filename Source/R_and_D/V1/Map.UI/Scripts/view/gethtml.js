@@ -1,70 +1,57 @@
 ﻿function getGoodReportHtml(jdata) {
     var obj = JSON.parse(jdata);
-    var html = "";
+    var html = "<br/><table>";
+    if (obj != null) {
+        html += "<tr> <th style='color:#ff0000' ><h5>" + obj.Title + "</h5></th></tr>";
+        if (obj.OrderCount != null) {
+            html += "<tr> <td> تعداد درخواست: " + addCommaSeperator(obj.OrderCount) + "</td> </tr>";
+        }
+        if (obj.SaleCount != null) {
+            html += "<tr> <td> تعداد فاکتور: " + addCommaSeperator(obj.SaleCount) + "</td> </tr>";
+        }
+        if (obj.RetSaleCount != null) {
+            html += "<tr> <td> تعداد برگشتی: " + addCommaSeperator(obj.RetSaleCount) + "</td> </tr>";
+        }
+        if (obj.SaleItemCount != null) {
+            html += "<tr> <td> تعداد اقلام کالای فروش رفته: " + addCommaSeperator(obj.SaleItemCount) + "</td> </tr>";
+        }
+        if (obj.RetSaleItemCount != null) {
+            html += "<tr> <td> تعداد اقلام کالای برگشتی: " + addCommaSeperator(obj.RetSaleItemCount) + "</td> </tr>";
+        }
 
-    html += "<h5>" + obj.Title + "</h5><hr>";
-    if (obj.OrderCount != null)
-    {
-        html += "<div>تعداد درخواست: " + addCommaSeperator(obj.OrderCount) + "</div>";
-    }
-    if (obj.SaleCount != null)
-    {
-        html += "<div>تعداد فاکتور: " + addCommaSeperator(obj.SaleCount) + "</div>";
-    }
-    if (obj.RetSaleCount != null)
-    {
-        html += "<div>تعداد برگشتی: " + addCommaSeperator(obj.RetSaleCount) + "</div>";
-    }
-    if (obj.SaleItemCount != null)
-    {
-        html += "<div>تعداد اقلام کالای فروش رفته: " + addCommaSeperator(obj.SaleItemCount) + "</div>";
-    }
-    if (obj.RetSaleItemCount != null)
-    {
-        html += "<div>تعداد اقلام کالای برگشتی: " + addCommaSeperator(obj.RetSaleItemCount) + "</div>";
-    }
+        if (obj.SaleQty != null) {
+            html += "<tr> <td>  تعداد کالای فروش رفته : " + addCommaSeperator(obj.SaleQty) + "</td> </tr>";
+        }
+        if (obj.RetSaleQty != null) {
+            html += "<tr> <td>  تعداد کالای برگشتی : " + addCommaSeperator(obj.RetSaleQty) + "</td> </tr>";
+        }
 
-    if (obj.SaleQty != null)
-    {
-        html += "<div> تعداد کالای فروش رفته : " + addCommaSeperator(obj.SaleQty) + "</div>";
+        if (obj.SaleAmount != null) {
+            html += "<tr> <td>  ریال کالای فروش رفته: " + addCommaSeperator(obj.SaleAmount) + "</td> </tr>";
+        }
+        if (obj.RetSaleAmount != null) {
+            html += "<tr> <td>  ریال کالای برگشتی: " + addCommaSeperator(obj.RetSaleAmount) + "</td> </tr>";
+        }
+        if (obj.SaleWeight != null) {
+            html += "<tr> <td>  وزن کالای فروش رفته: " + addCommaSeperator(obj.SaleWeight) + "</td> </tr>";
+        }
+        if (obj.RetSaleWeight != null) {
+            html += "<tr> <td>  وزن کالای برگشتی: " + addCommaSeperator(obj.RetSaleWeight) + "</td> </tr>";
+        }
+        if (obj.SaleDiscount != null) {
+            html += "<tr> <td>  ریال تخفیف فروش رفته: " + addCommaSeperator(obj.SaleDiscount) + "</td> </tr>";
+        }
+        if (obj.RetSaleDiscount != null) {
+            html += "<tr> <td>  ریال تخفیف برگشتی: " + addCommaSeperator(obj.RetSaleDiscount) + "</td> </tr>";
+        }
+        if (obj.SalePrizeCount != null) {
+            html += "<tr> <td>  تعداد اقلام جایزه: " + addCommaSeperator(obj.SalePrizeCount) + "</td> </tr>";
+        }
+        if (obj.PrizeQty != null) {
+            html += "<tr> <td>  (تعداد جایزه (کارتن : ظرف: " + addCommaSeperator(obj.PrizeQty) + "</td> </tr>";
+        }
     }
-    if (obj.RetSaleQty != null)
-    {
-        html += "<div> تعداد کالای برگشتی : " + addCommaSeperator(obj.RetSaleQty) + "</div>";
-    }
-
-    if (obj.SaleAmount != null)
-    {
-        html += "<div> ریال کالای فروش رفته: " + addCommaSeperator(obj.SaleAmount) + "</div>";
-    }
-    if (obj.RetSaleAmount != null)
-    {
-        html += "<div> ریال کالای برگشتی: " + addCommaSeperator(obj.RetSaleAmount) + "</div>";
-    }
-    if (obj.SaleWeight != null)
-    {
-        html += "<div> وزن کالای فروش رفته: " + addCommaSeperator(obj.SaleWeight) + "</div>";
-    }
-    if (obj.RetSaleWeight != null)
-    {
-        html += "<div> وزن کالای برگشتی: " + addCommaSeperator(obj.RetSaleWeight) + "</div>";
-    }
-    if (obj.SaleDiscount != null)
-    {
-        html += "<div> ریال تخفیف فروش رفته: " + addCommaSeperator(obj.SaleDiscount) + "</div>";
-    }
-    if (obj.RetSaleDiscount != null)
-    {
-        html += "<div> ریال تخفیف برگشتی: " + addCommaSeperator(obj.RetSaleDiscount) + "</div>";
-    }
-    if (obj.SalePrizeCount != null)
-    {
-        html += "<div> تعداد اقلام جایزه: " + addCommaSeperator(obj.SalePrizeCount) + "</div>";
-    }
-    if (obj.PrizeQty != null) {
-        html += "<div> (تعداد جایزه (کارتن : ظرف: " + addCommaSeperator(obj.PrizeQty) + "</div>";
-    }
-    return html;
+    return "</table>" + html;
 }
 
 function getOrderHtml(jdata) {

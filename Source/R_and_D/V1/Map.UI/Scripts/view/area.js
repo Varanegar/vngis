@@ -476,7 +476,7 @@ function onCustomerMarkerClick(e, id, marker, desc, editable) {
     }
     if (editable == true) {
         var oicon = marker.icon;
-        if ((oicon.url.indexOf("customerselected") < 0) && (oicon.url.indexOf("customer2") < 0)) {
+        if ((oicon.url.indexOf("customerselected") < 0) && (oicon.url.indexOf("customerotherrout") < 0)) {
             selected_markers.push({ marker: marker, oldicon: oicon });
             marker.setIcon({ url: "../Content/img/pin/customerselected.png", size: MarkersIcon.Customer.Size, anchor:  MarkersIcon.Customer.Anchor });
 
@@ -488,7 +488,7 @@ function onCustomerMarkerClick(e, id, marker, desc, editable) {
             }
             else {
                 var windowdesc = '';
-                if (oicon.url.indexOf("customer0") > 0) {
+                if (oicon.url.indexOf("customerwithoutrout") > 0) {
                     windowdesc = "<br />" + desc + "<br />" +
                         "<button id='btn_add_customer_' onclick='addToSelected(\"" + id + "\", true)' class='btn btn-default'>افزودن به مسیر</button>";
                 }
@@ -519,7 +519,7 @@ function addToSelected(id) {
     var index = findCustomerMarkerIndex(id);
     if (index > -1) {
         var mrk = selected_markers[index].marker;
-        mrk.setIcon({ url: "../Content/img/pin/customer1.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+        mrk.setIcon({ url: "../Content/img/pin/customerotherrout.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
         selected_markers.splice(index, 1);
         closeInfoWindow();
         addNewPoint(-1, mrk.getPosition().lat(), mrk.getPosition().lng(), id);
@@ -531,7 +531,7 @@ function removeFromSelected(id) {
     var index = findCustomerMarkerIndex(id);
     if (index > -1) {
         var mrk = selected_markers[index].marker;
-        mrk.setIcon({ url: "../Content/img/pin/customer0.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+        mrk.setIcon({ url: "../Content/img/pin/customerwithoutrout.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
         selected_markers.splice(index, 1);
 
         var pointindex = findPointMarkerIndexByCustomer(id);
@@ -790,7 +790,7 @@ function addCustomerpoint(guid, lat, lng, pointid) {
     if (pointid != '') {
         var index = findPointMarkerIndex(pointid);
         point_views[index].CstId = guid;
-        m.setIcon({ url: "../Content/img/pin/customer1.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+        m.setIcon({ url: "../Content/img/pin/customerotherrout.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
     }
     else {
         m.setIcon({ url: "../Content/img/pin/customernew.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
@@ -983,8 +983,14 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                             draggable: editcustomer,
                             clustering: true
                         });
-                        m.setIcon({ url: "../Content/img/pin/customer" + item.pointType + ".png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
-                        m.addListener('click', function(e) {
+                        var icon = "";
+                        if (item.pointType.toLowerCase() == customerRout.toLowerCase()) icon = "rout";
+                        if (item.pointType.toLowerCase() == customerOtherRout.toLowerCase()) icon = "otherrout";
+                        if (item.pointType.toLowerCase() == customerWithoutRout.toLowerCase()) icon = "withoutrout";
+
+                        m.setIcon({ url: "../Content/img/pin/customer" + icon + ".png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+
+                        m.addListener('click', function (e) {
                             onCustomerMarkerClick(e, item.id, m, item.desc, (!editcustomer && edit && isleaf));
                         });
 
@@ -1013,7 +1019,13 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                             windowdesc: item.desc,
                             clustering: true
                         });
-                        m.setIcon({ url: "../Content/img/pin/customer" + item.pointType + ".png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+
+                        var icon = "";
+                        if (item.pointType.toLowerCase() == customerRout.toLowerCase()) icon = "rout";
+                        if (item.pointType.toLowerCase() == customerOtherRout.toLowerCase()) icon = "otherrout";
+                        if (item.pointType.toLowerCase() == customerWithoutRout.toLowerCase()) icon = "withoutrout";
+                        m.setIcon({ url: "../Content/img/pin/customer" + icon + ".png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+
                         if (editcustomer)
                             m.addListener("dragend", function(e) {
                                 onCustomerDragEnd({ id: "customer_point_" + item.id, latLng: e.latLng });

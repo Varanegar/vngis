@@ -3,7 +3,10 @@ lackOfVisitEvent = "E68F7931-2189-4000-B173-D02719720923",
 lackOfOrderEvent = "E8ED4D92-CBC0-40F1-A732-53CFF4C91AC5",
 stopWithoutCustomerEvent = "3",
 customerPoint = "5",
-gpsOffEvent = 7;
+gpsOffEvent = 7,
+customerRout = '1B340061-0DFC-490B-9A72-91365916D911',
+customerOtherRout = '733E4674-57A3-4013-A6DB-6EF543356E1B',
+customerWithoutRout = 'A5BE354A-C0CB-4D47-B159-F156112408F8';
 
 
 //------------------------------------------------------
