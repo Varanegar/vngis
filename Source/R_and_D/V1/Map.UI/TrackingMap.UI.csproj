@@ -175,6 +175,7 @@
     <Content Include="Content\css\kendo\Material\loading.gif" />
     <Content Include="Content\css\kendo\Material\sprite.png" />
     <Content Include="Content\css\map.css" />
+    <Content Include="Content\css\persianDatepicker-default.css" />
     <Content Include="Content\css\sb-admin-2.css" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\css\style.css" />
@@ -249,7 +250,6 @@
     <Content Include="Content\css\kendo\images\kendoui.woff" />
     <None Include="Properties\PublishProfiles\MapClient.pubxml" />
     <None Include="Scripts\jquery\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\JalaliDate.js" />
     <Content Include="Scripts\jquery\jquery.blockUI.js" />
     <Content Include="Scripts\jquery\jquery.cookie.js" />
     <Content Include="Scripts\kendo\kendo.all.min.js" />
@@ -269,6 +269,7 @@
     <Content Include="Scripts\knockout\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout\knockout-3.4.0.js" />
     <Content Include="Scripts\knockout\knockout.mapping-latest.js" />
+    <Content Include="Scripts\persianDatepicker.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />

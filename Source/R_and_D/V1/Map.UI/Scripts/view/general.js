@@ -12,6 +12,22 @@ customerWithoutRout = 'A5BE354A-C0CB-4D47-B159-F156112408F8';
 //------------------------------------------------------
 //number
 //------------------------------------------------------
+
+
+function intDate() {
+    $(".date").persianDatepicker({
+        cellWidth: 48,
+        cellHeight: 32,
+        fontSize: 16,
+        isRTL: true,
+        selectedBefore: true,
+        formatDate: "YYYY/0M/0D",
+    });
+}
+
+//------------------------------------------------------
+//number
+//------------------------------------------------------
 function addCommaSeperator(nStr) {
     nStr += '';
     var x = nStr.split('.');
@@ -47,17 +63,7 @@ function get_temp_guid(id) {
 
 }
 
-//--------------------------------------------------
-//--date and time
-//--------------------------------------------------
-function intDate(dateId, setToday) {
-    var dte = $("#" + dateId).kendoDatePicker({ format: "yyyy/MM/dd" });
-    if (setToday) {
-        var date = new JalaliDate();
-        dte.val(date.toFullDateString());
-    }
-    return dte;
-}
+
 //--------------------------------------------------
 //--dropdown list
 //--------------------------------------------------

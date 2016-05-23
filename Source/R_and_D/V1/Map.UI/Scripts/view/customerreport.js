@@ -6,8 +6,6 @@ $(document).ready(function () {
 
     kendo.culture("fa-IR");
 
-    intDate('dte_to', true);
-    intDate('dte_from', true);
     initMap('mapContainer', MapCenterPosition);
 
     $("#grid_area").kendoGrid({

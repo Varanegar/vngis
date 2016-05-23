@@ -8,7 +8,7 @@
 
     @Styles.Render("~/Content/kendocss")
     @Styles.Render("~/Content/sitecss")
-    
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/modernizr")
@@ -16,20 +16,16 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Content/js/scripts.js")
 
-    @Scripts.Render("~/Scripts/JalaliDate.js")
 
-
+    @Scripts.Render("~/Scripts/persianDatepicker.min.js")
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyD7cqEKEjKQxbcOgFs92w9V1Do281bfv0E&v=3")
     @Scripts.Render("~/bundles/map")
     @Scripts.Render("~/Scripts/view/urls.js")
     @Scripts.Render("~/Scripts/view/general.js")
 
-
-
-
     </head>
     <body>
-      
+
 
         <div id="container" >
             <div id="sidebar" class="nav-collapse">
@@ -119,7 +115,10 @@
 
         <script>
             $(function () {
+                kendo.culture("fa-IR");
+
                 ko.applyBindings(accountManagerApp, $(".login-form")[0]);
+
             });
         </script>
 

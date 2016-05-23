@@ -2,6 +2,11 @@
 privateOwnerId = '79A0D598-0BD2-45B1-BAAA-0A9CF9EFF240',
 dataOwnerId = 'DD86E785-7171-498E-A9BB-82E1DBE334EE',
 dataOwnerCenterId = '02313882-9767-446D-B4CE-54004EF0AAC4',
+
+privateOwnerId = '79A0D598-0BD2-45B1-BAAA-0A9CF9EFF240',
+dataOwnerId = '3EEE33CE-E2FD-4A5D-A71C-103CC5046D0C',
+dataOwnerCenterId = '3EEE33CE-E2FD-4A5D-A71C-103CC5046D0C',
+
 errorMessage = {
     unAuthorized: "شما مجوز لازم را برای این درخواست ندارید!",
 },
@@ -30,6 +35,7 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 };
+var ajaxCount = 0;
 
 var showError = function (title, message) {
     toastr["error"](title, message);
@@ -39,13 +45,13 @@ var showSuccess = function (title, message) {
     toastr["success"](title, message);
 };
 
-var onRequestEnd = function (e) {
+var onRequestEnd = function(e) {
     if (e.type == "update" && !e.response.Errors)
         showSuccess('', 'اطلاعات ثبت شد.');
 
     if (e.type == "create" && !e.response.Errors)
         showSuccess('', 'اطلاعات ثبت شد.');
-}
+};
 
 var rowNumber = 0;
 function resetRowNumber(e) {
@@ -68,6 +74,7 @@ var freezUI = function () {
 };
 
 var unfreezUI = function () {
+    ajaxCount = 0;
     $.unblockUI({ fadeOut: 200 });
 };
 //******************************************************************//
@@ -136,6 +143,7 @@ function accountManagerViewModel() {
     }
     
     self.callApi = function(url, callType, dataParams, callBackFunc, async) {
+        ajaxCount++;
         freezUI();
         if (async == undefined)  async = true;
         
@@ -170,7 +178,9 @@ function accountManagerViewModel() {
             self.result(data);
             callBackFunc(data);
 
-            unfreezUI();
+            ajaxCount--;
+            if (ajaxCount <= 0)
+                unfreezUI();
 
         }).fail(function(jqXHR) {
             showAjaxError(jqXHR);
@@ -179,8 +189,9 @@ function accountManagerViewModel() {
                 self.requestAppObject({ url: url, callType: callType, callBackFunc: callBackFunc });
                 self.openLogin();
             }
-
-            unfreezUI();
+            ajaxCount--;
+            if (ajaxCount <= 0)
+                unfreezUI();
         });
     };
 

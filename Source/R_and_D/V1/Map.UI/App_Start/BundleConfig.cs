@@ -40,7 +40,8 @@ namespace TrackingMap.UI
               bundles.Add(new StyleBundle("~/Content/kendocss").Include(
                         "~/Content/css/kendo/kendo.common-material.min.css",
                         "~/Content/css/kendo/kendo.rtl.min.css",
-                        "~/Content/css/kendo/kendo.material.min.css"
+                        "~/Content/css/kendo/kendo.material.min.css",
+                        "~/Content/css/persianDatepicker-default.css" 
                       ));
 
               bundles.Add(new StyleBundle("~/Content/sitecss").Include(

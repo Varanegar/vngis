@@ -10,10 +10,7 @@ $(document).ready(function () {
     changed = true;
     
     $("#div_advance_condition").hide();
-    kendo.culture("fa-IR");
-
-    intDate('dte_to', true);
-    intDate('dte_from', true);
+    intDate();
     initMap('mapContainer', MapCenterPosition);
 
     $("#grid_area").kendoGrid({

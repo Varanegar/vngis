@@ -3,11 +3,7 @@ $(document).ready(function () {
 
     $("#pnl_marker").hide();
 
-    kendo.culture("fa-IR");
-    var date = new JalaliDate();
-    $("#dte_date").kendoDatePicker({
-        format: "yyyy/MM/dd"
-    }).val(date.toFullDateString());
+    intDate();
 
     $("#tim_from").kendoTimePicker({
         format: "HH:mm",
