@@ -95,7 +95,7 @@ function loadDdlCustomerDegree() {
 }
 function loadDdlGoodGroup() {
     $('#auto_good_group').kendoAutoComplete({
-        dataTextField: 'Title',
+        dataTextField: 'title',
         filter: 'contains',
         placeholder: 'انتخاب کنید...',
         minLength: 3,
@@ -109,7 +109,7 @@ function loadDdlGoodGroup() {
             var dataItem = this.dataItem(e.item.index());
 
             if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_good_group").val(dataItem.Id || dataItem.IntId);
+                $("#ddl_good_group").val(dataItem.uniqueId || dataItem.intId);
             } else
                 $("#ddl_good_group").val('');
 
@@ -124,19 +124,14 @@ function loadDdlGoodGroup() {
 }
 
 function loadAutoGoodGroup(options) {
-    $.ajax({
-        type: "POST",
-        url: url_getautocompletedata,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
-            SearchValue: $("#auto_good_group").val(),
-            TblName: "gnr.tblGoodsGroup", ValueName: "Id",
-            TextName: "GoodsGroupName", AddEmptyRow: true
-        }),
-        success: function (result) {
-            options.success(result);
-        }
+    accountManagerApp.callApi(urls.getautocompletedata, 'POST',        
+     {
+        SearchValue: $("#auto_good_group").val(),
+        TblName: "gnr.tblGoodsGroup", ValueName: "Id",
+        TextName: "GoodsGroupName", AddEmptyRow: true
+    },
+    function (result) {
+        options.success(result);
     });
 
 }
@@ -158,7 +153,7 @@ function loadDdlDunamicGroup() {
 
 function loadDdlGood() {
     $('#auto_good').kendoAutoComplete({
-        dataTextField: 'Title',
+        dataTextField: 'title',
         filter: 'contains',
         placeholder: 'انتخاب کنید...',
         minLength: 3,
@@ -172,7 +167,7 @@ function loadDdlGood() {
             var dataItem = this.dataItem(e.item.index());
 
             if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_good").val(dataItem.Id || dataItem.IntId);
+                $("#ddl_good").val(dataItem.uniqueId || dataItem.intId);
             } else
                 $("#ddl_good").val('');
 
@@ -188,21 +183,16 @@ function loadDdlGood() {
 }
 
 function loadAutoGood(options) {
-    $.ajax({
-        type: "POST",
-        url: url_getautocompletedata,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
+    accountManagerApp.callApi(urls.getautocompletedata, 'POST',        
+        {
             SearchValue: $("#auto_good").val(),
             TblName: "gnr.tblGoods",
             ValueName: "GoodsCode",
             TextName: "GoodsName ",
             AddEmptyRow: true
-        }),
-        success: function (result) {
+        },
+        function (result) {
             options.success(result);
-        }
     });
 
 }
