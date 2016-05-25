@@ -6,104 +6,110 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\publish\MapClient</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\anatoli\MapClient</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/HelpPage/HelpPage.css">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/Api.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/ApiGroup.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/HelpPageApiModel.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/ImageSample.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/InvalidSample.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/Parameters.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/Samples.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/TextSample.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Help/Index.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Shared/_Layout.cshtml">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/Web.config">
-      <publishTime>03/13/2016 23:39:21</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Areas/HelpPage/Views/_ViewStart.cshtml">
-      <publishTime>03/13/2016 23:39:19</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:15</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.pdb">
+      <publishTime>05/14/2016 13:42:15</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:19</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>03/18/2016 07:36:49</publishTime>
+      <publishTime>05/14/2016 13:42:20</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
-      <publishTime>03/13/2016 23:32:06</publishTime>
+      <publishTime>05/14/2016 13:42:18</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:19</publishTime>
     </File>
     <File Include="bin/System.Web.Http.dll">
-      <publishTime>03/13/2016 23:32:07</publishTime>
+      <publishTime>05/14/2016 13:42:18</publishTime>
     </File>
     <File Include="bin/System.Web.Http.WebHost.dll">
-      <publishTime>03/13/2016 23:32:07</publishTime>
+      <publishTime>05/14/2016 13:42:18</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:17</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:18</publishTime>
     </File>
     <File Include="bin/System.Web.Razor.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:18</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Deployment.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:19</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:19</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Razor.dll">
-      <publishTime>02/05/2016 22:09:02</publishTime>
+      <publishTime>05/14/2016 13:42:19</publishTime>
     </File>
     <File Include="bin/TrackingMap.Common.dll">
       <publishTime>04/10/2016 00:59:57</publishTime>
     </File>
     <File Include="bin/TrackingMap.UI.dll">
-      <publishTime>04/23/2016 14:15:10</publishTime>
+      <publishTime>05/24/2016 15:37:57</publishTime>
+    </File>
+    <File Include="bin/TrackingMap.UI.pdb">
+      <publishTime>05/24/2016 15:37:57</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
-      <publishTime>02/05/2016 22:09:04</publishTime>
+      <publishTime>05/14/2016 13:42:20</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>03/14/2016 02:06:37</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>03/14/2016 02:06:37</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/css/bootstrap-rtl.css">
-      <publishTime>03/14/2016 02:06:37</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/css/kendo/2014.1.318/Black/editor.png">
       <publishTime>03/14/2016 02:06:37</publishTime>
@@ -612,86 +618,155 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/css/kendo/2014.1.318/Uniform/sprite_2x.png">
       <publishTime>03/14/2016 02:06:38</publishTime>
     </File>
+    <File Include="Content/css/kendo/examples.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/images/back.png">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/images/kendoui.svg">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/images/kendoui.ttf">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/images/kendoui.woff">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/images/loading-blue-bak.gif">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/images/wp8_icons.png">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/images/wp8_inverseicons.png">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/kendo.bootstrap.min.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/kendo.common-bootstrap.min.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/kendo.common-material.min.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/kendo.material.min.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/kendo.material.mobile.min.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/kendo.rtl.min.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/Material/loading-image.gif">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/Material/loading.gif">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/kendo/Material/sprite.png">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
     <File Include="Content/css/map.css">
-      <publishTime>04/22/2016 22:56:35</publishTime>
+      <publishTime>05/21/2016 20:23:02</publishTime>
+    </File>
+    <File Include="Content/css/persianDatepicker-default.css">
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Content/css/sb-admin-2.css">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/css/Site.css">
-      <publishTime>04/21/2016 15:56:42</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/css/style.css">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/css/style.min.css">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/css/style_default.css">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/css/style_responsive.css">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/toastr.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/toastr.less">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/toastr.min.css">
+      <publishTime>05/14/2016 13:42:13</publishTime>
+    </File>
+    <File Include="Content/css/toastr.scss">
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/fonts/Far_Yekan.ttf">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/fonts/glyphicons-halflings-regular.eot">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/fonts/glyphicons-halflings-regular.svg">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/fonts/glyphicons-halflings-regular.ttf">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/fonts/glyphicons-halflings-regular.woff">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/img/bg-default.jpg">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/img/body-bg.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/img/cluster/m1.png">
-      <publishTime>03/19/2016 00:26:28</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/img/cluster/m2.png">
-      <publishTime>03/19/2016 00:26:28</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/img/cluster/m3.png">
-      <publishTime>03/19/2016 00:26:28</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/img/cluster/m4.png">
-      <publishTime>03/19/2016 00:26:28</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/img/cluster/m5.png">
-      <publishTime>03/19/2016 00:26:28</publishTime>
+      <publishTime>05/14/2016 13:42:13</publishTime>
     </File>
     <File Include="Content/img/forbidden.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/icon.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/iw_close.gif">
-      <publishTime>04/15/2016 10:06:25</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/loader.gif">
       <publishTime>04/19/2016 10:32:37</publishTime>
     </File>
+    <File Include="Content/img/loading-blue-bak.gif">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
     <File Include="Content/img/logo.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/area.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/center.png">
-      <publishTime>04/03/2016 21:53:08</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/customer.png">
-      <publishTime>04/23/2016 11:59:35</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Content/img/pin/customer0.png">
       <publishTime>04/23/2016 12:35:31</publishTime>
@@ -703,94 +778,106 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2016 11:59:35</publishTime>
     </File>
     <File Include="Content/img/pin/customernew.png">
-      <publishTime>04/23/2016 12:43:32</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Content/img/pin/customerotherrout.png">
+      <publishTime>05/21/2016 17:52:30</publishTime>
+    </File>
+    <File Include="Content/img/pin/customerrout.png">
+      <publishTime>05/21/2016 17:52:30</publishTime>
     </File>
     <File Include="Content/img/pin/customerselected.png">
-      <publishTime>04/23/2016 12:43:32</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Content/img/pin/customerwithoutrout.png">
+      <publishTime>05/21/2016 17:52:30</publishTime>
     </File>
     <File Include="Content/img/pin/distance.png">
-      <publishTime>04/23/2016 13:15:24</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/gpsoff.png">
-      <publishTime>04/23/2016 13:12:08</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/lackorder.png">
-      <publishTime>04/23/2016 13:07:47</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/lackvisit.png">
-      <publishTime>04/23/2016 13:15:06</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/marker0.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/order.png">
-      <publishTime>04/23/2016 13:10:59</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/order1.png">
-      <publishTime>04/23/2016 13:11:10</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/outeline.png">
-      <publishTime>04/23/2016 13:11:56</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/point.png">
-      <publishTime>04/03/2016 19:29:49</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/road.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/withoutactivity.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/pin/withoutcustomer.png">
-      <publishTime>04/23/2016 13:11:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/side-bar-list-bg.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/submenu_border.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/submenu_hover.png">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/img/top-bg.jpg">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/js/sb-admin-2.js">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/js/scripts.js">
-      <publishTime>03/14/2016 02:06:38</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>03/14/2016 02:06:38</publishTime>
     </File>
     <File Include="favicon.ico">
-      <publishTime>04/20/2016 13:19:26</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.eot">
-      <publishTime>03/13/2016 23:39:20</publishTime>
+      <publishTime>05/14/2016 13:42:15</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.svg">
-      <publishTime>03/13/2016 23:39:20</publishTime>
+      <publishTime>05/14/2016 13:42:15</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.ttf">
-      <publishTime>03/13/2016 23:39:20</publishTime>
+      <publishTime>05/14/2016 13:42:15</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.woff">
-      <publishTime>03/13/2016 23:39:20</publishTime>
+      <publishTime>05/14/2016 13:42:15</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>03/13/2016 23:40:00</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>03/25/2016 06:55:43</publishTime>
+      <publishTime>05/14/2016 13:42:15</publishTime>
+    </File>
+    <File Include="Scripts/app.js">
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
-      <publishTime>03/14/2016 02:05:50</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>03/14/2016 02:05:50</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Scripts/infobubble.js">
       <publishTime>04/15/2016 10:07:42</publishTime>
@@ -815,6 +902,33 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
       <publishTime>03/14/2016 02:05:50</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery-2.1.4.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery-2.1.4.min.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery-2.1.4.min.map">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery.blockUI.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery.cookie.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery.validate.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery.validate.min.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery.validate.unobtrusive.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/jquery/jquery.validate.unobtrusive.min.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Scripts/kendo/2014.1.318/cultures/kendo.culture.en-US.min.js">
       <publishTime>03/14/2016 02:05:50</publishTime>
@@ -1245,6 +1359,39 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/kendo/2014.1.318/kendo.window.min.js.map">
       <publishTime>03/14/2016 02:05:51</publishTime>
     </File>
+    <File Include="Scripts/kendo/kendo.all.min.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/kendo/kendo.messages.en-US.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/kendo/kendo.messages.fa-IR.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/knockout/knockout-3.4.0.debug.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/knockout/knockout-3.4.0.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/knockout/knockout.mapping-latest.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/map/infobubble.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/map/mapgeneral.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/map/markerclusterer.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/map/markerwithlabel.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/map/vn.googlemap.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
     <File Include="Scripts/markerclusterer.js">
       <publishTime>03/19/2016 00:26:43</publishTime>
     </File>
@@ -1252,88 +1399,100 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2016 02:05:51</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.6.2.js">
-      <publishTime>03/14/2016 02:05:51</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/persianDatepicker.min.js">
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Scripts/respond.js">
-      <publishTime>03/14/2016 02:05:51</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Scripts/respond.min.js">
-      <publishTime>03/14/2016 02:05:51</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/toastr.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
+    <File Include="Scripts/toastr.min.js">
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Scripts/view/area.js">
-      <publishTime>04/23/2016 13:55:17</publishTime>
+      <publishTime>05/21/2016 20:23:02</publishTime>
     </File>
     <File Include="Scripts/view/customerreport.js">
-      <publishTime>04/23/2016 12:18:55</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Scripts/view/general.js">
-      <publishTime>04/22/2016 23:31:47</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Scripts/view/gethtml.js">
-      <publishTime>04/22/2016 01:49:20</publishTime>
+      <publishTime>05/21/2016 17:52:30</publishTime>
     </File>
     <File Include="Scripts/view/goodbyvaluereport.js">
-      <publishTime>04/23/2016 13:59:19</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Scripts/view/goodreport.js">
-      <publishTime>04/23/2016 13:59:55</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Scripts/view/laststatus.js">
-      <publishTime>04/23/2016 13:57:46</publishTime>
+      <publishTime>05/19/2016 12:15:03</publishTime>
     </File>
     <File Include="Scripts/view/mapgeneral.js">
       <publishTime>04/23/2016 13:53:41</publishTime>
     </File>
     <File Include="Scripts/view/report.js">
-      <publishTime>04/23/2016 00:39:50</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Scripts/view/urls.js">
-      <publishTime>04/22/2016 05:44:06</publishTime>
+      <publishTime>05/20/2016 23:26:03</publishTime>
     </File>
     <File Include="Scripts/view/visitor.js">
-      <publishTime>04/23/2016 13:55:24</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Scripts/vn.googlemap.js">
       <publishTime>04/23/2016 10:16:55</publishTime>
     </File>
     <File Include="Views/Area/Index.cshtml">
-      <publishTime>04/20/2016 12:17:43</publishTime>
+      <publishTime>05/21/2016 17:52:30</publishTime>
     </File>
     <File Include="Views/CustomerReport/Index.cshtml">
-      <publishTime>04/15/2016 02:54:36</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Views/GoodByValueReport/Index.cshtml">
-      <publishTime>04/23/2016 11:07:54</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Views/GoodReport/Index.cshtml">
-      <publishTime>04/23/2016 11:04:29</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>03/14/2016 02:06:56</publishTime>
+      <publishTime>05/19/2016 12:15:04</publishTime>
     </File>
     <File Include="Views/LastStatus/Index.cshtml">
-      <publishTime>04/20/2016 00:18:37</publishTime>
+      <publishTime>05/19/2016 12:15:04</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
-      <publishTime>03/14/2016 02:06:56</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/23/2016 12:14:21</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Views/Shared/_Loading.cshtml">
       <publishTime>04/19/2016 10:33:34</publishTime>
     </File>
+    <File Include="Views/Shared/_login.cshtml">
+      <publishTime>05/14/2016 13:42:14</publishTime>
+    </File>
     <File Include="Views/Visitor/Index.cshtml">
-      <publishTime>04/21/2016 12:51:16</publishTime>
+      <publishTime>05/23/2016 16:33:38</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>03/14/2016 03:52:31</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
-      <publishTime>03/14/2016 02:06:56</publishTime>
+      <publishTime>05/14/2016 13:42:14</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/21/2016 17:53:56</publishTime>
+      <publishTime>05/24/2016 15:37:58</publishTime>
     </File>
   </ItemGroup>
 </Project>
