@@ -3,22 +3,14 @@ $(document).ready(function () {
 
     $("#pnl_marker").hide();
 
-    intDate();
-
-    $("#tim_from").kendoTimePicker({
-        format: "HH:mm",
-        value:"00:00"       
-    });
-    $("#tim_to").kendoTimePicker({
-        format: "HH:mm",
-        value:"24:00"
-});
-
+    $("#tim_from").val("00:00");
+    $("#tim_to").val("24:00");
+    
     loadLevel1Area();
 
     $("#grid_visitor").kendoGrid({
         autoBind: false,
-        height:440,
+        height:350,
         dataSource: {
             transport: {
                 read: loadVisitorByGroupid
@@ -113,6 +105,8 @@ function drawMarkers() {
        {
            personelIds: getSelectedIds("grid_visitor"),
            date: $("#dte_date").val(),
+           fromTime: $("#tim_from").val(),
+           toTime: $("#tim_to").val(),
            order: $("#chk_order").is(":checked"),
            lackOrder: $("#chk_lack_order").is(":checked"),
            lackVisit: $("#chk_lack_visit").is(":checked"),
@@ -176,7 +170,9 @@ function drawVisitorsPath() {
     accountManagerApp.callApi(urls.loadpersonelpath, 'POST',
         {
             personelIds: getSelectedIds("grid_visitor"),
-            date: $("#dte_date").val()
+            date: $("#dte_date").val(),
+            fromTime: $("#tim_from").val(),
+            toTime: $("#tim_to").val()
         },
         function (data) {
             if (data != null) {

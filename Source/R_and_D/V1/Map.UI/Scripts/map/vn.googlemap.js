@@ -86,8 +86,7 @@ function getSpace() {
 // ----------------------------------------------------------
 // Markers
 // ----------------------------------------------------------
-function addMarker(opt_options) {
-
+function addMarker(opt_options) { 
     var options = opt_options || {};
     var id = options['id'] || '';
     var lat = options['lat'] || 0;
@@ -223,14 +222,14 @@ function addPolyline(opt_options) {
 
     var symbolStart = {
         path: 'M -2,0 0,-2 2,0 0,2 z',
-        strokeColor: '#000',
+        strokeColor: '#e00',
         fillColor: '#222',
         fillOpacity: 1
     };
 
     var symbolEnd = {
         path: 'M -2,-2 2,2 M 2,-2 -2,2',
-        strokeColor: '#000',
+        strokeColor: '#e00',
         strokeWeight: 4
     };
 
@@ -240,6 +239,11 @@ function addPolyline(opt_options) {
         scale: 4
     };
 
+    var symbolArrow = {
+        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, //'m223.606,151.608l-80.046-80.046c-15.661-15.661-45.243-15.661-60.904,0l-80.046,80.046c-3.48,3.48-3.48,8.701 4.44089e-16,12.181s8.701,3.48 12.181,0l80.046-80.046c10.441-10.441 26.102-10.441 36.543,0l80.046,80.046c1.74,1.74 5.22,1.74 6.96,1.74 1.74,0 5.22,0 5.22-1.74 3.48-3.48 3.48-8.701 0-12.181z',
+        strokeOpacity: 0.8,
+    };
+
     var ico = null;
 
     if (dashed == true) {
@@ -247,25 +251,28 @@ function addPolyline(opt_options) {
         ico = [
             {
                 icon: symbolDash,
-            offset: '0', repeat: '20px'
+                offset: '0',
+                repeat: '20px'
             }
-            ]
+        ];
     }
 
     if (direction == true) {
         ico = [
-            {   icon: symbolStart,
+            {
+                icon: symbolStart,
                 offset: '0%'
             },
             {
-                icon: { path: google.maps.SymbolPath.FORWARD_OPEN_ARROW },
-                offset: '10%', repeat: '50px'
+                icon: symbolArrow,
+                offset: '10%',
+                repeat: '50px'
             },
             {
                 icon: symbolEnd,
                 offset: '100%'
             }
-        ]
+        ];
 
     }
 

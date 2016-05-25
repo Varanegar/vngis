@@ -7,24 +7,18 @@
     <div class="panel-body">
         <div class="header-bar">
             <div class="form-group row">
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <label for="dte_date">@CaptionResource.Date</label>
+                    <input type="text" id="dte_date" class="form-control mydate" />
                 </div>
-                <div class="col-md-2">
-                    <input type="text" id="dte_date" class="form-control date" />
-                </div>
-                <div class="col-md-1">
+                <div class="col-md-3">
                     <label for="dte_date">@CaptionResource.FromTime</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" id="tim_from" />
+                    <input type="text" id="tim_from" class="form-control time_pick mytime" />
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-3">
                     <label for="dte_date">@CaptionResource.ToTime</label>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" id="tim_to" />
+                    <input type="text" id="tim_to" class="form-control time_pick mytime" />
                 </div>
 
                 <div class="col-md-2">
@@ -48,7 +42,7 @@
         <div class="form-group row ">
 
             <div class="col-md-3">
-                <div class="side-bar">
+                <div class="side-bar" style="height: 500px;">
                     <div id="pnl_condition" class="frame-condition">
                         <div>
                             <button id='btn_marker' class='btn btn-default color-gray full-width'>@CaptionResource.Activities<span id="spn_marker" class='glyphicon glyphicon-chevron-down'></span></button>
@@ -73,9 +67,9 @@
                             <label for="chk_lack_visit">@CaptionResource.LackOfVisit</label>
                             <br />
                             @*<img src="~/Content/img/pin/withoutactivity.png" />
-                            @Html.CheckBox("chk_without_activity", true, new { @id = "chk_without_activity", @class = "control-label" })
-                            <label for="chk_without_activity">@CaptionResource.WithoutActivity</label>
-                            <br />*@
+                    @Html.CheckBox("chk_without_activity", true, new { @id = "chk_without_activity", @class = "control-label" })
+                    <label for="chk_without_activity">@CaptionResource.WithoutActivity</label>
+                    <br />*@
                             <img src="~/Content/img/pin/withoutcustomer.png" />
                             @Html.CheckBox("chk_wait", true, new { @id = "chk_wait", @class = "control-label" })
                             <label for="chk_wait">@CaptionResource.WaitWithoutCustomer</label>
@@ -108,8 +102,7 @@
                                 <label for="ddl_team">@CaptionResource.Team</label>
                             </div>
                             <div class="col-md-9">
-                                <select class="form-control" id="ddl_team">
-                                </select>
+                                <select class="form-control" id="ddl_team"></select>
                             </div>
                         </div>
                         <div class="row">
@@ -130,7 +123,7 @@
             </div>
 
             <div class="col-md-9">
-                <div id="Report_Frame" class="frame-map">
+                <div id="Report_Frame" class="frame-map" style="height: 500px;">
                     <div id="mapContainer"> </div>
                 </div>
             </div>

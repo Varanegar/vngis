@@ -182,9 +182,11 @@
     <Content Include="Content\css\style.min.css" />
     <Content Include="Content\css\style_default.css" />
     <Content Include="Content\css\style_responsive.css" />
+    <Content Include="Content\css\timepicki.css" />
     <Content Include="Content\css\toastr.css" />
     <Content Include="Content\css\toastr.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\arrow.png" />
     <Content Include="Content\img\iw_close.gif" />
     <Content Include="Content\img\bg-default.jpg" />
     <Content Include="Content\img\body-bg.png" />
@@ -215,12 +217,14 @@
     <Content Include="Content\img\pin\outeline.png" />
     <Content Include="Content\img\pin\point.png" />
     <Content Include="Content\img\pin\road.png" />
+    <Content Include="Content\img\pin\up-arrow-angle.ico" />
     <Content Include="Content\img\pin\withoutcustomer.png" />
     <Content Include="Content\img\pin\withoutactivity.png" />
     <Content Include="Content\img\side-bar-list-bg.png" />
     <Content Include="Content\img\submenu_border.png" />
     <Content Include="Content\img\submenu_hover.png" />
     <Content Include="Content\img\top-bg.jpg" />
+    <Content Include="Content\img\top_arr.png" />
     <Content Include="Content\js\sb-admin-2.js" />
     <Content Include="Content\js\scripts.js" />
     <Content Include="favicon.ico" />
@@ -272,6 +276,7 @@
     <Content Include="Scripts\persianDatepicker.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\timepicki.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\view\area.js" />

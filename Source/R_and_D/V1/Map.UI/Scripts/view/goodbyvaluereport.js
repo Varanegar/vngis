@@ -11,7 +11,7 @@ $(document).ready(function () {
     $("#div_advance_condition").hide();
     $("#pnl_marker .panel-value").hide();
     kendo.culture("fa-IR");
-    intDate();
+    
     initMap('mapContainer', MapCenterPosition);
 
     $("#grid_area").kendoGrid({
@@ -24,7 +24,7 @@ $(document).ready(function () {
             //serverFiltering: true,
             //serverSorting: true
         },
-        height:520,
+        height:440,
         sortable: false,
         editable: false,
         selectable: "row",
@@ -93,6 +93,14 @@ $(document).ready(function () {
 
     $("#pnl_header_condition select").on("change", function (e) {
         changed = true;
+    });
+
+    $("#btn_select_all").on("click", function (e) {
+        $('#pnl_marker input:checkbox').prop('checked', true);
+    });
+
+    $("#btn_remove_all").on("click", function (e) {
+        $('#pnl_marker input:checkbox').prop('checked', false);
     });
 
     loadDdlSaleOffice();
