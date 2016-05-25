@@ -731,6 +731,8 @@ function addNewPoint(pr, lat, lng, cust) {
     var guid = get_temp_guid(new_id);
     if (pr == -1) { pr = new_id; }
 
+    closeInfoWindow();
+
     addPoint(guid, pr, lat, lng, cust);
 }
 

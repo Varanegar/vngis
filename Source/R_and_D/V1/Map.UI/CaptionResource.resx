@@ -387,4 +387,10 @@
   <data name="Exit" xml:space="preserve">
     <value>خروج</value>
   </data>
+  <data name="RemoveAll" xml:space="preserve">
+    <value>حذف همه</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>انتخاب همه</value>
+  </data>
 </root>

@@ -1,6 +1,6 @@
 ﻿@font-face {
     font-family: 'far_Yekan';
-    src: url('../fonts/far_Yekan.ttf') format('truetype');
+    src: url('/Content/fonts/far_Yekan.ttf') format('truetype');
 }
 
 /**-------------------**/
@@ -31,14 +31,14 @@ body {
     padding-top: 1px;
     padding-bottom: 20px;
     color: #868686;
-    background: #EEE url(../img/bg-default.jpg) !important;
+    background: #EEE url('/Content/img/bg-default.jpg') !important;
 }
 
 #main-content {
     margin-top: 0px;
     margin-right: 215px;
-    min-height: 750px;
-    background: #f7f7f7 url("../img/body-bg.png");
+    min-height: 700px;
+    background: #f7f7f7 url("/Content/img/body-bg.png");
     box-shadow: 0 0 10px #757575;
     -moz-box-shadow: 0 0 10px #757575;
     -webkit-box-shadow: 0 0 10px #757575;
@@ -113,7 +113,7 @@ body {
     margin-top: 12px;
     width: 23px;
     height: 25px;
-    background: #e9ebec url("../img/body-bg.png") repeat scroll;
+    background: #e9ebec url("/Content/img/body-bg.png") repeat scroll;
 }
 
     .sidebar-toggler:before {
@@ -214,7 +214,7 @@ body {
     }
 
         #sidebar > ul > li > ul.sub > li.active > a, #sidebar > ul > li > ul.sub > li > a:hover {
-            background: url("../img/submenu_hover.png") !important;
+            background: url("/Content/img/submenu_hover.png") !important;
         }
 
 
@@ -229,7 +229,7 @@ ul.faq-list li a:hover, ul.faq-list li a.active {
 }
 
 #header.navbar-inverse .navbar-inner {
-    background: url("../img/top-bg.jpg") repeat-x scroll 0 0 #4e4e4e !important;
+    background: url("/Content/img/top-bg.jpg") repeat-x scroll 0 0 #4e4e4e !important;
 }
 
 #header.navbar-inverse .navbar-inner {
@@ -238,7 +238,7 @@ ul.faq-list li a:hover, ul.faq-list li a.active {
 }
 
 #header.navbar-inverse .navbar-inner {
-    background: #4e4e4e url("../img/top-bg.jpg") repeat-x !important;
+    background: #4e4e4e url("/Content/img/top-bg.jpg") repeat-x !important;
     min-height: 40px;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e4e4e',endColorstr='#4e4e4e',GradientType=0);
     border-width: 0;
@@ -266,7 +266,7 @@ ul.faq-list li a:hover, ul.faq-list li a.active {
 }
 
     #sidebar > ul > li {
-        background: url("../img/side-bar-list-bg.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+        background: url("/Content/img/side-bar-list-bg.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
         border: 0 none;
         display: block;
         line-height: 30px;
@@ -281,11 +281,11 @@ ul.faq-list li a:hover, ul.faq-list li a.active {
 
         #sidebar > ul > li > a:hover, #sidebar > ul > li:hover > a {
             color: #fff !important;
-            background: url("../img/side-bar-list-bg.png");
+            background: url("/Content/img/side-bar-list-bg.png");
         }
 
         #sidebar > ul > li.active > a {
-            background: url("../img/side-bar-list-bg.png");
+            background: url("/Content/img/side-bar-list-bg.png");
         }
 
         #sidebar > ul > li > ul.sub > li > a {
@@ -324,7 +324,7 @@ ul.faq-list li a:hover, ul.faq-list li a.active {
 }
 
 ul.sidebar-menu span.icon-box {
-    background: url("../img/side-bar-list-bg.png") repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    background: url("/Content/img/side-bar-list-bg.png") repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
     padding: 18px;
     margin-left: 10px;
     text-align: center;
@@ -464,7 +464,7 @@ footer {
  }
 
 .panel-main {
-    min-height: 700px;
+    min-height: 650px;
 }
 .panel-value{
     border: 1px solid #f3f3f3;
@@ -474,13 +474,12 @@ footer {
 .side-bar
  {
     background: #ddd;
-    height: 600px;
     border: solid 1px #ccc;
 }
 
 .frame-map {
     background: #f5f5f5;
-    height: 600px;
+
     border: solid 1px #ccc;
 }
 .frame-map-with-header {

@@ -15,13 +15,13 @@
                         <label>@CaptionResource.FromDate</label>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" id="dte_from" class="form-control date" />
+                        <input type="text" id="dte_from" class="form-control mydate" />
                     </div>
                     <div class="col-md-1">
                         <label>@CaptionResource.ToDate</label>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" id="dte_to " class="form-control date" />
+                        <input type="text" id="dte_to " class="form-control mydate" />
                     </div>
                     <div class="col-md-1">
                         <label>@CaptionResource.DefaultField</label>
@@ -152,22 +152,23 @@
         <div class="form-group row ">
 
             <div class="col-md-3">
-                <div class="side-bar">
+                <div class="side-bar" style="height: 600px;">
                     <ul class="nav nav-tabs">
                         <li class="active"><a id="tab_area_list" data-toggle="tab" href="#pnl_area">محدوده ها</a></li>
-                        <li ><a id="tab_result_check" data-toggle="tab" href="#pnl_condition">خروجی ها</a></li>
+                        <li><a id="tab_result_check" data-toggle="tab" href="#pnl_condition">خروجی ها</a></li>
                         <li><a id="tab_area_info" data-toggle="tab" href="#pnl_area_info">اطلاعات</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="pnl_area" class="tab-pane fade in active">
-                            <br />
                             <div id="grid_area" class="full-width"></div>
                         </div>
 
 
                         <div id="pnl_condition" class="tab-pane fade">
-                            <div id="pnl_marker" style="height: 520px" class="frame-border color-back-ligt-gray">
-
+                            <div id="pnl_marker" style="height: 450px" class="frame-border color-back-ligt-gray">
+                                <button id='btn_select_all' class='btn btn-default btn-xs color-gray'>@CaptionResource.SelectAll</button>
+                                <button id='btn_remove_all' class='btn btn-default btn-xs color-gray'>@CaptionResource.RemoveAll</button>
+                                <br />
                                 @Html.CheckBox("chk_request_count", true, new { @id = "chk_request_count", @class = "control-label" })
                                 <label for="chk_request_count">تعداد درخواست</label>
                                 <br />
@@ -231,7 +232,7 @@
                             </div>
                         </div>
                         <div id="pnl_area_info" class="tab-pane fade">
-                            <div style="height: 520px" class="frame-border color-back-ligt-gray">
+                            <div style="height: 450px" class="frame-border color-back-ligt-gray">
                                 <br />
                                 <div id="div_area_info" class="full-width"></div>
                             </div>
@@ -242,7 +243,7 @@
             </div>
 
             <div class="col-md-9">
-                <div id="Report_Frame" class="frame-map">
+                <div id="Report_Frame" class="frame-map" style="height: 500px;">
                     <div id="mapContainer"> </div>
                 </div>
             </div>

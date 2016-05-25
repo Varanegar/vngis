@@ -27,6 +27,11 @@ namespace TrackingMap.UI
                       "~/Scripts/respond.js",
                       "~/Scripts/toastr.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
+                        "~/Scripts/persianDatepicker.min.js",
+                        "~/Scripts/timepicki.js"
+                      ));
+
             bundles.Add(new ScriptBundle("~/bundles/map").Include(
                       "~/Scripts/map/markerclusterer.js",
                       "~/Scripts/map/markerwithlabel.js",
@@ -40,8 +45,12 @@ namespace TrackingMap.UI
               bundles.Add(new StyleBundle("~/Content/kendocss").Include(
                         "~/Content/css/kendo/kendo.common-material.min.css",
                         "~/Content/css/kendo/kendo.rtl.min.css",
-                        "~/Content/css/kendo/kendo.material.min.css",
-                        "~/Content/css/persianDatepicker-default.css" 
+                        "~/Content/css/kendo/kendo.material.min.css"
+                      ));
+
+            bundles.Add(new StyleBundle("~/Content/datetimecss").Include(
+                        "~/Content/css/timepicki.css",
+                        "~/Content/css/persianDatepicker-default.css"
                       ));
 
               bundles.Add(new StyleBundle("~/Content/sitecss").Include(

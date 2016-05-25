@@ -8,20 +8,31 @@ customerRout = '1B340061-0DFC-490B-9A72-91365916D911',
 customerOtherRout = '733E4674-57A3-4013-A6DB-6EF543356E1B',
 customerWithoutRout = 'A5BE354A-C0CB-4D47-B159-F156112408F8';
 
+$(document).ready(function() {
+    kendo.culture("fa-IR");
+    intDateTime();
+});
 
 //------------------------------------------------------
-//number
+//date time
 //------------------------------------------------------
-
-
-function intDate() {
-    $(".date").persianDatepicker({
+function intDateTime() {
+    $(".mydate").persianDatepicker({
         cellWidth: 48,
         cellHeight: 32,
         fontSize: 16,
         isRTL: true,
         selectedBefore: true,
         formatDate: "YYYY/0M/0D",
+    });
+    
+    $(".mytime").timepicki({
+        show_meridian: false,
+        min_hour_value: 0,
+        max_hour_value: 23,
+        step_size_minutes: 15,
+        overflow_minutes: true,
+        increase_direction: 'up'
     });
 }
 
