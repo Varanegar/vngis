@@ -66,8 +66,17 @@ $(document).ready(function () {
             var dataItem = this.dataItem(e.item.index());
             
             if ((dataItem != null) && (dataItem != undefined)) {
-                if (dataItem.HasLatLng == true)
-                    alert('مکان مشتری مورد نظر قبلا مشخص شده است، در صورت ذخیره اطلاعات جدید، مکان قبلی مشتری اصلاح خواهد شد.');
+                if (dataItem.hasLatLng == true)
+                    showQuestion('مکان مشتری مورد نظر قبلا مشخص شده است، در صورت ذخیره اطلاعات جدید، مکان قبلی مشتری اصلاح خواهد شد. ایا ادامه میدهید؟',
+                        'تغیر مکان مشتری',
+                        function() {
+                            $("#dlg_customer_hdn_id").val(dataItem.uniqueId);
+                        },
+                        function () {
+                            $("#customer").val('');
+                        }
+                    );
+                else
                 $("#dlg_customer_hdn_id").val(dataItem.uniqueId);
 
             }
