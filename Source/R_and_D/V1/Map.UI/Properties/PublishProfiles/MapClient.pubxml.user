@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\publish\MapClient</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\anatoli\MapClient</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/HelpPage/HelpPage.css">
@@ -51,6 +51,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>02/05/2016 22:09:02</publishTime>
     </File>
+    <File Include="bin/Antlr3.Runtime.pdb">
+      <publishTime>02/05/2016 22:09:02</publishTime>
+    </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>02/05/2016 22:09:02</publishTime>
     </File>
@@ -91,7 +94,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2016 00:59:57</publishTime>
     </File>
     <File Include="bin/TrackingMap.UI.dll">
-      <publishTime>05/24/2016 15:46:06</publishTime>
+      <publishTime>05/31/2016 14:10:23</publishTime>
+    </File>
+    <File Include="bin/TrackingMap.UI.pdb">
+      <publishTime>05/31/2016 14:10:23</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>02/05/2016 22:09:04</publishTime>
@@ -673,7 +679,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2016 02:06:38</publishTime>
     </File>
     <File Include="Content/css/Site.css">
-      <publishTime>05/24/2016 16:59:53</publishTime>
+      <publishTime>06/01/2016 15:02:03</publishTime>
     </File>
     <File Include="Content/css/style.css">
       <publishTime>03/14/2016 02:06:38</publishTime>
@@ -1426,13 +1432,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/13/2016 14:31:27</publishTime>
     </File>
     <File Include="Scripts/view/area.js">
-      <publishTime>05/24/2016 10:58:33</publishTime>
+      <publishTime>05/26/2016 12:43:41</publishTime>
     </File>
     <File Include="Scripts/view/customerreport.js">
       <publishTime>05/22/2016 18:48:09</publishTime>
     </File>
     <File Include="Scripts/view/general.js">
-      <publishTime>05/24/2016 13:07:18</publishTime>
+      <publishTime>05/28/2016 11:01:26</publishTime>
     </File>
     <File Include="Scripts/view/gethtml.js">
       <publishTime>05/21/2016 16:30:17</publishTime>
@@ -1462,7 +1468,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2016 10:16:55</publishTime>
     </File>
     <File Include="Views/Area/Index.cshtml">
-      <publishTime>05/24/2016 16:03:33</publishTime>
+      <publishTime>05/31/2016 22:31:07</publishTime>
     </File>
     <File Include="Views/CustomerReport/Index.cshtml">
       <publishTime>05/22/2016 20:48:39</publishTime>
@@ -1471,7 +1477,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/24/2016 15:35:50</publishTime>
     </File>
     <File Include="Views/GoodReport/Index.cshtml">
-      <publishTime>05/24/2016 15:36:25</publishTime>
+      <publishTime>05/24/2016 22:05:47</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>05/15/2016 09:25:07</publishTime>
@@ -1501,7 +1507,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2016 02:06:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/24/2016 15:46:09</publishTime>
+      <publishTime>06/01/2016 15:03:14</publishTime>
     </File>
   </ItemGroup>
 </Project>

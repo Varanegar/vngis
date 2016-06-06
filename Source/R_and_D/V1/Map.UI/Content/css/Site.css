@@ -532,9 +532,16 @@ footer {
 .right {
     float: right;
 }
+.color-white {
+    color: #fff;
+}
 .color-gray {
     color: #444;
 }
+.color-red {
+    color: #f00;
+}
+
 .color-light-gray {
     color: #888;
 }

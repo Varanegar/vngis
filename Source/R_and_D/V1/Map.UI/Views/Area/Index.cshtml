@@ -8,7 +8,7 @@
 
 
         <div class="col-md-3">
-            <div class="side-bar" style="height: 550px;">
+            <div class="side-bar" style="height: 600px;">
                 <div id="pnl_condition" class="frame-condition">
                     <div id="div_customer">
                         @Html.CheckBox("chk_customer", false, new { @id = "chk_customer", @class = "control-label" })
@@ -35,8 +35,20 @@
                     </div>
                 </div>
 
-                <div id="pnl_Area">
+                <div id="pnl_area" >
                     <div id="grid_area" class="full-width"></div>
+                </div>
+
+                <div id="pnl_customer_location" >
+                    <div id="div_btns_customer_location">
+                        <button type="button" class="btn btn-warning" id="btn_customer_withoute_location"  >بدون موقعیت</button>
+                        <button type="button" class="btn btn-default" id="btn_customer_invalid_location" >موقعیت نامعتبر</button>
+                    </div>
+                    
+                    <div id="grid_customer_withoute_location" class="full-width"></div>
+                    <div id="grid_customer_invalid_location" class="full-width"></div>
+
+
                 </div>
             </div>
         </div>
@@ -49,16 +61,19 @@
                             <input value=@CaptionResource.Save type="button" id="btn_save" class="btn btn-default">
                             <input value=@CaptionResource.Save type="button" id="btn_customer_save" class="btn btn-default">
                             <input value=@CaptionResource.Cancel type="button" id="btn_cancel" class="btn btn-default">
-                            <button id='btn_add_new_customer' class='btn btn-default'>تعریف مکان مشتری</button>
+                            <button id='btn_add_new_customer' class='btn btn-default'>تعریف موقعیت مشتری</button>
                             <button id='btn_add_customer_list' class='btn btn-default'>اختصاص مشتریان به مسیر</button>
                             <button id='btn_remove_customer_list' class='btn btn-default'>حذف مشتریان از مسیر</button>
+
+                            <button id='btn_set_customer' class='btn btn-default'>مشتریان مسیر</button>
+                            <button id='btn_map' class='btn btn-default'>@CaptionResource.Map</button>
                         </div>
 
                         <div class="right">
+                            <div id="pnl_area_title"></div>
                             @*<button id='btn_detail' class='btn btn-default'><i class='glyphicon glyphicon-zoom-in'></i></button>
                                 <button id='btn_edit' class='btn btn-default'><i class='glyphicon glyphicon-pencil'></i></button>*@
-                            <button id='btn_set_customer' class='btn btn-default'>مشتریان مسیر</button>
-                            <button id='btn_map' class='btn btn-default'>@CaptionResource.Map</button>
+                            <div></div>
                         </div>
                     </div>
                 </div>
@@ -67,15 +82,15 @@
 
             <div calss="row">
                 <div id="Report_Frame" class="frame-map-with-header">
-                    <div id="dlg_customer" class="modal fade" role="dialog" >
+                    <div id="dlg_customer" class="modal fade" role="dialog">
                         <div class="modal-dialog" style="width:400px">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">تعریف مکان مشتری</h4>
+                                    <h4 class="modal-title">تعریف موقعیت مشتری</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <input id='customer' style="width:300px;"/>
+                                    <input id='customer' style="width:300px;" />
                                     <input type="hidden" id="dlg_customer_hdn_lat" value="" />
                                     <input type="hidden" id="dlg_customer_hdn_lng" value="" />
                                     <input type="hidden" id="dlg_customer_hdn_id" value="" />

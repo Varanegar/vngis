@@ -1,8 +1,7 @@
 ﻿
 url_server = "http://localhost:59822/";
+
 url_prefix = "api/dsd/";
-
-
 
 urls = {
     loginUrl: url_server  + '/oauth/token',
@@ -21,7 +20,9 @@ urls = {
     removepoints: url_server + url_prefix + "route/rmvareapnt",
     loadlareabyevel: url_server + url_prefix + "route/ldareabylv",
     loadareasline: url_server + url_prefix + "route/ldarealines",
-
+    loadCustomersWithouteLocation: url_server + url_prefix + "route/ldcustnoloc",
+    loadCustomersInvalidLocation: url_server + url_prefix + "route/ldcustinvloc",
+    
     loadselectedcustomer: url_server + url_prefix + "route/ldselectedcust",
     loadnotselectedcustomer: url_server + url_prefix + "route/ldntselectedcust",
     addcustomertoarea: url_server + url_prefix + "route/adcusttoarea",
