@@ -536,7 +536,7 @@ function addToSelected(id) {
     var index = findCustomerMarkerIndex(id);
     if (index > -1) {
         var mrk = selected_markers[index].marker;
-        mrk.setIcon({ url: "../Content/img/pin/customerotherrout.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+        mrk.setIcon({ url: "../Content/img/pin/customerrout.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
         selected_markers.splice(index, 1);
         closeInfoWindow();
         addNewPoint(-1, mrk.getPosition().lat(), mrk.getPosition().lng(), id);
@@ -693,15 +693,19 @@ function addPoint(id, pr, lat, lng, cust) {
             var cpr = point_views[index].Pr;
 
             var transformcustomerbtn = "";
-            if (selectedRowIsLeaf() == true)
+            if ((selectedRowIsLeaf() == true) && (point_views[index].CstId == '' || point_views[index].CstId == null))
                 transformcustomerbtn = "<button id='btn_customer_transform_point_' onclick=transformCustomerPoint('" + id + "') class='btn btn-default'>تبدیل به مشتری</button>";
+            var deletebtn = "";
+            if (point_views[index].CstId == '' || point_views[index].CstId == null)
+                deletebtn = "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>";
+
             var windowdesc = "<br/>" +
                 "<input type='number' id='txt_priority_" + id + "' value=" + cpr + " class='form-control' />" +
                 "<br />" +
                 "<button id='btn_save_point_' onclick=savePoint('" + id + "') class='btn btn-default'>ذخیره</button>" +
                 "<button id='btn_add_point_' onclick=addPointByBtn('" + id + "') class='btn btn-default'>افزودن</button>" +
-                "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>" +
-                transformcustomerbtn;
+                 deletebtn+
+                 transformcustomerbtn;
 
             openInfoWindow(new google.maps.LatLng(lat, lng), windowdesc);
 

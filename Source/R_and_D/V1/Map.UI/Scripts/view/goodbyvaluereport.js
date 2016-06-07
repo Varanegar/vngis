@@ -77,6 +77,7 @@ function setCustomerInfoPanel(desc) {
     function geGoodValueFilter(ids) {
         return {
             AreaIds: ids,
+            CustomPoint : point_views,
             ClientId: client_id,
             ChangeFilter: changed,
             FromDate: $("#dte_from").val(),

@@ -13,9 +13,9 @@
             <div class="form-group" id ="pnl_header_condition">
                 <div class="row">
                     <div class="col-md-2">
-                        <input type="radio" name="report_type" value=1 checked> فروش 
+                        <input type="radio" id="rd_good" name="report_type" value=1 checked> فروش 
                         <br/>
-                        <input type="radio" name="report_type" value=2> عملکرد فروش 
+                        <input type="radio" id="rd_good_value" name="report_type" value=2> عملکرد فروش 
                     </div>
                     <div class="col-md-2">
                         <label>@CaptionResource.FromDate</label>
@@ -160,6 +160,12 @@
                     </ul>
                     <div class="tab-content">
                         <div id="pnl_area" class="tab-pane fade in active">
+                            <div id ="div_custom_point">
+                                @Html.CheckBox("chk_custom_point", false, new { @id = "chk_custom_point", @class = "control-label" })
+                                <label for="chk_custom_point">محدوده دلخواه</label>
+                            </div>
+
+                            
                             <div id="grid_area" class="full-width"></div>
                         </div>
 

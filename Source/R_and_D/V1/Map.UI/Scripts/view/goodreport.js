@@ -3,6 +3,8 @@ var map_auto_refresh = false;
 var client_id;
 var changed;
 
+var point_views = [];
+var new_id = 0;
 
 
 $(document).ready(function () {
@@ -11,6 +13,7 @@ $(document).ready(function () {
     
     $("#div_advance_condition").hide();
     $("#pnl_marker .panel-value").hide();
+    $("#div_custom_point").hide();
 
     initMap('mapContainer', MapCenterPosition);
 
@@ -104,6 +107,34 @@ $(document).ready(function () {
         }
 
     });
+
+    $('input[type=radio][name=report_type]').change(function () {
+        $("#grid_area").show();
+
+        if (this.value == 1) {
+            $("#div_custom_point").hide();
+        }
+        else if (this.value == 2) {
+            $("#div_custom_point").show();
+        }
+    });
+
+    
+    $("#chk_custom_point").on("change", function (e) {
+        point_views = [];
+        if (this.checked) {
+            $("#grid_area").hide();
+            clearOverlays();
+            addListener('click', addReportPointByClick);
+            addPolygon({
+                line: [], color: '#990000', weight: 3,
+                movingshape: true, fit: true
+            });
+        } else {
+            $("#grid_area").show();
+            removeListener('click');            
+        }
+    });
     
     loadDdlSaleOffice();
     loadDdlHeader();
@@ -116,7 +147,98 @@ $(document).ready(function () {
     loadDdlGood();
 });
 
+/**********************************************************/
+// Custom point
+/**********************************************************/
+function addReportPointByClick(args) {
+    //addNewPoint(-1, , );
+    
+    new_id++;
+    var id = get_temp_guid(new_id);
+    closeInfoWindow();
 
+   // addPoint(guid, pr, lat, lng);
+    var m = addMarker({
+        id: "point_" + id,
+        lat: args.latLng.lat(),
+        lng: args.latLng.lng(),
+        draggable: true, label: new_id,
+        clustering: false,
+        map: gmap,
+    });
+    m.setIcon({ url: MarkersIcon.Point.Url, size: MarkersIcon.Point.Size, anchor: MarkersIcon.Point.Anchor });
+    m.addListener("dragend", function (e) {
+        var index = findPointMarkerIndex(id);
+        if (index > -1) {
+            point_views[index].Lat = e.latLng.lat();
+            point_views[index].Lng = e.latLng.lng();
+        }
+        refreshAreaLine();
+    });
+
+    m.addListener('click', function (event) {
+        var index = findPointMarkerIndex(id);
+        if (index > -1) {
+            var windowdesc = "<br/>" +
+                "<input type='number' id='txt_priority_" + id + "' value=" + id + " class='form-control' />" +
+                "<br />" +
+                "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>" ;
+
+            openInfoWindow(new google.maps.LatLng(args.latLng.lat(), args.latLng.lng()), windowdesc);
+        }
+    });
+
+    point_views.push({ UniqueId: id, Lat: args.latLng.lat(), Lng: args.latLng.lng(), Pr: new_id });
+    refreshAreaLine();
+}
+
+function removePoint(id) {
+
+    var index = findPointMarkerIndex(id);
+    if (index > -1) {
+        var pr = parseInt(point_views[index].Pr);
+        for (var i = index; i < point_views.length - 1; i++) {
+            point_views[i].Pr = (parseInt(point_views[i].Pr) - 1).toString();
+        }
+        point_views.splice(index, 1);
+        removeMarkerById("point_" + id);
+        if (new_id == pr) new_id--;
+
+        refreshAreaLable();
+        refreshAreaLine();
+    }
+}
+
+function refreshAreaLable() {
+
+    $.each(point_views, function (i, item) {
+        var m = getMarkerById("point_" + item.UniqueId);
+        m.set("labelContent", item.Pr);
+    });
+}
+
+function refreshAreaLine() {
+    var line = [];
+    $.each(point_views, function (i, item) {
+        line.push(new google.maps.LatLng(item.Lat, item.Lng));
+    });
+    refreshMovingShape(line);
+}
+
+function findPointMarkerIndex(id) {
+    var gid;
+    if (id.lastIndexOf('_') > -1)
+        gid = id.substring(id.lastIndexOf('_') + 1);
+    else gid = id;
+
+    for (var i = 0; i < point_views.length; i++) {
+        if (point_views[i].UniqueId == gid) {
+            return i;
+        }
+    }
+    return -1;
+}
+/**********************************************************/
 function showDetail() {
     var row = getSelectedRow("grid_area");
     if (row.IsLeaf != true) {
@@ -184,17 +306,25 @@ function loadAreaList(options) {
 //map
 //--------------------------------------------------------------------------------
 function refreshMap(ids) {
-    clearOverlays();
-    if ((ids == undefined) || (ids == null))
-        ids = getSelectedIds("grid_area");
 
     if ($('input[name="report_type"]:checked').val() == 1) {
+        if ((ids == undefined) || (ids == null))
+            ids = getSelectedIds("grid_area");
+        clearOverlays();
         $("#div_area_info").html('');
         $('#tab_area_list').trigger('click');
         drawAreaInfo(ids);
     } else {
-        drawAreasLine(ids);
-        drawAreaMarker(ids);
+        if ($("#chk_custom_point").is(":checked")) {
+            drawAreaMarker(null);
+        } else {
+            if ((ids == undefined) || (ids == null))
+                ids = getSelectedIds("grid_area");
+            clearOverlays();
+            drawAreaMarker(ids);
+            drawAreasLine(ids);
+
+        }
     }
 }
 
