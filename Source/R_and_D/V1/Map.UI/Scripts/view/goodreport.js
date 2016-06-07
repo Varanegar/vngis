@@ -10,7 +10,8 @@ $(document).ready(function () {
     changed = true;
     
     $("#div_advance_condition").hide();
-   
+    $("#pnl_marker .panel-value").hide();
+
     initMap('mapContainer', MapCenterPosition);
 
     $("#grid_area").kendoGrid({
@@ -68,7 +69,7 @@ $(document).ready(function () {
         showDetail();
     });
 
-    $("#pnl_header_condition input").on("change", function (e) {
+    $("#pnl_header_condition input:not(:radio)").on("change", function (e) {
         changed = true;
     });
 
@@ -85,6 +86,25 @@ $(document).ready(function () {
     });
 
 
+    $("#pnl_marker input[type='checkbox']").on("change", function (e) {
+        if ($('input[name="report_type"]:checked').val() == 2) {
+        var flag = this.checked;
+        var id = this.id.replace("chk", "div");
+        if (flag)
+            $("#" + id).show();
+        else {
+            var fromid = this.id.replace("chk", "from");
+            var toid = this.id.replace("chk", "to");
+
+            $("#" + fromid).val('');
+            $("#" + toid).val('');
+            $("#" + id).hide();
+        }
+
+        }
+
+    });
+    
     loadDdlSaleOffice();
     loadDdlHeader();
     loadDdlSeller();
@@ -164,11 +184,18 @@ function loadAreaList(options) {
 //map
 //--------------------------------------------------------------------------------
 function refreshMap(ids) {
-    $("#div_area_info").html('');
-    $('#tab_area_list').trigger('click');
-
     clearOverlays();
-    drawAreaInfo(ids);
+    if ((ids == undefined) || (ids == null))
+        ids = getSelectedIds("grid_area");
+
+    if ($('input[name="report_type"]:checked').val() == 1) {
+        $("#div_area_info").html('');
+        $('#tab_area_list').trigger('click');
+        drawAreaInfo(ids);
+    } else {
+        drawAreasLine(ids);
+        drawAreaMarker(ids);
+    }
 }
 
 function drawAreaInfo(ids) {
@@ -263,8 +290,8 @@ function drawAreaCustomer(leafids) {
     }
 
 function setAreaInfoPanel(desc) {
-    $("#div_area_info").html(desc);
-    $('#tab_area_info').trigger('click');
+    $("#div_info").html(desc);
+    $('#tab_info').trigger('click');
 
 }
 //--------------------------------------------------------------------------------

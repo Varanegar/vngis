@@ -146,6 +146,7 @@
     <Compile Include="Controllers\GoodReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LastStatusController.cs" />
+    <Compile Include="Controllers\UserManagerController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Global.asax.cs">
@@ -313,6 +314,11 @@
     <Content Include="Views\GoodReport\Index.cshtml" />
     <Content Include="Views\GoodByValueReport\Index.cshtml" />
     <Content Include="Views\Shared\_login.cshtml" />
+    <Content Include="Views\UserManager\ChangePassword.cshtml" />
+    <Content Include="Views\UserManager\Edit.cshtml" />
+    <Content Include="Views\UserManager\Index.cshtml" />
+    <Content Include="Views\UserManager\Permissions.cshtml" />
+    <Content Include="Views\UserManager\Stocks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

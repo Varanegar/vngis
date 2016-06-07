@@ -276,3 +276,38 @@ function accountManagerViewModel() {
 };
 var accountManagerApp = new accountManagerViewModel();
 //******************************************************************//
+
+function changePasswordViewModel() {
+    // Data
+    var self = this;
+
+    self.oldPass = ko.observable('');
+    self.newPass = ko.observable('');
+    self.confirmNewPass = ko.observable('');
+
+    self.onChangePass = function () {
+        if (self.oldPass() === '' || self.newPass() === '' || self.confirmNewPass() === '') {
+            showError('', 'لطفا اطلاعات درخواستی را تکمیل نمایید');
+            $(".old-pass").focus();
+            return;
+        }
+        if (self.newPass() !== self.confirmNewPass()) {
+            showError('', 'رمز عبور جدید با تکرار آن برابر نیست');
+            $(".new-pass").focus();
+            return;
+        }
+
+        accountManagerApp.callApi(urls.changePasswordUrl, "POST", {
+            oldPassword: self.oldPass(), newPassword: self.newPass(), confirmPassword: self.confirmNewPass
+        }, function (data) {
+            showSuccess('', 'رمز عبور شما تغییر کرد');
+            self.clearForm();
+        });
+    };
+
+    self.clearForm = function () {
+        self.oldPass('');
+        self.newPass('');
+        self.confirmNewPass('');
+    };
+};
