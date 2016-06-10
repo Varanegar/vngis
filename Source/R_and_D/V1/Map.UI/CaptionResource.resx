@@ -393,4 +393,7 @@
   <data name="SelectAll" xml:space="preserve">
     <value>انتخاب همه</value>
   </data>
+  <data name="Clean" xml:space="preserve">
+    <value>پاک کردن</value>
+  </data>
 </root>

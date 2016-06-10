@@ -187,6 +187,15 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to پاک کردن.
+        /// </summary>
+        public static string Clean {
+            get {
+                return ResourceManager.GetString("Clean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مشتری.
         /// </summary>
         public static string Customer {

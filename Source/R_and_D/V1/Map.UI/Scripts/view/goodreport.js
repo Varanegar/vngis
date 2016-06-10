@@ -87,6 +87,9 @@ $(document).ready(function () {
     $("#btn_remove_all").on("click", function (e) {
         $('#pnl_marker input:checkbox').prop('checked', false);
     });
+    $("#btn_clean").on("click", function (e) {
+        cleanMap();
+    });
 
 
     $("#pnl_marker input[type='checkbox']").on("change", function (e) {
@@ -119,17 +122,13 @@ $(document).ready(function () {
         }
     });
 
-    
+
     $("#chk_custom_point").on("change", function (e) {
         point_views = [];
         if (this.checked) {
             $("#grid_area").hide();
-            clearOverlays();
+            cleanMap();
             addListener('click', addReportPointByClick);
-            addPolygon({
-                line: [], color: '#990000', weight: 3,
-                movingshape: true, fit: true
-            });
         } else {
             $("#grid_area").show();
             removeListener('click');            
@@ -150,23 +149,28 @@ $(document).ready(function () {
 /**********************************************************/
 // Custom point
 /**********************************************************/
-function addReportPointByClick(args) {
-    //addNewPoint(-1, , );
-    
-    new_id++;
-    var id = get_temp_guid(new_id);
-    closeInfoWindow();
+function cleanMap() {
+    point_views = [];
+    new_id = 0;
+    clearOverlays();
+    addPolygon({
+        line: [], color: '#990000', weight: 3,
+        movingshape: true, fit: true
+    });
+}
 
-   // addPoint(guid, pr, lat, lng);
+function addPoint(id, lat, lng, pr) {
+    
+    // addPoint(guid, pr, lat, lng);
     var m = addMarker({
         id: "point_" + id,
-        lat: args.latLng.lat(),
-        lng: args.latLng.lng(),
-        draggable: true, label: new_id,
-        clustering: false,
-        map: gmap,
+        lat: lat,
+        lng: lng,
+        draggable: true, label: pr,
+        clustering: false
     });
     m.setIcon({ url: MarkersIcon.Point.Url, size: MarkersIcon.Point.Size, anchor: MarkersIcon.Point.Anchor });
+
     m.addListener("dragend", function (e) {
         var index = findPointMarkerIndex(id);
         if (index > -1) {
@@ -182,12 +186,22 @@ function addReportPointByClick(args) {
             var windowdesc = "<br/>" +
                 "<input type='number' id='txt_priority_" + id + "' value=" + id + " class='form-control' />" +
                 "<br />" +
-                "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>" ;
+                "<button id='btn_remove_point_' onclick=removePoint('" + id + "') class='btn btn-default'>حذف</button>";
 
-            openInfoWindow(new google.maps.LatLng(args.latLng.lat(), args.latLng.lng()), windowdesc);
+            openInfoWindow(new google.maps.LatLng(lat, lng), windowdesc);
         }
     });
+}
 
+function addReportPointByClick(args) {
+    //addNewPoint(-1, , );
+    
+    new_id++;
+    var id = get_temp_guid(new_id);
+    closeInfoWindow();
+
+    addPoint(id, args.latLng.lat(), args.latLng.lng(), new_id);
+    
     point_views.push({ UniqueId: id, Lat: args.latLng.lat(), Lng: args.latLng.lng(), Pr: new_id });
     refreshAreaLine();
 }
@@ -305,22 +319,37 @@ function loadAreaList(options) {
 //--------------------------------------------------------------------------------
 //map
 //--------------------------------------------------------------------------------
-function refreshMap(ids) {
 
+function reDrawLine() {
+    $.each(point_views, function (i, item) {
+       addPoint("point_" + item.UniqueId, item.Lat, item.Lng, item.Pr);
+    });
+    addPolygon({
+        line: [], color: '#990000', weight: 3,
+        movingshape: true, fit: true
+    });
+
+    refreshAreaLine();
+}
+
+function refreshMap(ids) {
+    clearOverlays();
     if ($('input[name="report_type"]:checked').val() == 1) {
         if ((ids == undefined) || (ids == null))
             ids = getSelectedIds("grid_area");
-        clearOverlays();
+        new_id = 0;
         $("#div_area_info").html('');
         $('#tab_area_list').trigger('click');
         drawAreaInfo(ids);
     } else {
         if ($("#chk_custom_point").is(":checked")) {
+            reDrawLine();
             drawAreaMarker(null);
+            
         } else {
             if ((ids == undefined) || (ids == null))
                 ids = getSelectedIds("grid_area");
-            clearOverlays();
+            new_id = 0;
             drawAreaMarker(ids);
             drawAreasLine(ids);
 
