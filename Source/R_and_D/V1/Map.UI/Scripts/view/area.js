@@ -6,7 +6,7 @@ var ctr = false;
 var gridchange_flag = true;
 var new_id = 0;
 var selected_id = null;
-var customer_id = null;
+var selected_customer = null;
 
 
 $(document).ready(function () {
@@ -243,14 +243,24 @@ $(document).ready(function () {
         var lng = $("#dlg_customer_hdn_lng").val();
         var id = $("#dlg_customer_hdn_id").val();
         var pointid = $("#dlg_customer_hdn_point_id").val();
+        var desc = "";
+        if ($("#dlg_customer_name").is(":visible"))
+            desc = $("#dlg_customer_name").html();
+        else
+            desc = $("#customer").val();
 
         if ((id == null) || (id == undefined) || (id == ''))
             alert('مشتری انتخاب شده معتبر نمی باشد.');
         else
-            addCustomerpoint(id, lat, lng, pointid);
+            addCustomerpoint(id, lat, lng, pointid, desc);
         closeCustomerDialog();
     });
     
+    $("#btn_cancel_customer_position").on("click", function (e) {
+        closeCustomerDialog();
+        freeCustomer(false);
+    });
+
     $("#btn_customer_withoute_location").on("click", btnCustomerWithouteLocationClick);
     $("#btn_customer_invalid_location").on("click", btnCustomerInvalidLocationClick);
 
@@ -797,7 +807,7 @@ function refreshMapForCustomer() {
 
 
 
-        customer_id = null;
+        selected_customer = null;
         
         var isleaf = selectedRowIsLeaf();
 
@@ -837,7 +847,7 @@ function refreshCustomerLocationGrids(isleaf) {
             serverFiltering: false,
             serverSorting: false
         },
-        change: freeCustomer,
+        change: selectCustomer,
         height: h,
         sortable: false,
         editable: false,
@@ -848,17 +858,10 @@ function refreshCustomerLocationGrids(isleaf) {
             mode: "row"
         },
         columns: [
+            { field: "uniqueId", hidden:true },
             {
-                field: "customerName", title: "مشتری",
+                field: "customerName", title: "مشتریان بدون موقعیت",
                 template: "<h5>#=customerName#</h5><p>#=desc#</p>"
-            },
-            {
-                field: "uniqueId",
-                title: "&nbsp; &nbsp;",
-                width: 40,
-                filterable: false,
-                template:
-                    "<button id='btn_wolc_#=uniqueId#' type='button' class='btn-link btn-grid btn-detail' onclick=selectCustomer('#=uniqueId#');><span class='glyphicon glyphicon-map-marker color-gray span-btn-grid' style=' font-size: 18px;'></span ></button>"
             }
         ]
     });
@@ -885,7 +888,7 @@ function refreshCustomerLocationGrids(isleaf) {
         },
         columns: [
             {
-                field: "customerName", title: "مشتری",
+                field: "customerName", title: "مشتریان با موقعیت نامعتبر",
                 template:"<h5>#=customerName#</h5><p>#=desc#</p>"
  
             },
@@ -912,10 +915,12 @@ function locateCustomer(id) {
 
 }
 
-function selectCustomer(customerid) {
-    customer_id = customerid;
-    $("#btn_wolc_" + customer_id + " span ").removeClass("color-gray");
-    $("#btn_wolc_" + customer_id + " span ").addClass("color-red");
+function selectCustomer() {
+    var selectedData = this.dataItem(this.select());
+    selected_customer = null;
+    if ((selectedData != undefined) && (selectedData != null)) {
+        selected_customer = { id: selectedData.uniqueId, title: selectedData.customerName };
+    }
 }
 
 function freeCustomer(remove) {
@@ -925,9 +930,8 @@ function freeCustomer(remove) {
         dataSource.remove(dataItem);
         dataSource.sync();
     }
-    $("#btn_wolc_" + customer_id + " span ").removeClass("color-red");
-    $("#btn_wolc_" + customer_id + " span ").addClass("color-gray");
-    customer_id = null;
+    selected_customer = null;
+    $("#grid_customer_withoute_location").data("kendoGrid").clearSelection();
 }
 
 function btnCustomerWithouteLocationClick() {
@@ -971,13 +975,14 @@ function loadCustomerInvalidLocation(options) {
         );
 }
 
-function addCustomerpoint(guid, lat, lng, pointid) {
+function addCustomerpoint(guid, lat, lng, pointid, desc) {
 
     var m = addMarker({
         id: "customer_point_" + guid,
         lat: lat, lng: lng,
         tit: '', draggable: true, label: '',
         clustering: false,
+        windowdesc: "<br/>" + desc,
     });
 
     if (pointid != '') {
@@ -995,6 +1000,7 @@ function addCustomerpoint(guid, lat, lng, pointid) {
     customer_views.push({ UniqueId: guid, Lat: lat, Lng: lng });
 
     closeCustomerDialog();
+    freeCustomer(true);
     return m;
 
 }
@@ -1009,18 +1015,24 @@ function closeCustomerDialog() {
 }
 
 function addCustomerByClick(args) {
-    if (customer_id != null) {
-        addCustomerpoint(customer_id, args.latLng.lat(), args.latLng.lng(), '');
-        freeCustomer(true);
+    if (selected_customer != null) {
+        $("#dlg_customer_name").show();
+        $("#customer").hide();
+        $("#dlg_customer_name").html("<h5>" + selected_customer.title+ "</h5>");
+        $("#dlg_customer_hdn_id").val(selected_customer.id);
     } else {
+        $("#customer").show();
+        $("#dlg_customer_name").hide();
         $("#dlg_customer_hdn_id").val('');
-        $("#dlg_customer_hdn_point_id").val('');
-        $("#dlg_customer_hdn_lat").val(args.latLng.lat());
-        $("#dlg_customer_hdn_lng").val(args.latLng.lng());
-
-
-        $("#dlg_customer").modal('show');
+        $("#dlg_customer_name").html('');
     }
+
+    $("#dlg_customer_hdn_point_id").val('');
+    $("#dlg_customer_hdn_lat").val(args.latLng.lat());
+    $("#dlg_customer_hdn_lng").val(args.latLng.lng());
+
+    $("#dlg_customer").modal('show');
+    
 }
 
 function onCustomerDragEnd(args) {
