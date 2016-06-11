@@ -312,7 +312,6 @@
     <Content Include="Views\LastStatus\Index.cshtml" />
     <Content Include="Views\CustomerReport\Index.cshtml" />
     <Content Include="Views\GoodReport\Index.cshtml" />
-    <Content Include="Views\GoodByValueReport\Index.cshtml" />
     <Content Include="Views\Shared\_login.cshtml" />
     <Content Include="Views\UserManager\ChangePassword.cshtml" />
     <Content Include="Views\UserManager\Edit.cshtml" />

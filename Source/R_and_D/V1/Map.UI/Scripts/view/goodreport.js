@@ -68,6 +68,10 @@ $(document).ready(function () {
         refreshMap();
     });
 
+    $("#btn_excel").on("click", function (e) {
+        refreshMap();
+    });
+
     $("#grid_area").on("dblclick", "tr.k-state-selected", function (e) {
         showDetail();
     });

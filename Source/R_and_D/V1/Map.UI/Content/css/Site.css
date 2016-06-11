@@ -539,12 +539,21 @@ footer {
     color: #444;
 }
 .color-red {
-    color: #f00;
+    color: #C9302C;
+}
+.color-orange {
+    color: #EC971F;
 }
 
 .color-light-gray {
     color: #888;
 }
+
+.color-greeen {
+    color: #4BB04F;
+}
+
+
 
 .color-back-ligt-gray {
     background: #f3f3f3;

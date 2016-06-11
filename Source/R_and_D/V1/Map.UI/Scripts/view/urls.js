@@ -11,7 +11,8 @@ urls = {
     //--------------------------------------------------------
     loadarealist: url_server + url_prefix + "route/ldarealst", //"Area/LoadAreaList";    
     loadareapoints: url_server + url_prefix + "route/ldareapoint", //"Area/LoadAreaPoints";
-    haspoint: url_server + url_prefix + "route/hsareapoint",    
+    getareacenterpoint: url_server + url_prefix + "route/gtareacntpnt", 
+    haspoint: url_server + url_prefix + "route/hsareapoint",
     getareapath: url_server + url_prefix + "route/getareapath",
     savepoints: url_server + url_prefix + "route/svareapnt",
     loadareaparentpoints: url_server + url_prefix + "route/ldareaprntpnt",
@@ -22,7 +23,11 @@ urls = {
     loadareasline: url_server + url_prefix + "route/ldarealines",
     loadCustomersWithouteLocation: url_server + url_prefix + "route/ldcustnoloc",
     loadCustomersInvalidLocation: url_server + url_prefix + "route/ldcustinvloc",
+    loadCustomersValidLocation: url_server + url_prefix + "route/ldcustvloc",
+    loadCustomersLocationCount: url_server + url_prefix + "route/ldcustloccnt",
     
+    
+
     loadselectedcustomer: url_server + url_prefix + "route/ldselectedcust",
     loadnotselectedcustomer: url_server + url_prefix + "route/ldntselectedcust",
     addcustomertoarea: url_server + url_prefix + "route/adcusttoarea",
