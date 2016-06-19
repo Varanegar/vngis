@@ -399,4 +399,7 @@
   <data name="ExportToExcel" xml:space="preserve">
     <value>ارسال به اکسل</value>
   </data>
+  <data name="Print" xml:space="preserve">
+    <value>چاپ</value>
+  </data>
 </root>

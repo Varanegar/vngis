@@ -165,7 +165,7 @@ function accountManagerViewModel() {
         }
 
         shouldShowLogout(true);
-
+        //console.log(url);
         $.ajax({
             type: callType,
             url: url,

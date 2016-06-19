@@ -2,6 +2,7 @@
 var customer_views = [];
 var selected_markers = [];
 var customer_markers = [];
+var customer_invalid_location_ids = [];
 var ctr = false;
 var gridchange_flag = true;
 var new_id = 0;
@@ -261,9 +262,9 @@ $(document).ready(function () {
         freeCustomer(false);
     });
 
-    $("#btn_customer_withoute_location").on("click", btnCustomerWithouteLocationClick);
-    $("#btn_customer_invalid_location").on("click", btnCustomerInvalidLocationClick);
-    $("#btn_customer_valid_location").on("click", btnCustomerValidLocationClick);
+    $("#btn_customer_withoute_location").on("click", function (e) { btnCustomerLocationClick("Withoute"); });
+    $("#btn_customer_invalid_location").on("click", function (e) { btnCustomerLocationClick("Invalid"); });
+    $("#btn_customer_valid_location").on("click", function (e) { btnCustomerLocationClick("Valid"); });
 
 });
 function savePoints() {
@@ -523,6 +524,20 @@ function onCustomerMarkerClick(e, id, marker, desc, editable, lat , lng) {
                 else {
                     windowdesc = "<br />" + desc + "<br />" +
                         "<button id='btn_remove_customer_' onclick='removeFromSelected(\"" + id + "\", true)' class='btn btn-default'>حذف از مسیر</button>";
+                        
+                    var find = false;
+                    for (var i = 0; i < customer_invalid_location_ids.length; i++) {
+                        if (customer_invalid_location_ids[i] == id) {
+                            find = true;
+                            break;
+                        }
+                    }
+                    if (find) {
+                        windowdesc +=
+                            "<button id='btn_relocate_customer_' onclick='relocateCustomer(\"" + id + "\")' class='btn btn-default'>اصلاح موقعیت</button>";
+
+                        }
+                    
                 }
                 openInfoWindow(new google.maps.LatLng(lat, lng), windowdesc);
             }
@@ -530,6 +545,14 @@ function onCustomerMarkerClick(e, id, marker, desc, editable, lat , lng) {
     }
     else {
         openInfoWindow(new google.maps.LatLng(lat, lng), "<br />" + desc);
+    }
+
+}
+
+function relocateCustomer(id) {
+    if (point_views.length > 0) {
+        var latlng = new google.maps.LatLng(point_views[point_views.length - 1].Lat - getSpace(), point_views[point_views.length - 1].Lng - getSpace());
+        onCustomerDragEnd({ id: "customer_point_" + id, latLng: latlng, move:true });
     }
 
 }
@@ -684,7 +707,12 @@ function addPointByBtn(id) {
 }
 
 function addPointByClick(args) {
-    addNewPoint(-1, args.latLng.lat(), args.latLng.lng());
+
+    if (selected_customer != null) {
+        addCustomerByClick(args);
+    } else {
+        addNewPoint(-1, args.latLng.lat(), args.latLng.lng());
+    }
     refreshAreaLine();
 }
 
@@ -793,6 +821,13 @@ function enableGrid() {
 function refreshMapForCustomer() {
 
     if (selected_id != null) {
+        selected_customer = null;
+        clearOverlays();
+        point_views = [];
+        customer_views = [];
+        customer_markers = [];
+
+
         $("#btn_add_new_customer").hide();
         $("#btn_set_customer").hide();
         $("#btn_map").hide();
@@ -802,25 +837,16 @@ function refreshMapForCustomer() {
         $("#btn_cancel").show();
         
         var isleaf = selectedRowIsLeaf();
-
-        selected_customer = null;
- 
-        refreshCustomerLocationGrids(isleaf);
-
-        
+        refreshCustomerLocationGrids(isleaf);        
         disableGrid();
         
-        clearOverlays();
-        point_views = [];
-        customer_views = [];
-        customer_markers = [];
         addListener('click', addCustomerByClick);
 
         drawAreaCustomerPoints(false, isleaf, true);
         drawAreaLinePoints(false, isleaf, true);
 
 
-        btnCustomerWithouteLocationClick();
+        btnCustomerLocationClick("Withoute");
 
     }
 }
@@ -835,27 +861,29 @@ function refreshCustomerLocationGrids(isleaf) {
     $("#grid_customer_invalid_location").hide();
     $("#grid_customer_valid_location").hide();
     $("#pnl_customer_location").show();
-    
+    customer_invalid_location_ids = [];
 
     if (isleaf) {
-        $("#div_btns_customer_location").show();
         accountManagerApp.callApi(urls.loadCustomersLocationCount, 'POST',
             { regionAreaId: selected_id },
             function (data) {
                 if ((data != undefined) && (data != null)) {
+                    if (data.invalidLocationCount + data.withoutLocationCount > 0) {
+                        $("#div_btns_customer_location").show();
+                    } else {
+                        $("#div_btns_customer_location").hide();
+                    }
 
                     if (data.invalidLocationCount > 0)
-                        $("#btn_customer_invalid_location").prop("disabled", false);
+                        $("#btn_customer_invalid_location").show();
                     else {
-                        $("#btn_customer_invalid_location").prop("disabled", true);
                         $("#btn_customer_invalid_location").hide();
 
                     }
                         
                     if (data.withoutLocationCount > 0)
-                        $("#btn_customer_withoute_location").prop("disabled", false);
+                        $("#btn_customer_withoute_location").show();
                     else {
-                        $("#btn_customer_withoute_location").prop("disabled", true);
                         $("#btn_customer_withoute_location").hide();
                     }
                 }
@@ -913,13 +941,18 @@ function refreshCustomerLocationGrids(isleaf) {
                 serverFiltering: false,
                 serverSorting: false
             },
-            change: selectCustomer,
             height: h,
             sortable: false,
             editable: false,
             selectable: "row",
             pageable: false,
             scrollable: true,
+            change: function (arg) {
+                var selectedData = this.dataItem(this.select());
+                if (selectedData.uniqueId) {
+                    locateCustomer(selectedData.uniqueId);
+                }
+            },
             filterable: {
                 mode: "row"
             },
@@ -929,14 +962,6 @@ function refreshCustomerLocationGrids(isleaf) {
                     field: "customerName", title: "مشتریان مسیر",
                     template: "<h5 class='color-greeen'>#=customerName#</h5><p>#=desc#</p>",
                     headerTemplate: "<h5>مشتریان مسیر<h5/>",
-                },
-                {
-                    field: "uniqueId",
-                    title: "&nbsp; &nbsp;",
-                    width: 40,
-                    filterable: false,
-                    template:
-                        "<button  type='button' class='btn-link btn-grid btn-detail' onclick=locateCustomer('#=uniqueId#');><span class='glyphicon glyphicon-map-marker color-gray span-btn-grid' style=' font-size: 18px;'></span ></button>"
                 }
 
             ]
@@ -953,6 +978,12 @@ function refreshCustomerLocationGrids(isleaf) {
                 serverFiltering: false,
                 serverSorting: false
             },
+            change: function (arg) {
+                var selectedData = this.dataItem(this.select());
+                if (selectedData.uniqueId) {
+                    locateCustomer(selectedData.uniqueId);
+                }
+            },
             height: h,
             sortable: false,
             editable: false,
@@ -967,14 +998,6 @@ function refreshCustomerLocationGrids(isleaf) {
                     field: "customerName", title: "مشتریان با موقعیت نامعتبر",
                     template: "<h5 class='color-red'>#=customerName#</h5><p>#=desc#</p>",
                     headerTemplate: "<h5>مشتریان با موقعیت نامعتبر<h5/>",
-                },
-                {
-                    field: "uniqueId",
-                    title: "&nbsp; &nbsp;",
-                    width: 40,
-                    filterable: false,
-                    template:
-                        "<button  type='button' class='btn-link btn-grid btn-detail' onclick=locateCustomer('#=uniqueId#');><span class='glyphicon glyphicon-map-marker color-gray span-btn-grid' style=' font-size: 18px;'></span ></button>"
                 }
             ]
         });
@@ -1012,39 +1035,42 @@ function freeCustomer(remove) {
     $("#grid_customer_withoute_location").data("kendoGrid").clearSelection();
 }
 
-function btnCustomerValidLocationClick() {
-    $("#grid_customer_valid_location").show();
-    $("#grid_customer_invalid_location").hide();
-    $("#grid_customer_withoute_location").hide();
 
-    $("#btn_customer_valid_location").hide();
-    if (!$("#btn_customer_invalid_location").is(':disabled'))
-        $("#btn_customer_invalid_location").show();
-    if (!$("#btn_customer_withoute_location").is(':disabled'))
-        $("#btn_customer_withoute_location").show();
-}
+function btnCustomerLocationClick(typ) {
+    freeCustomer(false); 
 
+    if (typ == "Withoute") $("#grid_customer_withoute_location").show();
+    else $("#grid_customer_withoute_location").hide();
 
-function btnCustomerInvalidLocationClick() {
-    $("#grid_customer_valid_location").hide();
-    $("#grid_customer_invalid_location").show();
-    $("#grid_customer_withoute_location").hide();
+    if (typ == "Valid") $("#grid_customer_valid_location").show();
+    else $("#grid_customer_valid_location").hide();
 
-    $("#btn_customer_valid_location").show();
-    $("#btn_customer_invalid_location").hide();
-    if (!$("#btn_customer_withoute_location").is(':disabled'))
-        $("#btn_customer_withoute_location").show();
-}
+    if (typ == "Invalid") $("#grid_customer_invalid_location").show();
+    else $("#grid_customer_invalid_location").hide();   
 
-function btnCustomerWithouteLocationClick() {
-    $("#grid_customer_valid_location").hide();
-    $("#grid_customer_invalid_location").hide();
-    $("#grid_customer_withoute_location").show();
+    $("#btn_customer_withoute_location").removeClass("btn-warning");
+    $("#btn_customer_valid_location").removeClass("btn-warning");
+    $("#btn_customer_invalid_location").removeClass("btn-warning");
+    
+    $("#btn_customer_withoute_location").addClass("btn-default");
+    $("#btn_customer_valid_location").addClass("btn-default");
+    $("#btn_customer_invalid_location").addClass("btn-default");
 
-    $("#btn_customer_valid_location").show();
-    if (!$("#btn_customer_invalid_location").is(':disabled'))
-        $("#btn_customer_invalid_location").show();
-    $("#btn_customer_withoute_location").hide();
+    if (typ == "Withoute") {
+        $("#btn_customer_withoute_location").addClass("btn-warning");
+        $("#btn_customer_withoute_location").removeClass("btn-default");
+    }
+
+    if (typ == "Valid") {
+        $("#btn_customer_valid_location").addClass("btn-warning");
+        $("#btn_customer_valid_location").removeClass("btn-default");
+    }
+
+    if (typ == "Invalid"){
+        $("#btn_customer_invalid_location").addClass("btn-warning");
+        $("#btn_customer_invalid_location").removeClass("btn-default");
+    }
+
 }
 
 
@@ -1061,6 +1087,9 @@ function loadCustomerInvalidLocation(options) {
     accountManagerApp.callApi(urls.loadCustomersInvalidLocation, 'POST',
             { regionAreaId: selected_id },
             function (result) {
+                $.each(result, function (i, item) {
+                    customer_invalid_location_ids.push(item.uniqueId);
+                });
                 options.success(result);
             }
         );
@@ -1143,6 +1172,9 @@ function onCustomerDragEnd(args) {
     }
     var m = getMarkerById(args.id);
     m.setIcon({ url: "../Content/img/pin/customernew.png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
+    if (args.move == true) {
+        m.setPosition(args.latLng);
+    }
 }
 
 function findCustomerViewIndex(id) {
@@ -1193,7 +1225,7 @@ function refreshMap(edit) {
             $("#btn_save").show();
             $("#btn_cancel").show();
             $("#btn_add_new_customer").hide();
-
+            $("#btn_set_customer").hide();            
             refreshCustomerLocationGrids(isleaf);
 
             addListener('click', addPointByClick);
@@ -1205,6 +1237,9 @@ function refreshMap(edit) {
             $("#btn_save").hide();
             $("#btn_cancel").hide();
             $("#btn_add_new_customer").show();
+            $("#pnl_customer_location").hide();
+            if (isleaf)
+                $("#btn_set_customer").show();            
             enableGrid();
             removeListener('click');
         }
@@ -1234,9 +1269,10 @@ function showCustomerLocationMessage() {
             if ((data != undefined) && (data != null)) {
 
             var desc = '';
-            if (data.invalidLocationCount > 0)
+            if (data.invalidLocationCount > 0) {
                 desc += 'مشتری با موقعیت نامعتبر : ' + data.invalidLocationCount;
                 desc += '<br/>';
+            }
             if (data.withoutLocationCount > 0)
                 desc += 'مشتری بدون موقعیت : ' + data.withoutLocationCount;
                 
@@ -1342,7 +1378,7 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                             id: "customer_point_" + item.id,
                             lat: item.latitude,
                             lng: item.longitude,
-                            draggable: editcustomer,
+                            draggable: true,
                             clustering: true
                         });
                         var icon = "";
@@ -1353,7 +1389,7 @@ function drawAreaCustomerPoints(edit, isleaf, editcustomer) {
                         m.setIcon({ url: "../Content/img/pin/customer" + icon + ".png", size: MarkersIcon.Customer.Size, anchor: MarkersIcon.Customer.Anchor });
 
                         m.addListener('click', function (e) {
-                            onCustomerMarkerClick(e, item.id, m, item.desc, (!editcustomer && edit && isleaf), item.latitude, item.longitude);
+                            onCustomerMarkerClick(e, item.id, m, item.desc, ((!editcustomer) && edit && isleaf), item.latitude, item.longitude);
                         });
 
                         //if (editcustomer)

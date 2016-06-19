@@ -1,0 +1,10 @@
+﻿@font-face {
+    font-family: 'BMitra';
+    src: url('/Content/fonts/BMitra.eot?#') format('eot'), url('/Content/fonts/BMitra.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+.stiReportPanel table, .stiReportPanel td{
+        font-family:Tahoma !important;
+        font-size:80%;
+    }

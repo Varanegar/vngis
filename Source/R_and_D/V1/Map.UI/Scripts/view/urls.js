@@ -1,7 +1,7 @@
 ﻿
-url_server = "http://localhost:59822/";
+url_server = "http://localhost:5272";
 
-url_prefix = "api/dsd/";
+url_prefix = "/api/dsd/";
 
 urls = {
     loginUrl: url_server  + '/oauth/token',

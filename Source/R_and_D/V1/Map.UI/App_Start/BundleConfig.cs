@@ -55,11 +55,11 @@ namespace TrackingMap.UI
 
               bundles.Add(new StyleBundle("~/Content/sitecss").Include(
                   "~/Content/css/bootstrap-rtl.css",
+                  "~/Content/css/sb-admin-2.css",
                   "~/Content/css/Site.css",
                   "~/Content/css/toastr.min.css",
                   "~/Content/css/map.css",
-                  "~/Content/css/style_responsive.css",
-                  "~/Content/css/sb-admin-2.css"
+                  "~/Content/css/style_responsive.css"
                       ));         
         }
     }
