@@ -138,7 +138,7 @@ $(document).ready(function () {
             removeListener('click');            
         }
     });
-    
+    /*
     loadDdlSaleOffice();
     loadDdlHeader();
     loadDdlSeller();
@@ -146,8 +146,8 @@ $(document).ready(function () {
     loadDdlCustomerActivity();
     loadDdlCustomerDegree();
     loadDdlGoodGroup();
-    //loadDdlDunamicGroup();
     loadDdlGood();
+    */
 });
 
 /**********************************************************/

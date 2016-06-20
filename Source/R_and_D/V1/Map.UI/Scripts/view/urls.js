@@ -1,5 +1,5 @@
 ﻿
-url_server = "http://localhost:5272";
+url_server = "http://localhost:59822";
 
 url_prefix = "/api/dsd/";
 

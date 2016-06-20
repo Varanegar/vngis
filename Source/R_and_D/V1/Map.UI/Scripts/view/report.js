@@ -8,16 +8,30 @@ function removeCacheData(clientid) {
     function (data) {
     }, false);
 }
-
+/*
 function loadDdlSaleOffice() {
-    accountManagerApp.callApi(urls.getcombodata, 'POST', 
-         { TblName: "gnr.tblSaleOffice", ValueName: "ID", TextName: "Name" },
-         function (data) {
-             addItemsToDroupdown({ elementId: "ddl_sale_office", data: data, addSelectRow: true });
-    });
 
+    $("#ddl_sale_office").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        minLength: 3,
+        dataSource: {
+            serverFiltering: false,
+            transport: { read: loadSaleOffice }
+        }
+    });
 }
 
+function loadSaleOffice(options) {
+    accountManagerApp.callApi(urls.getcombodata, 'POST',
+         { TblName: "gnr.tblSaleOffice", ValueName: "ID", TextName: "Name" },
+        function (result) {
+            options.success(result);
+        });
+     }
 
 function loadDdlHeader() {
     accountManagerApp.callApi(urls.getcombodata, 'POST', 
@@ -29,44 +43,32 @@ function loadDdlHeader() {
 }
 
 function loadDdlSeller() {
-    $('#auto_seller').kendoAutoComplete({
-        dataTextField: 'title',
-        filter: 'contains',
-        placeholder: 'انتخاب کنید...',
+    $('#ddl_seller').kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
         minLength: 3,
         dataSource: {
-            serverFiltering: true,
-            //serverPaging: true,
+            serverFiltering: false,
             transport: { read: loadAutoSeller }
-        },
-        select: function (e) {
-
-            var dataItem = this.dataItem(e.item.index());
-
-            if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_seller").val(dataItem.uniqueId || dataItem.intId);
-            } else
-                $("#ddl_seller").val('');
-
-            // Use the selected item or its text
-        },
-        change: function(e) {
-            if ($("#auto_seller").data("kendoAutoComplete").value() == "") {
-                $("#ddl_seller").val('');
-            } 
         }
     });
+    
 }
 
 function loadAutoSeller(options) {
-    accountManagerApp.callApi(urls.getautocompletedata, 'POST', 
-            { tblName: "gnr.vwDealer", 
-            searchTerm: $("#auto_seller").val(),
-            valueName: "PersCode",
-            textName: "FullName" },
+    accountManagerApp.callApi(urls.getautocompletedata, 'POST',
+            {
+                tblName: "gnr.vwDealer",
+//                searchTerm: $("#ddl_seller").val(),
+                valueName: "PersCode",
+                textName: "FullName"
+            },
         function (result) {
             options.success(result);
-    });
+        });
 
 }
 
@@ -136,20 +138,6 @@ function loadAutoGoodGroup(options) {
 
 }
 
-function loadDdlDunamicGroup() {
-    //$.ajax({
-    //    type: "POST",
-    //    url: url_getcombodata,
-    //    dataType: "json",
-    //    contentType: "application/json; charset=utf-8",
-    //    data: JSON.stringify({ TblName: "gnr.tblGoods", ValueName: "Id", TextName: "Name", AddEmptyRow: true }),
-    //    success: function (data) {
-    //        addItemsToDroupdown("ddl_dynamic_group", data);
-    //    }
-    //});
-
-}
-
 
 function loadDdlGood() {
     $('#auto_good').kendoAutoComplete({
@@ -197,4 +185,4 @@ function loadAutoGood(options) {
 
 }
 
-
+*/

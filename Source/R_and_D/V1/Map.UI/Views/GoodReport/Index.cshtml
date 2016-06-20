@@ -66,7 +66,9 @@
                             <label>@CaptionResource.SaleOffice</label>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-control" id="ddl_sale_office"></select>
+                            <input id="ddl_sale_office" class="form-control" />
+
+                            @*   <select class="form-control" id="ddl_sale_office"></select>*@
                         </div>
 
                         <div class="col-md-1">
@@ -80,9 +82,12 @@
                             <label for="ddl_seller">@CaptionResource.Seller</label>
                         </div>
                         <div class="col-md-3">
-                            <input type="hidden" id="ddl_seller" value="" />
-                            <input id='auto_seller' />
-                            @*                            <select class="form-control" id="ddl_seller"></select>*@
+                            <input id='ddl_seller' class="form-control" />
+                            
+                            @*<input type="hidden" id="ddl_seller" value="" />
+                            <input id='auto_seller'  />*@
+
+                            @* <select class="form-control" id="ddl_seller"></select>*@
                         </div>
                     </div>
 
