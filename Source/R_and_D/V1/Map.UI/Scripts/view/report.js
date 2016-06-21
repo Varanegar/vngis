@@ -8,15 +8,15 @@ function removeCacheData(clientid) {
     function (data) {
     }, false);
 }
-/*
-function loadDdlSaleOffice() {
 
+function loadDdlSaleOffice() {
     $("#ddl_sale_office").kendoComboBox({
         placeholder: "انتخاب کنید ..",
         dataTextField: "title",
         dataValueField: "intId",
         filter: "contains",
         autoBind: false,
+        change: onComboChange,
         minLength: 3,
         dataSource: {
             serverFiltering: false,
@@ -34,10 +34,26 @@ function loadSaleOffice(options) {
      }
 
 function loadDdlHeader() {
+    $("#ddl_header").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        change: onComboChange,
+        minLength: 3,
+        dataSource: {
+            serverFiltering: false,
+            transport: { read: loadHeader }
+        }
+    });
+}
+
+function loadHeader(options) {
     accountManagerApp.callApi(urls.getcombodata, 'POST', 
-        { TblName: "gnr.vwSupervisor", ValueName: "SupervisorCode", TextName: "FullName", AddEmptyRow: true },
-        function (data) {
-            addItemsToDroupdown({ elementId: "ddl_header", data: data, addSelectRow: true });
+        { TblName: "gnr.vwSupervisor", ValueName: "ID", TextName: "FullName", AddEmptyRow: true },
+        function (result) {
+            options.success(result);
     });
 
 }
@@ -49,21 +65,22 @@ function loadDdlSeller() {
         dataValueField: "intId",
         filter: "contains",
         autoBind: false,
+        change: onComboChange,
         minLength: 3,
         dataSource: {
             serverFiltering: false,
-            transport: { read: loadAutoSeller }
+            transport: { read: loadSeller }
         }
     });
     
 }
 
-function loadAutoSeller(options) {
+function loadSeller(options) {
     accountManagerApp.callApi(urls.getautocompletedata, 'POST',
             {
                 tblName: "gnr.vwDealer",
 //                searchTerm: $("#ddl_seller").val(),
-                valueName: "PersCode",
+                valueName: "ID",
                 textName: "FullName"
             },
         function (result) {
@@ -73,116 +90,168 @@ function loadAutoSeller(options) {
 }
 
 function loadDdlCustomer() {
-    accountManagerApp.callApi(urls.getcombodata, 'POST', 
-        { TblName: "sle.tblCustCtgrSle", ValueName: "CustCtgrCode", TextName: "CustCtgrName", AddEmptyRow: true },
-        function (data) {
-            addItemsToDroupdown({ elementId: "ddl_customer_class", data: data, addSelectRow: true });
-    });
-
-}
-function loadDdlCustomerActivity() {
-    accountManagerApp.callApi(urls.getcombodata, 'POST', 
-        { TblName: "gnr.tblCustAct", ValueName: "CustActCode", TextName: "CustActName"},
-        function (data) {
-            addItemsToDroupdown({ elementId: "ddl_customer_activity", data: data, addSelectRow: true });
-    });
-}
-function loadDdlCustomerDegree() {
-    accountManagerApp.callApi(urls.getcombodata, 'POST', 
-        { TblName: "gnr.tblCustlevel", ValueName: "Code", TextName: "Title ", AddEmptyRow: true },
-        function (data) {
-            addItemsToDroupdown({ elementId: "ddl_customer_degree", data: data, addSelectRow: true });
-    });
-
-}
-function loadDdlGoodGroup() {
-    $('#auto_good_group').kendoAutoComplete({
-        dataTextField: 'title',
-        filter: 'contains',
-        placeholder: 'انتخاب کنید...',
+    $("#ddl_customer_class").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        change: onComboChange,
         minLength: 3,
         dataSource: {
-            serverFiltering: true,
-            //serverPaging: true,
-            transport: { read: loadAutoGoodGroup }
-        },
-        select: function (e) {
-
-            var dataItem = this.dataItem(e.item.index());
-
-            if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_good_group").val(dataItem.uniqueId || dataItem.intId);
-            } else
-                $("#ddl_good_group").val('');
-
-            // Use the selected item or its text
-        },
-        change: function(e) {
-            if ($("#auto_good_group").data("kendoAutoComplete").value() == "") {
-            $("#ddl_good_group").val('');
-        } 
-    }
-});
+            serverFiltering: false,
+            transport: { read: loadCustomer }
+        }
+    });
 }
 
-function loadAutoGoodGroup(options) {
-    accountManagerApp.callApi(urls.getautocompletedata, 'POST',        
-     {
-        SearchValue: $("#auto_good_group").val(),
-        TblName: "gnr.tblGoodsGroup", ValueName: "Id",
-        TextName: "GoodsGroupName", AddEmptyRow: true
-    },
+function loadCustomer(options) {
+    accountManagerApp.callApi(urls.getcombodata, 'POST',
+        { TblName: "sle.tblCustCtgrSle", ValueName: "ID", TextName: "CustCtgrName", AddEmptyRow: true },
+        function(result) {
+            options.success(result);
+        });
+}
+
+function loadDdlCustomerActivity() {
+    $("#ddl_customer_activity").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        change: onComboChange,
+        minLength: 3,
+        dataSource: {
+            serverFiltering: false,
+            transport: { read: loadCustomerActivity }
+        }
+    });
+}
+function loadCustomerActivity(options) {
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+        { TblName: "gnr.tblCustAct", ValueName: "ID", TextName: "CustActName"},
+        function(result) {
+            options.success(result);
+        });
+}
+
+
+/******************************************************/
+/* CustomerDegree                                     */
+/******************************************************/
+function loadDdlCustomerDegree() {
+    $("#ddl_customer_degree").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        change: onComboChange,
+        minLength: 3,
+        dataSource: {
+            serverFiltering: false,
+            transport: { read: loadCustomerDegree }
+        }
+    });
+}
+
+function loadCustomerDegree(options) {
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+        { TblName: "gnr.tblCustlevel", ValueName: "ID", TextName: "Title ", AddEmptyRow: true },
+        function(result) {
+            options.success(result);
+        });
+}
+
+/******************************************************/
+/* Good Group                                         */
+/******************************************************/
+function loadDdlGoodGroup() {
+    $("#ddl_good_group").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        change: onComboChange,
+        minLength: 3,
+        dataSource: {
+            serverFiltering: false,
+            transport: { read: loadGoodGroup }
+        }
+    });
+}
+function loadDdlUnsoldGoodGroup() {
+    $("#ddl_unsold_good_group").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        change: onComboChange,
+        minLength: 3,
+        dataSource: {
+            serverFiltering: false,
+            transport: { read: loadGoodGroup }
+        }
+    });
+}
+
+function loadGoodGroup(options) {
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+        { TblName: "gnr.tblGoodsGroup", ValueName: "Id", TextName: "GoodsGroupName ", AddEmptyRow: true },
     function (result) {
         options.success(result);
     });
 
 }
 
-
-function loadDdlGood() {
-    $('#auto_good').kendoAutoComplete({
-        dataTextField: 'title',
-        filter: 'contains',
-        placeholder: 'انتخاب کنید...',
+/******************************************************/
+/* Good                                               */
+/******************************************************/
+function loadDdlUnsoldGood() {
+    $("#ddl_unsold_good").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        change: onComboChange,
         minLength: 3,
         dataSource: {
-            serverFiltering: true,
-            //serverPaging: true,
-            transport: { read: loadAutoGood }
-        },
-        select: function (e) {
-
-            var dataItem = this.dataItem(e.item.index());
-
-            if ((dataItem != null) && (dataItem != undefined)) {
-                $("#ddl_good").val(dataItem.uniqueId || dataItem.intId);
-            } else
-                $("#ddl_good").val('');
-
-            // Use the selected item or its text
-        },
-        change: function (e) {
-        if ($("#auto_good").data("kendoAutoComplete").value() == "") {
-            $("#ddl_good").val('');
-        } 
-    }
-
+            serverFiltering: false,
+            transport: { read: loadGood }
+        }
     });
 }
 
-function loadAutoGood(options) {
-    accountManagerApp.callApi(urls.getautocompletedata, 'POST',        
-        {
-            SearchValue: $("#auto_good").val(),
-            TblName: "gnr.tblGoods",
-            ValueName: "GoodsCode",
-            TextName: "GoodsName ",
-            AddEmptyRow: true
-        },
-        function (result) {
-            options.success(result);
+function loadDdlGood() {
+    $("#ddl_good").kendoComboBox({
+        placeholder: "انتخاب کنید ..",
+        dataTextField: "title",
+        dataValueField: "intId",
+        filter: "contains",
+        autoBind: false,
+        change: onComboChange,
+        minLength: 3,
+        dataSource: {
+            serverFiltering: false,
+            transport: { read: loadGood }
+        }
     });
-
 }
 
-*/
+function loadGood(options) {
+    accountManagerApp.callApi(urls.getcombodata, 'POST', 
+        { TblName: "gnr.tblGoods", ValueName: "ID", TextName: "GoodsName ", AddEmptyRow: true },
+    function (result) {
+        options.success(result);
+    });
+}
+
+
+function onComboChange(e) {
+    changed = true;
+}
+

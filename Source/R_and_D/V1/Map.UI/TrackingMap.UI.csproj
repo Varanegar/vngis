@@ -157,6 +157,7 @@
     </Compile>
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\CustomerReportController.cs" />
+    <Compile Include="Controllers\FinanceReportController.cs" />
     <Compile Include="Controllers\GoodByValueReportController.cs" />
     <Compile Include="Controllers\GoodReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -299,7 +300,9 @@
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\view\area.js" />
     <Content Include="Scripts\view\gethtml.js" />
+    <Content Include="Scripts\view\financebyvaluereport.js" />
     <Content Include="Scripts\view\goodbyvaluereport.js" />
+    <Content Include="Scripts\view\financereport.js" />
     <Content Include="Scripts\view\goodreport.js" />
     <Content Include="Scripts\view\customerreport.js" />
     <Content Include="Scripts\view\general.js" />
@@ -336,6 +339,7 @@
     <Content Include="Views\UserManager\Permissions.cshtml" />
     <Content Include="Views\UserManager\Stocks.cshtml" />
     <Content Include="Views\GoodReport\ProductReportStimulView.cshtml" />
+    <Content Include="Views\FinanceReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

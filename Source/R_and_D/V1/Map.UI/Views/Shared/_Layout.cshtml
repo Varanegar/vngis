@@ -73,6 +73,14 @@
                             @CaptionResource.GoodReport
                         </a>
                     </li>
+                    <li class="@(ViewBag.CurrMenu == "FinanceReport" ? "active" : "")">
+                        <a href="/FinanceReport/Index">
+                            <span class="icon-box">
+                                <i class="glyphicon glyphicon-random"></i>
+                            </span>
+                            @CaptionResource.FinanceReport
+                        </a>
+                    </li>
                     <li id="menuExit">
                         <a  href="javascript:void(0);" onclick="accountManagerApp.logout();">
                             <span class="icon-box">

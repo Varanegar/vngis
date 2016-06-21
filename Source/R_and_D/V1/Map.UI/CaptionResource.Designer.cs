@@ -430,6 +430,15 @@ namespace TrackingMap.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to گزارش مالی.
+        /// </summary>
+        public static string FinanceReport {
+            get {
+                return ResourceManager.GetString("FinanceReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to از تاریخ .
         /// </summary>
         public static string FromDate {
@@ -867,6 +876,24 @@ namespace TrackingMap.UI {
         public static string Tracking {
             get {
                 return ResourceManager.GetString("Tracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کالا فروش نرفته.
+        /// </summary>
+        public static string UnsoldGood {
+            get {
+                return ResourceManager.GetString("UnsoldGood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to گروه کالا فروش نرفته.
+        /// </summary>
+        public static string UnSoldGoodGroup {
+            get {
+                return ResourceManager.GetString("UnSoldGoodGroup", resourceCulture);
             }
         }
         

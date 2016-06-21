@@ -402,4 +402,13 @@
   <data name="Print" xml:space="preserve">
     <value>چاپ</value>
   </data>
+  <data name="FinanceReport" xml:space="preserve">
+    <value>گزارش مالی</value>
+  </data>
+  <data name="UnsoldGood" xml:space="preserve">
+    <value>کالا فروش نرفته</value>
+  </data>
+  <data name="UnSoldGoodGroup" xml:space="preserve">
+    <value>گروه کالا فروش نرفته</value>
+  </data>
 </root>

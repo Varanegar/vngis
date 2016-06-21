@@ -1,4 +1,7 @@
 ﻿function getGoodReportHtml(jdata) {
+    if (jdata == "")
+        return "";
+    
     var obj = JSON.parse(jdata);
     var html = "<br/><table>";
     if (obj != null) {
@@ -55,6 +58,9 @@
 }
 
 function getOrderHtml(jdata) {
+    if (jdata == "")
+        return "";
+
     var obj = JSON.parse(jdata);
     var html = "";
     html +=
@@ -94,6 +100,9 @@ return html;
 }
 
 function getLackOfOrderHtml(jdata) {
+    if (jdata == "")
+        return "";
+
     var obj = JSON.parse(jdata);
     var html = "";
     html +=
@@ -125,6 +134,9 @@ function getLackOfOrderHtml(jdata) {
 
 
 function getLackOfVisitHtml(jdata) {
+    if (jdata == "")
+        return "";
+    
     var obj = JSON.parse(jdata);
     var html = "";
     html +=
@@ -150,4 +162,5 @@ function getLackOfVisitHtml(jdata) {
         html += "<tr> <td> علت : " + obj.Description + "</td> </tr>";
     }
     html += "</table>";
+    return html;
 }
