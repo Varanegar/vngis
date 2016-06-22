@@ -56,6 +56,49 @@
     }
     return "</table>" + html;
 }
+function getFinanceReportHtml(jdata) {
+
+    if (jdata == "")
+        return "";
+
+    var obj = JSON.parse(jdata);
+    var html = "<br/><table>";
+    if (obj != null) {
+        html += "<tr> <th style='color:#ff0000' ><h5>" + obj.Title + "</h5></th></tr>";
+        if (obj.OpenFactorCount != null) {
+            html += "<tr> <td> تعدادفاکتورباز: " + addCommaSeperator(obj.OpenFactorCount) + "</td> </tr>";
+        }
+        if (obj.OpenFactorAmount != null) {
+            html += "<tr> <td> مبلغ فاکتورباز: " + addCommaSeperator(obj.OpenFactorAmount) + "</td> </tr>";
+        }
+        if (obj.OpenFactorDay != null) {
+            html += "<tr> <td> تعداد روز فاکتور باز: " + addCommaSeperator(obj.OpenFactorDay) + "</td> </tr>";
+        }
+        if (obj.RejectChequeCount != null) {
+            html += "<tr> <td> تعدادچک برگشتی: " + addCommaSeperator(obj.RejectChequeCount) + "</td> </tr>";
+        }
+        if (obj.RejectChequeAmount != null) {
+            html += "<tr> <td> مبلغ چک برگشتی: " + addCommaSeperator(obj.RejectChequeAmount) + "</td> </tr>";
+        }
+
+        if (obj.InprocessChequeCount != null) {
+            html += "<tr> <td>  تعداد چک درجریان : " + addCommaSeperator(obj.InprocessChequeCount) + "</td> </tr>";
+        }
+        if (obj.InprocessChequeAmount != null) {
+            html += "<tr> <td>  اعتباراولیه ی اسنادی : " + addCommaSeperator(obj.InprocessChequeAmount) + "</td> </tr>";
+        }
+        if (obj.RemainedCredit != null) {
+            html += "<tr> <td>  مانده ی اعتبار اسنادی: " + addCommaSeperator(obj.RemainedCredit) + "</td> </tr>";
+        }
+        if (obj.FirstDebitCredit != null) {
+            html += "<tr> <td>  اعتباراولیه ی بدهکاری: " + addCommaSeperator(obj.FirstDebitCredit) + "</td> </tr>";
+        }
+        if (obj.RemainedDebitCredit != null) {
+            html += "<tr> <td>  مانده ی اعتبار بدهکاری: " + addCommaSeperator(obj.RemainedDebitCredit) + "</td> </tr>";
+        }
+    }
+    return "</table>" + html;
+}
 
 function getOrderHtml(jdata) {
     if (jdata == "")

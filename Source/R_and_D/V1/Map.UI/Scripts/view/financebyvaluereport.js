@@ -36,8 +36,8 @@ function drawAreasLine(ids) {
 }
 
 function drawAreaMarker(ids) {
-    accountManagerApp.callApi(urls.loadproductvaluereport, 'POST',
-        geGoodValueFilter(ids),
+    accountManagerApp.callApi(urls.loadfinancevaluereport, 'POST',
+        geFinanceValueFilter(ids),
         function(data) {
             if (data != null) {
                 $.each(data, function(i, item) {
@@ -52,8 +52,8 @@ function drawAreaMarker(ids) {
 
                     m.addListener('click', function(e) {
                         closeInfoWindow();
-                        openInfoWindow(e.latLng, getGoodReportHtml(item.jData));
-                        setCustomerInfoPanel(getGoodReportHtml(item.jData));
+                        openInfoWindow(e.latLng, getFinanceReportHtml(item.jData));
+                        setCustomerInfoPanel(getFinanceReportHtml(item.jData));
                     });
 
                 });
@@ -74,7 +74,7 @@ function setCustomerInfoPanel(desc) {
     //--------------------------------------------------------------------------------
     //condition
     //--------------------------------------------------------------------------------
-    function geGoodValueFilter(ids) {
+    function geFinanceValueFilter(ids) {
         return {
             AreaIds: ids,
             CustomPoint : point_views,
@@ -96,51 +96,30 @@ function setCustomerInfoPanel(desc) {
 
             UnSoldGoodGroup: parseInt($("#ddl_unsold_good_group").val()),
             UnSoldGood: $("#ddl_unsold_good").val(),
-
-            FromRequestCount: $("#from_request_count").val(),
-            ToRequestCount: $("#to_request_count").val(),
-
-            FromFactorCount: $("#from_factor_count").val(),
-            ToFactorCount: $("#to_factor_count").val(),
-
-            FromRejectCount: $("#from_reject_count").val(),
-            ToRejectCount: $("#to_reject_count").val(),
-
-            FromSaleItemCount: $("#from_sale_item_count").val(),
-            ToSaleItemCount: $("#to_sale_item_count").val(),
-
-            FromRejectItemCount: $("#from_reject_item_count").val(),
-            ToRejectItemCount: $("#to_reject_item_count").val(),
-
-            FromSaleAmount: $("#from_sale_amount").val(),
-            ToSaleAmount: $("#to_sale_amount").val(),
-
-            FromRejectAmount: $("#from_reject_amount").val(),
-            ToRejectAmount: $("#to_reject_amount").val(),
-
-            FromSaleQty: $("#from_sale_qty").val(),
-            ToSaleQty: $("#to_sale_qty").val(),
-
-            FromRejectQty: $("#from_reject_qty").val(),
-            ToRejectQty: $("#to_reject_qty").val(),
-
-            FromSaleWeight: $("#from_sale_weight").val(),
-            ToSaleWeight: $("#to_sale_weight").val(),
-
-            FromRejectWeight: $("#from_reject_weight").val(),
-            ToRejectWeight: $("#to_reject_weight").val(),
-
-            FromSaleDiscount: $("#from_sale_discount").val(),
-            ToSaleDiscount: $("#to_sale_discount").val(),
-
-            FromRejectDiscount: $("#from_reject_discount").val(),
-            ToRejectDiscount: $("#to_reject_discount").val(),
-
-            FromBonusCount: $("#from_bonus_count").val(),
-            ToBonusCount: $("#to_bonus_count").val(),
-
-            FromBonusQty: $("#from_bonus_qty").val(),
-            ToBonusQty: $("#to_bonus_qty").val()
+      
+            FromOpenFactorCount: $("#from_opent_factor_count").val(),
+            ToOpenFactorCount: $("#to_opent_factor_count").val(),
+            FromOpenFactorAmount: $("#from_opent_factor_amount").val(),
+            ToOpenFactorAmount: $("#to_opent_factor_amount").val(),
+            FromOpenFactorDay: $("#from_opent_factor_day").val(),
+            ToOpenFactorDay: $("#to_opent_factor_day").val(),
+            FromRejectChequeCount: $("#from_reject_cheque_count").val(),
+            ToRejectChequeCount: $("#to_reject_cheque_count").val(),
+            FromRejectChequeAmount: $("#from_reject_cheque_amount").val(),
+            ToRejectChequeAmount: $("#to_reject_cheque_amount").val(),
+            FromInprocessChequeCoun: $("#from_inprocess_cheque_count").val(),
+            ToInprocessChequeCoun: $("#to_inprocess_cheque_count").val(),
+            FromInprocessChequeAmount: $("#from_inprocess_cheque_amount").val(),
+            ToInprocessChequeAmount: $("#to_inprocess_cheque_amount").val(),
+            FromFirstCredit: $("#from_first_credit").val(),
+            ToFirstCredit: $("#to_first_credit").val(),
+            FromRemainedCredit: $("#from_remained_credit").val(),
+            ToRemainedCredit: $("#to_remained_credit").val(),
+            FromFirstDebitCredit: $("#from_first_debit_credit").val(),
+            ToFirstDebitCredit: $("#to_first_debit_credit").val(),
+            FromRemainedDebitCredit: $("#from_remained_debit_credit").val(),
+            ToRemainedDebitCredit: $("#to_remained_debit_credit").val(),
+            
         };
 
     }

@@ -57,13 +57,24 @@ urls = {
     // product Report
     //--------------------------------------------------------
     loadproductreport: url_server + url_prefix + "pruductreport/ldprdrep",
-    loadproductreportcustomer : url_server + url_prefix + "pruductreport/ldcust",
-    removeproductreportcache : url_server + url_prefix + "pruductreport/rmvcch",
-
     loadproductvaluereport: url_server + url_prefix + "pruductreport/ldprdvalrep",
+    loadproductreportcustomer: url_server + url_prefix + "pruductreport/ldcust",
 
+    //--------------------------------------------------------
+    // finance Report
+    //--------------------------------------------------------
+    loadfinancereport: url_server + url_prefix + "financereport/ldfinrep",
+    loadfinancevaluereport: url_server + url_prefix + "financereport/ldfinvalrep",
+    loadfinancereportcustomer: url_server + url_prefix + "financereport/ldcust",
+
+    //--------------------------------------------------------
+    // Report
+    //--------------------------------------------------------
+    removeproductreportcache: url_server + url_prefix + "pruductreport/rmvcch",
     getcombodata: url_server + url_prefix + "report/ldcmblst",
     getautocompletedata: url_server + url_prefix + "report/ldatcmplst"
+
+
 };
 //--------------------------------------------------------
 // customer Report

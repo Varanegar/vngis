@@ -13,9 +13,9 @@
             <div class="form-group" id ="pnl_header_condition">
                 <div class="row">
                     <div class="col-md-2">
-                        <input type="radio" id="rd_good" name="report_type" value=1 checked> فروش 
+                        <input type="radio" id="rd_region" name="report_type" value=1 checked> مبتنی بر منطقه 
                         <br/>
-                        <input type="radio" id="rd_good_value" name="report_type" value=2> عملکرد فروش 
+                        <input type="radio" id="rd_customer" name="report_type" value=2> مبتنی بر مشتری
                     </div>
                     <div class="col-md-2">
                         <label>@CaptionResource.FromDate</label>
@@ -29,22 +29,18 @@
                         <label>@CaptionResource.DefaultField</label>
                         <select class="form-control"  id="ddl_default">
                             <option value="0" selected="selected">عنوان</option>
-                            <option value="1" >تعداد درخواست</option>
-                            <option value="2" >تعداد فاکتور</option>
-                            <option value="3">تعداد برگشت فاکتور</option>
-                            <option value="4">تعداد اقلام کالای فروش رفته</option>
-                            <option value="5">تعداد اقلام کالای برگشتی</option>
-                            <option value="6">تعداد کالای فروش رفته (کارتن : ظرف)</option>
-                            <option value="7">تعداد کالای برگشتی (کارتن : ظرف)</option>
-                            <option value="8">ریال کالای فروش رفته</option>
-                            <option value="9">ریال کالای برگشتی</option>
-                            <option value="10">وزن کالای فروش رفته</option>
-                            <option value="11">وزن کالای برگشتی</option>
-                            <option value="12">ریال تخفیف فروش رفته</option>
-                            <option value="13">ریال تخفیف برگشتی</option>
-                            <option value="14">تعداد اقلام جایزه</option>
-                            <option value="15">تعداد جایزه (کارتن : ظرف)</option>
-                        </select>
+                            <option value="1" >تعدادفاکتورباز</option>
+                            <option value="2" >مبلغ فاکتورباز</option>
+                            <option value="3">تعدادچک برگشتی</option>
+                            <option value="4">مبلغ چک برگشتی</option>
+                            <option value="5">تعداد چک درجریان</option>
+                            <option value="6">مبلغ چک در جریان</option>
+                            <option value="7">اعتباراولیه ی اسنادی</option>
+                            <option value="8">مانده ی اعتبار اسنادی</option>
+                            <option value="9">اعتباراولیه ی بدهکاری</option>
+                            <option value="10">مانده ی اعتبار بدهکاری</option>
+                            <option value="11">تعداد روز فاکتور باز</option>
+                       </select>
                     </div>
 
                     <div class="col-md-4">
@@ -193,185 +189,137 @@
                                 <button id='btn_select_all' class='btn btn-default btn-xs color-gray'>@CaptionResource.SelectAll</button>
                                 <button id='btn_remove_all' class='btn btn-default btn-xs color-gray'>@CaptionResource.RemoveAll</button>
                                 <br />
-                                @Html.CheckBox("chk_request_count", false, new { @id = "chk_request_count", @class = "control-label" })
-                                <label for="chk_request_count">تعداد درخواست</label>
-                                <div id="div_request_count" class="panel-value">
-                                    <label for="from_request_count">از</label>
-                                    <input id="from_request_count" type="number" class="form-control" />
+                                @Html.CheckBox("chk_opent_factor_count", false, new { @id = "chk_opent_factor_count", @class = "control-label" })
+                                <label for="chk_opent_factor_count">تعدادفاکتورباز</label>
+                                <div id="div_opent_factor_count" class="panel-value">
+                                    <label for="from_opent_factor_count">از</label>
+                                    <input id="from_opent_factor_count" type="number" class="form-control" />
 
-                                    <label for="to_request_count">تا</label>
-                                    <input id="to_request_count" type="number" class="form-control" />
+                                    <label for="to_opent_factor_count">تا</label>
+                                    <input id="to_opent_factor_count" type="number" class="form-control" />
+
+                                </div>
+                                <br />
+                                @Html.CheckBox("chk_opent_factor_amount", false, new { @id = "chk_opent_factor_amount", @class = "control-label" })
+                                <label for="chk_opent_factor_amount">مبلغ فاکتورباز</label>
+                                <div id="div_opent_factor_amount" class="panel-value">
+                                    <label for="from_opent_factor_amount">از</label>
+                                    <input id="from_opent_factor_amount" type="number" class="form-control" />
+
+                                    <label for="to_opent_factor_amount">تا</label>
+                                    <input id="to_opent_factor_amount" type="number" class="form-control" />
 
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_factor_count", false, new { @id = "chk_factor_count", @class = "control-label" })
-                                <label for="chk_factor_count">تعداد فاکتور</label>
-                                <div id="div_factor_count" class="panel-value">
-                                    <label for="from_factor_count">از</label>
-                                    <input id="from_factor_count" type="number" class="form-control" />
+                                @Html.CheckBox("chk_opent_factor_day", false, new { @id = "chk_opent_factor_day", @class = "control-label" })
+                                <label for="chk_opent_factor_day">تعداد روز فاکتور باز</label>
+                                <div id="div_opent_factor_day" class="panel-value">
+                                    <label for="from_opent_factor_day">از</label>
+                                    <input id="from_opent_factor_day" type="number" class="form-control" />
 
-                                    <label for="to_factor_count">تا</label>
-                                    <input id="to_factor_count" type="number" class="form-control" />
+                                    <label for="to_opent_factor_day">تا</label>
+                                    <input id="to_opent_factor_day" type="number" class="form-control" />
+                                </div>
+                                <br />
+
+                                @Html.CheckBox("chk_reject_cheque_count", false, new { @id = "chk_reject_cheque_count", @class = "control-label" })
+                                <label for="chk_reject_cheque_count">تعدادچک برگشتی</label>
+                                <div id="div_reject_cheque_count" class="panel-value">
+                                    <label for="from_reject_cheque_count">از</label>
+                                    <input id="from_reject_cheque_count" type="number" class="form-control" />
+
+                                    <label for="to_reject_cheque_count">تا</label>
+                                    <input id="to_reject_cheque_count" type="number" class="form-control" />
 
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_count", false, new { @id = "chk_reject_count", @class = "control-label" })
-                                <label for="chk_reject_count">تعداد برگشت فاکتور</label>
-                                <div id="div_reject_count" class="panel-value">
-                                    <label for="from_reject_count">از</label>
-                                    <input id="from_reject_count" type="number" class="form-control" />
+                                @Html.CheckBox("chk_reject_cheque_amount", false, new { @id = "chk_reject_cheque_amount", @class = "control-label" })
+                                <label for="chk_reject_cheque_amount">مبلغ چک برگشتی</label>
+                                <div id="div_reject_cheque_amount" class="panel-value">
+                                    <label for="from_reject_cheque_amount">از</label>
+                                    <input id="from_reject_cheque_amount" type="number" class="form-control" />
 
-                                    <label for="to_reject_count">تا</label>
-                                    <input id="to_reject_count" type="number" class="form-control" />
-
-                                </div>
-                                <br />
-
-                                @Html.CheckBox("chk_sale_item_count", false, new { @id = "chk_sale_item_count", @class = "control-label" })
-                                <label for="chk_sale_item_count">تعداد اقلام کالای فروش رفته</label>
-                                <div id="div_sale_item_count" class="panel-value">
-                                    <label for="from_sale_item_count">از</label>
-                                    <input id="from_sale_item_count" type="number" class="form-control" />
-
-                                    <label for="to_sale_item_count">تا</label>
-                                    <input id="to_sale_item_count" type="number" class="form-control" />
+                                    <label for="to_reject_cheque_amount">تا</label>
+                                    <input id="to_reject_cheque_amount" type="number" class="form-control" />
 
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_item_count", false, new { @id = "chk_reject_item_count", @class = "control-label" })
-                                <label for="chk_reject_item_count">تعداد اقلام کالای برگشتی</label>
-                                <div id="div_reject_item_count" class="panel-value">
-                                    <label for="from_reject_item_count">از</label>
-                                    <input id="from_reject_item_count" type="number" class="form-control" />
+                                @Html.CheckBox("chk_inprocess_cheque_count", false, new { @id = "chk_inprocess_cheque_count", @class = "control-label" })
+                                <label for="chk_inprocess_cheque_count">تعداد چک درجریان</label>
+                                <div id="div_inprocess_cheque_count" class="panel-value">
+                                    <label for="from_inprocess_cheque_count">از</label>
+                                    <input id="from_inprocess_cheque_count" type="number" class="form-control" />
 
-                                    <label for="to_reject_item_count">تا</label>
-                                    <input id="to_reject_item_count" type="number" class="form-control" />
-
-                                </div>
-                                <br />
-
-                                @Html.CheckBox("chk_sale_qty", false, new { @id = "chk_sale_qty", @class = "control-label" })
-                                <label for="chk_sale_qty">تعداد کالای فروش رفته (کارتن : ظرف)</label>
-                                <div id="div_sale_qty" class="panel-value">
-                                    <label for="from_sale_qty">از</label>
-                                    <input id="from_sale_qty" type="number" class="form-control" />
-
-                                    <label for="to_sale_qty">تا</label>
-                                    <input id="to_sale_qty" type="number" class="form-control" />
+                                    <label for="to_inprocess_cheque_count">تا</label>
+                                    <input id="to_inprocess_cheque_count" type="number" class="form-control" />
 
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_qty", false, new { @id = "chk_reject_qty", @class = "control-label" })
-                                <label for="chk_reject_qty">تعداد کالای برگشتی (کارتن : ظرف)</label>
-                                <div id="div_reject_qty" class="panel-value">
-                                    <label for="from_reject_qty">از</label>
-                                    <input id="from_reject_qty" type="number" class="form-control" />
+                                @Html.CheckBox("chk_inprocess_cheque_amount", false, new { @id = "chk_inprocess_cheque_amount", @class = "control-label" })
+                                <label for="chk_inprocess_cheque_amount">مبلغ چک در جریان</label>
+                                <div id="div_inprocess_cheque_amount" class="panel-value">
+                                    <label for="from_inprocess_cheque_amount">از</label>
+                                    <input id="from_inprocess_cheque_amount" type="number" class="form-control" />
 
-                                    <label for="to_reject_qty">تا</label>
-                                    <input id="to_reject_qty" type="number" class="form-control" />
-
-                                </div>
-                                <br />
-
-                                @Html.CheckBox("chk_sale_amount", false, new { @id = "chk_sale_amount", @class = "control-label" })
-                                <label for="chk_sale_amount">ریال کالای فروش رفته</label>
-                                <div id="div_sale_amount" class="panel-value">
-                                    <label for="from_sale_amount">از</label>
-                                    <input id="from_sale_amount" type="number" class="form-control" />
-
-                                    <label for="to_sale_amount">تا</label>
-                                    <input id="to_sale_amount" type="number" class="form-control" />
+                                    <label for="to_inprocess_cheque_amount">تا</label>
+                                    <input id="to_inprocess_cheque_amount" type="number" class="form-control" />
 
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_reject_amount", false, new { @id = "chk_reject_amount", @class = "control-label" })
-                                <label for="chk_reject_amount">ریال کالای برگشتی</label>
-                                <div id="div_reject_amount" class="panel-value">
-                                    <label for="from_reject_amount">از</label>
-                                    <input id="from_reject_amount" type="number" class="form-control" />
 
-                                    <label for="to_reject_amount">تا</label>
-                                    <input id="to_reject_amount" type="number" class="form-control" />
+                                @Html.CheckBox("chk_first_credit", false, new { @id = "chk_first_credit", @class = "control-label" })
+                                <label for="chk_first_credit">اعتباراولیه ی اسنادی</label>
+                                <div id="div_first_credit" class="panel-value">
+                                    <label for="from_first_credit">از</label>
+                                    <input id="from_first_credit" type="number" class="form-control" />
+
+                                    <label for="to_first_credit">تا</label>
+                                    <input id="to_first_credit" type="number" class="form-control" />
+
+                                </div>
+                                <br />
+                                
+                                @Html.CheckBox("chk_remained_credit", false, new { @id = "chk_remained_credit", @class = "control-label" })
+                                <label for="chk_remained_credit">مانده ی اعتبار اسنادی</label>
+                                <div id="div_remained_credit" class="panel-value">
+                                    <label for="from_remained_credit">از</label>
+                                    <input id="from_remained_credit" type="number" class="form-control" />
+
+                                    <label for="to_remained_credit">تا</label>
+                                    <input id="to_remained_credit" type="number" class="form-control" />
 
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_sale_weight", false, new { @id = "chk_sale_weight", @class = "control-label" })
-                                <label for="chk_sale_weight">وزن کالای فروش رفته</label>
-                                <div id="div_sale_weight" class="panel-value">
-                                    <label for="from_sale_weight">از</label>
-                                    <input id="from_sale_weight" type="number" class="form-control" />
+                                @Html.CheckBox("chk_first_debit_credit", false, new { @id = "chk_first_credit", @class = "control-label" })
+                                <label for="chk_first_debit_credit">اعتباراولیه ی بدهکاری</label>
+                                <div id="div_first_debit_credit" class="panel-value">
+                                    <label for="from_first_debit_credit">از</label>
+                                    <input id="from_first_debit_credit" type="number" class="form-control" />
 
-                                    <label for="to_sale_weight">تا</label>
-                                    <input id="to_sale_weight" type="number" class="form-control" />
-
-                                </div>
-                                <br />
-
-                                @Html.CheckBox("chk_reject_weight", false, new { @id = "chk_reject_weight", @class = "control-label" })
-                                <label for="chk_reject_weight">وزن کالای برگشتی</label>
-                                <div id="div_reject_weight" class="panel-value">
-                                    <label for="from_reject_weight">از</label>
-                                    <input id="from_reject_weight" type="number" class="form-control" />
-
-                                    <label for="to_reject_weight">تا</label>
-                                    <input id="to_reject_weight" type="number" class="form-control" />
+                                    <label for="to_first_debit_credit">تا</label>
+                                    <input id="to_first_debit_credit" type="number" class="form-control" />
 
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_sale_discount", false, new { @id = "chk_sale_discount", @class = "control-label" })
-                                <label for="chk_sale_discount">ریال تخفیف فروش رفته</label>
-                                <div id="div_sale_discount" class="panel-value">
-                                    <label for="from_sale_discount">از</label>
-                                    <input id="from_sale_discount" type="number" class="form-control" />
+                                @Html.CheckBox("chk_remained_debit_credit", false, new { @id = "chk_remained_debit_credit", @class = "control-label" })
+                                <label for="chk_remained_debit_credit">مانده ی اعتبار بدهکاری</label>
+                                <div id="div_remained_debit_credit" class="panel-value">
+                                    <label for="from_remained_debit_credit">از</label>
+                                    <input id="from_remained_debit_credit" type="number" class="form-control" />
 
-                                    <label for="to_sale_discount">تا</label>
-                                    <input id="to_sale_discount" type="number" class="form-control" />
-
+                                    <label for="to_remained_debit_credit">تا</label>
+                                    <input id="to_remained_debit_credit" type="number" class="form-control" />
                                 </div>
                                 <br />
+                                
 
-                                @Html.CheckBox("chk_reject_discount", false, new { @id = "chk_reject_discount", @class = "control-label" })
-                                <label for="chk_reject_discount">ریال تخفیف برگشتی</label>
-                                <div id="div_reject_discount" class="panel-value">
-                                    <label for="from_reject_discount">از</label>
-                                    <input id="from_reject_discount" type="number" class="form-control" />
-
-                                    <label for="to_reject_discount">تا</label>
-                                    <input id="to_reject_discount" type="number" class="form-control" />
-
-                                </div>
-                                <br />
-
-                                @Html.CheckBox("chk_bonus_count", false, new { @id = "chk_bonus_count", @class = "control-label" })
-                                <label for="chk_bonus_count">تعداد اقلام جایزه</label>
-                                <div id="div_bonus_count" class="panel-value">
-                                    <label for="from_bonus_count">از</label>
-                                    <input id="from_bonus_count" type="number" class="form-control" />
-
-                                    <label for="to_bonus_count">تا</label>
-                                    <input id="to_bonus_count" type="number" class="form-control" />
-
-                                </div>
-                                <br />
-
-                                @Html.CheckBox("chk_bonus_qty", false, new { @id = "chk_bonus_qty", @class = "control-label" })
-                                <label for="chk_bonus_qty">تعداد جایزه (کارتن : ظرف)</label>
-                                <div id="div_bonus_qty" class="panel-value">
-                                    <label for="from_bonus_qty">از</label>
-                                    <input id="from_bonus_qty" type="number" class="form-control" />
-
-                                    <label for="to_bonus_qty">تا</label>
-                                    <input id="to_bonus_qty" type="number" class="form-control" />
-
-                                </div>
-                                <br />
                             </div>
                         </div>
                         <div id="pnl_info" class="tab-pane fade">
