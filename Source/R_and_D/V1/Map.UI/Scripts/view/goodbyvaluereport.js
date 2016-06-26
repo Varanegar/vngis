@@ -1,4 +1,16 @@
-﻿
+﻿function sendToPrintProductValueReport(reportname) {
+    $.ajax({
+        type: "POST",
+        url: urls.printproductvaluereport,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(getFilter(null)),
+        success: function (data) {
+            window.location.href = '/GoodReport/ShowPrintProductValueReport';
+        }
+    });
+}
+
 //--------------------------------------------------------------------------------
 //map
 //--------------------------------------------------------------------------------

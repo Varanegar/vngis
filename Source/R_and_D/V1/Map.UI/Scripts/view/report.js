@@ -70,8 +70,11 @@ $(document).ready(function() {
     $("#btn_run").on("click", function (e) {
         refreshMap();
     });
+    $("#btn_print").on("click", function (e) {
+        sendToPrint();
+    });
 
-
+    
     $("#grid_area").on("dblclick", "tr.k-state-selected", function (e) {
         showDetail();
     });
@@ -103,16 +106,6 @@ $(document).ready(function() {
 
     });
 
-    $('input[type=radio][name=report_type]').change(function () {
-        $("#grid_area").show();
-
-        if (this.value == 1) {
-            $("#div_custom_point").hide();
-        }
-        else if (this.value == 2) {
-            $("#div_custom_point").show();
-        }
-    });
 
     $("#chk_custom_point").on("change", function (e) {
         point_views = [];
@@ -139,6 +132,17 @@ $(document).ready(function() {
 
 });
 
+
+function setDropdownPrintBtn(report) {
+    $("#dropdown_print").empty();
+    accountManagerApp.callApi(urls.loadprintlist, 'POST',
+        { reportName: report },
+        function (data) {
+            $.each(data, function (i, item) {
+                $("#dropdown_print").append("<li><a href='#' onclick=sendToPrint('" + item.reportFileName + "');>" + item.reportTitle + "</a></li>");
+            });
+        });
+}
 
 /*********************************************************************************************************************************************************/
 // Area List Grid

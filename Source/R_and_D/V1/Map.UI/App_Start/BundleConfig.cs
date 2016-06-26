@@ -25,7 +25,8 @@ namespace TrackingMap.UI
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/toastr.min.js"));
+                      "~/Scripts/toastr.min.js"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
                         "~/Scripts/persianDatepicker.min.js",

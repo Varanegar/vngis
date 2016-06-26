@@ -1,6 +1,20 @@
 ﻿
 
 $(document).ready(function () {
+
+    $('input[type=radio][name=report_type]').change(function () {
+        $("#grid_area").show();
+        if (this.value == 1) {
+            $("#div_custom_point").hide();
+            setDropdownPrintBtn("FinanceReport");
+        }
+        else if (this.value == 2) {
+            $("#div_custom_point").show();
+            setDropdownPrintBtn("FinanceValueReport");
+        }
+    });
+
+
     loadDdlSaleOffice();
     loadDdlHeader();
     loadDdlSeller();

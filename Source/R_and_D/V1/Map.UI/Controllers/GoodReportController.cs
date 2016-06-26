@@ -1,7 +1,9 @@
-﻿using Stimulsoft.Report;
+﻿using Anatoli.ViewModels.RequestModel;
+using Anatoli.ViewModels.VnGisModels;
+using Stimulsoft.Report;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using Stimulsoft.Report.MvcMobile;
@@ -18,19 +20,98 @@ namespace TrackingMap.UI.Controllers
             return View();
         }
 
-
         //Print
-        public ActionResult ProductReport()
+        //[Route("prntprdrep")]
+        [HttpPost]
+        public ActionResult PrintProductReport(ProductReportRequestModel data)
         {
+            var allData = ServiceCall.CallApi<List<ProductReportForPrintViewModel>>("pruductreport/prntprdrep", data);
+            
+            TempData["ProductReportStimulData"] = allData;
+            return Json(true);
+        }
+        
+        public ActionResult ShowPrintProductReport(string reportFileName)
+        {
+            TempData["ProductReportFileName"] = reportFileName;
             return View("ProductReportStimulView");
         }
         public ActionResult GetProductReportSnapshot()
         {
-            var report = new StiReport();
-            report.LoadDocument(Server.MapPath("~/Content/reports/ProductReport.mrt"));
-            //report.RegBusinessObject("ProductReport", data);
+
+            //ProductReport
+            var reportname = TempData["ProductReportFileName"].ToString();
+            reportname = reportname.Replace("\"", "");
+            StiReport report = null;
+
+            if (!System.IO.File.Exists(Server.MapPath("~/Content/reports/" + reportname + ".dll")))
+            {
+              // load report from file
+                report = new StiReport();
+                report.Load(Server.MapPath("~/Content/reports/" + reportname + ".mrt"));
+                // compile report to assembly
+                report.Compile(Server.MapPath("~/Content/reports/" + reportname + ".dll"));
+            }
+            else  // if assembly exist
+            {
+                report = StiReport.GetReportFromAssembly(Server.MapPath("~/Content/reports/" + reportname + ".dll"));
+            } 
+            //report.Load(Server.MapPath("~/Content/reports/" + reportname + ".mrt"));
+            var data = (List<ProductReportForPrintViewModel>)TempData["ProductReportStimulData"];
+
+            report.RegBusinessObject("ProductReportForPrintViewModel", data);
             return StiMvcMobileViewer.GetReportSnapshotResult(HttpContext, report);
         }
+
+       /**************************************************************************
+        * product value
+        *************************************************************************** */
+
+        //Print
+        //[Route("prntprdrep")]
+        [HttpPost]
+        public ActionResult PrintProductValueReport(ProductReportRequestModel data)
+        {
+            var allData = ServiceCall.CallApi<List<ProductValueReportForPrintViewModel>>("pruductreport/prntprdvalrep", data);
+
+            TempData["ProductValueReportStimulData"] = allData;
+            return Json(true);
+        }
+
+        public ActionResult ShowPrintProductValueReport(string reportFileName)
+        {
+            TempData["ProductReportFileName"] = reportFileName;
+            return View("ProductValueReportStimulView");
+        }
+
+        public ActionResult GetProductValueReportSnapshot()
+        {
+
+            //ProductReport
+            var reportname = TempData["ProductValueReportFileName"].ToString();
+            reportname = reportname.Replace("\"", "");
+            StiReport report = null;
+
+            if (!System.IO.File.Exists(Server.MapPath("~/Content/reports/" + reportname + ".dll")))
+            {
+                // load report from file
+                report = new StiReport();
+                report.Load(Server.MapPath("~/Content/reports/" + reportname + ".mrt"));
+                // compile report to assembly
+                report.Compile(Server.MapPath("~/Content/reports/" + reportname + ".dll"));
+            }
+            else  // if assembly exist
+            {
+                report = StiReport.GetReportFromAssembly(Server.MapPath("~/Content/reports/" + reportname + ".dll"));
+            }
+            //report.Load(Server.MapPath("~/Content/reports/" + reportname + ".mrt"));
+            var data = (List<ProductReportForPrintViewModel>)TempData["ProductValueReportStimulData"];
+
+            report.RegBusinessObject("ProductValueReportForPrintViewModel", data);
+            return StiMvcMobileViewer.GetReportSnapshotResult(HttpContext, report);
+        }
+
+
         public ActionResult ViewerEvent()
         {
             return StiMvcMobileViewer.ViewerEventResult(HttpContext);
@@ -46,6 +127,6 @@ namespace TrackingMap.UI.Controllers
             return StiMvcMobileViewer.ExportReportResult(HttpContext);
         }
 
-
+        
     }
 }

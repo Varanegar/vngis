@@ -1,6 +1,13 @@
 ﻿
-url_server = "http://localhost:59822";
+privateOwnerId = '79A0D598-0BD2-45B1-BAAA-0A9CF9EFF240',
+dataOwnerId = 'DD86E785-7171-498E-A9BB-82E1DBE334EE',
+dataOwnerCenterId = '02313882-9767-446D-B4CE-54004EF0AAC4',
 
+privateOwnerId = '79A0D598-0BD2-45B1-BAAA-0A9CF9EFF240',
+dataOwnerId = '3EEE33CE-E2FD-4A5D-A71C-103CC5046D0C',
+dataOwnerCenterId = '3EEE33CE-E2FD-4A5D-A71C-103CC5046D0C',
+
+url_server = "http://localhost:59822";
 url_prefix = "/api/dsd/";
 
 urls = {
@@ -59,6 +66,10 @@ urls = {
     loadproductreport: url_server + url_prefix + "pruductreport/ldprdrep",
     loadproductvaluereport: url_server + url_prefix + "pruductreport/ldprdvalrep",
     loadproductreportcustomer: url_server + url_prefix + "pruductreport/ldcust",
+    removeproductreportcache: url_server + url_prefix + "pruductreport/rmvcch",
+
+    printproductreport: "/GoodReport/PrintProductReport",
+    printproductvaluereport: "/GoodReport/PrintProductValueReport",
 
     //--------------------------------------------------------
     // finance Report
@@ -66,11 +77,12 @@ urls = {
     loadfinancereport: url_server + url_prefix + "financereport/ldfinrep",
     loadfinancevaluereport: url_server + url_prefix + "financereport/ldfinvalrep",
     loadfinancereportcustomer: url_server + url_prefix + "financereport/ldcust",
+    removefinancereportcache: url_server + url_prefix + "financereport/rmvcch",
 
     //--------------------------------------------------------
     // Report
     //--------------------------------------------------------
-    removeproductreportcache: url_server + url_prefix + "pruductreport/rmvcch",
+    loadprintlist: url_server + url_prefix + "report/ldrptlst",
     getcombodata: url_server + url_prefix + "report/ldcmblst",
     getautocompletedata: url_server + url_prefix + "report/ldatcmplst"
 

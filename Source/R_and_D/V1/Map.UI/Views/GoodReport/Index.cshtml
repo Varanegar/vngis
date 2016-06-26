@@ -13,9 +13,9 @@
             <div class="form-group" id ="pnl_header_condition">
                 <div class="row">
                     <div class="col-md-2">
-                        <input type="radio" id="rd_good" name="report_type" value=1 checked> فروش 
+                        <input type="radio" id="rd_good" name="report_type" value=1 checked> مبتنی بر منطقه  
                         <br/>
-                        <input type="radio" id="rd_good_value" name="report_type" value=2> عملکرد فروش 
+                        <input type="radio" id="rd_good_value" name="report_type" value=2> مبتنی بر مشتری 
                     </div>
                     <div class="col-md-2">
                         <label>@CaptionResource.FromDate</label>
@@ -50,12 +50,16 @@
                     <div class="col-md-4">
                         <div class="left">
                             <button id='btn_adv_con' class='btn btn-default color-gray'>@CaptionResource.Advance</button>
-                            <button id='btn_run' class='btn btn-primary color-gray large-btn'>@CaptionResource.Run</button>
-                            <button id='btn_print' class='btn btn-primary color-gray large-btn'
-                                    onclick="location.href='@Url.Action("ProductReport")'"
-                                    >
-                                @CaptionResource.Print
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">@CaptionResource.Print</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
                                 </button>
+                                <ul id="dropdown_print" class="dropdown-menu" role="menu">
+                                </ul>
+                            </div>
+                            <button id='btn_run' class='btn btn-primary large-btn'>@CaptionResource.Run</button>
+
                         </div>
                     </div>
                 </div>

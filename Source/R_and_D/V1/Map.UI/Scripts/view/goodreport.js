@@ -1,6 +1,19 @@
 ﻿
 $(document).ready(function () {
    
+    $('input[type=radio][name=report_type]').change(function () {
+        $("#grid_area").show();
+        if (this.value == 1) {
+            $("#div_custom_point").hide();
+            setDropdownPrintBtn("ProductReport");
+        }
+        else if (this.value == 2) {
+            $("#div_custom_point").show();
+            setDropdownPrintBtn("ProductValueReport");
+        }
+    });
+
+    setDropdownPrintBtn("ProductReport");
     loadDdlSaleOffice();
     loadDdlHeader();
     loadDdlSeller();
@@ -13,6 +26,42 @@ $(document).ready(function () {
     loadDdlUnsoldGood();
 
 });
+
+//--------------------------------------------------------------------------------
+//print
+//--------------------------------------------------------------------------------
+
+
+function sendToPrint(reportname) {
+    
+    
+    if ($('input[name="report_type"]:checked').val() == 1) {
+        sendToPrintProductReport(reportname);
+    } else {
+        sendToPrintProductValueReport(reportname);
+    }
+}
+function sendToPrintProductReport(reportname) {
+    freezUI();
+
+    $.ajax({
+        type: "POST",
+        url: urls.printproductreport,
+        //dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(getFilter(null)),
+        success: function (data) {
+            window.location.href = '/GoodReport/ShowPrintProductReport?reportFileName="' + reportname + '"';
+            unfreezUI();
+        }
+        
+    }).fail(function (jqXHR) {
+        showAjaxError(jqXHR);
+        unfreezUI();
+    });
+    
+}
+
 
 //--------------------------------------------------------------------------------
 //map
