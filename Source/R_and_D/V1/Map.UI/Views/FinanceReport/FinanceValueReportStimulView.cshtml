@@ -1,0 +1,18 @@
+﻿@using Stimulsoft.Report.MvcMobile
+@{Layout = "";}
+
+<div class="panel panel-default panel-main">
+    <div>
+        @Html.Stimulsoft().RenderMvcMobileViewerScripts()
+
+        @Html.Stimulsoft().StiMvcMobileViewer(new StiMvcMobileViewerOptions()
+    {
+        Theme = StiTheme.Office2013,
+       // Localization = "~/Content/Localization/en.xml",
+        ActionGetReportSnapshot = "GetFinanceValueReportSnapshot",
+        ActionViewerEvent = "ViewerEvent",
+        ActionPrintReport = "PrintReport",
+        ActionExportReport = "ExportReport"
+    })
+    </div>
+</div>

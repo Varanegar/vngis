@@ -1,4 +1,22 @@
-﻿
+﻿function sendToPrintFinanceValueReport(reportname) {
+    $.ajax({
+        type: "POST",
+        url: urls.printfinancevaluereport,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(getFilter(null)),
+        success: function (data) {
+            window.open('/FinanceReport/ShowPrintFinanceValueReport?reportFileName="' + reportname + '"', "_blank");
+            unfreezUI();
+
+        }
+
+    }).fail(function (jqXHR) {
+        showAjaxError(jqXHR);
+        unfreezUI();
+    });
+}
+
 //--------------------------------------------------------------------------------
 //map
 //--------------------------------------------------------------------------------

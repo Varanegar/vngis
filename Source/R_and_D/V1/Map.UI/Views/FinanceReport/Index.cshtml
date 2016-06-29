@@ -46,12 +46,15 @@
                     <div class="col-md-4">
                         <div class="left">
                             <button id='btn_adv_con' class='btn btn-default color-gray'>@CaptionResource.Advance</button>
-                            <button id='btn_run' class='btn btn-primary color-gray large-btn'>@CaptionResource.Run</button>
-                            <button id='btn_print' class='btn btn-primary color-gray large-btn'
-                                    onclick="location.href='@Url.Action("ProductReport")'"
-                                    >
-                                @CaptionResource.Print
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">@CaptionResource.Print</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
                                 </button>
+                                <ul id="dropdown_print" class="dropdown-menu" role="menu"></ul>
+                            </div>
+                            <button id='btn_run' class='btn btn-primary large-btn'>@CaptionResource.Run</button>
+
                         </div>
                     </div>
                 </div>
@@ -296,7 +299,7 @@
                                 </div>
                                 <br />
 
-                                @Html.CheckBox("chk_first_debit_credit", false, new { @id = "chk_first_credit", @class = "control-label" })
+                                @Html.CheckBox("chk_first_debit_credit", false, new { @id = "chk_first_debit_credit", @class = "control-label" })
                                 <label for="chk_first_debit_credit">اعتباراولیه ی بدهکاری</label>
                                 <div id="div_first_debit_credit" class="panel-value">
                                     <label for="from_first_debit_credit">از</label>

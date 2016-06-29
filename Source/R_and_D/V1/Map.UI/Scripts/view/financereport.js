@@ -14,7 +14,7 @@ $(document).ready(function () {
         }
     });
 
-
+    setDropdownPrintBtn("FinanceReport");
     loadDdlSaleOffice();
     loadDdlHeader();
     loadDdlSeller();
@@ -28,6 +28,41 @@ $(document).ready(function () {
 
 });
 
+
+//--------------------------------------------------------------------------------
+//print
+//--------------------------------------------------------------------------------
+
+
+function sendToPrint(reportname) {
+    
+    
+    if ($('input[name="report_type"]:checked').val() == 1) {
+        sendToPrintFinanceReport(reportname);
+    } else {
+        sendToPrintFinanceValueReport(reportname);
+    }
+}
+function sendToPrintFinanceReport(reportname) {
+    freezUI();
+
+    $.ajax({
+        type: "POST",
+        url: urls.printfinancereport,
+        //dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(getFilter(null)),
+        success: function (data) {
+            window.open('/FinanceReport/ShowPrintFinanceReport?reportFileName="' + reportname + '"', "_blank");
+            unfreezUI();
+        }
+        
+    }).fail(function (jqXHR) {
+        showAjaxError(jqXHR);
+        unfreezUI();
+    });
+    
+}
 
 
 //--------------------------------------------------------------------------------
@@ -184,10 +219,10 @@ function getFinanceFilter(ids) {
         OpenFactorCount: $("#chk_opent_factor_count").is(":checked"),
         OpenFactorAmount: $("#chk_opent_factor_amount").is(":checked"),
         OpenFactorDay: $("#chk_opent_factor_day").is(":checked"),
-        RejectCheckCount: $("#chk_reject_cheque_count").is(":checked"),
-        RejectCheckAmount: $("#chk_reject_cheque_amount").is(":checked"),
-        InprocessCheckCoun: $("#chk_inprocess_cheque_count").is(":checked"),
-        InprocessCheckAmount: $("#chk_inprocess_cheque_amount").is(":checked"),
+        RejectChequeCount: $("#chk_reject_cheque_count").is(":checked"),
+        RejectChequeAmount: $("#chk_reject_cheque_amount").is(":checked"),
+        InprocessChequeCount: $("#chk_inprocess_cheque_count").is(":checked"),
+        InprocessChequeAmount: $("#chk_inprocess_cheque_amount").is(":checked"),
         FirstCredit: $("#chk_first_credit").is(":checked"),
         RemainedCredit: $("#chk_remained_credit").is(":checked"),
         FirstDebitCredit: $("#chk_first_debit_credit").is(":checked"),

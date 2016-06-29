@@ -6,9 +6,16 @@
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(getFilter(null)),
         success: function (data) {
-            window.location.href = '/GoodReport/ShowPrintProductValueReport';
+            window.open('/GoodReport/ShowPrintProductValueReport?reportFileName="' + reportname + '"', "_blank");
+            unfreezUI();
+
         }
+
+    }).fail(function (jqXHR) {
+        showAjaxError(jqXHR);
+        unfreezUI();
     });
+    
 }
 
 //--------------------------------------------------------------------------------

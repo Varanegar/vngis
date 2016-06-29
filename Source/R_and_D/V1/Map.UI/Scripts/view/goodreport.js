@@ -51,7 +51,7 @@ function sendToPrintProductReport(reportname) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(getFilter(null)),
         success: function (data) {
-            window.location.href = '/GoodReport/ShowPrintProductReport?reportFileName="' + reportname + '"';
+            window.open('/GoodReport/ShowPrintProductReport?reportFileName="' + reportname + '"', "_blank");
             unfreezUI();
         }
         

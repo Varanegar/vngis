@@ -85,7 +85,11 @@ function getFinanceReportHtml(jdata) {
             html += "<tr> <td>  تعداد چک درجریان : " + addCommaSeperator(obj.InprocessChequeCount) + "</td> </tr>";
         }
         if (obj.InprocessChequeAmount != null) {
-            html += "<tr> <td>  اعتباراولیه ی اسنادی : " + addCommaSeperator(obj.InprocessChequeAmount) + "</td> </tr>";
+            html += "<tr> <td>  مبلغ چک درجریان : " + addCommaSeperator(obj.InprocessChequeAmount) + "</td> </tr>";
+        }
+
+        if (obj.FirstCredit != null) {
+            html += "<tr> <td>  اعتباراولیه ی اسنادی : " + addCommaSeperator(obj.FirstCredit) + "</td> </tr>";
         }
         if (obj.RemainedCredit != null) {
             html += "<tr> <td>  مانده ی اعتبار اسنادی: " + addCommaSeperator(obj.RemainedCredit) + "</td> </tr>";

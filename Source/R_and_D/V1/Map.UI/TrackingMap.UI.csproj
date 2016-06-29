@@ -348,6 +348,8 @@
     <Content Include="Views\GoodReport\ProductReportStimulView.cshtml" />
     <Content Include="Views\FinanceReport\Index.cshtml" />
     <Content Include="Views\GoodReport\ProductValueReportStimulView.cshtml" />
+    <Content Include="Views\FinanceReport\FinanceReportStimulView.cshtml" />
+    <Content Include="Views\FinanceReport\FinanceValueReportStimulView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
